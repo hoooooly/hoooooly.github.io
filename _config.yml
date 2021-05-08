@@ -104,4 +104,5 @@ theme: Kratos-Rebirth
 deploy:
   type: git
   repo: https://github.com/hoooooly/hoooooly.github.io
+  branch: gh-pages
 
