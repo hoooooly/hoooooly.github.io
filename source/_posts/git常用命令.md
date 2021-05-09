@@ -1,5 +1,5 @@
 ---
-title: git常用命令
+title: Git常用命令
 date: 2021-05-08 18:03:19
 categories: Git
 tags:
@@ -14,23 +14,23 @@ only:
 - tag
 ---
 
-# Git 常用命令
+# Git常用命令
 
 ## 仓库
 
-### 在当前目录新建一个Git代码库
+在当前目录新建一个Git代码库
 
 ```shell
 git init
 ```
 
-### 新建一个目录，将其初始化为Git代码库
+新建一个目录，将其初始化为Git代码库
 
 ```shell
 git init [project-name]
 ```
 
-### 下载一个项目和它的整个代码历史
+下载一个项目和它的整个代码历史
 
 ```shell
 git clone [url]
@@ -38,19 +38,19 @@ git clone [url]
 
 ## 配置
 
-### 显示当前的Git配置
+显示当前的Git配置
 
 ```shell
 git config --list
 ```
 
-### 编辑Git配置文件
+编辑Git配置文件
 
 ```shell
 git config -e [--global]
 ```
 
-### 设置提交代码时的用户信息
+设置提交代码时的用户信息
 
 ```shell
 git config [--global] user.name "[name]"
@@ -59,242 +59,471 @@ git config [--global] user.email "[email address]"
 
 ## 增加/删除文件
 
-### 添加指定文件到暂存区
+添加指定文件到暂存区
 
 ```shell
 git add [file1] [file2] ...
 ```
 
-### 添加指定目录到暂存区，包括子目录
+添加指定目录到暂存区，包括子目录
 
 ```shell
 git add [dir]
 ```
 
-#### 添加当前目录的所有文件到暂存区
+添加当前目录的所有文件到暂存区
 
 ```shell
 git add .
 ```
 
-# 添加每个变化前，都会要求确认
-# 对于同一个文件的多处变化，可以实现分次提交
-$ git add -p
+## 添加每个变化前，都会要求确认
 
-# 删除工作区文件，并且将这次删除放入暂存区
-$ git rm [file1] [file2] ...
+对于同一个文件的多处变化，可以实现分次提交
 
-# 停止追踪指定文件，但该文件会保留在工作区
-$ git rm --cached [file]
+```shell
+git add -p
+````
 
-# 改名文件，并且将这个改名放入暂存区
-$ git mv [file-original] [file-renamed]
-代码提交
-# 提交暂存区到仓库区
-$ git commit -m [message]
+删除工作区文件，并且将这次删除放入暂存区
 
-# 提交暂存区的指定文件到仓库区
-$ git commit [file1] [file2] ... -m [message]
+```shell
+git rm [file1] [file2] ...
+```
 
-# 提交工作区自上次commit之后的变化，直接到仓库区
-$ git commit -a
+停止追踪指定文件，但该文件会保留在工作区
 
-# 提交时显示所有diff信息
-$ git commit -v
+```shell
+git rm --cached [file]
+```
 
-# 使用一次新的commit，替代上一次提交
-# 如果代码没有任何新变化，则用来改写上一次commit的提交信息
-$ git commit --amend -m [message]
+改名文件，并且将这个改名放入暂存区
 
-# 重做上一次commit，并包括指定文件的新变化
-$ git commit --amend [file1] [file2] ...
-分支
-# 列出所有本地分支
-$ git branch
+```shell
+git mv [file-original] [file-renamed]
+```
 
-# 列出所有远程分支
-$ git branch -r
+## 代码提交
 
-# 列出所有本地分支和远程分支
-$ git branch -a
+提交暂存区到仓库区
 
-# 新建一个分支，但依然停留在当前分支
-$ git branch [branch-name]
+```shell
+git commit -m [message]
+```
 
-# 新建一个分支，并切换到该分支
-$ git checkout -b [branch]
+提交暂存区的指定文件到仓库区
 
-# 新建一个分支，指向指定commit
-$ git branch [branch] [commit]
+```shell
+git commit [file1] [file2] ... -m [message]
+```
 
-# 新建一个分支，与指定的远程分支建立追踪关系
-$ git branch --track [branch] [remote-branch]
+提交工作区自上次commit之后的变化，直接到仓库区
 
-# 切换到指定分支，并更新工作区
-$ git checkout [branch-name]
+```shell
+git commit -a
+```
 
-# 切换到上一个分支
-$ git checkout -
+提交时显示所有diff信息
 
-# 建立追踪关系，在现有分支与指定的远程分支之间
-$ git branch --set-upstream [branch] [remote-branch]
+```shell
+git commit -v
+```
 
-# 合并指定分支到当前分支
-$ git merge [branch]
+使用一次新的commit，替代上一次提交,如果代码没有任何新变化，则用来改写上一次commit的提交信息
 
-# 选择一个commit，合并进当前分支
-$ git cherry-pick [commit]
+```shell
+git commit --amend -m [message]
+```
 
-# 删除分支
-$ git branch -d [branch-name]
+重做上一次commit，并包括指定文件的新变化
 
-# 删除远程分支
-$ git push origin --delete [branch-name]
-$ git branch -dr [remote/branch]
-标签
-# 列出所有tag
-$ git tag
+```shell
+git commit --amend [file1] [file2] ...
+```
 
-# 新建一个tag在当前commit
-$ git tag [tag]
+## 分支
 
-# 新建一个tag在指定commit
-$ git tag [tag] [commit]
+列出所有本地分支
 
-# 删除本地tag
-$ git tag -d [tag]
+```shell
+git branch
+```
 
-# 删除远程tag
-$ git push origin :refs/tags/[tagName]
+列出所有远程分支
 
-# 查看tag信息
-$ git show [tag]
+```shell
+git branch -r
+```
 
-# 提交指定tag
-$ git push [remote] [tag]
+列出所有本地分支和远程分支
 
-# 提交所有tag
-$ git push [remote] --tags
+```shell
+git branch -a
+```
 
-# 新建一个分支，指向某个tag
-$ git checkout -b [branch] [tag]
-查看信息
-# 显示有变更的文件
-$ git status
+新建一个分支，但依然停留在当前分支
 
-# 显示当前分支的版本历史
-$ git log
+```shell
+git branch [branch-name]
+```
 
-# 显示commit历史，以及每次commit发生变更的文件
-$ git log --stat
+新建一个分支，并切换到该分支
 
-# 搜索提交历史，根据关键词
-$ git log -S [keyword]
+```shell
+git checkout -b [branch]
+```
 
-# 显示某个commit之后的所有变动，每个commit占据一行
-$ git log [tag] HEAD --pretty=format:%s
+新建一个分支，指向指定commit
 
-# 显示某个commit之后的所有变动，其"提交说明"必须符合搜索条件
-$ git log [tag] HEAD --grep feature
+```shell
+git branch [branch] [commit]
+```
 
-# 显示某个文件的版本历史，包括文件改名
-$ git log --follow [file]
-$ git whatchanged [file]
+新建一个分支，与指定的远程分支建立追踪关系
 
-# 显示指定文件相关的每一次diff
-$ git log -p [file]
+```shell
+git branch --track [branch] [remote-branch]
+```
 
-# 显示过去5次提交
-$ git log -5 --pretty --oneline
+切换到指定分支，并更新工作区
 
-# 显示所有提交过的用户，按提交次数排序
-$ git shortlog -sn
+```shell
+git checkout [branch-name]
+```
 
-# 显示指定文件是什么人在什么时间修改过
-$ git blame [file]
+切换到上一个分支
 
-# 显示暂存区和工作区的差异
-$ git diff
+```shell
+git checkout -
+```
 
-# 显示暂存区和上一个commit的差异
-$ git diff --cached [file]
+建立追踪关系，在现有分支与指定的远程分支之间
 
-# 显示工作区与当前分支最新commit之间的差异
-$ git diff HEAD
+```shell
+git branch --set-upstream [branch] [remote-branch]
+```
 
-# 显示两次提交之间的差异
-$ git diff [first-branch]...[second-branch]
+合并指定分支到当前分支
 
-# 显示今天你写了多少行代码
-$ git diff --shortstat "@{0 day ago}"
+```shell
+git merge [branch]
+```
 
-# 显示某次提交的元数据和内容变化
-$ git show [commit]
+选择一个commit，合并进当前分支
 
-# 显示某次提交发生变化的文件
-$ git show --name-only [commit]
+```shell
+git cherry-pick [commit]
+```
 
-# 显示某次提交时，某个文件的内容
-$ git show [commit]:[filename]
+删除分支
 
-# 显示当前分支的最近几次提交
-$ git reflog
-远程同步
-# 下载远程仓库的所有变动
-$ git fetch [remote]
+```shell
+git branch -d [branch-name]
+```
 
-# 显示所有远程仓库
-$ git remote -v
+删除远程分支
 
-# 显示某个远程仓库的信息
-$ git remote show [remote]
+```shell
+git push origin --delete [branch-name]
+git branch -dr [remote/branch]
+```
 
-# 增加一个新的远程仓库，并命名
-$ git remote add [shortname] [url]
+## 标签
 
-# 取回远程仓库的变化，并与本地分支合并
-$ git pull [remote] [branch]
+列出所有tag
 
-# 上传本地指定分支到远程仓库
-$ git push [remote] [branch]
+```shell
+git tag
+```
 
-# 强行推送当前分支到远程仓库，即使有冲突
-$ git push [remote] --force
+新建一个tag在当前commit
 
-# 推送所有分支到远程仓库
-$ git push [remote] --all
-撤销
-# 恢复暂存区的指定文件到工作区
-$ git checkout [file]
+```shell
+git tag [tag]
+```
 
-# 恢复某个commit的指定文件到暂存区和工作区
-$ git checkout [commit] [file]
+新建一个tag在指定commit
 
-# 恢复暂存区的所有文件到工作区
-$ git checkout .
+```shell
+git tag [tag] [commit]
+```
 
-# 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变
-$ git reset [file]
+删除本地tag
 
-# 重置暂存区与工作区，与上一次commit保持一致
-$ git reset --hard
+```shell
+git tag -d [tag]
+```
 
-# 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
-$ git reset [commit]
+删除远程tag
 
-# 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
-$ git reset --hard [commit]
+```shell
+git push origin :refs/tags/[tagName]
+```
 
-# 重置当前HEAD为指定commit，但保持暂存区和工作区不变
-$ git reset --keep [commit]
+查看tag信息
 
-# 新建一个commit，用来撤销指定commit
-# 后者的所有变化都将被前者抵消，并且应用到当前分支
-$ git revert [commit]
+```shell
+git show [tag]
+```
+
+提交指定tag
+
+```shell
+git push [remote] [tag]
+```
+
+提交所有tag
+
+```shell
+git push [remote] --tags
+```
+
+新建一个分支，指向某个tag
+
+```shell
+git checkout -b [branch] [tag]
+```
+
+## 查看信息
+
+显示有变更的文件
+
+```shell
+git status
+```
+
+显示当前分支的版本历史
+
+```shell
+git log
+```
+
+显示commit历史，以及每次commit发生变更的文件
+
+```shell
+git log --stat
+```
+
+搜索提交历史，根据关键词
+
+```shell
+git log -S [keyword]
+```
+
+显示某个commit之后的所有变动，每个commit占据一行
+
+```shell
+git log [tag] HEAD --pretty=format:%s
+```
+
+显示某个commit之后的所有变动，其"提交说明"必须符合搜索条件
+
+```shell
+git log [tag] HEAD --grep feature
+```
+
+显示某个文件的版本历史，包括文件改名
+
+```shell
+git log --follow [file]
+git whatchanged [file]
+```
+
+显示指定文件相关的每一次diff
+
+```shell
+git log -p [file]
+```
+
+显示过去5次提交
+
+```shell
+git log -5 --pretty --oneline
+```
+
+显示所有提交过的用户，按提交次数排序
+
+```shell
+git shortlog -sn
+```
+
+显示指定文件是什么人在什么时间修改过
+
+```shell
+git blame [file]
+```
+
+显示暂存区和工作区的差异
+
+```shell
+git diff
+```
+
+显示暂存区和上一个commit的差异
+
+```shell
+git diff --cached [file]
+```
+
+显示工作区与当前分支最新commit之间的差异
+
+```shell
+git diff HEAD
+```
+
+显示两次提交之间的差异
+
+```shell
+git diff [first-branch]...[second-branch]
+```
+
+显示今天你写了多少行代码
+
+```shell
+git diff --shortstat "@{0 day ago}"
+```
+
+显示某次提交的元数据和内容变化
+
+```shell
+git show [commit]
+```
+
+显示某次提交发生变化的文件
+
+```shell
+git show --name-only [commit]
+```
+
+显示某次提交时，某个文件的内容
+
+```shell
+git show [commit]:[filename]
+```
+
+显示当前分支的最近几次提交
+
+```shell
+git reflog
+```
+
+## 远程同步
+
+下载远程仓库的所有变动
+
+```shell
+git fetch [remote]
+```
+
+显示所有远程仓库
+
+```shell
+git remote -v
+```
+
+显示某个远程仓库的信息
+
+```shell
+git remote show [remote]
+```
+
+增加一个新的远程仓库，并命名
+
+```shell
+git remote add [shortname] [url]
+```
+
+取回远程仓库的变化，并与本地分支合并
+
+```shell
+git pull [remote] [branch]
+```
+
+上传本地指定分支到远程仓库
+
+```shell
+git push [remote] [branch]
+```
+
+强行推送当前分支到远程仓库，即使有冲突
+
+```shell
+git push [remote] --force
+```
+
+推送所有分支到远程仓库
+
+```shell
+git push [remote] --all
+```
+
+## 撤销
+
+恢复暂存区的指定文件到工作区
+
+```shell
+git checkout [file]
+```
+
+恢复某个commit的指定文件到暂存区和工作区
+
+```shell
+git checkout [commit] [file]
+```
+
+恢复暂存区的所有文件到工作区
+
+```shell
+git checkout .
+```
+
+重置暂存区的指定文件，与上一次commit保持一致，但工作区不变
+
+```shell
+git reset [file]
+```
+
+重置暂存区与工作区，与上一次commit保持一致
+
+```shell
+git reset --hard
+```
+
+重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
+
+```shell
+git reset [commit]
+```
+
+重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
+
+```shell
+git reset --hard [commit]
+```
+
+重置当前HEAD为指定commit，但保持暂存区和工作区不变
+
+```shell
+git reset --keep [commit]
+```
+
+新建一个commit，用来撤销指定commit，后者的所有变化都将被前者抵消，并且应用到当前分支
+
+```shell
+git revert [commit]
+```
 
 暂时将未提交的变化移除，稍后再移入
-$ git stash
-$ git stash pop
-其他
-# 生成一个可供发布的压缩包
-$ git archive
+
+```shell
+git stash
+git stash pop
+```
+
+## 其他
+
+生成一个可供发布的压缩包
+
+```shell
+git archive
+```
