@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="/images/logo.webp">
-  <title>Holy的个人博客</title>
+  <title>爬虫基础原理 | Holy的个人博客</title>
   <meta name="author" content="Holy Chan" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,15 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=espholychan@outlook.com" />
   
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="Http" />
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Holy的个人博客">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符 例如：https:&#x2F;&#x2F;github.com&#x2F;favicon.ico既是一个URL，也是一个URI。 URL是URI的一个子集，也就是每个URL都是URI，但不是每个URI都是URL。 URI还包括一个子类叫做">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫基础原理">
+<meta property="og:url" content="http://example.com/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Holy的个人博客">
+<meta property="og:description" content="http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符 例如：https:&#x2F;&#x2F;github.com&#x2F;favicon.ico既是一个URL，也是一个URI。 URL是URI的一个子集，也就是每个URL都是URI，但不是每个URI都是URL。 URI还包括一个子类叫做">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/images/logo.webp">
+<meta property="article:published_time" content="2021-05-09T23:24:23.000Z">
+<meta property="article:modified_time" content="2021-05-09T23:51:08.000Z">
 <meta property="article:author" content="Holy Chan">
+<meta property="article:tag" content="Http">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/logo.webp">
 <meta name="twitter:site" content="@null">
@@ -121,199 +126,153 @@
                     
 
         <section class="col-md-8">
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">爬虫基础原理</h1>
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-05-10</li>
+                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            237
+                        
+                        字
+                    </li>
                     
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/">爬虫基础原理</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符
-例如：https://github.com...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-10
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/Http/" rel="tag">Http</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1620604268000"></time> 前，其中的内容可能需要更新。
                 </div>
-            </article>
-        
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
+                
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-number">1.1.</span> <span class="toc-text">URI和URL</span></a></li></ol></li></ol>
+                    </div>
+                
+                <hr />
+                <h1 id="http基本原理"><a href="#http基本原理" class="headerlink" title="http基本原理"></a>http基本原理</h1><h2 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h2><p><code>URI （Uniform Resource Identifier）</code> 即<strong>统一资源标志符</strong><br><code>URL （Uniform Resource Locator</code> 即<strong>统一资源定位符</strong></p>
+<p>例如：<br><code>https://github.com/favicon.ico</code>既是一个URL，也是一个URI。</p>
+<p><code>URL</code>是<code>URI</code>的一个子集，也就是每个<code>URL</code>都是<code>URI</code>，但不是每个URI都是URL。</p>
+<p><code>URI</code>还包括一个子类叫做<code>URN（Universal Resource Name）</code>即统一资源名称。</p>
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
                     
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/08/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/Git/">Git</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/08/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Git常用命令</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    Git常用命令仓库在当前目录新建一个Git代码库
-1git init
-
-新建一个目录，将其初始化为Git代码库
-1git init [project-name]
-
-下载一个项目和它的整个代码历史
-1git clone [url]
-
-配...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-08
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/Git/" rel="tag">Git</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/08/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
                     
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/08/Hexo%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/08/Hexo%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/">Hexo搭建个人博客</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    HexoHexo是一个快速、简洁且高效的博客框架。
-安装git安装1234Windows：下载并安装 git.Mac：使用 Homebrew, MacPorts 或者下载 安装程序。Linux (Ubuntu, Debian)：sud...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-08
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/08/Hexo%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-    
-    
-</section>
-
-
-    <div class="hidden">
-        <!-- 加载文章阅读对应的统计功能，评论自带的那种 -->
-        
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
     </div>
-
-
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/";
+            const title         = "「爬虫基础原理」";
+            const excerpt       = `http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符
+例如：https://github.com...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/Http/" rel="tag">Http</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-05-10</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" Git常用命令" href="/2021/05/08/git常用命令/">&lt; 上一篇</a>
+                </div>
+                
+                
+            </nav>
+        
+        
+    </article>
+</section>
 
                 
             
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -328,6 +287,20 @@
     </div>
 </aside>
             
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-text">URI和URL</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
