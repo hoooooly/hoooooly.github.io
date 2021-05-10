@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="/images/logo.webp">
-  <title>爬虫基础原理 | Holy的个人站点</title>
+  <title>Hexo在腾讯云的部署 | Holy的个人站点</title>
   <meta name="author" content="Holy Chan" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=espholychan@outlook.com" />
   
-    <meta name="keywords" content="Http" />
+    <meta name="keywords" content="Hexo" />
   
-  <meta name="description" content="http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符 例如：https:&#x2F;&#x2F;github.com&#x2F;favicon.ico既是一个URL，也是一个URI。 URL是URI的一个子集，也就是每个URL都是URI，但不是每个URI都是URL。 URI还包括一个子类叫做">
+  <meta name="description" content="简介Hexo在GitHub pages上的访问太慢了，迁移到腾讯云服务器上。 部署环境腾讯云服务器（Centos 64位）。 服务器配置安装git1yum install git  创建git用户并修改权限 1234adduser gitpasswd gitchmod 740 &#x2F;etc&#x2F;sudoersvim &#x2F;etc&#x2F;sudoers  找到一下内容 12## Allow root to run a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="爬虫基础原理">
-<meta property="og:url" content="http://example.com/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:title" content="Hexo在腾讯云的部署">
+<meta property="og:url" content="http://example.com/2021/05/10/Hexo%E5%9C%A8%E8%85%BE%E8%AE%AF%E4%BA%91%E7%9A%84%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="Holy的个人站点">
-<meta property="og:description" content="http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符 例如：https:&#x2F;&#x2F;github.com&#x2F;favicon.ico既是一个URL，也是一个URI。 URL是URI的一个子集，也就是每个URL都是URI，但不是每个URI都是URL。 URI还包括一个子类叫做">
+<meta property="og:description" content="简介Hexo在GitHub pages上的访问太慢了，迁移到腾讯云服务器上。 部署环境腾讯云服务器（Centos 64位）。 服务器配置安装git1yum install git  创建git用户并修改权限 1234adduser gitpasswd gitchmod 740 &#x2F;etc&#x2F;sudoersvim &#x2F;etc&#x2F;sudoers  找到一下内容 12## Allow root to run a">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/images/logo.webp">
-<meta property="article:published_time" content="2021-05-09T23:24:23.000Z">
-<meta property="article:modified_time" content="2021-05-09T23:51:08.000Z">
+<meta property="article:published_time" content="2021-05-10T04:51:56.000Z">
+<meta property="article:modified_time" content="2021-05-10T06:53:16.000Z">
 <meta property="article:author" content="Holy Chan">
-<meta property="article:tag" content="Http">
+<meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/logo.webp">
 <meta name="twitter:site" content="@null">
@@ -129,7 +129,7 @@
     <article>
         <div class="kratos-hentry kratos-post-inner clearfix">
             <header class="kratos-entry-header">
-                <h1 class="kratos-entry-title text-center">爬虫基础原理</h1>
+                <h1 class="kratos-entry-title text-center">Hexo在腾讯云的部署</h1>
                 
                 <ul class="kratos-post-meta text-center">
                     <li><i class="fa fa-calendar"></i> 2021-05-10</li>
@@ -138,7 +138,7 @@
                         <i class="fa fa-edit"></i> 
                         
                         
-                            237
+                            1399
                         
                         字
                     </li>
@@ -147,18 +147,68 @@
             </header>
             <div class="kratos-post-content">
                 <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1620604268000"></time> 前，其中的内容可能需要更新。
+                    本文最后编辑于 <time datetime="1620629596000"></time> 前，其中的内容可能需要更新。
                 </div>
                 
                     <div class="kratos-post-inner-toc">
-                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-number">1.1.</span> <span class="toc-text">URI和URL</span></a></li></ol></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">部署环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">服务器配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85git"><span class="toc-number">3.1.</span> <span class="toc-text">安装git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx"><span class="toc-number">3.2.</span> <span class="toc-text">安装nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEnginx"><span class="toc-number">3.3.</span> <span class="toc-text">配置nginx</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8Bgit%E4%BB%93%E5%BA%93%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">4.</span> <span class="toc-text">建立git仓库并修改权限</span></a></li></ol>
                     </div>
                 
                 <hr />
-                <h1 id="http基本原理"><a href="#http基本原理" class="headerlink" title="http基本原理"></a>http基本原理</h1><h2 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h2><p><code>URI （Uniform Resource Identifier）</code> 即<strong>统一资源标志符</strong><br><code>URL （Uniform Resource Locator</code> 即<strong>统一资源定位符</strong></p>
-<p>例如：<br><code>https://github.com/favicon.ico</code>既是一个URL，也是一个URI。</p>
-<p><code>URL</code>是<code>URI</code>的一个子集，也就是每个<code>URL</code>都是<code>URI</code>，但不是每个URI都是URL。</p>
-<p><code>URI</code>还包括一个子类叫做<code>URN（Universal Resource Name）</code>即统一资源名称。</p>
+                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>Hexo</code>在<code>GitHub pages</code>上的访问太慢了，迁移到腾讯云服务器上。</p>
+<h2 id="部署环境"><a href="#部署环境" class="headerlink" title="部署环境"></a>部署环境</h2><p>腾讯云服务器（Centos 64位）。</p>
+<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install git</span><br></pre></td></tr></table></figure>
+
+<p>创建git用户并修改权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adduser git</span><br><span class="line">passwd git</span><br><span class="line">chmod 740 /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br></pre></td></tr></table></figure>
+
+<p>找到一下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Allow root to run any commands anywhere</span></span></span><br><span class="line">root    ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
+
+<p>在该语句下添加</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git ALL=(ALL) ALL</span><br></pre></td></tr></table></figure>
+
+<p>退出（esc + :wq）并修改权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 400 /etc/sudoers</span><br></pre></td></tr></table></figure>
+
+<p>本地使用gitbash创建密钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa //因为我在GitHub上部署博客时已经创建过密钥，这里可以直接跳过生成，用以前的密钥</span><br></pre></td></tr></table></figure>
+
+<p>在腾讯云中创建<code>ssh</code>，并将本地的<code>id_rsa.pub</code>中的文件内容全部复制到<code>authorized_keys</code>中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su git</span><br><span class="line">mkdir ~/.ssh</span><br><span class="line">vim ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>修改权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">chmod 600 .ssh/authorized_keys</span><br><span class="line">chmod 700 .ssh</span><br></pre></td></tr></table></figure>
+
+<p>本地测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -v git@SERVER //@后是你自己的服务器公网IP，如果不出现failed字样，说明成功</span><br></pre></td></tr></table></figure>
+
+<p>云服务器中创建网站目录并设置权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">mkdir /home/hexo</span><br><span class="line">chown git:git -R /home/hexo</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx    // 安装</span><br><span class="line">systemctl start nginx.service     // 启动服务</span><br></pre></td></tr></table></figure>
+
+<p>以上执行完之后，在浏览器中输入你的公网IP如果可以进入CentOs界面，说明Nginx安装成功。</p>
+<h3 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -t  // 命令查看位置，一般为 /etc/nginx/nginx.conf。</span><br><span class="line">vim /etc/nginx/nginx.conf //修改配置文件，在server_name后添加自己的域名（要备案），root后添加/home/hexo</span><br></pre></td></tr></table></figure>
+
+<p>重启服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立git仓库并修改权限"><a href="#建立git仓库并修改权限" class="headerlink" title="建立git仓库并修改权限"></a>建立git仓库并修改权限</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">cd /home/git</span><br><span class="line">git init --bare blog.git</span><br><span class="line">chown git:git -R blog.git</span><br></pre></td></tr></table></figure>
+
+<p>同步网站根目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim blog.git/hooks/post-receive</span><br></pre></td></tr></table></figure>
+
+<p>填入如下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">git --work-tree=/home/hexo --git-dir=/home/git/blog.git checkout -f</span><br></pre></td></tr></table></figure>
+
+<p>修改权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /home/git/blog.git/hooks/post-receive</span><br></pre></td></tr></table></figure>
+
+<p>在本地Hexo目录下修改_config.yml文件中的deploy后的repo改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git@SERVER:/home/git/blog.git   //@后为你的服务器公网IP</span><br></pre></td></tr></table></figure>
+
+<p>以上全部完成后，执行hexo的部署命令即可完成在腾讯云服务器上的博客部署。</p>
 
             </div>
             
@@ -212,7 +262,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "http://example.com/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/",
+                text: "http://example.com/2021/05/10/Hexo%E5%9C%A8%E8%85%BE%E8%AE%AF%E4%BA%91%E7%9A%84%E9%83%A8%E7%BD%B2/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -224,10 +274,14 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/";
-            const title         = "「爬虫基础原理」";
-            const excerpt       = `http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符
-例如：https://github.com...`;
+            const hostUrl       = "http://example.com/2021/05/10/Hexo%E5%9C%A8%E8%85%BE%E8%AE%AF%E4%BA%91%E7%9A%84%E9%83%A8%E7%BD%B2/";
+            const title         = "「Hexo在腾讯云的部署」";
+            const excerpt       = `简介Hexo在GitHub pages上的访问太慢了，迁移到腾讯云服务器上。
+部署环境腾讯云服务器（Centos 64位）。
+服务器配置安装git1yum install git
+
+创建git用户并修改权限
+1234adduser g...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -246,7 +300,7 @@
                 <div class="footer-tag clearfix">
                     <div class="pull-left">
                     <i class="fa fa-tags"></i>
-                        <a class="tag-none-link" href="/tags/Http/" rel="tag">Http</a>
+                        <a class="tag-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
                     </div>
                     <div class="pull-date">
                     <span>最后编辑：2021-05-10</span>
@@ -258,12 +312,12 @@
             <nav class="navigation post-navigation clearfix" role="navigation">
                 
                 <div class="nav-previous clearfix">
-                    <a title=" Git常用命令" href="/2021/05/08/git常用命令/">&lt; 上一篇</a>
+                    <a title=" 爬虫基础原理" href="/2021/05/10/爬虫基础原理/">&lt; 上一篇</a>
                 </div>
                 
                 
                 <div class="nav-next clearfix">
-                    <a title=" Hexo在腾讯云的部署" href="/2021/05/10/Hexo在腾讯云的部署/">下一篇 &gt;</a>
+                    <a title=" 腾讯云配置ssl证书" href="/2021/05/10/腾讯云配置ssl证书/">下一篇 &gt;</a>
                 </div>
                 
             </nav>
@@ -301,7 +355,7 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-text">URI和URL</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83"><span class="toc-text">部署环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">服务器配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85git"><span class="toc-text">安装git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx"><span class="toc-text">安装nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEnginx"><span class="toc-text">配置nginx</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8Bgit%E4%BB%93%E5%BA%93%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-text">建立git仓库并修改权限</span></a></li></ol>
     </div>
 </aside>
                 

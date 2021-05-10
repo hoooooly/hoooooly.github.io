@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Holy的个人博客
+title: Holy的个人站点
 subtitle: ''
 description: ''
 keywords:
@@ -103,6 +103,7 @@ theme: Kratos-Rebirth
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/hoooooly/hoooooly.github.io
+  repo: https://github.com/hoooooly/hoooooly.github.io # 部署到guthub pages使用这个
+  # repo: git@121.4.223.225:/home/git/blog.git
   # example, https://github.com/hexojs/hexojs.github.io
   branch: gh-pages
