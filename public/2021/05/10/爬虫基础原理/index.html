@@ -15,16 +15,16 @@
   
     <meta name="keywords" content="Http" />
   
-  <meta name="description" content="http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符 例如：https:&#x2F;&#x2F;github.com&#x2F;favicon.ico既是一个URL，也是一个URI。 URL是URI的一个子集，也就是每个URL都是URI，但不是每个URI都是URL。 URI还包括一个子类叫做">
+  <meta name="description" content="http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符 例如：https:&#x2F;&#x2F;github.com&#x2F;favicon.ico既是一个URL，也是一个URI。用URL&#x2F;URI来唯一指定了它的访问方式，这其中包括了访问协议Https，访问路径（即根目录）和资源名称fav">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爬虫基础原理">
 <meta property="og:url" content="http://example.com/2021/05/10/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Holy的个人站点">
-<meta property="og:description" content="http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符 例如：https:&#x2F;&#x2F;github.com&#x2F;favicon.ico既是一个URL，也是一个URI。 URL是URI的一个子集，也就是每个URL都是URI，但不是每个URI都是URL。 URI还包括一个子类叫做">
+<meta property="og:description" content="http基本原理URI和URLURI （Uniform Resource Identifier） 即统一资源标志符URL （Uniform Resource Locator 即统一资源定位符 例如：https:&#x2F;&#x2F;github.com&#x2F;favicon.ico既是一个URL，也是一个URI。用URL&#x2F;URI来唯一指定了它的访问方式，这其中包括了访问协议Https，访问路径（即根目录）和资源名称fav">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/images/logo.webp">
 <meta property="article:published_time" content="2021-05-09T23:24:23.000Z">
-<meta property="article:modified_time" content="2021-05-09T23:51:08.000Z">
+<meta property="article:modified_time" content="2021-05-10T16:10:44.000Z">
 <meta property="article:author" content="Holy Chan">
 <meta property="article:tag" content="Http">
 <meta name="twitter:card" content="summary">
@@ -142,7 +142,7 @@
                         <i class="fa fa-edit"></i> 
                         
                         
-                            237
+                            ~3.43K
                         
                         字
                     </li>
@@ -151,18 +151,106 @@
             </header>
             <div class="kratos-post-content">
                 <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1620604268000"></time> 前，其中的内容可能需要更新。
+                    本文最后编辑于 <time datetime="1620663044000"></time> 前，其中的内容可能需要更新。
                 </div>
                 
                     <div class="kratos-post-inner-toc">
-                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-number">1.1.</span> <span class="toc-text">URI和URL</span></a></li></ol></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-number">1.1.</span> <span class="toc-text">URI和URL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E6%96%87%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text">超文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E5%92%8CHTTPS"><span class="toc-number">1.3.</span> <span class="toc-text">HTTP和HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">HTTP请求过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-number">1.4.1.</span> <span class="toc-text">请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">请求方法</span></a></li></ol></li></ol>
                     </div>
                 
                 <hr />
                 <h1 id="http基本原理"><a href="#http基本原理" class="headerlink" title="http基本原理"></a>http基本原理</h1><h2 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h2><p><code>URI （Uniform Resource Identifier）</code> 即<strong>统一资源标志符</strong><br><code>URL （Uniform Resource Locator</code> 即<strong>统一资源定位符</strong></p>
-<p>例如：<br><code>https://github.com/favicon.ico</code>既是一个URL，也是一个URI。</p>
-<p><code>URL</code>是<code>URI</code>的一个子集，也就是每个<code>URL</code>都是<code>URI</code>，但不是每个URI都是URL。</p>
-<p><code>URI</code>还包括一个子类叫做<code>URN（Universal Resource Name）</code>即统一资源名称。</p>
+<p>例如：<br><code>https://github.com/favicon.ico</code>既是一个URL，也是一个URI。用URL/URI来唯一指定了它的访问方式，这其中包括了访问协议Https，访问路径（即根目录）和资源名称<code>favicon.ico</code>。</p>
+<p>URL是URI的一个子集，也就是每个URL都是URI，但不是每个URI都是URL。</p>
+<p>URI还包括一个子类叫做URN（Universal Resource Name）即统一资源名称。但是在目前的互联网，URN的使用非常少，几乎所有的 URI都是URL，所以一般的网页链接我们可以称之为 URL，也可以称之为 URI。</p>
+<h2 id="超文本"><a href="#超文本" class="headerlink" title="超文本"></a>超文本</h2><p><code>Hypertext</code>，我们在浏览器里看到的网页就是超文本解析而成的，其网页源代码是一系列 HTML代码，里面包含了一系列标签，比如<code>img</code>显示图片，<code>p</code>指定显示段落等。浏览器解析这些标签后，便形成了我们平常看到的网页，而网页的源代码<code>HTML</code>就可以称作超文本。</p>
+<h2 id="HTTP和HTTPS"><a href="#HTTP和HTTPS" class="headerlink" title="HTTP和HTTPS"></a>HTTP和HTTPS</h2><p><code>HTTP</code>的全称是Hyper Text Transfer Protocol，中文名叫作<strong>超文本传输协议</strong>，HTTP协议是用于从网络传输超文本数据到本地浏览器的传送协议，它能保证高效而准确地传送超文本文档。HTTP由万维网协会（World Wide Web Consortium）和Internet工作小组IETF（Internet EngineeringTask Force）共同合作制定的规范，目前广泛使用的是<code>HTTP 1.1</code>版本。</p>
+<p><code>HTTPS</code>的全称是<code>Hyper Text Transfer Protocol over Secure Socket Layer</code>，是以安全为目标HTTP通道，简单讲是HTTP的安全版，即HTTP下加入<code>SSL</code>层，简称为<code>HTTPS</code>。</p>
+<p><code>HTTPS</code>的安全基础是<code>SSL</code>，因此通过它传输的内容都是经过<code>SSL</code>加密的，它的主要作用可以分为两种：</p>
+<ul>
+<li>建立一个信息安全通道，来保证数据传输的安全。</li>
+<li>确认网站的真实性，凡是使用了HTTPS的网站，都可以通过点击浏览器地址栏的锁头标志来查看网站认证之后的真实信息，也可以通过<code>CA</code>机构颁发的安全签章来查询。</li>
+</ul>
+<p>现在越来越多的网站和 App 都已经向 HTTPS 方向发展。例如：</p>
+<ul>
+<li>苹果公司强制所有 iOS App 在 2017 年 1 月 1 日 前全部改为使用 HTTPS 加密，否则 App 就无法在应用商店上架。</li>
+<li>谷歌从 2017 年 1 月推出的 Chrome 56 开始，对未进行 HTTPS 加密的网址链接亮出风险提示，即在地址栏的显著位置提醒用户 “此网页不安全”。</li>
+<li>腾讯微信小程序的官方需求文档要求后台使用 HTTPS 请求进行网络通信，不满足条件的域名和协议无法请求。</li>
+</ul>
+<p>因此，HTTPS 已经已经是大势所趋。</p>
+<h2 id="HTTP请求过程"><a href="#HTTP请求过程" class="headerlink" title="HTTP请求过程"></a>HTTP请求过程</h2><p>我们在浏览器中输入一个URL，回车之后便可以在浏览器中观察到页面内容。实际上，这个过程是浏览器向网站所在的服务器发送了一个请求，网站服务器接收到这个请求后进行处理和解析，然后返回对应的<strong>响应</strong>，接着传回给浏览器。响应里包含了页面的源代码等内容，浏览器再对其进行解析，便将网页呈现了出来，传输模型如图所示：</p>
+<p><img src="1.png" alt="传输模型"></p>
+<p>此处客户端即代表我们自己的 PC 或手机浏览器，服务器即要访问的网站所在的服务器。</p>
+<p>为了更直观地说明这个过程，这里用浏览器的开发者模式下的<code>Network监听组件</code>来做演示，它可以显示访问当前请求网页时发生的所有网络请求和响应。打开浏览器（Chrome或Edge都可以），右击并选择 “检查”项，即可打开浏览器的开发者工具。这里访问百度<code>http://www.baidu.com/</code>，输入该 URL后回车，观察这个过程中发生了怎样的网络请求。可以看到，在<code>Network</code>页面下方 出现了一个个的条目，其中一个条目就代表一次发送请求和接收响应的过程，如图所示:</p>
+<p><img src="Screenshot_2.png" alt="Network监听"></p>
+<p>我们先观察第一个网络请求，即<code>www.baidu.com</code>，其中各列的含义如下。</p>
+<ul>
+<li>第一列 <code>Name：请求的名称</code>，一般会将 URL的最后一部分内容当作名称。</li>
+<li>第二列 <code>Status：响应的状态码</code>，这里显示为 <code>200</code>，代表响应是正常的。通过状态码，我们可以判断发送了请求之后是否得到了正常的响应。 </li>
+<li>第三列 <code>Type：请求的文档类型</code>。这里为<code>document</code>，代表我们这次请求的是一个 HTML文档，内容就是一些 HTML代码。</li>
+<li>第四列 <code>Initiator：请求源</code>。用来标记请求是由哪个对象或进程发起的。</li>
+<li>第五列 <code>Size：从服务器下载的文件和请求的资源大小</code>。如果是从缓存中取得的资源，则该列会显示 fromcache。</li>
+<li>第六列 <code>Time：发起请求到获取响应所用的总时间</code>。</li>
+<li>第七列 <code>Waterfall：网络请求的可视化瀑布流</code>。 我们点击这个条目即可看到其更详细的信息，如图所示。</li>
+</ul>
+<p><img src="Screenshot_3.png" alt="详细信息"></p>
+<p>首先是<code>General部分</code>，<code>Request URL</code>为请求的URL，<code>Request Method</code>为请求的方法，<code>Status Code</code>为响应状态码，<code>Remote Address</code>为远程服务器的地址和端口，<code>Referrer Policy</code>为 Referrer判别策略。 </p>
+<p>再继续往下，可以看到，有<code>Response Headers</code>和<code>Request Headers</code>，这分别代表<code>响应头</code>和<code>请求头</code>。请求头里带有许多请求信息，例如<code>浏览器标识、Cookies、Host</code>等信息，这是请求的一部分，服务器会根据请求头内的信息判断请求是否合法，进而作出对应的响应。图中看到的<code>Response Headers</code>就是响应的一部分，例如其中包含了服务器的类型、文档类型、日期等信息，浏览器接受到响应后，会解析响应内容，进而呈现网页内容。</p>
+<h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><p><strong>请求</strong>，由客户端向服务端发出，可以分为4部分内容：<code>请求方法（Request Method</code>、<code>请求的网址（Request URL）</code>、<code>请求头（Request Headers）</code>、<code>请求体（Request Body）</code>。</p>
+<h2 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h2><p>常见的请求方法有两种：<code>GET</code>和<code>POST</code>。 在浏览器中直接输入URL并回车，这便发起了一个<code>GET请求</code>，请求的参数会直接包含到URL里。例如，在百度中搜索Python，这就是一个GET请求，链接为<code>https://www.baidu.com/s?wd=Python</code>，其中URL中包 含了请求的参数信息，这里参数<code>wd</code>表示要搜寻的关键字。<code>POST请求</code>大多在表单提交时发起。比如，对于一个登录表单，输入用户名和密码后，点击“登录”按钮，这通常会发起一个<code>POST请求</code>，其数据通常 以表单的形式传输，而不会体现在URL中。</p>
+<p><code>GET</code>和<code>POST</code>请求方法有如下区别。</p>
+<ul>
+<li><code>GET请求</code>中的参数包含在URL里面，数据可以在URL中看到，而<code>POST请求</code>的URL不会包含这些数据，数据都是通过表单形式传输的，会包含在请求体中。</li>
+<li><code>GET请求</code>提交的数据最多只有<em>1024字节</em>，而<code>POST请求</code>没有限制。 一般来说，登录时，需要提交用户名和密码，其中包含了敏感信息，使用<code>GET方式</code>请求的话，密码就会暴露在URL里面，造成密码泄露，所以这里最好以<code>POST方式</code>发送。上传文件时，由于文件内容比较大，也会选用<code>POST方式</code>。 我们平常遇到的绝大部分请求都是<code>GET</code>或<code>POST</code>请求，另外还有一些请求方法，如<code>HEAD</code>、<code>PUT</code>、<code>DELETE</code>、<code>OPTIONS</code>、<code>CONNECT</code>、<code>TRACE</code>等，我们简单将其总结为下表。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">GET</td>
+<td align="left">请求页面，并返回页面内容</td>
+</tr>
+<tr>
+<td align="left">HEAD</td>
+<td align="left">类似于GET请求，只不过返回的响应中没有具体的内容，用于获取报头</td>
+</tr>
+<tr>
+<td align="left">POST</td>
+<td align="left">大多用于表单提交或上传文件，数据包含在请求体中</td>
+</tr>
+<tr>
+<td align="left">PUT</td>
+<td align="left">从客户端向服务器传送的数据取代指定文档中的内容</td>
+</tr>
+<tr>
+<td align="left">DELETE</td>
+<td align="left">请求服务器删除指定的页面</td>
+</tr>
+<tr>
+<td align="left">CONNECT</td>
+<td align="left">把服务器当作跳板，让服务器代替客户端访问其他网页</td>
+</tr>
+<tr>
+<td align="left">OPTIONS</td>
+<td align="left">允许客户端查看服务器的性能</td>
+</tr>
+<tr>
+<td align="left">TRACE</td>
+<td align="left">回显服务器收到的请求，主要用于测试或诊断</td>
+</tr>
+</tbody></table>
+<style>
+    table
+    {
+        margin: auto
+    }
+</style>
+
+<p>请求的网址，即统一资源定位符 URL，它可以唯一确定我们想请求的资源。</p>
 
             </div>
             
@@ -253,7 +341,7 @@
                         <a class="tag-none-link" href="/tags/Http/" rel="tag">Http</a>
                     </div>
                     <div class="pull-date">
-                    <span>最后编辑：2021-05-10</span>
+                    <span>最后编辑：2021-05-11</span>
                     </div>
                 </div>
             </footer>
@@ -305,7 +393,7 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-text">URI和URL</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-text">URI和URL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E6%96%87%E6%9C%AC"><span class="toc-text">超文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E5%92%8CHTTPS"><span class="toc-text">HTTP和HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B"><span class="toc-text">HTTP请求过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-text">请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-text">请求方法</span></a></li></ol></li></ol>
     </div>
 </aside>
                 
