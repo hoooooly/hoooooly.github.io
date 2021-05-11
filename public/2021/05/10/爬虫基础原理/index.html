@@ -24,7 +24,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/images/logo.webp">
 <meta property="article:published_time" content="2021-05-09T23:24:23.000Z">
-<meta property="article:modified_time" content="2021-05-10T16:10:44.000Z">
+<meta property="article:modified_time" content="2021-05-10T23:49:32.000Z">
 <meta property="article:author" content="Holy Chan">
 <meta property="article:tag" content="Http">
 <meta name="twitter:card" content="summary">
@@ -142,7 +142,7 @@
                         <i class="fa fa-edit"></i> 
                         
                         
-                            ~3.43K
+                            ~4.35K
                         
                         字
                     </li>
@@ -151,11 +151,11 @@
             </header>
             <div class="kratos-post-content">
                 <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1620663044000"></time> 前，其中的内容可能需要更新。
+                    本文最后编辑于 <time datetime="1620690572000"></time> 前，其中的内容可能需要更新。
                 </div>
                 
                     <div class="kratos-post-inner-toc">
-                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-number">1.1.</span> <span class="toc-text">URI和URL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E6%96%87%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text">超文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E5%92%8CHTTPS"><span class="toc-number">1.3.</span> <span class="toc-text">HTTP和HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">HTTP请求过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-number">1.4.1.</span> <span class="toc-text">请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">请求方法</span></a></li></ol></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-number">1.1.</span> <span class="toc-text">URI和URL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E6%96%87%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text">超文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E5%92%8CHTTPS"><span class="toc-number">1.3.</span> <span class="toc-text">HTTP和HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">HTTP请求过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-number">1.4.1.</span> <span class="toc-text">请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">请求方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="toc-number">1.6.</span> <span class="toc-text">请求头</span></a></li></ol></li></ol>
                     </div>
                 
                 <hr />
@@ -251,6 +251,18 @@
 </style>
 
 <p>请求的网址，即统一资源定位符 URL，它可以唯一确定我们想请求的资源。</p>
+<h2 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h2><p>请求头，用来说明服务器要使用的附加信息，比较重要的信息有<code>Cookie</code>、<code>Referer</code>、<code>User-Agent</code>等。下面简要说明一些常用的头信息。</p>
+<ul>
+<li><code>Accept：请求报头域</code>，用于指定客户端可接受哪些类型的信息。</li>
+<li><code>Accept-Language</code>：指定客户端可接受的语言类型。</li>
+<li><code>Accept-Encoding</code>：指定客户端可接受的内容编码。</li>
+<li><code>Host</code>：用于指定请求资源的主机<code>IP</code>和端口号，其内容为请求URL的原始服务器或网关的位置。从 HTTP 1.1 版本开始，请求必须包含此内容。</li>
+<li><code>Cookie</code>：也常用复数形式<code>Cookies</code>，这是网站为了辨别用户进行会话跟踪而存储在用户本地的数据。它的主要功能是维持当前访问会话。例如，我们输入用户名和密码成功登录某个网站后，服务器会用会 话保存登录状态信息，后面我们每次刷新或请求该站点的其他页面时，会发现都是登录状态，这就是<code>Cookies</code>的功劳。<code>Cookies</code>里有信息标识了我们所对应的服务器的会话，每次浏览器在请求该站点的页 面时，都会在请求头中加上<code>Cookies</code>并将其发送给服务器，服务器通过<code>Cookies</code>识别出是我们自己，并且查出当前状态是登录状态，所以返回结果就是登录之后才能看到的网页内容。</li>
+<li><code>Referer</code>：此内容用来标识这个请求是从哪个页面发过来的，服务器可以拿到这一信息并做相应的处理，如做来源统计、防盗链处理等。</li>
+<li><code>User-Agent</code>：简称<code>UA</code>，它是一个特殊的字符串头，可以使服务器识别客户使用的操作系统及版本、浏览器及版本等信息。在做爬虫时加上此信息，可以伪装为浏览器；如果不加，很可能会被识别出为爬虫。</li>
+<li><code>Content-Type</code>：也叫互联网媒体类型<code>（Internet Media Type）</code>或者<code>MIME类型</code>，在<code>HTTP</code>协议消息头中，它用来表示具体请求中的媒体类型信息。例如，<code>text/html</code>代表<code>HTML</code>格式，<code>image/gif</code>代表<code>GIF</code>图片，<code>application/json</code>代表<code>JSON</code>类型，更多对应关系可以查看此对照表：<code>http://tool.oschina.net/commons</code>。</li>
+</ul>
+<p>因此，请求头是请求的重要组成部分，在写爬虫时，大部分情况下都需要设定请求头</p>
 
             </div>
             
@@ -393,14 +405,14 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-text">URI和URL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E6%96%87%E6%9C%AC"><span class="toc-text">超文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E5%92%8CHTTPS"><span class="toc-text">HTTP和HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B"><span class="toc-text">HTTP请求过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-text">请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-text">请求方法</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">http基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URI%E5%92%8CURL"><span class="toc-text">URI和URL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E6%96%87%E6%9C%AC"><span class="toc-text">超文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E5%92%8CHTTPS"><span class="toc-text">HTTP和HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B"><span class="toc-text">HTTP请求过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-text">请求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-text">请求方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="toc-text">请求头</span></a></li></ol></li></ol>
     </div>
 </aside>
                 
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">1</span></li></ul>
   </aside>
 
 
@@ -420,6 +432,12 @@
   <div class="tab-content">
       <ul class="list-group">
         
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/11/%E5%9C%A8Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E5%B5%8C%E5%85%A5%E5%A4%96%E9%93%BE%E8%A7%86%E9%A2%91/"><i class="fa  fa-book"></i> 在Hexo博客中嵌入外链视频</a>
+            
+          
         
           
           
@@ -446,11 +464,7 @@
           
         
           
-          
-            <a class="list-group-item" href="/2021/05/08/Hexo%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/"><i class="fa  fa-book"></i> Hexo搭建个人博客</a>
             
-          
-        
       </ul>
   </div>
   </aside>
