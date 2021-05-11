@@ -1,5 +1,5 @@
 ---
-title: 爬虫基础原理
+title: HTTP基本原理
 date: 2021-05-09 20:48:23
 categories: 爬虫
 tags:
@@ -14,7 +14,6 @@ only:
 - tag
 ---
 
-# http基本原理
 
 ## URI和URL
 
