@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="/images/logo.webp">
-  <title>Hexo在腾讯云的部署 | Holy的个人站点</title>
+  <title>python多线程基本原理 | Holy的个人站点</title>
   <meta name="author" content="Holy Chan" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=espholychan@outlook.com" />
   
-    <meta name="keywords" content="Hexo" />
+    <meta name="keywords" content="python, threading, 多线程" />
   
-  <meta name="description" content="简介Hexo在GitHub pages上的访问太慢了，迁移到腾讯云服务器上。 部署环境腾讯云服务器（Centos 64位）。 服务器配置安装git1yum install git  创建git用户并修改权限 1234adduser gitpasswd gitchmod 740 &#x2F;etc&#x2F;sudoersvim &#x2F;etc&#x2F;sudoers  找到一下内容 12## Allow root to run a">
+  <meta name="description" content="多线程的含义说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。 进程我们可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编辑器进程。但一个进程中是可以同时处理很多事情的，比如在浏览器中，我们可以在多个选项卡中打开多个页面，有的页面在播放音乐，有的页面在播放视频，有的网页在播放动画，它们可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo在腾讯云的部署">
-<meta property="og:url" content="http://example.com/2021/05/10/Hexo%E5%9C%A8%E8%85%BE%E8%AE%AF%E4%BA%91%E7%9A%84%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:title" content="python多线程基本原理">
+<meta property="og:url" content="http://example.com/2021/05/13/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Holy的个人站点">
-<meta property="og:description" content="简介Hexo在GitHub pages上的访问太慢了，迁移到腾讯云服务器上。 部署环境腾讯云服务器（Centos 64位）。 服务器配置安装git1yum install git  创建git用户并修改权限 1234adduser gitpasswd gitchmod 740 &#x2F;etc&#x2F;sudoersvim &#x2F;etc&#x2F;sudoers  找到一下内容 12## Allow root to run a">
+<meta property="og:description" content="多线程的含义说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。 进程我们可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编辑器进程。但一个进程中是可以同时处理很多事情的，比如在浏览器中，我们可以在多个选项卡中打开多个页面，有的页面在播放音乐，有的页面在播放视频，有的网页在播放动画，它们可">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/images/logo.webp">
-<meta property="article:published_time" content="2021-05-10T04:51:56.000Z">
-<meta property="article:modified_time" content="2021-05-10T06:53:16.000Z">
+<meta property="article:published_time" content="2021-05-12T19:42:12.000Z">
+<meta property="article:modified_time" content="2021-05-12T19:42:10.000Z">
 <meta property="article:author" content="Holy Chan">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="多线程">
+<meta property="article:tag" content="threading">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/logo.webp">
 <meta name="twitter:site" content="@null">
@@ -133,16 +135,16 @@
     <article>
         <div class="kratos-hentry kratos-post-inner clearfix">
             <header class="kratos-entry-header">
-                <h1 class="kratos-entry-title text-center">Hexo在腾讯云的部署</h1>
+                <h1 class="kratos-entry-title text-center">python多线程基本原理</h1>
                 
                 <ul class="kratos-post-meta text-center">
-                    <li><i class="fa fa-calendar"></i> 2021-05-10</li>
+                    <li><i class="fa fa-calendar"></i> 2021-05-13</li>
                     <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
                     <li>
                         <i class="fa fa-edit"></i> 
                         
                         
-                            1399
+                            ~1.96K
                         
                         字
                     </li>
@@ -151,68 +153,31 @@
             </header>
             <div class="kratos-post-content">
                 <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1620629596000"></time> 前，其中的内容可能需要更新。
+                    本文最后编辑于 <time datetime="1620848530000"></time> 前，其中的内容可能需要更新。
                 </div>
                 
                     <div class="kratos-post-inner-toc">
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">部署环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">服务器配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85git"><span class="toc-number">3.1.</span> <span class="toc-text">安装git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx"><span class="toc-number">3.2.</span> <span class="toc-text">安装nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEnginx"><span class="toc-number">3.3.</span> <span class="toc-text">配置nginx</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8Bgit%E4%BB%93%E5%BA%93%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">4.</span> <span class="toc-text">建立git仓库并修改权限</span></a></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">多线程的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">多线程适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">Python实现多线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread%E7%9B%B4%E6%8E%A5%E5%88%9B%E5%BB%BA%E5%AD%90%E7%BA%BF%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">Thread直接创建子线程</span></a></li></ol></li></ol>
                     </div>
                 
                 <hr />
-                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>Hexo</code>在<code>GitHub pages</code>上的访问太慢了，迁移到腾讯云服务器上。</p>
-<h2 id="部署环境"><a href="#部署环境" class="headerlink" title="部署环境"></a>部署环境</h2><p>腾讯云服务器（Centos 64位）。</p>
-<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install git</span><br></pre></td></tr></table></figure>
-
-<p>创建git用户并修改权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adduser git</span><br><span class="line">passwd git</span><br><span class="line">chmod 740 /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br></pre></td></tr></table></figure>
-
-<p>找到一下内容</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Allow root to run any commands anywhere</span></span></span><br><span class="line">root    ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
-
-<p>在该语句下添加</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git ALL=(ALL) ALL</span><br></pre></td></tr></table></figure>
-
-<p>退出（esc + :wq）并修改权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 400 /etc/sudoers</span><br></pre></td></tr></table></figure>
-
-<p>本地使用gitbash创建密钥</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa //因为我在GitHub上部署博客时已经创建过密钥，这里可以直接跳过生成，用以前的密钥</span><br></pre></td></tr></table></figure>
-
-<p>在腾讯云中创建<code>ssh</code>，并将本地的<code>id_rsa.pub</code>中的文件内容全部复制到<code>authorized_keys</code>中。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su git</span><br><span class="line">mkdir ~/.ssh</span><br><span class="line">vim ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-
-<p>修改权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">chmod 600 .ssh/authorized_keys</span><br><span class="line">chmod 700 .ssh</span><br></pre></td></tr></table></figure>
-
-<p>本地测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -v git@SERVER //@后是你自己的服务器公网IP，如果不出现failed字样，说明成功</span><br></pre></td></tr></table></figure>
-
-<p>云服务器中创建网站目录并设置权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">mkdir /home/hexo</span><br><span class="line">chown git:git -R /home/hexo</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx    // 安装</span><br><span class="line">systemctl start nginx.service     // 启动服务</span><br></pre></td></tr></table></figure>
-
-<p>以上执行完之后，在浏览器中输入你的公网IP如果可以进入CentOs界面，说明Nginx安装成功。</p>
-<h3 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -t  // 命令查看位置，一般为 /etc/nginx/nginx.conf。</span><br><span class="line">vim /etc/nginx/nginx.conf //修改配置文件，在server_name后添加自己的域名（要备案），root后添加/home/hexo</span><br></pre></td></tr></table></figure>
-
-<p>重启服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart nginx.service</span><br></pre></td></tr></table></figure>
-
-<h2 id="建立git仓库并修改权限"><a href="#建立git仓库并修改权限" class="headerlink" title="建立git仓库并修改权限"></a>建立git仓库并修改权限</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br><span class="line">cd /home/git</span><br><span class="line">git init --bare blog.git</span><br><span class="line">chown git:git -R blog.git</span><br></pre></td></tr></table></figure>
-
-<p>同步网站根目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim blog.git/hooks/post-receive</span><br></pre></td></tr></table></figure>
-
-<p>填入如下内容</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">git --work-tree=/home/hexo --git-dir=/home/git/blog.git checkout -f</span><br></pre></td></tr></table></figure>
-
-<p>修改权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /home/git/blog.git/hooks/post-receive</span><br></pre></td></tr></table></figure>
-
-<p>在本地Hexo目录下修改_config.yml文件中的deploy后的repo改为：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git@SERVER:/home/git/blog.git   //@后为你的服务器公网IP</span><br></pre></td></tr></table></figure>
-
-<p>以上全部完成后，执行hexo的部署命令即可完成在腾讯云服务器上的博客部署。</p>
+                <h2 id="多线程的含义"><a href="#多线程的含义" class="headerlink" title="多线程的含义"></a>多线程的含义</h2><p>说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。</p>
+<p>进程我们可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编辑器进程。但一个进程中是可以同时处理很多事情的，比如在浏览器中，我们可以在多个选项卡中打开多个页面，有的页面在播放音乐，有的页面在播放视频，有的网页在播放动画，它们可以同时运行，互不干扰。为什么能同时做到同时运行这么多的任务呢？这里就需要引出线程的概念了，其实这一个个任务，实际上就对应着一个个线程的执行。</p>
+<p>而进程呢？它就是<strong>线程的集合</strong>，进程就是由一个或多个线程构成的，线程是操作系统进行运算调度的最小单位，是进程中的一个最小运行单元。比如上面所说的浏览器进程，其中的播放音乐就是一个线程，播 放视频也是一个线程，当然其中还有很多其他的线程在同时运行，这些线程的并发或并行执行最后使得整个浏览器可以同时运行这么多的任务。</p>
+<p>了解了线程的概念，多线程就很容易理解了，多线程就是一个进程中同时执行多个线程，前面所说的浏览器的情景就是典型的多线程执行。</p>
+<p><code>并发和并行</code></p>
+<p>并说到多进程和多线程，这里就需要再讲解两个概念，那就是并发和并行。我们知道，一个程序在计算机中运行，其底层是处理器通过运行一条条的指令来实现的。</p>
+<p>并发，英文叫作<code>concurrency</code>。它是指同一时刻只能有一条指令执行，但是多个线程的对应的指令被快速轮换地执行。比如一个处理器，它先执行线程<code>A</code>的指令一段时间，再执行线程<code>B</code>的指令一段时间，再切回到线程<code>A</code>执行一段时间。</p>
+<p>由于处理器执行指令的速度和切换的速度非常非常快，人完全感知不到计算机在这个过程中有多个线程切换上下文执行的操作，这就使得宏观上看起来多个线程在同时运行。但微观上只是这个处理器在连续不断地在多个线程之间切换和执行，每个线程的执行一定会占用这个处理器一个时间片段，同一时刻，其实只有一个线程在执行。</p>
+<p>并行，英文叫作<code>parallel</code>。它是指同一时刻，有多条指令在多个处理器上同时执行，并行必须要依赖于多个处理器。不论是从宏观上还是微观上，多个线程都是在同一时刻一起执行的。</p>
+<p>并行只能在多处理器系统中存在，如果我们的计算机处理器只有一个核，那就不可能实现并行。而并发在单处理器和多处理器系统中都是可以存在的，因为仅靠一个核，就可以实现并发。</p>
+<p>举个例子，比如系统处理器需要同时运行多个线程。如果系统处理器只有一个核，那它只能通过并发的方式来运行这些线程。如果系统处理器有多个核，当一个核在执行一个线程时，另一个核可以执行另一个线程，这样这两个线程就实现了并行执行，当然其他的线程也可能和另外的线程处在同一个核上执行，它们之间就是并发执行。具体的执行方式，就取决于操作系统的调度了。</p>
+<h2 id="多线程适用场景"><a href="#多线程适用场景" class="headerlink" title="多线程适用场景"></a>多线程适用场景</h2><p>多在一个程序进程中，有一些操作是比较耗时或者需要等待的，比如等待数据库的查询结果的返回，等待网页结果的响应。如果使用单线程，处理器必须要等到这些操作完成之后才能继续往下执行其他操作，而这个线程在等待的过程中，处理器明显是可以来执行其他的操作的。如果使用多线程，处理器就可以在某个线程等待的时候，去执行其他的线程，从而从整体上提高执行效率。</p>
+<p>像上述场景，线程在执行过程中很多情况下是需要等待的。比如网络爬虫就是一个非常典型的例子，爬虫在向服务器发起请求之后，有一段时间必须要等待服务器的响应返回，这种任务就属于<code>IO</code>密集型任务。对于这种任务，如果我们启用多线程，处理器就可以在某个线程等待的过程中去处理其他的任务，从而提高整体的爬取效率。</p>
+<p>但并不是所有的任务都是<code>IO</code>密集型任务，还有一种任务叫作计算密集型任务，也可以称之为<code>CPU</code>密集型任务。顾名思义，就是任务的运行一直需要处理器的参与。此时如果我们开启了多线程，一个处理器从一个计算密集型任务切换到切换到另一个计算密集型任务上去，处理器依然不会停下来，始终会忙于计算，这样并不会节省总体的时间，因为需要处理的任务的计算总量是不变的。如果线程数目过多，反而还会在线程切换的过程中多耗费一些时间，整体效率会变低。</p>
+<p>所以，如果任务不全是计算密集型任务，我们可以使用多线程来提高程序整体的执行效率。尤其对于网络爬虫这种 IO 密集型任务来说，使用多线程会大大提高程序整体的爬取效率。</p>
+<h2 id="Python实现多线程"><a href="#Python实现多线程" class="headerlink" title="Python实现多线程"></a>Python实现多线程</h2><p>实在<code>Python</code>中，实现多线程的模块叫作<code>threading</code>，是<code>Python</code>自带的模块。使用<code>threading</code>实现多线程的方法。</p>
+<h3 id="Thread直接创建子线程"><a href="#Thread直接创建子线程" class="headerlink" title="Thread直接创建子线程"></a>Thread直接创建子线程</h3><p>首先，我们可以使用<code>Thread</code>类来创建一个线程，创建时需要指定<code>target</code>参数为运行的方法名称，如果被调用的方法需要传入额外的参数，则可以通过<code>Thread</code>的<code>args</code>参数来指定。示例如下：</p>
 
             </div>
             
@@ -266,7 +231,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "http://example.com/2021/05/10/Hexo%E5%9C%A8%E8%85%BE%E8%AE%AF%E4%BA%91%E7%9A%84%E9%83%A8%E7%BD%B2/",
+                text: "http://example.com/2021/05/13/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -278,14 +243,10 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2021/05/10/Hexo%E5%9C%A8%E8%85%BE%E8%AE%AF%E4%BA%91%E7%9A%84%E9%83%A8%E7%BD%B2/";
-            const title         = "「Hexo在腾讯云的部署」";
-            const excerpt       = `简介Hexo在GitHub pages上的访问太慢了，迁移到腾讯云服务器上。
-部署环境腾讯云服务器（Centos 64位）。
-服务器配置安装git1yum install git
-
-创建git用户并修改权限
-1234adduser g...`;
+            const hostUrl       = "http://example.com/2021/05/13/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/";
+            const title         = "「python多线程基本原理」";
+            const excerpt       = `多线程的含义说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。
+进程我们可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -304,10 +265,10 @@
                 <div class="footer-tag clearfix">
                     <div class="pull-left">
                     <i class="fa fa-tags"></i>
-                        <a class="tag-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
+                        <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>, <a class="tag-none-link" href="/tags/threading/" rel="tag">threading</a>, <a class="tag-none-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a>
                     </div>
                     <div class="pull-date">
-                    <span>最后编辑：2021-05-10</span>
+                    <span>最后编辑：2021-05-13</span>
                     </div>
                 </div>
             </footer>
@@ -316,13 +277,9 @@
             <nav class="navigation post-navigation clearfix" role="navigation">
                 
                 <div class="nav-previous clearfix">
-                    <a title=" HTTP基本原理" href="/2021/05/09/HTTP基本原理/">&lt; 上一篇</a>
+                    <a title=" Session和Cookies" href="/2021/05/12/Session和Cookies/">&lt; 上一篇</a>
                 </div>
                 
-                
-                <div class="nav-next clearfix">
-                    <a title=" 腾讯云配置ssl证书" href="/2021/05/10/腾讯云配置ssl证书/">下一篇 &gt;</a>
-                </div>
                 
             </nav>
         
@@ -359,7 +316,7 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83"><span class="toc-text">部署环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">服务器配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85git"><span class="toc-text">安装git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx"><span class="toc-text">安装nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEnginx"><span class="toc-text">配置nginx</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8Bgit%E4%BB%93%E5%BA%93%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-text">建立git仓库并修改权限</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-text">多线程的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">多线程适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">Python实现多线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread%E7%9B%B4%E6%8E%A5%E5%88%9B%E5%BB%BA%E5%AD%90%E7%BA%BF%E7%A8%8B"><span class="toc-text">Thread直接创建子线程</span></a></li></ol></li></ol>
     </div>
 </aside>
                 
