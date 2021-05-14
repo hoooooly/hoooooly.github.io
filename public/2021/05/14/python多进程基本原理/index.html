@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="Zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/logo.webp">
+  <title>python多进程基本原理 | Holy的个人站点</title>
+  <meta name="author" content="Holy Chan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=espholychan@outlook.com" />
+  
+    <meta name="keywords" content="multiprocessing, python" />
+  
+  <meta name="description" content="多进程的含义多进程（Process）是具有一定独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配和调度的一个独立单位。 顾名思义，多进程就是启用多个进程同时运行。由于进程是线程的集合，而且进程是由一个或多个线程构成的，所以多进程的运 行意味着有大于或等于进程数量的线程在运行。 Python多进程的优势由于进程中GIL的存在，Python中的多线程并不能很好地发挥多核优势，一个进程中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python多进程基本原理">
+<meta property="og:url" content="http://example.com/2021/05/14/python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Holy的个人站点">
+<meta property="og:description" content="多进程的含义多进程（Process）是具有一定独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配和调度的一个独立单位。 顾名思义，多进程就是启用多个进程同时运行。由于进程是线程的集合，而且进程是由一个或多个线程构成的，所以多进程的运 行意味着有大于或等于进程数量的线程在运行。 Python多进程的优势由于进程中GIL的存在，Python中的多线程并不能很好地发挥多核优势，一个进程中">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/logo.webp">
+<meta property="article:published_time" content="2021-05-14T12:04:49.000Z">
+<meta property="article:modified_time" content="2021-05-14T16:25:16.000Z">
+<meta property="article:author" content="Holy Chan">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="multiprocessing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/logo.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Holy的个人站点</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">python多进程基本原理</h1>
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-05-14</li>
+                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~5.16K
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1621009516000"></time> 前，其中的内容可能需要更新。
+                </div>
+                
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">多进程的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">2.</span> <span class="toc-text">Python多进程的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">多进程的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8Process%E7%B1%BB"><span class="toc-number">3.1.</span> <span class="toc-text">直接使用Process类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">守护进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%AD%89%E5%BE%85"><span class="toc-number">5.</span> <span class="toc-text">进程等待</span></a></li></ol>
+                    </div>
+                
+                <hr />
+                <h2 id="多进程的含义"><a href="#多进程的含义" class="headerlink" title="多进程的含义"></a>多进程的含义</h2><p>多进程（<code>Process</code>）是具有一定独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配和调度的一个独立单位。</p>
+<p>顾名思义，多进程就是启用多个进程同时运行。由于进程是线程的集合，而且进程是由一个或多个线程构成的，所以多进程的运 行意味着有大于或等于进程数量的线程在运行。</p>
+<h2 id="Python多进程的优势"><a href="#Python多进程的优势" class="headerlink" title="Python多进程的优势"></a>Python多进程的优势</h2><p>由于进程中<code>GIL</code>的存在，<code>Python</code>中的多线程并不能很好地发挥多核优势，一个进程中的多个线程，在同一时刻只能有一个线程运行。</p>
+<p>对于多进程来说，每个进程都有属于自己的<code>GIL</code>，所以，在多核处理器下，多进程的运行是不会受<code>GIL</code>的影响的。因此，多进程能更好地发挥多核的优势。</p>
+<p>当然，对于爬虫这种<code>IO</code>密集型任务来说，多线程和多进程影响差别并不大。对于计算密集型任务来说，<code>Python</code>的多进程相比多线程，其多核运行效率会有成倍的提升。</p>
+<p>总的来说，<code>Python</code>的多进程整体来看是比多线程更有优势的。所以，在条件允许的情况下，能用多进程就尽量用多进程。</p>
+<p>不过值得注意的是，由于进程是系统进行资源分配和调度的一个独立单位，所以各个进程之间的数据是无法共享的，如多个进程无法共享一个全局变量，进程之间的数据共享需要有单独的机制来实现到。</p>
+<h2 id="多进程的实现"><a href="#多进程的实现" class="headerlink" title="多进程的实现"></a>多进程的实现</h2><p>在<code>Python</code>中也有内置的库来实现多进程，它就是<code>multiprocessing</code>。</p>
+<p><code>multiprocessing</code>提供了一系列的组件，如<code>Process（进程</code>、<code>Queue（队列）</code>、<code>Semaphore（信号量）</code>、<code>Pipe（管道）</code>、<code>Lock（锁）</code>、<code>Pool（进程池）</code>等，接下来让我们来了解下它们的使用方法。</p>
+<h3 id="直接使用Process类"><a href="#直接使用Process类" class="headerlink" title="直接使用Process类"></a>直接使用Process类</h3><p>在<code>multiprocessing</code>中，每一个进程都用一个<code>Process</code>类来表示。它的<code>API</code>调用如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Process([group [, target [, name [, args [, kwargs]]]]])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>target</code>表示调用对象，你可以传入方法的名字。</li>
+<li><code>args</code>表示被调用对象的位置参数元组，比如<code>target</code>是函数<code>func</code>，他有两个参数<code>m</code>，<code>n</code>，那么<code>args</code>就传入<code>[m, n]</code>即可。</li>
+<li><code>kwargs</code>表示调用对象的字典。</li>
+<li><code>name</code>是别名，相当于给这个进程取一个名字。</li>
+<li><code>group</code>分组。</li>
+</ul>
+<p>先用一个实例来感受一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process</span>(<span class="params">index</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;process: <span class="subst">&#123;index&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">        p = multiprocessing.Process(target=process, args=(i,))</span><br><span class="line">        p.start()</span><br></pre></td></tr></table></figure>
+
+<p>这是一个实现多进程最基础的方式：通过创建<code>Process</code>来新建一个子进程，其中<code>target</code>参数传入方法名，<code>args</code>是方法的参数，是以 元组的形式传入，其和被调用的方法<code>process</code>的参数是一一对应的。</p>
+<blockquote>
+<p>注意：这里<code>args </code>必须要是一个元组，如果只有一个参数，那也要在元组第一个元素后面加一个逗号，如果没有逗号则和单个元素本身没有区别，无法构成元组，导致参数传递出现问题。</p>
+</blockquote>
+<p>创建完进程之后，我们通过调用<code>start</code>方法即可启动进程了。运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">process: <span class="number">0</span></span><br><span class="line">process: <span class="number">1</span></span><br><span class="line">process: <span class="number">2</span></span><br><span class="line">process: <span class="number">3</span></span><br><span class="line">process: <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>运行了<code>5</code>个子进程，每个进程都调用了<code>process</code>方法。<code>process</code>方法的<code>index</code>参数通过<code>Process</code>的<code>args</code>传入，分别是<code>0~4</code>这<code>5</code>个序号，最后打印出来，<code>5</code>个子进程运行结束。</p>
+<p>由于进程是<code>Python</code>中最小的资源分配单元，因此这些进程和线程不同，各个进程之间的数据是不会共享的，每启动一个进程，都会独立分配资源。</p>
+<p>在当前<code>CPU</code>核数足够的情况下，这些不同的进程会分配给不同的<code>CPU</code>核来运行，实现真正的并行执行。</p>
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">CPU number: <span class="number">4</span></span><br><span class="line">Child process name: Process-<span class="number">2</span> <span class="built_in">id</span>: <span class="number">12112</span></span><br><span class="line">Child process name: Process-<span class="number">3</span> <span class="built_in">id</span>: <span class="number">14708</span></span><br><span class="line">Child process name: Process-<span class="number">1</span> <span class="built_in">id</span>: <span class="number">11208</span></span><br><span class="line">Child process name: Process-<span class="number">5</span> <span class="built_in">id</span>: <span class="number">9968</span></span><br><span class="line">Child process name: Process-<span class="number">4</span> <span class="built_in">id</span>: <span class="number">11784</span></span><br><span class="line">Process ended</span><br><span class="line">process: <span class="number">0</span></span><br><span class="line">process: <span class="number">1</span></span><br><span class="line">process: <span class="number">2</span></span><br><span class="line">process: <span class="number">3</span></span><br><span class="line">process: <span class="number">4</span></span><br><span class="line">````</span><br><span class="line"></span><br><span class="line">通过`cpu_count`成功获取了`CPU`核心的数量：`<span class="number">4</span>`个，不同的机器结果可能不同。通过 `active_children`获取到了当前正在活跃运行的进程列表。然后遍历每个进程，并将它们的*名称*和*进程号*打印出来了，这里进程号直接使用`pid`属性即可获取，进程名称直接通过`name`属性即可获取。</span><br><span class="line"></span><br><span class="line"><span class="comment">## 继承继Process类</span></span><br><span class="line"></span><br><span class="line">在上面的例子中，创建进程是直接使用`Process`这个类来创建的，这是一种创建进程的方式。不过，创建进程的方式不止这一 种，同样，也可以像线程`Thread`一样来通过继承的方式创建一个进程类，进程的基本操作我们在子类的`run`方法中实现即可。</span><br><span class="line"></span><br><span class="line">通过一个实例来看一下：</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProcess</span>(<span class="params">Process</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, loop</span>):</span></span><br><span class="line">        Process.__init__(self)</span><br><span class="line">        self.loop = loop</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">for</span> count <span class="keyword">in</span> <span class="built_in">range</span>(self.loop):</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&#x27;Pid: <span class="subst">&#123;self.pid&#125;</span> LoopCount: <span class="subst">&#123;count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,<span class="number">5</span>):</span><br><span class="line">        p = MyProcess(i)</span><br><span class="line">        p.start()</span><br></pre></td></tr></table></figure>
+
+<p>声明了一个构造方法，这个方法接收一个<code>loop</code>参数，代表循环次数，并将其设置为全局变量。在<code>run</code>方法中，又使用这个<code>loop</code>变量循环了<code>loop</code>次并打印了当前的进程号和循环次数。</p>
+<p>在调用时，用<code>range</code>方法得到了<code>2、3、4</code>三个数字，并把它们分别初始化了<code>MyProcess</code>进程，然后调用<code>start</code>方法将进程启动起来。</p>
+<blockquote>
+<p>注意：这里进程的执行逻辑需要在<code>run</code>方法中实现，启动进程需要调用<code>start</code>方法，调用之后<code>run</code>方法便会执行。</p>
+</blockquote>
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Pid: <span class="number">13728</span> LoopCount: <span class="number">0</span></span><br><span class="line">Pid: <span class="number">13560</span> LoopCount: <span class="number">0</span></span><br><span class="line">Pid: <span class="number">9908</span> LoopCount: <span class="number">0</span> </span><br><span class="line">Pid: <span class="number">9908</span> LoopCount: <span class="number">1</span></span><br><span class="line">Pid: <span class="number">13560</span> LoopCount: <span class="number">1</span></span><br><span class="line">Pid: <span class="number">13728</span> LoopCount: <span class="number">1</span></span><br><span class="line">Pid: <span class="number">13728</span> LoopCount: <span class="number">2</span></span><br><span class="line">Pid: <span class="number">9908</span> LoopCount: <span class="number">2</span></span><br><span class="line">Pid: <span class="number">13728</span> LoopCount: <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>三个进程分别打印出了<code>2、3、4</code>条结果，即进程<code>13560</code>打印了<code>2</code>次结果，进程<code>9908</code> 打印了<code>3</code>次结果，进程<code>13728</code>打印了<code>4</code>次结果。</p>
+<blockquote>
+<p>注意，这里的进程<code>pid</code>代表进程号，不同机器、不同时刻运行结果可能不同。 </p>
+</blockquote>
+<p>通过上面的方式，非常方便地实现了一个进程的定义。为了复用方便，可以把一些方法写在每个进程类里封装好，在使用时直接初始化一个进程类运行即可。</p>
+<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><p>在多进程中，同样存在守护进程的概念，如果一个进程被设置为守护进程，当父进程结束后，子进程会自动被终止，我们可以通过设置<code>daemon</code>属性来控制是否为守护进程。</p>
+<p>还是原来的例子，增加了<code>deamon</code>属性的设置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyProcess</span>(<span class="params">Process</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, loop</span>):</span></span><br><span class="line">        Process.__init__(self)</span><br><span class="line">        self.loop = loop</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">for</span> count <span class="keyword">in</span> <span class="built_in">range</span>(self.loop):</span><br><span class="line">            time.sleep(<span class="number">1</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&#x27;Pid: <span class="subst">&#123;self.pid&#125;</span> LoopCount: <span class="subst">&#123;count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,<span class="number">5</span>):</span><br><span class="line">        p = MyProcess(i)</span><br><span class="line">        p.daemon = <span class="literal">True</span></span><br><span class="line">        p.start()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Main process is ended.&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Main process <span class="keyword">is</span> ended.</span><br></pre></td></tr></table></figure>
+
+<p>结果很简单，因为主进程没有做任何事情，直接输出一句话结束，所以在这时也直接终止了子进程的运行。</p>
+<p>这样可以有效防止无控制地生成子进程。这样的写法可以让我们在主进程运行结束后无需额外担心子进程是否关闭，避免了独立子进程的运行。</p>
+<h2 id="进程等待"><a href="#进程等待" class="headerlink" title="进程等待"></a>进程等待</h2><p>上面的运行效果其实不太符合我们预期：主进程运行结束时，子进程（守护进程）也都退出了，子进程什么都没来得及执行。</p>
+<p>能不能让所有子进程都执行完了然后再结束呢？当然是可以的，只需要加入<code>join</code>方法即可，可以将代码改写如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">process = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>,<span class="number">5</span>):</span><br><span class="line">    p = MyProcess(i)</span><br><span class="line">    process.append(p)</span><br><span class="line">    p.daemon = <span class="literal">True</span></span><br><span class="line">    p.start()</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> process:</span><br><span class="line">    p.join()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Main process is ended.&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Pid: <span class="number">13220</span> LoopCount: <span class="number">0</span></span><br><span class="line">Pid: <span class="number">10488</span> LoopCount: <span class="number">0</span></span><br><span class="line">Pid: <span class="number">4652</span> LoopCount: <span class="number">0</span></span><br><span class="line">Pid: <span class="number">13220</span> LoopCount: <span class="number">1</span></span><br><span class="line">Pid: <span class="number">10488</span> LoopCount: <span class="number">1</span></span><br><span class="line">Pid: <span class="number">4652</span> LoopCount: <span class="number">1</span></span><br><span class="line">Pid: <span class="number">10488</span> LoopCount: <span class="number">2</span></span><br><span class="line">Pid: <span class="number">4652</span> LoopCount: <span class="number">2</span></span><br><span class="line">Pid: <span class="number">4652</span> LoopCount: <span class="number">3</span></span><br><span class="line">Main process <span class="keyword">is</span> ended.</span><br></pre></td></tr></table></figure>
+
+<p>在调用<code>start</code>和<code>join</code>方法后，父进程就可以等待所有子进程都执行完毕后，再打印出结束的结果。</p>
+<p>默认情况下，<code>join</code>是无限期的。也就是说，如果有子进程没有运行完毕，主进程会一直等待。这种情况下，如果子进程出现问题陷入了死循环，主进程也会无限等待下去。怎么解决这个问题呢？可以给<code>join</code>方法传递一个超时参数，代表最长等待秒数。如果子进程没有在这个指定秒数之内完成，会被强制返回，主进程不再会等待。也就是说这个参数设置了主进程等待该子进程的最长时间。</p>
+<p>例如这里传入<code>1</code>，代表最长等待<code>1</code>秒，代码改写如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Pid: <span class="number">11936</span> LoopCount: <span class="number">0</span></span><br><span class="line">Pid: <span class="number">968</span> LoopCount: <span class="number">0</span></span><br><span class="line">Pid: <span class="number">11572</span> LoopCount: <span class="number">0</span></span><br><span class="line">Pid: <span class="number">11936</span> LoopCount: <span class="number">1</span></span><br><span class="line">Pid: <span class="number">968</span> LoopCount: <span class="number">1</span></span><br><span class="line">Pid: <span class="number">11572</span> LoopCount: <span class="number">1</span></span><br><span class="line">Main process <span class="keyword">is</span> ended.</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，有的子进程本来要运行<code>3</code>秒，结果运行<code>1</code>秒就被强制返回了，由于是守护进程，该子进程被终止了。</p>
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/05/14/python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/05/14/python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/";
+            const title         = "「python多进程基本原理」";
+            const excerpt       = `多进程的含义多进程（Process）是具有一定独立功能的程序关于某个数据集合上的一次运行活动，是系统进行资源分配和调度的一个独立单位。
+顾名思义，多进程就是启用多个进程同时运行。由于进程是线程的集合，而且进程是由一个或多个线程构成的，...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/multiprocessing/" rel="tag">multiprocessing</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-05-15</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" python多线程基本原理" href="/2021/05/12/python多线程基本原理/">&lt; 上一篇</a>
+                </div>
+                
+                
+            </nav>
+        
+        
+    </article>
+</section>
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/my.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-text">多进程的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">Python多进程的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">多进程的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8Process%E7%B1%BB"><span class="toc-text">直接使用Process类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="toc-text">守护进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%AD%89%E5%BE%85"><span class="toc-text">进程等待</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">5</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.8em;">Hexo</a> <a href="/tags/Http/" style="font-size: 0.6em;">Http</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.7em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.6em;">javascript</a> <a href="/tags/multiprocessing/" style="font-size: 0.6em;">multiprocessing</a> <a href="/tags/nginx/" style="font-size: 0.6em;">nginx</a> <a href="/tags/python/" style="font-size: 0.8em;">python</a> <a href="/tags/threading/" style="font-size: 0.6em;">threading</a> <a href="/tags/web/" style="font-size: 0.6em;">web</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.6em;">多线程</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 0.6em;">爬虫</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/14/python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> python多进程基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/12/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> python多线程基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/12/Session%E5%92%8CCookies/"><i class="fa  fa-book"></i> Session和Cookies</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/12/%E7%88%AC%E8%99%AB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> 爬虫的基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/11/web%E7%BD%91%E9%A1%B5%E5%9F%BA%E7%A1%80/"><i class="fa  fa-book"></i> web网页基础</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <!-- <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li> -->
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

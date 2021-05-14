@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="Zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/logo.webp">
+  <title>python多线程基本原理 | Holy的个人站点</title>
+  <meta name="author" content="Holy Chan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=espholychan@outlook.com" />
+  
+    <meta name="keywords" content="python, threading, 多线程" />
+  
+  <meta name="description" content="多线程的含义说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。 进程可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编辑器进程。但一个进程中是可以同时处理很多事情的，比如在浏览器中，可以在多个选项卡中打开多个页面，有的页面在播放音乐，有的页面在播放视频，有的网页在播放动画，它们可以同时运">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python多线程基本原理">
+<meta property="og:url" content="http://example.com/2021/05/12/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Holy的个人站点">
+<meta property="og:description" content="多线程的含义说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。 进程可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编辑器进程。但一个进程中是可以同时处理很多事情的，比如在浏览器中，可以在多个选项卡中打开多个页面，有的页面在播放音乐，有的页面在播放视频，有的网页在播放动画，它们可以同时运">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/logo.webp">
+<meta property="article:published_time" content="2021-05-12T03:42:12.420Z">
+<meta property="article:modified_time" content="2021-05-14T12:04:24.000Z">
+<meta property="article:author" content="Holy Chan">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="多线程">
+<meta property="article:tag" content="threading">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/logo.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Holy的个人站点</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                <h1 class="kratos-entry-title text-center">python多线程基本原理</h1>
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-05-12</li>
+                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~7.32K
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1620993864000"></time> 前，其中的内容可能需要更新。
+                </div>
+                
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">多线程的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C"><span class="toc-number">2.</span> <span class="toc-text">并发和并行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text">多线程适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">Python实现多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%A7%E6%89%BFThread%E7%B1%BB%E5%88%9B%E5%BB%BA%E5%AD%90%E7%BA%BF%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">继承Thread类创建子线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="toc-number">6.</span> <span class="toc-text">守护进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-number">7.</span> <span class="toc-text">互斥锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">Python多线程的问题</span></a></li></ol>
+                    </div>
+                
+                <hr />
+                <h2 id="多线程的含义"><a href="#多线程的含义" class="headerlink" title="多线程的含义"></a>多线程的含义</h2><p>说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。</p>
+<p>进程可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编辑器进程。但一个进程中是可以同时处理很多事情的，比如在浏览器中，可以在多个选项卡中打开多个页面，有的页面在播放音乐，有的页面在播放视频，有的网页在播放动画，它们可以同时运行，互不干扰。为什么能同时做到同时运行这么多的任务呢？这里就需要引出线程的概念了，其实这一个个任务，实际上就对应着一个个线程的执行。</p>
+<p>而进程呢？它就是<strong>线程的集合</strong>，进程就是由一个或多个线程构成的，线程是操作系统进行运算调度的最小单位，是进程中的一个最小运行单元。比如上面所说的浏览器进程，其中的播放音乐就是一个线程，播放视频也是一个线程，当然其中还有很多其他的线程在同时运行，这些线程的并发或并行执行最后使得整个浏览器可以同时运行这么多的任务。</p>
+<p>了解了线程的概念，多线程就很容易理解了，多线程就是一个进程中同时执行多个线程，前面所说的浏览器的情景就是典型的多线程执行。</p>
+<h2 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h2><p>并说到多进程和多线程，这里就需要再讲解两个概念，那就是并发和并行。知道，一个程序在计算机中运行，其底层是处理器通过运行一条条的指令来实现的。</p>
+<p>并发，英文叫作<code>concurrency</code>。它是指同一时刻只能有一条指令执行，但是多个线程的对应的指令被快速轮换地执行。比如一个处理器，它先执行线程<code>A</code>的指令一段时间，再执行线程<code>B</code>的指令一段时间，再切回到线程<code>A</code>执行一段时间。</p>
+<p>由于处理器执行指令的速度和切换的速度非常非常快，人完全感知不到计算机在这个过程中有多个线程切换上下文执行的操作，这就使得宏观上看起来多个线程在同时运行。但微观上只是这个处理器在连续不断地在多个线程之间切换和执行，每个线程的执行一定会占用这个处理器一个时间片段，同一时刻，其实只有一个线程在执行。</p>
+<p>并行，英文叫作<code>parallel</code>。它是指同一时刻，有多条指令在多个处理器上同时执行，并行必须要依赖于多个处理器。不论是从宏观上还是微观上，多个线程都是在同一时刻一起执行的。</p>
+<p>并行只能在多处理器系统中存在，如果的计算机处理器只有一个核，那就不可能实现并行。而并发在单处理器和多处理器系统中都是可以存在的，因为仅靠一个核，就可以实现并发。</p>
+<p>举个例子，比如系统处理器需要同时运行多个线程。如果系统处理器只有一个核，那它只能通过并发的方式来运行这些线程。如果系统处理器有多个核，当一个核在执行一个线程时，另一个核可以执行另一个线程，这样这两个线程就实现了并行执行，当然其他的线程也可能和另外的线程处在同一个核上执行，它们之间就是并发执行。具体的执行方式，就取决于操作系统的调度了。</p>
+<h2 id="多线程适用场景"><a href="#多线程适用场景" class="headerlink" title="多线程适用场景"></a>多线程适用场景</h2><p>多在一个程序进程中，有一些操作是比较耗时或者需要等待的，比如等待数据库的查询结果的返回，等待网页结果的响应。如果使用单线程，处理器必须要等到这些操作完成之后才能继续往下执行其他操作，而这个线程在等待的过程中，处理器明显是可以来执行其他的操作的。如果使用多线程，处理器就可以在某个线程等待的时候，去执行其他的线程，从而从整体上提高执行效率。</p>
+<p>像上述场景，线程在执行过程中很多情况下是需要等待的。比如网络爬虫就是一个非常典型的例子，爬虫在向服务器发起请求之后，有一段时间必须要等待服务器的响应返回，这种任务就属于<code>IO</code>密集型任务。对于这种任务，如果启用多线程，处理器就可以在某个线程等待的过程中去处理其他的任务，从而提高整体的爬取效率。</p>
+<p>但并不是所有的任务都是<code>IO</code>密集型任务，还有一种任务叫作计算密集型任务，也可以称之为<code>CPU</code>密集型任务。顾名思义，就是任务的运行一直需要处理器的参与。此时如果开启了多线程，一个处理器从一个计算密集型任务切换到切换到另一个计算密集型任务上去，处理器依然不会停下来，始终会忙于计算，这样并不会节省总体的时间，因为需要处理的任务的计算总量是不变的。如果线程数目过多，反而还会在线程切换的过程中多耗费一些时间，整体效率会变低。</p>
+<p>所以，如果任务不全是计算密集型任务，可以使用多线程来提高程序整体的执行效率。尤其对于网络爬虫这种IO密集型任务来说，使用多线程会大大提高程序整体的爬取效率。</p>
+<h2 id="Python实现多线程"><a href="#Python实现多线程" class="headerlink" title="Python实现多线程"></a>Python实现多线程</h2><p>实在<code>Python</code>中，实现多线程的模块叫作<code>threading</code>，是<code>Python</code>自带的模块。使用<code>threading</code>实现多线程的方法。</p>
+<p>###Thread直接创建子线程</p>
+<p>首先，可以使用<code>Thread</code>类来创建一个线程，创建时需要指定<code>target</code>参数为运行的方法名称，如果被调用的方法需要传入额外的参数，则可以通过<code>Thread</code>的<code>args</code>参数来指定。示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">target</span>(<span class="params">second</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.currentThread().name&#125;</span> id runing&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.current_thread().name&#125;</span> sleep <span class="subst">&#123;second&#125;</span>s&#x27;</span>)</span><br><span class="line">    time.sleep(second)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.currentThread().name&#125;</span> is ended&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.currentThread().name&#125;</span> id runing&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">5</span>]:</span><br><span class="line">    thread = threading.Thread(target=target, args=[i])</span><br><span class="line">    thread.start()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.currentThread().name&#125;</span> is ended&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Threading MainThread <span class="built_in">id</span> runing</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="built_in">id</span> runing</span><br><span class="line">Threading Thread-<span class="number">1</span> sleep 1s</span><br><span class="line">Threading Thread-<span class="number">2</span> <span class="built_in">id</span> runingThreading MainThread <span class="keyword">is</span> ended</span><br><span class="line"></span><br><span class="line">Threading Thread-<span class="number">2</span> sleep 5s</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="keyword">is</span> ended</span><br><span class="line">Threading Thread-<span class="number">2</span> <span class="keyword">is</span> ended</span><br></pre></td></tr></table></figure>
+
+<p>在这里首先声明了一个方法，叫作<code>target</code>，它接收一个参数为<code>second</code>，通过方法的实现可以发现，这个方法其实就是执行了一个<code>time.sleep</code>休眠操作，<code>second</code>参数就是休眠秒数，其前后都<code>print</code>了一些内容，其中线程的名字通过<code>threading.current_thread().name</code>来获取出来，如果是主线程的话，其值就是<code>MainThread</code>，如果是子线程的话，其值就是<code>Thread-*</code>。</p>
+<p>然后通过<code>Thead</code>类新建了两个线程，<code>target</code>参数就是刚才所定义的方法名，<code>args</code>以列表的形式传递。两次循环中，这里<code>i</code>分别就是<code>1</code>和<code>5</code>，这样两个线程就分别休眠<code>1</code>秒·和5秒，声明完成之后，调用<code>start</code>方法即可开始线程的运行。</p>
+<p>观察结果可以发现，这里一共产生了三个线程，分别是主线程<code>MainThread</code>和两个子线程<code>Thread-1</code>、<code>Thread-2</code>。另外观察到，主线程首先运行结束，紧接着<code>Thread-1</code>、<code>Thread-2</code>才接连运行结束，分别间隔了<code>1</code>秒和<code>4</code>秒。这说明主线程并没有等待子线程运行完毕才结束运行，而是直接退出了，有点不符合常理。如果想要主线程等待子线程运行完毕之后才退出，可以让每个子线程对象都调用下<code>join</code>方法，实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">threads = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">5</span>]:</span><br><span class="line">    thread = threading.Thread(target=target, args=[i])</span><br><span class="line">    threads.append(thread)</span><br><span class="line">    thread.start()</span><br><span class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</span><br><span class="line">    thread.join()</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Threading MainThread <span class="built_in">id</span> runing</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="built_in">id</span> runing</span><br><span class="line">Threading Thread-<span class="number">1</span> sleep 1s</span><br><span class="line">Threading Thread-<span class="number">2</span> <span class="built_in">id</span> runing</span><br><span class="line">Threading Thread-<span class="number">2</span> sleep 5s</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="keyword">is</span> ended</span><br><span class="line">Threading Thread-<span class="number">2</span> <span class="keyword">is</span> ended</span><br><span class="line">Threading MainThread <span class="keyword">is</span> ended</span><br></pre></td></tr></table></figure>
+
+<p>主线程必须等待子线程都运行结束，主线程才继续运行并结束。</p>
+<h2 id="继承Thread类创建子线程"><a href="#继承Thread类创建子线程" class="headerlink" title="继承Thread类创建子线程"></a>继承Thread类创建子线程</h2><p>另外，也可以通过继承<code>Thread</code>类的方式创建一个线程，该线程需要执行的方法写在类的<code>run</code>方法里面即可。上面的例子的等价改写为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span>(<span class="params">threading.Thread</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, second</span>):</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.second = second</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.current_thread().name&#125;</span> is runing&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;Threding <span class="subst">&#123;threading.current_thread().name&#125;</span> sleep <span class="subst">&#123;self.second&#125;</span>s&#x27;</span>)</span><br><span class="line">        time.sleep(self.second)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.current_thread().name&#125;</span> is ended&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.current_thread().name&#125;</span> is running&#x27;</span>)</span><br><span class="line">threads = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">5</span>]:</span><br><span class="line">    thread = MyThread(i)</span><br><span class="line">    threads.append(thread)</span><br><span class="line">    thread.start()</span><br><span class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</span><br><span class="line">    thread.join()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Threading <span class="subst">&#123;threading.current_thread().name&#125;</span> is ended&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Threading MainThread <span class="built_in">id</span> runing</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="built_in">id</span> runing</span><br><span class="line">Threading Thread-<span class="number">1</span> sleep 1s</span><br><span class="line">Threading Thread-<span class="number">2</span> <span class="built_in">id</span> runing</span><br><span class="line">Threading Thread-<span class="number">2</span> sleep 5s</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="keyword">is</span> ended</span><br><span class="line">Threading Thread-<span class="number">2</span> <span class="keyword">is</span> ended</span><br><span class="line">Threading MainThread <span class="keyword">is</span> ended</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，两种实现方式，其运行效果是相同的。</p>
+<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><p>在线程中有一个叫作守护线程的概念，如果一个线程被设置为守护线程，那么意味着这个线程是“不重要”的，这意味着，如果主线程结束了而该守护线程还没有运行完，那么它将会被强制结束。在<code>Python</code>中可以通过<code>setDaemon</code>方法来将某个线程设置为守护线程。</p>
+<p>示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Threding MainThread <span class="keyword">is</span> running</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="keyword">is</span> running</span><br><span class="line">Threding Thread-<span class="number">1</span> sleep 2s</span><br><span class="line">Threading Thread-<span class="number">2</span> <span class="keyword">is</span> running</span><br><span class="line">Threding Thread-<span class="number">2</span> sleep 5s</span><br><span class="line">Threading MainThread <span class="keyword">is</span> ended</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="keyword">is</span> ended</span><br></pre></td></tr></table></figure>
+
+<p>在这里通过 setDaemon方法将 t2 设置为了守护线程，这样主线程在运行完毕时，t2 线程会随着线程的结束而结束。</p>
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Threding MainThread <span class="keyword">is</span> running</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="keyword">is</span> running</span><br><span class="line">Threding Thread-<span class="number">1</span> sleep 2s</span><br><span class="line">Threading Thread-<span class="number">2</span> <span class="keyword">is</span> running</span><br><span class="line">Threding Thread-<span class="number">2</span> sleep 5s</span><br><span class="line">Threading MainThread <span class="keyword">is</span> ended</span><br><span class="line">Threading Thread-<span class="number">1</span> <span class="keyword">is</span> ended</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，没有<code>Thread-2</code>打印退出的消息，<code>Thread-2</code>随着主线程的退出而退出了。</p>
+<p>这里并没有调用<code>join</code>方法，如果让<code>t1</code>和<code>t2</code>都调用<code>join</code>方法，主线程就会仍然等待各个子线程执行完毕再退出，不论其是否是守护线程。</p>
+<h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><p>互在一个进程中的多个线程是共享资源的，比如在一个进程中，有一个全局变量<code>count</code>用来计数，声明多个线程，每个线程运行时都给<code>count</code>加<code>1</code>，代码实现如下：</p>
+<p>在这里，声明了<code>1000</code>个线程，每个线程都是现取到当前的全局变量<code>count</code>值，然后休眠一小段时间，然后对<code>count</code>赋予新的值。</p>
+<p>按照常理来说，最终的<code>count</code>值应该为<code>1000</code>。但其实不然。运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Final count: <span class="number">15</span></span><br></pre></td></tr></table></figure>
+
+<p>最后的结果居然只有<code>15</code>，而且多次运行或者换个环境运行结果是不同的.这是为什么呢？因为<code>count</code>这个值是共享的，每个线程都可以在执行<code>temp = count</code>这行代码时拿到当前<code>count</code>的值，但是这些线程中的一些线程可能是并发或者并行执行的，这就导致不同的线程拿到的可能是同一个<code>count</code>值，最后导致有些线程的<code>count</code>的加<code>1</code>操作并没有生效，导致最后的结果偏小。</p>
+<p>所以，如果多个线程同时对某个数据进行读取或修改，就会出现不可预料的结果。为了避免这种情况，我们需要对多个线程进行同步，要实现同步，我们可以对需要操作的数据进行<strong>加锁保护</strong>，这里就需要用到<code>threading.Lock</code>了。</p>
+<p>加锁保护是什么意思呢？就是说，某个线程在对数据进行操作前，需要先加锁，这样其他的线程发现被加锁了之后，就无法继续向下执行，会一直等待锁被释放，只有加锁的线程把锁释放了，其他的线程才能 继续加锁并对数据做修改，修改完了再释放锁。这样可以确保同一时间只有一个线程操作数据，多个线程不会再同时读取和修改同一个数据，这样最后的运行结果就是对的了。</p>
+<p>将代码修改为如下内容：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span>(<span class="params">threading.Thread</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">global</span> count</span><br><span class="line">        lock.acquire()  <span class="comment"># 加锁</span></span><br><span class="line">        temp = count + <span class="number">1</span></span><br><span class="line">        time.sleep(<span class="number">0.001</span>)</span><br><span class="line">        count = temp</span><br><span class="line">        lock.release() <span class="comment"># 解锁</span></span><br><span class="line"></span><br><span class="line">threads = []</span><br><span class="line">lock = threading.Lock() <span class="comment"># 创建一把锁</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">    thread = MyThread()</span><br><span class="line">    thread.start()</span><br><span class="line">    threads.append(thread)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> thread <span class="keyword">in</span> threads:</span><br><span class="line">    thread.join()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Final count: <span class="subst">&#123;count&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Final count: <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Python多线程的问题"><a href="#Python多线程的问题" class="headerlink" title="Python多线程的问题"></a>Python多线程的问题</h2><p>由于<code>Python</code>中<code>GIL</code>的限制，导致不论是在单核还是多核条件下，在同一时刻只能运行一个线程，导致<code>Python</code>多线程无法发挥多核并行的优势。</p>
+<p><code>GIL</code>全称为<code>GlobalInterpreter Lock</code>，中文翻译为全局解释器锁，其最初设计是出于数据安全而考虑的。</p>
+<p>在<code>Python</code>多线程下，每个线程的执行方式如下：</p>
+<ul>
+<li>获取<code>GIL</code>执行对应线程的代码</li>
+<li>释放<code>GIL</code>可见，某个线程想要执行，必须先拿到 GIL，我们可以把 GIL看作是通行证，并且在一个 Python进程中，GIL只有一个。拿不到通行证的线程，就不允许执行。这样就会导致，即使是多核条件下，一个 Python 进程下的多个线程，同一时刻也只能执行一个线程。 不过对于爬虫这种 IO 密集型任务来说，这个问题影响并不大。而对于计算密集型任务来说，由于 GIL的存在，多线程总体的运行效率相比可能反而比单线程更低</li>
+</ul>
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/05/12/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/05/12/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/";
+            const title         = "「python多线程基本原理」";
+            const excerpt       = `多线程的含义说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。
+进程可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编辑器...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>, <a class="tag-none-link" href="/tags/threading/" rel="tag">threading</a>, <a class="tag-none-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-05-14</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" Session和Cookies" href="/2021/05/12/Session和Cookies/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" python多进程基本原理" href="/2021/05/14/python多进程基本原理/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/my.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-text">多线程的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C"><span class="toc-text">并发和并行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">多线程适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">Python实现多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%A7%E6%89%BFThread%E7%B1%BB%E5%88%9B%E5%BB%BA%E5%AD%90%E7%BA%BF%E7%A8%8B"><span class="toc-text">继承Thread类创建子线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="toc-text">守护进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-text">互斥锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">Python多线程的问题</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">5</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.8em;">Hexo</a> <a href="/tags/Http/" style="font-size: 0.6em;">Http</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.7em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.6em;">javascript</a> <a href="/tags/multiprocessing/" style="font-size: 0.6em;">multiprocessing</a> <a href="/tags/nginx/" style="font-size: 0.6em;">nginx</a> <a href="/tags/python/" style="font-size: 0.8em;">python</a> <a href="/tags/threading/" style="font-size: 0.6em;">threading</a> <a href="/tags/web/" style="font-size: 0.6em;">web</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.6em;">多线程</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 0.6em;">爬虫</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/14/python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> python多进程基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/12/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> python多线程基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/12/Session%E5%92%8CCookies/"><i class="fa  fa-book"></i> Session和Cookies</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/12/%E7%88%AC%E8%99%AB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> 爬虫的基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/05/11/web%E7%BD%91%E9%A1%B5%E5%9F%BA%E7%A1%80/"><i class="fa  fa-book"></i> web网页基础</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <!-- <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li> -->
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
