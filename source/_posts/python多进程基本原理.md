@@ -9,8 +9,8 @@ only:
   - home
   - category
   - tag
-date: 2021-05-14 20:04:49
-categories: 爬虫
+date: 2021-05-17 20:04:49
+categories: python
 pic:
 ---
 
@@ -101,7 +101,7 @@ process: 1
 process: 2
 process: 3
 process: 4
-````
+```
 
 通过`cpu_count`成功获取了`CPU`核心的数量：`4`个，不同的机器结果可能不同。通过 `active_children`获取到了当前正在活跃运行的进程列表。然后遍历每个进程，并将它们的*名称*和*进程号*打印出来了，这里进程号直接使用`pid`属性即可获取，进程名称直接通过`name`属性即可获取。
 
@@ -235,6 +235,19 @@ Main process is ended.
 例如这里传入`1`，代表最长等待`1`秒，代码改写如下：
 
 ```python
+    process = []
+    for i in range(2,5):
+        p = MyProcess(i)
+        process.append(p)
+        p.daemon = True
+        p.start()
+    for p in process:
+        p.join(1)
+```
+
+运行结果如下：
+
+```python
 Pid: 11936 LoopCount: 0
 Pid: 968 LoopCount: 0
 Pid: 11572 LoopCount: 0
@@ -246,3 +259,220 @@ Main process is ended.
 
 可以看到，有的子进程本来要运行`3`秒，结果运行`1`秒就被强制返回了，由于是守护进程，该子进程被终止了。
 
+## 终止进程
+
+终止进程不止有守护进程这一种做法，我们也可以通过`terminate`方法来终止某个子进程，另外我们还可以通过`is_alive`方法判断进程是否还在运行。
+
+下面看一个实例：
+
+```python
+import time
+import multiprocessing
+
+def process():
+    print('Starting')
+    time.sleep(5)
+    print('Finished')
+
+if __name__ == '__main__':
+    p = multiprocessing.Process(target=process)
+    print('Before:', p, p.is_alive())
+    
+    p.start()
+    print('During:', p, p.is_alive())
+
+    p.terminate()
+    print('Terminate:', p, p.is_alive())
+
+    p.join()
+    print('Joined:', p, p.is_alive())
+```
+
+用`Process`创建了一个进程，接着调用`start`方法启动这个进程，然后调用`terminate`方法将进程终止，最后调用`join`方法。
+
+另外，在进程运行不同的阶段，通过`is_alive`方法判断当前进程是否还在运行。
+
+运行结果如下：
+
+```python
+Before: <Process(Process-1, initial)> False
+During: <Process(Process-1, started)> True
+Terminate: <Process(Process-1, started)> True       
+Joined: <Process(Process-1, stopped[SIGTERM])> False
+```
+
+这里有一个值得注意的地方，在调用`terminate`方法之后，我们用`is_alive`方法获取进程的状态发现依然还是运行状态。在调用`join`方法之后，`is_alive`方法获取进程的运行状态才变为终止状态。
+
+所以，在调用`terminate`方法之后，记得要调用一下`join`方法，这里调用`join`方法可以为进程提供时间来更新对象状态，用来反映出最终的进程终止效果。
+
+## 进程互斥锁
+
+```python
+from multiprocessing import Process, Lock
+import time
+
+class MyProcess(Process):
+    def __init__(self, loop, lock):
+        Process.__init__(self)
+        self.loop = loop
+        self.lock = lock
+    
+    def run(self):
+        for count in range(self.loop):
+            time.sleep(0.1)
+            self.lock.acquire()
+            print(f'Pid: {self.pid} LoopCount: {count}')
+            self.lock.release()
+
+if __name__ == '__main__':
+    lock = Lock()
+    for i in range(10, 15):
+        p = MyProcess(i, lock)
+        p.start()
+```
+
+在访问一些临界区资源时，使用`Lock`可以有效避免进程同时占用资源而导致的一些问题。
+
+## 信号量
+
+｀multiprocessing`库中的`Semaphore`来实现信号量，实现多个进程共享资源，同时限制可访问的进程数量。
+
+## 道管
+
+管道（`Pipe`）用来实现进程之间的通讯，管道可以是单向的，即`half-duplex`：一个进程负责发消息，另一个进程负责收消息；也可以是双向的`duplex`，即互相收发消息。 默认声明`Pipe`对象是双向管道，如果要创建单向管道，可以在初始化的时候传入`deplex`参数为`False`。
+
+```python
+from multiprocessing import Process, Pipe
+
+class Consumer(Process):
+    def __init__(self, pipe):
+        Process.__init__(self)
+        self.pipe = pipe
+    
+    def run(self):
+        self.pipe.send('Cosumer Worlds')
+        print(f'Consumer Received: {self.pipe.recv()}')
+
+class Producer(Process):
+    def __init__(self, pipe):
+        Process.__init__(self)
+        self.pipe = pipe
+    
+    def run(self):
+        print(f'Producer Received: {self.pipe.recv()}')
+        self.pipe.send('Producer Words')
+
+if __name__ == '__main__':
+    pipe = Pipe()
+    p = Producer(pipe[0])
+    c = Consumer(pipe[1])
+    p.daemon = c.daemon = True
+    p.start()
+    c.start()
+    p.join()
+    c.join()
+    print('Main Process Ended')
+```
+
+声明了一个默认为双向的管道，然后将管道的两端分别传给两个进程。两个进程互相收发。观察一下结果：
+
+```python
+Producer Received: Cosumer Worlds
+Consumer Received: Producer Words
+Main Process Ended
+```
+
+**管道**`Pipe`就像进程之间搭建的桥梁，利用它可以很方便地实现进程间通信。
+
+## 进程池
+
+> 假如现在我们遇到这么一个问题，我有`10000`个任务，每个任务需要启动一个进程来执行，并且一个进程运行完毕之后要紧接着 启动下一个进程，同时我还需要控制进程的并发数量，不能并发太高，不然`CPU`处理不过来（如果同时运行的进程能维持在一个 最高恒定值当然利用率是最高的）。
+
+那么我们该如何来实现这个需求呢？
+
+用`Process`和`Semaphore`可以实现，但是实现起来比较烦琐。这种需求在平时又是非常常见的。此时，我们就可以派上进程池了，即`multiprocessing`中的`Pool`。 `Pool`可以提供指定数量的进程，供用户调用，当有新的请求提交到`pool`中时，如果池还没有满，就会创建一个新的进程用来执行该请求；但如果池中的进程数已经达到规定最大值，那么该请求就会等待，直到池中有进程结束，才会创建新的进程来执行它。
+
+用一个实例来实现一下，代码如下：
+
+```python
+import time
+from multiprocessing import Pool
+
+def function(index):
+    print(f'Start process: {index}')
+    time.sleep(3)
+    print(f'End process {index}')
+
+if __name__ == '__main__':
+    pool = Pool(processes=3)
+    for i in range(4):
+        pool.apply_async(function, args=(i,))
+    print('Main Process started')
+    pool.close()
+    pool.join()
+    print('Main process ended')
+```
+
+声明了一个大小为`3`的进程池，通过`processes`参数来指定，如果不指定，那么会自动根据处理器内核来分配进程数。接着我们使用`apply_async`方法将进程添加进去，`args`可以用来传递参数。
+
+运行结果如下：
+
+```python
+Main Process started
+Start process: 0
+Start process: 1
+Start process: 2
+End process 0
+Start process: 3
+End process 1
+End process 2
+End process 3
+Main process ended
+```
+
+进程池大小为`3`，可以看到有`3`个进程同时执行，第4个进程在等待，在有进程运行完毕之后，第4个进程马上跟着运行，出现了如上的运行效果。
+
+最后，我们要记得调用`close`方法来关闭进程池，使其不再接受新的任务，然后调用`join`方法让主进程等待子进程的退出，等子进程运行完毕之后，主进程接着运行并结束。
+
+上面的写法多少有些烦琐，使用你进程池的`map`方法，可以将上述写法简化很多。
+
+`map`方法是怎么用的呢？第一个参数就是要启动的进程对应的执行方法，第`2`个参数是一个可迭代对象，其中的每个元素会被传递给这个执行方法。
+
+举个例子：现在有一个`list`，里面包含了很多`URL`，定义了一个方法用来抓取每个`URL`内容并解析，那么可以直接在`map`的第一个参数传入方法名，第`2`个参数传入`URL`数组。
+
+用一个实例来感受一下：
+
+```python
+from multiprocessing import Pool
+import urllib.request
+import urllib.error
+
+def scrape(url):
+    try:
+        urllib.request.urlopen(url)
+        print(f'URL {url} scraped')
+    except (urllib.error.HTTPError, urllib.error.URLError):
+        print(f'URL {url} not scraped')
+
+if __name__ == '__main__':
+    pool = Pool(processes=3)
+    urls = [
+        'https://www.baidu.com',
+        'https://www.meituan.com',
+        'https://blog.csdn.net',
+        'https://xxxyxxx.net',
+    ]
+    pool.map(scrape, urls)
+    pool.close()
+```
+
+运行结果：
+
+```python
+URL https://www.baidu.com scraped
+URL https://xxxyxxx.net not scraped
+URL https://blog.csdn.net scraped
+URL https://www.meituan.com scraped
+```
+
+这样，就可以实现`3`个进程并行运行。不同的进程相互独立地输出了对应的爬取结果。
