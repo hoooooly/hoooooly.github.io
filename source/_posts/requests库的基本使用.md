@@ -371,3 +371,128 @@ print(r.text)
 
 在上面的实例中，使用`text`和`content`获取了响应的内容。此外，还有很多属性和方法可以用来获取其他信息，比如`状态码`、`响应头`、`Cookies`等。示例如下:
 
+```python
+import requests
+
+r = requests.get('https://static1.scrape.cuiqingcai.com/', verify=False)
+
+print(type(r.status_code), r.status_code)
+print(type(r.headers), r.headers)
+print(type(r.cookies), r.cookies)
+print(type(r.url), r.url)
+print(type(r.history), r.history)
+```
+
+这里分别打印输出`status_code`属性得到状态码，输出`headers`属性得到响应头，输出`cookies`属性得到`Cookies`，输出`url`属性得到`URL`，输出`history`属性得到请求历史。
+
+运行结果如下：
+
+```python
+<class 'int'> 200
+<class 'requests.structures.CaseInsensitiveDict'> {'Date': 'Wed, 19 May 2021 12:52:03 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '41538', 'Connection': 'keep-alive', 'X-Frame-Options': 'DENY', 'X-Content-Type-Options': 'nosniff', 'Expires': 'Wed, 19 May 2021 13:01:46 GMT', 'Cache-Control': 'max-age=600', 'Strict-Transport-Security': 'max-age=15724800; includeSubDomains'}
+<class 'requests.cookies.RequestsCookieJar'> <RequestsCookieJar[]>
+<class 'str'> https://static1.scrape.cuiqingcai.com/
+<class 'list'> []
+```
+
+`headers`和`cookies`这两个属性得到的结果分别是`CaseInsensitiveDict`和`RequestsCookieJar`类型。
+
+状态码是用来表示响应状态的，比如返回`200`代表我们得到的响应是没问题的，上面的例子正好输出的结果也是`200`，所以可以通过判断`Response`的状态码来确认是否爬取成功。
+
+`requests`还提供了一个内置的状态码查询对象`requests.codes`，用法示例如下：
+
+```python
+import requests
+
+r = requests.get('https://static1.scrape.cuiqingcai.com/', verify=False)
+exit() if not r.status_code == requests.codes.ok else print('Request successfully')
+```
+
+这里通过比较返回码和内置的成功的返回码，来保证请求得到了正常响应，输出成功请求的消息，否则程序终止，这里我们用`requests.codes.ok`得到的是成功的状态码`200`。
+
+这样的话，我们就不用再在程序里面写状态码对应的数字了，用字符串表示状态码会显得更加直观。
+
+下面列出了返回码和相应的查询条件：
+
+```python
+# 信息性状态码
+100: ('continue',),
+101: ('switching_protocols',),
+102: ('processing',),
+103: ('checkpoint',),
+122: ('uri_too_long', 'request_uri_too_long'),
+
+# 成功状态码
+200: ('ok', 'okay', 'all_ok', 'all_okay', 'all_good', '\\o/', '✓'),
+201: ('created',),
+202: ('accepted',),
+203: ('non_authoritative_info', 'non_authoritative_information'),
+204: ('no_content',),
+205: ('reset_content', 'reset'),
+206: ('partial_content', 'partial'),
+207: ('multi_status', 'multiple_status', 'multi_stati', 'multiple_stati'),
+208: ('already_reported',),
+226: ('im_used',),
+
+# 重定向状态码
+300: ('multiple_choices',),
+301: ('moved_permanently', 'moved', '\\o-'),
+302: ('found',),
+303: ('see_other', 'other'),
+304: ('not_modified',),
+305: ('use_proxy',),
+306: ('switch_proxy',),
+307: ('temporary_redirect', 'temporary_moved', 'temporary'),
+308: ('permanent_redirect', 'resume_incomplete', 'resume',), # These 2 to be removed in 3.0 
+
+# 客户端错误状态码 
+400: ('bad_request', 'bad'), 
+401: ('unauthorized',), 
+402: ('payment_required', 'payment'), 
+403: ('forbidden',), 
+404: ('not_found', '-o-'), 
+405: ('method_not_allowed', 'not_allowed'), 
+406: ('not_acceptable',), 
+407: ('proxy_authentication_required', 'proxy_auth', 'proxy_authentication'),
+408: ('request_timeout', 'timeout'), 
+409: ('conflict',),
+410: ('gone',),
+411: ('length_required',),
+412: ('precondition_failed', 'precondition'),
+413: ('request_entity_too_large',),
+414: ('request_uri_too_large',),
+415: ('unsupported_media_type', 'unsupported_media', 'media_type'),
+416: ('requested_range_not_satisfiable', 'requested_range', 'range_not_satisfiable'),
+417: ('expectation_failed',),
+418: ('im_a_teapot', 'teapot', 'i_am_a_teapot'),
+421: ('misdirected_request',),
+422: ('unprocessable_entity', 'unprocessable'),
+423: ('locked',),
+424: ('failed_dependency', 'dependency'),
+425: ('unordered_collection', 'unordered'),
+426: ('upgrade_required', 'upgrade'),
+428: ('precondition_required', 'precondition'),
+429: ('too_many_requests', 'too_many'),
+431: ('header_fields_too_large', 'fields_too_large'),
+444: ('no_response', 'none'),
+449: ('retry_with', 'retry'),
+450: ('blocked_by_windows_parental_controls', 'parental_controls'),
+451: ('unavailable_for_legal_reasons', 'legal_reasons'),
+499: ('client_closed_request',), 
+
+# 服务端错误状态码
+500: ('internal_server_error', 'server_error', '/o\\', '✗'),
+501: ('not_implemented',),
+502: ('bad_gateway',),
+503: ('service_unavailable', 'unavailable'),
+504: ('gateway_timeout',),
+505: ('http_version_not_supported', 'http_version'),
+506: ('variant_also_negotiates',),
+507: ('insufficient_storage',),
+509: ('bandwidth_limit_exceeded', 'bandwidth'),
+510: ('not_extended',),
+511: ('network_authentication_required', 'network_auth', 'network_authentication')
+```
+
+比如，如果想判断结果是不是`404`状态，可以用`requests.codes.not_found`来比对。
+

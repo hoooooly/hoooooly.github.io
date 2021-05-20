@@ -10,7 +10,7 @@ only:
   - category
   - tag
 date: 2021-05-17 20:04:49
-categories: python
+categories: Python
 pic:
 ---
 
