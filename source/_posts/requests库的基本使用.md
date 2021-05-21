@@ -33,7 +33,7 @@ pip3 install requests
 
 比如这里有一个示例网站:[https://static1.scrape.cuiqingcai.com/](https://static1.scrape.cuiqingcai.com/)，其内容如下：
 
-![示列网站](Screenshot_2.png)
+![示列网站](Screenshot_2.webp)
 
 这个网站展示了一些电影数据，如果想要把这个网页里面的数据爬下来，比如获取各个电影的名称、上映时间等信息，然后把它存下来的话，该怎么做呢？
 
@@ -496,3 +496,304 @@ exit() if not r.status_code == requests.codes.ok else print('Request successfull
 
 比如，如果想判断结果是不是`404`状态，可以用`requests.codes.not_found`来比对。
 
+## 高级用法
+
+刚才，了解`requests`的基本用法，如基本的`GET、POST`请求以及`Response`对象。当然`requests`能做到的不仅这些，它几乎可以完成`HTTP`的所有操作。
+
+下面来了解下`requests`的一些高级用法，如文件上传、`Cookies`设置、代理设置等。
+
+### 文件上传
+
+`requests`可以模拟提交一些数据。假如有的网站需要上传文件，也可以用它来实现，示例如下：
+
+```python
+import requests
+
+files = {'file':open('baidu.png', 'rb')}
+r = requests.post('http://httpbin.org/post', files=files)
+print(r.text)
+```
+
+要注意的是，`baidu.png`需要和当前脚本在同一目录下。如果有其他文件，当然也可以使用其他文件来上传，更改下代码即可。运行结果如下：
+
+```shell  
+{
+  "args": {}, 
+  "data": "", 
+  "files": {
+    "file": "data:application/octet-stream;base64,iVBORw0KGgoAAAANSU......"
+  },
+  "form": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Content-Length": "15589",
+    "Content-Type": "multipart/form-data; boundary=7e0556b094615781fff3b0ed4316dccd",
+    "Host": "httpbin.org",
+    "User-Agent": "python-requests/2.25.1",
+    "X-Amzn-Trace-Id": "Root=1-60a72501-36f606570785cb9d4356df71"
+  },
+  "json": null,
+  "origin": "202.62.112.143",
+  "url": "http://httpbin.org/post"
+}
+```
+
+以上省略部分内容，这个网站会返回响应，里面包含`files`这个字段，而`form`字段是空的，这证明文件上传部分会单独有一个`files`字段来标识。
+
+### Cookies
+
+获取`Cookies`。
+
+```python
+import requests
+
+r = requests.get('http://www.baidu.com')
+print(r.cookies)
+for key, value in r.cookies.items():
+    print(key + '=' + value)
+```
+
+运行结果如下：
+
+```shell
+<RequestsCookieJar[<Cookie BDORZ=27315 for .baidu.com/>]>
+BDORZ=27315
+```
+
+调用`cookies`属性即可成功得到`Cookies`，可以发现它是`RequestCookieJar`类型。然后用`items` 方法将其转化为元组组成的列表，遍历输出每一个`Cookie`的名称和值，实现`Cookie`的遍历解析。
+
+可以直接用`Cookie`来维持登录状态，下面我们以`GitHub`为例来说明一下，首先我们登录`GitHub`，然后将`Headers`中的`Cookie`内容复制下来，如图所示：
+
+![](Screenshot_1.webp)
+
+可以替换成你自己的`Cookie`，将其设置到`Headers`里面，然后发送请求。
+
+### Session维持
+
+在`requests`中，如果直接利用`get`或`post`等方法的确可以做到模拟网页的请求，但是这实际上是相当于不同的`Session`，相当于你用两个浏览器打开了不同的页面。
+
+设想这样一个场景，第一个请求利用`post`方法登录了某个网站，第二次想获取成功登录后的自己的个人信息，又用了一次`get`方法去请求个人信息页面。实际上，这相当于打开了两个浏览器，是两个完全不相关的`Session`，能成功获取个人信息吗？当然不能。
+
+解决这个问题的主要方法就是维持同一个`Session`，相当于打开一个新的浏览器选项卡而不是新开一个浏览器。但我又不想每次设置`Cookies`，那该怎么办呢？这时候就有了新的利器——**`Session`对象**。 利用它，可以方便地维护一个`Session`，而且不用担心`Cookies`的问题，它会帮我们自动处理好。示例如下：
+
+```python
+import requests
+
+requests.get('http://httpbin.org/cookies/set/number/123456789', verify=False)
+r = requests.get('http://httpbin.org/cookies', verify=False)
+
+print(r.text)
+```
+
+运行结果如下：
+
+```python
+{
+  "cookies": {}
+}
+```
+
+这并不行。再用 Session试试看：
+
+```python
+import requests
+
+s = requests.Session()
+s.get('http://httpbin.org/cookies/set/number/123456789')
+r = s.get('http://httpbin.org/cookies')
+
+print(r.text)
+```
+
+运行结果如下：
+
+```python
+{
+  "cookies": {
+    "number": "123456789"
+  }
+}
+```
+
+利用`Session`，可以做到模拟同一个`Session`而不用担心`Cookies`的问题。它通常用于模拟登录成功之后再进行下一步的操作。
+
+### SSL证书验证
+
+现在很多网站都要求使用`HTTPS`协议，但是有些网站可能并没有设置好`HTTPS`证书，或者网站的`HTTPS`证书不被`CA`机构认可，这时候，这些网站可能就会出现`SSL`证书错误的提示。
+
+比如示例网站：[https://static2.scrape.cuiqingcai.com/](https://static2.scrape.cuiqingcai.com/)。 用浏览器打开这个`URL`，则会提示**「您的连接不是私密连接」**这样的错误，如图所示：
+
+![示例网站](Screenshot_3.webp)
+
+那如果我们一定要爬取这个网站怎么办呢？我们可以使用`verify`参数控制是否验证证书，如果将其设置为`False`，在请求时就不会再验证证书是否有效。如果不加`verify`参数的话，默认值是`True`，会自动验证。
+
+改写代码如下：
+
+```python
+import requests
+response = requests.get('https://static2.scrape.cuiqingcai.com/', verify=False) 
+print(response.status_code) 
+```
+
+这样就会打印出请求成功的状态码：
+
+```python
+/usr/local/lib/python3.7/site-packages/urllib3/connectionpool.py:857: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html
+InsecureRequestWarning) 200 
+```
+
+不过发现报了一个警告，它建议我们给它指定证书。可以通过设置忽略警告的方式来屏蔽这个警告：
+
+```python
+import requests from requests.packages 
+import urllib3 
+
+urllib3.disable_warnings() 
+response = requests.get('https://static2.scrape.cuiqingcai.com/', verify=False) 
+print(response.status_code)
+```
+
+或者通过捕获警告到日志的方式忽略警告：
+
+```python
+import logging 
+import requests 
+
+logging.captureWarnings(True) 
+response = requests.get('https://static2.scrape.cuiqingcai.com/', verify=False) 
+print(response.status_code)
+```
+
+当然，也可以指定一个本地证书用作客户端证书，这可以是单个文件（包含密钥和证书）或一个包含两个文件路径的元组： 
+
+```python
+import requests response = requests.get('https://static2.scrape.cuiqingcai.com/', cert=('/path/server.crt', '/path/server.key')) 
+print(response.status_code)
+```
+
+上面的代码是演示实例，要有`crt`和`key`文件，并且指定它们的路径。另外注意，本地私有证书的`key`必须是解密状态，加密状态的`key`是不支持的。
+
+### 超时时间
+
+在本机网络状况不好或者服务器网络响应延迟甚至无响应时，可能会等待很久才能收到响应，甚至到最后收不到响应而报错。为了防止服务器不能及时响应，应该设置一个超时时间，即超过了这个时间还没有得到响应，那就报错。这需要用到`timeout`参数。这个时间的计算是发出请求到服务器返回响应的时间。示例如下：
+
+```python
+import requests 
+r = requests.get('https://httpbin.org/get', timeout=1) 
+print(r.status_code)
+```
+
+通过这样的方式将超时时间设置为`1`秒，如果`1`秒内没有响应，那就抛出异常。
+
+实际上，请求分为两个阶段，即连接`（connect）`和读取`（read）`。 上面设置的`timeout`将用作连接和读取这二者的`timeout`总和。
+
+如果要分别指定，就可以传入一个元组：
+
+```python
+r = requests.get('https://httpbin.org/get', timeout=(5, 30))
+```
+
+如果想永久等待，可以直接将`timeout`设置为`None`，或者不设置直接留空，因为默认是`None`。这样的话，如果服务器还在运行，但是响应特别慢，那就慢慢等吧，它永远不会返回超时错误的。其用法如下：
+
+```python
+r = requests.get('https://httpbin.org/get', timeout=None) 
+```
+
+或直接不加参数：
+
+```python
+r = requests.get('https://httpbin.org/get')
+```
+
+###　身份认证
+
+在访问某些设置了身份认证的网站时，例如：[https://static3.scrape.cuiqingcai.com/](https://static3.scrape.cuiqingcai.com/)，我们可能会遇到这样的认证窗口，如图所示：
+
+![认证](Screenshot_4.webp)
+
+如果遇到了这种情况，那就是这个网站启用了基本身份认证，英文叫作`HTTP Basic Access Authentication`，它是一种用来允许网页浏览器或其他客户端程序在请求时提供**用户名**和**口令形式**的身份凭证的一种登录验证方式。 如果遇到了这种情况，怎么用`reqeusts`来爬取呢，当然也有办法。
+
+可以使用`requests`自带的身份认证功能，通过`auth`参数即可设置，示例如下：
+
+```python
+import requests
+from requests.auth import HTTPBasicAuth
+
+r = requests.get('https://static3.scrape.cuiqingcai.com/', auth=HTTPBasicAuth('admin', 'admin'), verify=False)
+print(r.status_code)
+```
+
+成功的话，返回状态码`200`。
+
+如果参数都传一个`HTTPBasicAuth`类，就显得有点烦琐了，所以`requests`提供了一个更简单的写法，可以直接传一个元组，它会默认使用`HTTPBasicAuth`这个类来认证。
+
+上面的代码可以直接简写如下：
+
+```python
+import requests
+r = requests.get('https://static3.scrape.cuiqingcai.com/', auth=('admin', 'admin'))
+print(r.status_code)
+```
+
+此外，`requests`还提供了其他认证方式，如`OAuth`认证，不过此时需要安装`oauth`包，安装命令如下：
+
+```python
+pip3 install requests_oauthlib
+```
+
+使用`OAuth1`认证的方法如下：
+
+```python
+import requests from requests_oauthlib 
+import OAuth1 
+url = 'https://api.twitter.com/1.1/account/verify_credentials.json' 
+auth = OAuth1('YOUR_APP_KEY', 'YOUR_APP_SECRET', 'USER_OAUTH_TOKEN', 'USER_OAUTH_TOKEN_SECRET')
+requests.get(url, auth=auth) 
+```
+
+更多详细的功能就可以参考`requests_oauthlib`的官方文档：[https://requests-oauthlib.readthedocs.org/](https://requests-oauthlib.readthedocs.org/)，不再赘述。
+
+### 代理设置
+
+某些网站在测试的时候请求几次，能正常获取内容。但是对于大规模且频繁的请求，网站可能会弹出验证码，或者跳转到登录认证页面，更甚者可能会直接封禁客户端的`IP`，导致一定时间段内无法访问。
+
+为了防止这种情况发生，我们需要设置代理来解决这个问题，这就需要用到`proxies`参数。可以用这样的方式设置：
+
+```python
+import requests
+proxies = { 
+  'http': 'http://10.10.10.10:1080', 
+  'https': 'http://10.10.10.10:1080', 
+}
+requests.get('https://httpbin.org/get', proxies=proxies) 
+```
+
+当然，直接运行这个实例或许行不通，因为这个代理可能是无效的，可以直接搜索寻找有效的代理并替换试验一下。
+
+若代理需要使用上文所述的身份认证，可以使用类似`ttp://user:password@host:port`这样的语法来设置代理，示例如下：
+
+```python
+import requests
+proxies = {'https': 'http://user:password@10.10.10.10:1080/',} 
+requests.get('https://httpbin.org/get', proxies=proxies)
+```
+
+除了基本的`HTTP`代理外，`requests`还支持`SOCKS`协议的代理。
+
+首先，需要安装`socks`这个库：
+
+```python
+pip3 install "requests[socks]"
+```
+
+然后就可以使用`SOCKS`协议代理了，示例如下：
+
+```python
+import requests
+proxies = { 
+  'http': 'socks5://user:password@host:port', 
+  'https': 'socks5://user:password@host:port' 
+}
+requests.get('https://httpbin.org/get', proxies=proxies)
+```

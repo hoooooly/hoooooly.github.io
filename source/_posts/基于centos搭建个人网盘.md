@@ -1,7 +1,8 @@
 ---
-title: 基于centos搭建个人网盘
+title: 基于NextCloud搭建个人网盘
 tags:
-  - seafile
+  - nextCloud
+  - docker
 comments: true
 toc: true
 only:
@@ -9,7 +10,7 @@ only:
   - category
   - tag
 date: 2021-05-20 16:16:41
-categories: Python
+categories: 博客教程
 pic:
 ---
 
@@ -19,7 +20,7 @@ pic:
 
 ## 安装 Nextcloud
 
-## 安装Mysql
+### 安装Mysql
 
 ```shell
 docker pull mysql # 拉取镜像
@@ -82,13 +83,12 @@ docker pull nextcloud
 
 运行`Nextcloud`
 
-{% colorpanel info "-d #容器后台运行
+参数说明：
 
---name nextcloud #容器名
-
--v /data/nextcloud:/var/www/html #将宿主机的目录/data/nextcloud挂载到容器的/var/www/html
-
--p 8000:80 #将宿主机的端口（此处以8000为例）映射到容器的80端口" %}
+- -d #容器后台运行
+- --name nextcloud #容器名
+- -v /data/nextcloud:/var/www/html #将宿主机的目录/data/nextcloud挂载到容器的/var/www/html
+- -p 8000:80 #将宿主机的端口（此处以8000为例）映射到容器的80端口"
 
 ```shell
 docker run -d \
