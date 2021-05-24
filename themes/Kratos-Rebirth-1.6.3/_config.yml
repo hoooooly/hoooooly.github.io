@@ -1,0 +1,174 @@
+# Global 全局配置
+site_analytics:  # 站点统计代码，这一行代码会被插入到后页脚。
+hoster:  # 网站托管服务提供者，这个是出于感恩性的可选添加内容，这一个链接会被插入到后页脚。
+site_logo: /images/logo.webp # 网站的LOGO图片文件，请注意与后面核心JS的设置保持一致。
+snow: true  # (*true/false*)站点下雪特效开关，控制是否在载入下雪相关的代码。
+enable_dark: true # (*true/false*)站点是否启用暗色模式适配。请注意，即使启用了暗色模式，在亮色的环境下主题仍然会渲染为亮色模式；同时用户可以手动选择使用的颜色（右下角菜单栏按钮处）。
+highlight_theme: night-eighties # 代码高亮主题（light | night | night-eighties | night-blue | night-bright）
+cdn: false # (*true/false*)为静态资源开启CDN加速（使用jsDelivr）。请注意，如果您修改了任何静态资源，那么请保持此项为false（同时也是默认状态）
+check_update: true # (*true/false*)版本更新检查，无需检查的话就记得关闭哦。
+
+# Index 首页配置
+index:
+  post_type: false # (*true/false*)站点首页是否使用文章主题的显示模式（即一开始可见一部分，点击阅读更多可以加载全文，Hexo许多主题都默认的显示模式（而不是默认的这种卡片式的陈列方式）
+  read_count: true # (*true/false*)在首页显示每篇文章的阅读量统计（目前仅支持 valine/waline 评论系统的内置统计功能）
+  comment_count: true # (*true/false*)在首页显示每篇文章的评论量统计（目前仅支持 waline 评论系统的内置统计功能）
+
+# Top Menu 顶部导航栏配置 （具体格式请参照文档）
+menu:
+  index: /
+  archives: /archives/
+  about: /about/
+  # friends: /friends/
+  sites: 
+    submenu: true
+    cloud: http://holychan.ltd:8000
+    # author: 
+    # project: 
+label:
+  index: <i class="fa fa-home"></i>首页
+  archives: <i class="fa fa-file"></i>归档
+  about: <i class="fa fa-paw"></i>关于我
+  #friends: <i class="fa fa-paw"></i>好伙伴
+  sites:
+    submenu: <i class="fa fa-link"></i>链接
+    #author: 作者博客
+    #project: 项目链接
+    cloud: 个人网盘
+
+# Footer 页脚配置
+group_link: 
+contact:
+  weibo: 
+  mail: espholychan@outlook.com
+  telegram: 
+  twitter: 
+  facebook: 
+  linkedin: 
+  fediverse:
+    instance: 
+    username: 
+  github: 
+  rss:
+timenotice: 本站已运行
+icp: 鄂ICP备2021008617号-1
+psr: 
+  
+# Post Page 文章页配置
+posts:
+  show_cc: true
+  donate: false
+  share: true
+  comments:
+
+# Disqus [Disqus](https://disqus.com) 评论相关
+disqus:
+  shortname: 
+
+# DisqusJS [DisqusJS](https://disqusjs.skk.moe/) 评论相关
+disqusjs:
+  shortname: 
+  sitename: 
+  api: 
+  apikey: 
+  admin: 
+  adminlabel: 
+
+# Valine [Valine](https://valine.js.org) 评论相关
+valine:
+  app_id: 
+  app_key: 
+  visitor: true
+  enableQQ: false
+
+# Twikoo [Twikoo](https://twikoo.js.org) 评论相关
+twikoo:
+  env_id: 
+
+# Waline [Waline](https://waline.js.org) 评论相关
+## 不仅限于以下内容，您可以参照 Waline的 [前端配置文档](https://waline.js.org/client/basic.html) 设置您需要的配置项
+## el 和 path 会在页面自动生成，不必加入
+waline:
+  serverURL: #后端服务器地址，必填
+  visitor: true
+
+# APlayer 左下角音乐播放器
+aplayer:
+  enabled: true
+  playlist: 
+  meting:
+    server: netease
+    type: playlist
+    id: 3204190542
+  order: random
+
+# Widgets 侧边栏小挂件
+sidebar: right
+widgets:
+- about
+- splitter
+- toc
+- category
+- tagcloud
+- posts
+avatarUri: /images/my.webp
+
+# Fancybox 文章内图片单击放大
+fancybox: true
+
+# Search 搜索
+search:
+  enable: true
+  path: search.json
+  field: post # page | post | all. Default post
+  content: true # Include post | page content
+
+# JavaScript 相关配置
+## 由于Javascript被压缩后难以有效编辑与生成，因而为了简化操作，将相关的配置项在生成文件时以独立的json文件写出，调用时使用fetch API获取。
+jsconfig:
+  main:
+    pic:
+      CDN: true # 表示使用 CDN 加载图片
+      random_amount: 20 # 表示从1~20
+      filename: "images/thumb/thumb_{no}.webp" # 相对于主题根目录，表示文件名的格式, {no} 用以指代随机的编号。
+                                              # 如果包含 // 表示使用指定域名的绝对路径（例如第三方图床服务等），那么会忽略 CDN 选项
+    createTime: "2021/05/08 12:03:12"
+    donateBtn: "支持我~"
+    scanNotice: "扫一扫，好不好？"
+    qr_alipay: "/images/alipayqr.webp"
+    qr_wechat: "/images/wechatpayqr.webp"
+    siteLeaveEvent: false
+    leaveTitle: "{{{(>_<)}}}哦哟，崩溃啦~"
+    returnTitle: "(*´∇｀*)欸，又好啦~"
+    copyrightNotice: "该内容采用 CC BY-NC-SA 4.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"
+    expire_day: 30
+    topNavScrollToggle: true
+
+# Site verify 站点验证相关配置内容
+site_verify:
+  google: 
+  baidu: 
+  bing: 
+
+# Friends 友链相关内容
+friends:
+  href: "friends"
+  page:
+    title: "好伙伴们"
+    comments: false
+    description: "好伙伴们在哪里~"
+    updated: "2021-01-18"
+  list:
+  - name: "猫猫①号"
+    bio: "喵~"
+    avatar: "../images/avatar.webp"
+    link: "#"
+  - name: "猫猫②号"
+    bio: "喵喵~"
+    avatar: "../images/avatar.webp"
+    link: "#"
+  - name: "猫猫⑨号"
+    bio: "咪啪~"
+    avatar: "../images/avatar.webp"
+    link: "#"
+  verify: true # 验证每个友链的可访问性，炸了会有提示

@@ -193,4 +193,172 @@ def scrape_detail(url):
     return scrape_page(url)
 ```
 
-未完待续。。。20210523
+定义了一个`scrape_detail`方法，它接收一个`url`参数，并通过调用`scrape_page`方法获得网页源代码。由于刚才已经实现了`scrape_page`方法，所以在这里不用再写一遍页面爬取的逻辑，直接调用即可，这就做到了代码复用。
+
+单独定义一个`scrape_detail`方法在逻辑上会显得更清晰，而且以后如果想要对`scrape_detail`方法进行改动，比如添加日志输出或是增加预处理，都可以在 `scrape_detail`里面实现，而不用改动`scrape_page`方法，灵活性会更好。
+
+详情页的爬取方法已经实现了，接着就是详情页的解析了，实现如下：
+
+```python
+def parse_detail(html):
+    """详情页的解析"""
+    doc = pq(html)
+    cover = doc('img.cover').attr('src')
+    name = doc('a > h2').text()
+    categories = [item.text() for item in doc('.categories button span').items()]
+    published_at = doc('.info:contains(上映)').text()
+    published_at = re.search('(\d{4}-\d{2}-\d{2})', published_at).group(1) \
+        if published_at and re.search('\d{4}-\d{2}-\d{2}', published_at) else None
+    drama = doc('.drama p').text()
+    score = doc('p.score').text()
+    score = float(score) if score else None
+    return{
+        'cover': cover,
+        'name': name,
+        'categories': categories,
+        'published_at': published_at,
+        'drama': drama,
+        'score': score
+    }
+```
+
+定义了`parse_detail`方法用于解析详情页，它接收一个`html`参数，解析其中的内容，并以字典的形式返回结果。每个字段的解析情况如下所述：
+
+- `cove`r：封面，直接选取`class`为`cover`的`img`节点，并调用`attr`方法获取`src`属性的内容即可。
+- `name`：名称，直接选取`a`节点的直接子节点`h2`节点，并调用`text`方法提取其文本内容即可得到名称。
+- `categories`：类别，由于类别是多个，所以这里首先用`.categories button span`选取了`class`为`categories`的节点内部的`span`节点，其结果是多个，所以这里进行了遍历，取出了每个`span`节点的文本内容，得到的便是列表形式的类别。
+- `published_at`：上映时间，由于`pyquery`支持使用`:contains`直接指定包含的文本内容并进行提取，且每个上映时间信息都包含了「上映」二字，所以这里就直接使用`:contains(上映)`提取了`class`为`info`的`div`节点。提取之后，得到的结果类似「1993-07-26 上映」这样，并不想要「上映」这两个字，所以又调用了正则表达式把日期单独提取出来了。当然这里也可以直接使用`strip`或`replace`方法把多余的文字去掉。
+- `drama`：直接提取`class`为`drama`的节点内部的`p`节点的文本即可。
+- `score`：直接提取`class`为`score`的`p`节点的文本即可，由于提取结果是字符串，所以我们需要把它转成浮点数，即``float`类型。
+
+上述字段提取完毕之后，构造一个字典返回。这样，成功完成了详情页的提取和分析了。
+
+将main方法稍微改写一下，增加这两个方法的调用，改写如下：
+
+```python
+def main():
+    for page in range(1, TOTAL_PAGE+1):
+        index_html = scrape_index(page)
+        detail_urls = parse_index((index_html))
+        for detail_url in detail_urls:
+            detail_html = scrape_detail(detail_url)
+            data = parse_detail(detail_html)
+            logging.info('get detail data %s', data)
+```
+
+首先遍历了`detail_urls`，获取了每个详情页的`URL`，然后依次调用了`scrape_detail`和`parse_detail`方法，最后得到了每个详情页的提取结果，赋值为`data`并输出。
+
+运行结果如下：
+
+```python
+2021-05-24 12:46:31,432 - INFO: get detail data {'cover': 'https://p0.meituan.net/movie/b0d986a8bf89278afbb19f6abaef70f31206570.jpg@464w_644h_1e_1c', 'name': "辛德勒的名单 - Schindler's List", 'categories': ['剧情', '历史', '战争'], 'published_at': '1993-11-30', 'drama': '1939年，波兰在纳粹德国的统治下，党卫军对犹太人进行了隔离统治。德国商人奥斯卡·辛德勒（连姆·尼森 饰）来到德军统治下的克拉科夫，开设了一间搪瓷厂，生产军需用品。凭着出众的社交能力和大量的金钱，辛德勒和德军建立了良好 的关系，他的工厂雇用犹太人工作，大发战争财。1943年，克拉科夫的犹太人遭到了惨绝人寰的大屠杀，辛德勒目睹这一切，受到了极大的震撼，他贿赂军官，让自己的工厂成为集中营的附属劳役营，在那些疯狂屠杀的日子里，他的工厂也成为了犹太人的避难所。1944年，德国战败前夕，屠杀犹太人的行动越发疯狂，辛德勒向德军军官开出了1200人的名单，倾家荡产买下了这些犹太人的生命。在那些暗无天日的岁月里，拯救一个人，就是拯救全世界。', 'score': 9.5}
+```
+
+可以看到，已经成功提取出每部电影的基本信息，包括封面、名称、类别，等等。
+
+## 保存到MongoDB
+
+请确保现在有一个可以正常连接和使用的`MongoDB`数据库。 将数据导入`MongoDB`需要用到`PyMongo`这个库，这个在最开始已经引入过了。那么接下来我们定义一下 `MongoDB`的连接配置，实现如下：
+
+```python
+MONGO_CONNECTION_STRING = 'mongodb://localhost:27017'
+MONGO_DB_NAME = 'movies'
+MONGO_COLLECTIONS_NAME = 'movies'
+
+client = pymongo.MongoClient(MONGO_CONNECTION_STRING)
+db = client['movies']
+collection = db['movies']
+```
+
+在这里声明了几个变量，介绍如下：
+
+- `MONGO_CONNECTION_STRING`：`MongoDB`的连接字符串，里面定义了`MongoDB`的基本连接信息，如`host`、`port`，还可以定义用户名密码等内容。
+- `MONGO_DB_NAME`：`MongoDB`数据库的名称。
+- `MONGO_COLLECTION_NAME`：`MongoDB`的集合名称。
+
+这里用`MongoClient`声明了一个连接对象，然后依次声明了存储的数据库和集合。接下来，再实现一个将数据保存到`MongoDB`的方法，实现如下：
+
+```python
+def save_data(data):
+    collection.update_one({
+        'name': data.get('name')
+    },{
+        '$set': data
+    }, upsert=True)
+```
+
+声明了一个`save_data`方法，它接收一个`data`参数，也就是我们刚才提取的电影详情信息。在方法里面，调用了`update_one`方法，第1个参数是**查询条件**，即根据`name`进行查询；第2个参数是`data`对象本身，也就是所有的数据，这里用`$set`操作符表示更新操作；第3个参数很关键，这里实际上是`upsert`参数，如果把这个设置为 `True`，则可以做到存在即更新，不存在即插入的功能，更新会根据第一个参数设置的`name`字段，所以这样可以防止数据库中出现同名的电影数据。
+
+> 注：实际上电影可能有同名，但该场景下的爬取数据没有同名情况，当然这里更重要的是实现`MongoDB`的去重操作。
+
+接下来将`main`方法稍微改写一下就好了，改写如下：
+
+```python
+def main():
+    for page in range(1, TOTAL_PAGE+1):
+        index_html = scrape_index(page)
+        detail_urls = parse_index((index_html))
+        for detail_url in detail_urls:
+            detail_html = scrape_detail(detail_url)
+            data = parse_detail(detail_html)
+            logging.info('get detail data %s\n', data)
+            logging.info('saving data to mongodb')
+            save_data(data)
+            logging.info('data saved successfully\n')
+```
+
+重新运行，输出结果：
+
+```python
+......
+2021-05-24 13:16:46,882 - INFO: get detail data {'cover': 'https://p0.meituan.net/movie/58782fa5439c25d764713f711ebecd1e201941.jpg@464w_644h_1e_1c', 'name': '魂断蓝桥 - Waterloo Bridge', 'categories': ['剧情', '爱情', '战争'], 'published_at': '1940-05-17', 'drama': '第一次世界大战期间，回国度假的陆军中 
+尉罗伊（罗伯特·泰勒 饰）在滑铁卢桥上邂逅了舞蹈演员玛拉（费雯·丽 饰），两人彼此倾心，爱情迅速升温。就在两人决定结婚之时，罗伊应招回营地，两人被迫分离。由
+于错过剧团演出，玛拉被开除，只能和好友相依为命。不久玛拉得知罗伊阵亡的消息，几欲崩溃，备受打击。失去爱情的玛拉感到一切都失去了意义，为了生存，她和好友不
+得不沦为妓女。然而命运弄人，就在此时玛拉竟然再次遇到了罗伊。虽然为罗伊的生还兴奋不已，玛拉却因自己的失身陷入痛苦之中。感到一切难以挽回的玛拉潸然离开，独
+自来到两人最初相遇的地点——滑铁卢桥上…', 'score': 9.5}
+
+2021-05-24 13:16:46,885 - INFO: saving data to mongodb
+2021-05-24 13:16:46,889 - INFO: data saved successfully
+```
+
+运行完毕之后我们可以使用`MongoDB`客户端工具可视化查看已经爬取到的数据，结果如下：
+
+![](Screenshot_6.webp)
+
+## 多进程加速
+
+由于整个的爬取是单进程的，而且只能逐条爬取，速度稍微有点慢，有没有方法来对整个爬取过程进行加速呢？
+
+在前面学习了多进程的基本原理和使用方法，下面就来实践一下多进程的爬取。
+
+由于一共有`10`页详情页，并且这`10`页内容是互不干扰的，所以可以一页开一个进程来爬取。由于这`10`个列表页页码正好可以提前构造成一个列表，所以可以选用多进程里面的进程池`Pool`来实现这个过程。
+
+这里需要改写下`main`方法的调用，实现如下：
+
+```python
+def main(page):
+    for page in range(1, TOTAL_PAGE+1):
+        index_html = scrape_index(page)
+        detail_urls = parse_index((index_html))
+        for detail_url in detail_urls:
+            detail_html = scrape_detail(detail_url)
+            data = parse_detail(detail_html)
+            logging.info('get detail data %s\n', data)
+            logging.info('saving data to mongodb')
+            save_data(data)
+            logging.info('data saved successfully\n')
+
+
+if __name__ == '__main__':
+    pool = multiprocessing.Pool()
+    pages = range(1, TOTAL_PAGE + 1)
+    pool.map(main, pages)
+    pool.close()
+    pool.join()
+```
+
+这里首先给`main`方法添加一个参数`page`，用以表示列表页的页码。接着声明了一个进程池，并声明`pages`为所有需要遍历的页码，即`1~10`。最后调用`map`方法，第1个参数就是需要被调用的方法，第2个参数就是`pages`，即需要遍历的页码。
+
+这样`pages`就会被依次遍历。把`1~10`这10个页码分别传递给`main`方法，并把每次的调用变成一个进程，加入到进程池中执行，进程池会根据当前运行环境来决定运行多少进程。
+
+运行输出结果和之前类似，但是可以明显看到加了多进程执行之后，爬取速度快了非常多。可以清空一下之前的`MongoDB`数据，可以发现数据依然可以被正常保存到`MongoDB`数据库中。
