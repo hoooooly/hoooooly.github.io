@@ -13,3 +13,15 @@ only:
 - category
 - tag
 ---
+
+
+[//]:#(设置表格整体居中显示)
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+

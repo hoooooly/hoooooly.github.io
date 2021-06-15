@@ -136,7 +136,63 @@
                 <div class="kratos-entry-border-new clearfix">
                     
                     <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/29/scrapy%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+                        <a href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/">
+                            
+                                <img class="kratos-entry-thumb-new-img" src="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/Screenshot_8.webp">
+                            
+                        </a>
+                    </div>
+                    <div class="kratos-post-inner-new">
+                        <header class="kratos-entry-header-new">
+                                <a class="label-link" href="/categories/Django/">Django</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/">Django入门-视图函数</a>
+                        </header>
+                        <div class="kratos-entry-content-new">
+                            <p>
+                                
+                                    第一个视图函数第一个视图函数目前我们已经有一个视图函数叫 home ，这个视图在我们的应用程序主页上显示为&quot;Hello， World!&quot; 。
+boards/views.py
+1234from django.http...
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <footer class="kratos-post-meta-new">
+                        <span class="pull-left">
+                            <a>
+                                <i class="fa fa-calendar"></i>
+                                2021-06-11
+                            </a>
+                            <a>
+                                
+                                    <i class="fa fa-tags"></i>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                                
+                            </a>
+                            
+                                <!-- 当前仅支持valine/waline自带的统计功能 -->
+                                
+                            
+                            
+                                <!-- 当前仅支持waline自带的统计功能 -->
+                                
+                            
+                        </span>
+                        <span class="pull-right">
+                            <a class="read-more" href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+        
+    
+        
+        
+            <article class="kratos-hentry clearfix">
+                <div class="kratos-entry-border-new clearfix">
+                    
+                    <div class="kratos-entry-thumb-new">
+                        <a href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/">
                             
                                 <img class="kratos-entry-thumb-new-img">
                             
@@ -145,20 +201,17 @@
                     <div class="kratos-post-inner-new">
                         <header class="kratos-entry-header-new">
                                 <a class="label-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/29/scrapy%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">scrapy的基本使用</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/">抓取网易云音乐热评</a>
                         </header>
                         <div class="kratos-entry-content-new">
                             <p>
                                 
-                                    抓取目标要完成的任务如下。
+                                    查看页面源代码，发现源代码中并不含有热评。通过工具抓包查看请求，数据是通过后端数据库请求过来的。
 
-创建一个Scrapy项目。
-创建一个Spider来抓取站点和处理数据。
-通过命令行将抓取的内容导出。
-将抓取的内容保存到MongoDB数据库。
+查看标头可以发现，这条获取热评的请求传递的参数是加密的。
 
-抓取的目标站点为。
-准备工作安装好scrapy框架、Mon...
+首先，我们要找到未加密的参数。
+通过查看请求程序，可以看到当前网页调用了那...
                                 
                             </p>
                         </div>
@@ -167,229 +220,7 @@
                         <span class="pull-left">
                             <a>
                                 <i class="fa fa-calendar"></i>
-                                2021-05-29
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/scrapy/" rel="tag">scrapy</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/29/scrapy%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/">scrapy框架介绍</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    Scrapy介绍Scrapy是一个基于Twisted的异步处理框架，是纯Python实现的爬虫框架，其架构清晰，模块之间的耦合程度低，可扩展性极强，可以灵活完成各种需求。只需要定制开发几个模块就可以轻松实现一个爬虫。
-首先来看下Scr...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-29
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>, <a class="tag-none-link" href="/tags/scrapy/" rel="tag">scrapy</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/29/%E5%86%85%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E9%BD%90%E7%89%A9%E8%AE%BA/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E5%BA%84%E5%AD%90/">庄子</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/29/%E5%86%85%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E9%BD%90%E7%89%A9%E8%AE%BA/">内篇（二）——齐物论</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    
-南郭子綦隐机而坐，仰天而嘘，荅焉似丧其耦。颜成子游立侍乎前，曰：“何居乎？形固可使如槁木，而心固可使如死灰乎？今之隐机者，非昔之隐机者也？”子綦曰：“偃，不亦善乎，而问之也！今者吾丧我，汝知之乎？汝闻人籁而未闻地籁，汝闻地籁而不闻天...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-29
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/29/%E5%86%85%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E9%BD%90%E7%89%A9%E8%AE%BA/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/29/%E5%86%85%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%8D%E9%81%A5%E6%B8%B8/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E5%BA%84%E5%AD%90/">庄子</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/29/%E5%86%85%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%8D%E9%81%A5%E6%B8%B8/">内篇（一）——逍遥游</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    
-北冥有鱼，其名为鲲。鲲之大，不知其几千里也。化而为鸟，其名为鹏。鹏之背，不知其几千里也。怒而飞，其翼若垂天之云。是鸟也，海运则将徙于南冥。南冥者，天池也。
-
-北方的大海里有一条鱼，它的名字叫鲲。鲲的体积，不知道大到有几千里。变化成为...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-29
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/%E8%AF%BB%E4%B9%A6/" rel="tag">读书</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/29/%E5%86%85%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%8D%E9%81%A5%E6%B8%B8/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/Python/">Python</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/">python的内置类型</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    字符串与字节Python3中只有一种能够保存文本信息的数据类型，就是str(string，字符串)。它是不可变的序列，保存的Unicode码位(code point)。
-字符串可以保存的数据类型有非常明确的限制，就是Unicode文本...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-28
+                                2021-06-10
                             </a>
                             <a>
                                 
@@ -407,7 +238,7 @@
                             
                         </span>
                         <span class="pull-right">
-                            <a class="read-more" href="/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                            <a class="read-more" href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
                         </span>
                     </footer>
                 </div>
@@ -420,26 +251,21 @@
                 <div class="kratos-entry-border-new clearfix">
                     
                     <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/26/go%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85/">
+                        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/">
                             
-                                <img class="kratos-entry-thumb-new-img">
+                                <img class="kratos-entry-thumb-new-img" src="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/Screenshot_8.webp">
                             
                         </a>
                     </div>
                     <div class="kratos-post-inner-new">
                         <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/Go/">Go</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/26/go%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85/">go语言的下载和安装</a>
+                                <a class="label-link" href="/categories/Django/">Django</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/">Django入门-模型设计</a>
                         </header>
                         <div class="kratos-entry-content-new">
                             <p>
                                 
-                                    下载安装包访问https://studygolang.com/dl下载对应系统的安装包，这里以windows平台为例。
-
-安装安装下载后的安装文件。
-
-使用推荐的默认设置就可以了。
-增加环境变量在系统环境变量PATH中添加go的安装路...
+                                    模型这些模型基本上代表了应用程序的数据库设计。在本节中要做的是创建 Django 所表示的类，这些类就是在上一节中建模的类∶ Board，Topic和 Post。User 模型被命名为内置应用叫 auth，它以命名空间 django....
                                 
                             </p>
                         </div>
@@ -448,12 +274,12 @@
                         <span class="pull-left">
                             <a>
                                 <i class="fa fa-calendar"></i>
-                                2021-05-26
+                                2021-06-09
                             </a>
                             <a>
                                 
                                     <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/go/" rel="tag">go</a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
                                 
                             </a>
                             
@@ -466,7 +292,7 @@
                             
                         </span>
                         <span class="pull-right">
-                            <a class="read-more" href="/2021/05/26/go%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                            <a class="read-more" href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
                         </span>
                     </footer>
                 </div>
@@ -479,23 +305,22 @@
                 <div class="kratos-entry-border-new clearfix">
                     
                     <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/25/Selenium%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">
+                        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
                             
-                                <img class="kratos-entry-thumb-new-img">
+                                <img class="kratos-entry-thumb-new-img" src="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Screenshot_8.webp">
                             
                         </a>
                     </div>
                     <div class="kratos-post-inner-new">
                         <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/25/Selenium%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">Selenium的基本使用</a>
+                                <a class="label-link" href="/categories/Django/">Django</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">Django入门-系统设计</a>
                         </header>
                         <div class="kratos-entry-content-new">
                             <p>
                                 
-                                    在很多情况下，Ajax请求的接口通常会包含加密的参数，如token、sign等，如：https://dynamic2.scrape.cuiqingcai.com/，它的Ajax接口是包含一个token参数的，如图所示。
-
-由于接口的请...
+                                    论坛项目在进入模型，视图等其它有趣的部分之前，先让我们花点时间，简要地讨论我们将要开发的这个项目。如果你已经有了Web 开发的经验并且觉得它太繁琐了，那么你可以浏览一下图片以了解我们将要构建的内容，然后直接跳转到本教程的模型部分。
+用...
                                 
                             </p>
                         </div>
@@ -504,12 +329,12 @@
                         <span class="pull-left">
                             <a>
                                 <i class="fa fa-calendar"></i>
-                                2021-05-25
+                                2021-06-09
                             </a>
                             <a>
                                 
                                     <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/selenium/" rel="tag">selenium</a>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
                                 
                             </a>
                             
@@ -522,7 +347,7 @@
                             
                         </span>
                         <span class="pull-right">
-                            <a class="read-more" href="/2021/05/25/Selenium%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                            <a class="read-more" href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
                         </span>
                     </footer>
                 </div>
@@ -535,118 +360,7 @@
                 <div class="kratos-entry-border-new clearfix">
                     
                     <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/25/%E5%9F%BA%E4%BA%8Edocker%E9%83%A8%E7%BD%B2code-server/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/Docker/">Docker</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/25/%E5%9F%BA%E4%BA%8Edocker%E9%83%A8%E7%BD%B2code-server/">基于docker部署code-server</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    拉取镜像1234# docker pull codercom/code-server# docker imagesREPOSITORY             TAG       IMAGE ID       CREATED     ...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-25
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/docker/" rel="tag">docker</a>, <a class="tag-none-link" href="/tags/vscode/" rel="tag">vscode</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/25/%E5%9F%BA%E4%BA%8Edocker%E9%83%A8%E7%BD%B2code-server/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/">
-                            
-                                <img class="kratos-entry-thumb-new-img">
-                            
-                        </a>
-                    </div>
-                    <div class="kratos-post-inner-new">
-                        <header class="kratos-entry-header-new">
-                                <a class="label-link" href="/categories/Linux/">Linux</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/">腾讯云主机CPU占用100%</a>
-                        </header>
-                        <div class="kratos-entry-content-new">
-                            <p>
-                                
-                                    异常情况使用ssh登录发现连接很缓慢，排除网络问题。登陆后使用top查看进程，发现git用户的两个进程占用了95%的CPU。
-
-网上查了下，kswapd0被植入挖矿病毒，立马kill这个进程，CPU的负荷马上降了下来。
-查看进程端口1...
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <footer class="kratos-post-meta-new">
-                        <span class="pull-left">
-                            <a>
-                                <i class="fa fa-calendar"></i>
-                                2021-05-25
-                            </a>
-                            <a>
-                                
-                                    <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/git/" rel="tag">git</a>, <a class="tag-none-link" href="/tags/linux/" rel="tag">linux</a>, <a class="tag-none-link" href="/tags/%E7%97%85%E6%AF%92/" rel="tag">病毒</a>
-                                
-                            </a>
-                            
-                                <!-- 当前仅支持valine/waline自带的统计功能 -->
-                                
-                            
-                            
-                                <!-- 当前仅支持waline自带的统计功能 -->
-                                
-                            
-                        </span>
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    </footer>
-                </div>
-            </article>
-        
-    
-        
-        
-            <article class="kratos-hentry clearfix">
-                <div class="kratos-entry-border-new clearfix">
-                    
-                    <div class="kratos-entry-thumb-new">
-                        <a href="/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/">
+                        <a href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/">
                             
                                 <img class="kratos-entry-thumb-new-img">
                             
@@ -655,17 +369,13 @@
                     <div class="kratos-post-inner-new">
                         <header class="kratos-entry-header-new">
                                 <a class="label-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-                            <h2 class="kratos-entry-title-new"><a href="/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/">Ajax爬取案例实战</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/">spider的用法</a>
                         </header>
                         <div class="kratos-entry-content-new">
                             <p>
                                 
-                                    准备工作
-安装好Python 3（最低为 3.6 版本），并能成功运行Python 3程序。
-了解PythonHTTP请求库requests的基本用法。
-了解Ajax的基础知识和分析Ajax的基本方法。
-
-爬取目标其链接为：https...
+                                    Spider 的用法在 Scrapy 中，要抓取网站的链接配置、抓取逻辑、解析逻辑等其实都是在 Spider 中配置的。
+Spider运行流程在实现 Scrapy 爬虫项目时，最核心的类便是 Spider 类了，它定义了如何爬取某个网...
                                 
                             </p>
                         </div>
@@ -674,12 +384,12 @@
                         <span class="pull-left">
                             <a>
                                 <i class="fa fa-calendar"></i>
-                                2021-05-24
+                                2021-06-08
                             </a>
                             <a>
                                 
                                     <i class="fa fa-tags"></i>
-                                    <a class="tag-none-link" href="/tags/ajax/" rel="tag">ajax</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
+                                    <a class="tag-none-link" href="/tags/scarpy/" rel="tag">scarpy</a>
                                 
                             </a>
                             
@@ -692,7 +402,285 @@
                             
                         </span>
                         <span class="pull-right">
-                            <a class="read-more" href="/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                            <a class="read-more" href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+        
+    
+        
+        
+            <article class="kratos-hentry clearfix">
+                <div class="kratos-entry-border-new clearfix">
+                    
+                    <div class="kratos-entry-thumb-new">
+                        <a href="/2021/06/07/django%E5%85%A5%E9%97%A8%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+                            
+                                <img class="kratos-entry-thumb-new-img">
+                            
+                        </a>
+                    </div>
+                    <div class="kratos-post-inner-new">
+                        <header class="kratos-entry-header-new">
+                                <a class="label-link" href="/categories/Django/">Django</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/07/django%E5%85%A5%E9%97%A8%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">django入门-环境搭建</a>
+                        </header>
+                        <div class="kratos-entry-content-new">
+                            <p>
+                                
+                                    为什么要使用Django?Django是一个用python编写的Web框架。Web框架是一种软件，基于web框架可以开发动态网站，各种应用程序以及服务。它提供了一系列工具和功能，可以解决许多与Web开发相关的常见问题，比如∶ 安全功能...
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <footer class="kratos-post-meta-new">
+                        <span class="pull-left">
+                            <a>
+                                <i class="fa fa-calendar"></i>
+                                2021-06-07
+                            </a>
+                            <a>
+                                
+                                    <i class="fa fa-tags"></i>
+                                    <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
+                                
+                            </a>
+                            
+                                <!-- 当前仅支持valine/waline自带的统计功能 -->
+                                
+                            
+                            
+                                <!-- 当前仅支持waline自带的统计功能 -->
+                                
+                            
+                        </span>
+                        <span class="pull-right">
+                            <a class="read-more" href="/2021/06/07/django%E5%85%A5%E9%97%A8%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+        
+    
+        
+        
+            <article class="kratos-hentry clearfix">
+                <div class="kratos-entry-border-new clearfix">
+                    
+                    <div class="kratos-entry-thumb-new">
+                        <a href="/2021/06/06/XPath%E5%BA%93%E8%A7%A3%E6%9E%90/">
+                            
+                                <img class="kratos-entry-thumb-new-img">
+                            
+                        </a>
+                    </div>
+                    <div class="kratos-post-inner-new">
+                        <header class="kratos-entry-header-new">
+                                <a class="label-link" href="/categories/Python%E6%A0%87%E5%87%86%E5%BA%93/">Python标准库</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/06/XPath%E5%BA%93%E8%A7%A3%E6%9E%90/">XPath库解析</a>
+                        </header>
+                        <div class="kratos-entry-content-new">
+                            <p>
+                                
+                                    XPath，全称 XML Path Language，即 XML 路径语言，它是一门在XML文档中查找信息的语言。XPath 最初设计是用来搜寻XML文档的，HTML是XML的子集，它同样适用于HTML文档的搜索。
+安装1pip in...
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <footer class="kratos-post-meta-new">
+                        <span class="pull-left">
+                            <a>
+                                <i class="fa fa-calendar"></i>
+                                2021-06-06
+                            </a>
+                            <a>
+                                
+                                    <i class="fa fa-tags"></i>
+                                    <a class="tag-none-link" href="/tags/lxml/" rel="tag">lxml</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>, <a class="tag-none-link" href="/tags/xpath/" rel="tag">xpath</a>
+                                
+                            </a>
+                            
+                                <!-- 当前仅支持valine/waline自带的统计功能 -->
+                                
+                            
+                            
+                                <!-- 当前仅支持waline自带的统计功能 -->
+                                
+                            
+                        </span>
+                        <span class="pull-right">
+                            <a class="read-more" href="/2021/06/06/XPath%E5%BA%93%E8%A7%A3%E6%9E%90/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+        
+    
+        
+        
+            <article class="kratos-hentry clearfix">
+                <div class="kratos-entry-border-new clearfix">
+                    
+                    <div class="kratos-entry-thumb-new">
+                        <a href="/2021/06/06/%E4%BC%98%E7%BE%8E%E5%9B%BE%E5%BA%93%E6%8A%93%E5%8F%96/">
+                            
+                                <img class="kratos-entry-thumb-new-img">
+                            
+                        </a>
+                    </div>
+                    <div class="kratos-post-inner-new">
+                        <header class="kratos-entry-header-new">
+                                <a class="label-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/06/%E4%BC%98%E7%BE%8E%E5%9B%BE%E5%BA%93%E6%8A%93%E5%8F%96/">优美图库抓取</a>
+                        </header>
+                        <div class="kratos-entry-content-new">
+                            <p>
+                                
+                                    抓取思路1.拿到主页面的源代码，然后提取子页面的链接接地址，href2.通过href拿到子页面的内容，从子页面中找到图片的下载地址 img -&gt; src3.下载图片并保存
+实现代码如下：
+12345678910111213141...
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <footer class="kratos-post-meta-new">
+                        <span class="pull-left">
+                            <a>
+                                <i class="fa fa-calendar"></i>
+                                2021-06-06
+                            </a>
+                            <a>
+                                
+                                    <i class="fa fa-tags"></i>
+                                    <a class="tag-none-link" href="/tags/bs4/" rel="tag">bs4</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>, <a class="tag-none-link" href="/tags/requests/" rel="tag">requests</a>
+                                
+                            </a>
+                            
+                                <!-- 当前仅支持valine/waline自带的统计功能 -->
+                                
+                            
+                            
+                                <!-- 当前仅支持waline自带的统计功能 -->
+                                
+                            
+                        </span>
+                        <span class="pull-right">
+                            <a class="read-more" href="/2021/06/06/%E4%BC%98%E7%BE%8E%E5%9B%BE%E5%BA%93%E6%8A%93%E5%8F%96/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+        
+    
+        
+        
+            <article class="kratos-hentry clearfix">
+                <div class="kratos-entry-border-new clearfix">
+                    
+                    <div class="kratos-entry-thumb-new">
+                        <a href="/2021/06/05/Beautiful-Soup%E5%BA%93/">
+                            
+                                <img class="kratos-entry-thumb-new-img">
+                            
+                        </a>
+                    </div>
+                    <div class="kratos-post-inner-new">
+                        <header class="kratos-entry-header-new">
+                                <a class="label-link" href="/categories/Python%E6%A0%87%E5%87%86%E5%BA%93/">Python标准库</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/05/Beautiful-Soup%E5%BA%93/">Beautiful Soup4库</a>
+                        </header>
+                        <div class="kratos-entry-content-new">
+                            <p>
+                                
+                                    Beautiful Soup 是一个可以从HTML或XML文件中提取数据的Python库。
+安装1pip install beautifulsoup4
+
+Beautiful Soup支持Python标准库中的HTML解析器,还支持一些...
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <footer class="kratos-post-meta-new">
+                        <span class="pull-left">
+                            <a>
+                                <i class="fa fa-calendar"></i>
+                                2021-06-05
+                            </a>
+                            <a>
+                                
+                                    <i class="fa fa-tags"></i>
+                                    <a class="tag-none-link" href="/tags/bs4/" rel="tag">bs4</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
+                                
+                            </a>
+                            
+                                <!-- 当前仅支持valine/waline自带的统计功能 -->
+                                
+                            
+                            
+                                <!-- 当前仅支持waline自带的统计功能 -->
+                                
+                            
+                        </span>
+                        <span class="pull-right">
+                            <a class="read-more" href="/2021/06/05/Beautiful-Soup%E5%BA%93/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                        </span>
+                    </footer>
+                </div>
+            </article>
+        
+    
+        
+        
+            <article class="kratos-hentry clearfix">
+                <div class="kratos-entry-border-new clearfix">
+                    
+                    <div class="kratos-entry-thumb-new">
+                        <a href="/2021/06/04/re%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C/">
+                            
+                                <img class="kratos-entry-thumb-new-img">
+                            
+                        </a>
+                    </div>
+                    <div class="kratos-post-inner-new">
+                        <header class="kratos-entry-header-new">
+                                <a class="label-link" href="/categories/Python%E6%A0%87%E5%87%86%E5%BA%93/">Python标准库</a>
+                            <h2 class="kratos-entry-title-new"><a href="/2021/06/04/re%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C/">re正则表达式操作</a>
+                        </header>
+                        <div class="kratos-entry-content-new">
+                            <p>
+                                
+                                    Regular Expression，正则表达式，使用表达式的方式对字符串进行匹配的语法规则。
+正则表达式语法一个正则表达式指定了一集与之匹配的字符串；模块内的函数可以让你检查某个字符串是否跟给定的正则表达式匹配。
+要看正则写得对不对...
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <footer class="kratos-post-meta-new">
+                        <span class="pull-left">
+                            <a>
+                                <i class="fa fa-calendar"></i>
+                                2021-06-04
+                            </a>
+                            <a>
+                                
+                                    <i class="fa fa-tags"></i>
+                                    <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>, <a class="tag-none-link" href="/tags/re/" rel="tag">re</a>
+                                
+                            </a>
+                            
+                                <!-- 当前仅支持valine/waline自带的统计功能 -->
+                                
+                            
+                            
+                                <!-- 当前仅支持waline自带的统计功能 -->
+                                
+                            
+                        </span>
+                        <span class="pull-right">
+                            <a class="read-more" href="/2021/06/04/re%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
                         </span>
                     </footer>
                 </div>
@@ -702,7 +690,7 @@
     
     
         <div class='text-center pagination'>
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
         </div>
     
 </section>
@@ -739,7 +727,7 @@
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%84%E5%AD%90/">庄子</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">14</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E6%A0%87%E5%87%86%E5%BA%93/">Python标准库</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%84%E5%AD%90/">庄子</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
   </aside>
 
 
@@ -748,7 +736,7 @@
   <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
     <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
       <div class="tag-clouds">
-        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.73em;">Hexo</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.67em;">ajax</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/docker/" style="font-size: 0.73em;">docker</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.8em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.67em;">javascript</a> <a href="/tags/linux/" style="font-size: 0.67em;">linux</a> <a href="/tags/mongodb/" style="font-size: 0.6em;">mongodb</a> <a href="/tags/multiprocessing/" style="font-size: 0.6em;">multiprocessing</a> <a href="/tags/nextCloud/" style="font-size: 0.6em;">nextCloud</a> <a href="/tags/nginx/" style="font-size: 0.6em;">nginx</a> <a href="/tags/pymongodb/" style="font-size: 0.6em;">pymongodb</a>
+        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.73em;">Hexo</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.67em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.67em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.67em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.8em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.73em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.67em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.8em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.67em;">javascript</a> <a href="/tags/linux/" style="font-size: 0.67em;">linux</a>
       </div>
   </aside>
 
@@ -762,34 +750,78 @@
         
           
           
-            <a class="list-group-item" href="/2021/05/29/scrapy%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> scrapy的基本使用</a>
+            <a class="list-group-item" href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/"><i class="fa  fa-book"></i> Django入门-视图函数</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/"><i class="fa  fa-book"></i> scrapy框架介绍</a>
+            <a class="list-group-item" href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/"><i class="fa  fa-book"></i> 抓取网易云音乐热评</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2021/05/29/%E5%86%85%E7%AF%87%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E9%BD%90%E7%89%A9%E8%AE%BA/"><i class="fa  fa-book"></i> 内篇（二）——齐物论</a>
+            <a class="list-group-item" href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/"><i class="fa  fa-book"></i> Django入门-模型设计</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2021/05/29/%E5%86%85%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%8D%E9%81%A5%E6%B8%B8/"><i class="fa  fa-book"></i> 内篇（一）——逍遥游</a>
+            <a class="list-group-item" href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"><i class="fa  fa-book"></i> Django入门-系统设计</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/"><i class="fa  fa-book"></i> python的内置类型</a>
+            <a class="list-group-item" href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/"><i class="fa  fa-book"></i> spider的用法</a>
             
           
         
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
           
             
           
@@ -930,7 +962,7 @@
     <meting-js
         server="netease"
         type="playlist"
-        id="3204190542"
+        id="81305697"
         order="random"
         fixed="true"
     >
