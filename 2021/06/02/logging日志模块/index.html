@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="Zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/logo.webp">
+  <title>logging日志模块 | Holy的个人站点</title>
+  <meta name="author" content="Holy Chan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="logging" />
+  
+  <meta name="description" content="基础教程日志级别   级别 使用场景    DEBUG 细节信息，仅当诊断问题时适用   INFO 程序按预期运行   WARNING 表明有已经或即将发生的意外   ERROR 由于严重的问题，程序的某些功能已经不能正常执行   CRITICAL 严重的错误，表明程序已经不能继续执行   默认是WARNING级别，意味着只会追踪该级别以及以上的事件，除非修改日志配置。 simple exampl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="logging日志模块">
+<meta property="og:url" content="http://example.com/2021/06/02/logging%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="Holy的个人站点">
+<meta property="og:description" content="基础教程日志级别   级别 使用场景    DEBUG 细节信息，仅当诊断问题时适用   INFO 程序按预期运行   WARNING 表明有已经或即将发生的意外   ERROR 由于严重的问题，程序的某些功能已经不能正常执行   CRITICAL 严重的错误，表明程序已经不能继续执行   默认是WARNING级别，意味着只会追踪该级别以及以上的事件，除非修改日志配置。 simple exampl">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/logo.webp">
+<meta property="article:published_time" content="2021-06-02T01:34:05.000Z">
+<meta property="article:modified_time" content="2021-06-15T15:47:31.601Z">
+<meta property="article:author" content="Holy Chan">
+<meta property="article:tag" content="logging">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/logo.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="http://holychan.ltd:8000">个人网盘</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Holy的个人站点</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                
+                    <h1 class="kratos-entry-title text-center">logging日志模块</h1>
+                
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-06-02</li>
+                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~4.87K
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1623772051601"></time> 前，其中的内容可能需要更新。
+                </div>
+                
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">基础教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB"><span class="toc-number">1.1.</span> <span class="toc-text">日志级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97%E5%88%B0%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">记录日志到文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%8F%98%E9%87%8F%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.</span> <span class="toc-text">记录变量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E6%98%BE%E7%A4%BA%E6%B6%88%E6%81%AF%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">更改显示消息的格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E6%B6%88%E6%81%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E6%97%A5%E6%9C%9F-%E6%97%B6%E9%97%B4"><span class="toc-number">1.5.</span> <span class="toc-text">在消息中显示日期&#x2F;时间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">进阶教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">记录流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%99%A8"><span class="toc-number">2.2.</span> <span class="toc-text">记录器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">2.3.</span> <span class="toc-text">处理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%99%A8"><span class="toc-number">2.4.</span> <span class="toc-text">格式器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="toc-number">2.5.</span> <span class="toc-text">配置日志记录</span></a></li></ol></li></ol>
+                    </div>
+                
+                <hr />
+                <h2 id="基础教程"><a href="#基础教程" class="headerlink" title="基础教程"></a>基础教程</h2><h3 id="日志级别"><a href="#日志级别" class="headerlink" title="日志级别"></a>日志级别</h3><table>
+<thead>
+<tr>
+<th align="center">级别</th>
+<th align="center">使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DEBUG</td>
+<td align="center">细节信息，仅当诊断问题时适用</td>
+</tr>
+<tr>
+<td align="center">INFO</td>
+<td align="center">程序按预期运行</td>
+</tr>
+<tr>
+<td align="center">WARNING</td>
+<td align="center">表明有已经或即将发生的意外</td>
+</tr>
+<tr>
+<td align="center">ERROR</td>
+<td align="center">由于严重的问题，程序的某些功能已经不能正常执行</td>
+</tr>
+<tr>
+<td align="center">CRITICAL</td>
+<td align="center">严重的错误，表明程序已经不能继续执行</td>
+</tr>
+</tbody></table>
+<p>默认是WARNING级别，意味着只会追踪该级别以及以上的事件，除非修改日志配置。</p>
+<p>simple example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.warning(<span class="string">&#x27;警告信息&#x27;</span>)</span><br><span class="line">logging.info(<span class="string">&#x27;正常信息&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING:root:警告信息</span><br></pre></td></tr></table></figure>
+
+<p>INFO信息并没有出现，因为默认级别是WARNING级别。</p>
+<h3 id="记录日志到文件"><a href="#记录日志到文件" class="headerlink" title="记录日志到文件"></a>记录日志到文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(filename=<span class="string">&#x27;example.log&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>, level=logging.DEBUG)</span><br><span class="line">logging.debug(<span class="string">&#x27;这个消息会被记录到日志文件中&#x27;</span>)</span><br><span class="line">logging.info(<span class="string">&#x27;这个也会被记录&#x27;</span>)</span><br><span class="line">logging.warning(<span class="string">&#x27;这个也会被记录&#x27;</span>)</span><br><span class="line">logging.error(<span class="string">&#x27;这个也被记录，error&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>日志信息会记录到<code>exampe.log</code>中，3.9版本以后增加了encoding参数，在之前的版本或者没有指定时，编码会使用open()使用的默认值。</p>
+<p>对 basicConfig() 的调用应该在 debug() ， info() 等的前面。因为它被设计为一次性的配置，只有第一次调用会进行操作，随后的调用不会产生有效操作。</p>
+<p>如果多次运行上述脚本，则连续运行的消息将追加到文件 example.log 。 如果你希望每次运行重新开始，而不是记住先前运行的消息，则可以通过将上例中的调用更改为来指定 filemode 参数:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logging.basicConfig(filename=<span class="string">&#x27;example.log&#x27;</span>, filemode=<span class="string">&#x27;w&#x27;</span>, level=logging.DEBUG)</span><br></pre></td></tr></table></figure>
+
+<h3 id="记录变量数据"><a href="#记录变量数据" class="headerlink" title="记录变量数据"></a>记录变量数据</h3><p>使用格式字符作为事件描述信息，附加传入变量数据作为参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.warning(<span class="string">&#x27;打印变量1：%s，打印变量2：%s&#x27;</span>, <span class="string">&#x27;100&#x27;</span>, <span class="string">&#x27;1000&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING:root:打印变量<span class="number">1</span>：<span class="number">100</span>，打印变量<span class="number">2</span>：<span class="number">1000</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="更改显示消息的格式"><a href="#更改显示消息的格式" class="headerlink" title="更改显示消息的格式"></a>更改显示消息的格式</h3><p>example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(<span class="built_in">format</span>=<span class="string">&#x27;%(levelname)s:%(message)s&#x27;</span>, level=logging.DEBUG)</span><br><span class="line">logging.debug(<span class="string">&quot;这是debug信息&quot;</span>)</span><br><span class="line">logging.info(<span class="string">&quot;这是info信息&quot;</span>)</span><br><span class="line">logging.warning(<span class="string">&quot;这是warning信息&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DEBUG:这是debug信息</span><br><span class="line">INFO:这是info信息      </span><br><span class="line">WARNING:这是warning信息</span><br></pre></td></tr></table></figure>
+
+<h3 id="在消息中显示日期-时间"><a href="#在消息中显示日期-时间" class="headerlink" title="在消息中显示日期/时间"></a>在消息中显示日期/时间</h3><p>显示事件的日期和时间，在格式字符串中使用<code>&#39;%(asctime)s&#39;</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(<span class="built_in">format</span>=<span class="string">&#x27;%(asctime)s %(message)s&#x27;</span>, level=logging.DEBUG)</span><br><span class="line">logging.warning(<span class="string">&#x27;这是警告信息&#x27;</span>)</span><br><span class="line">logging.info(<span class="string">&#x27;这是提示信息&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2021</span>-06-02 <span class="number">10</span>:<span class="number">52</span>:<span class="number">34</span>,<span class="number">738</span> 这是警告信息</span><br><span class="line"><span class="number">2021</span>-06-02 <span class="number">10</span>:<span class="number">52</span>:<span class="number">34</span>,<span class="number">738</span> 这是提示信息</span><br></pre></td></tr></table></figure>
+
+<p><code>datafmt</code>参数可以控制时间的格式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(<span class="built_in">format</span>=<span class="string">&#x27;%(asctime)s %(message)s&#x27;</span>, level=logging.DEBUG, datefmt=<span class="string">&#x27;%Y-%m-%d %I:%M:%S %p&#x27;</span>)</span><br><span class="line">logging.warning(<span class="string">&#x27;这是警告信息&#x27;</span>)</span><br><span class="line">logging.info(<span class="string">&#x27;这是提示信息&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2021</span>-06-02 <span class="number">10</span>:<span class="number">55</span>:<span class="number">55</span> AM 这是警告信息</span><br><span class="line"><span class="number">2021</span>-06-02 <span class="number">10</span>:<span class="number">55</span>:<span class="number">55</span> AM 这是提示信息</span><br></pre></td></tr></table></figure>
+
+<p><code>datefmt</code> 参数的格式与 <code>time.strftime()</code> 支持的格式相同。</p>
+<h2 id="进阶教程"><a href="#进阶教程" class="headerlink" title="进阶教程"></a>进阶教程</h2><p>日志库采用模块化的方法，提供了几类组件：记录器、处理器、过滤器和格式器。</p>
+<ul>
+<li>记录器暴露了应用程序代码直接使用的接口。</li>
+<li>处理器将日志记录（由记录器创建）发送到适当的目标。</li>
+<li>过滤器提供了更精细的附加功能，用于确定要输出的日志记录。</li>
+<li>格式器指定最终输出中日志记录的样式。</li>
+</ul>
+<p>通过调用 <code>Logger</code> 类（以下称为 loggers ， 记录器）的实例来执行日志记录。 每个实例都有一个名称，它们在概念上以点（句点）作为分隔符排列在命名空间的层次结构中。 例如，名为 ‘scan’ 的记录器是记录器 ‘scan.text’ ，’scan.html’ 和 ‘scan.pdf’ 的父级。 记录器名称可以是你想要的任何名称，并指示记录消息源自的应用程序区域。</p>
+<p>良好实践是在使用日志记录模块中使用模块记录器，命名如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger = logging.getLogger(__name__)</span><br></pre></td></tr></table></figure>
+
+<p>记录器层次结构的根称为根记录器。 这是函数 <code>debug()</code> 、 <code>info()</code> 、 <code>warning()</code> 、 <code>error()</code> 和 <code>critical() </code>使用的记录器，它们就是调用了根记录器的同名方法。函数和方法具有相同的签名。根记录器的名称在输出中打印为 <code>&#39;root&#39;</code> 。</p>
+<p>可以将消息记录到不同的地方。 软件包中的支持包含，用于将日志消息写入文件、 HTTP GET/POST 位置、通过 <code>SMTP</code> 发送电子邮件、通用套接字、队列或特定于操作系统的日志记录机制（如 <code>syslog</code> 或 Windows NT 事件日志）。 目标由 <code>handler</code> 类提供。 如果你有任何内置处理器类未满足的特殊要求，则可以创建自己的日志目标类。</p>
+<p>默认情况下，没有为任何日志消息设置目标。 你可以使用 <code>basicConfig()</code> 指定目标（例如控制台或文件），如教程示例中所示。 如果你调用函数 debug() 、 info() 、 warning() 、 error() 和 critical() ，它们将检查是否有设置目标；如果没有设置，将在委托给根记录器进行实际的消息输出之前设置目标为控制台（ sys.stderr ）并设置显示消息的默认格式。</p>
+<p>由 <code>basicConfig()</code> 设置的消息默认格式为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">severity:logger name:message</span><br></pre></td></tr></table></figure>
+
+<p>可以通过使用 <code>format</code> 参数将格式字符串传递给 <code>basicConfig()</code> 来更改此设置。</p>
+<h3 id="记录流程"><a href="#记录流程" class="headerlink" title="记录流程"></a>记录流程</h3><p>记录器和处理器中的日志事件信息流程如下图所示。</p>
+<p><img src=""></p>
+<h3 id="记录器"><a href="#记录器" class="headerlink" title="记录器"></a>记录器</h3><p><code>Logger</code> 对象有三重任务。首先，它们向应用程序代码公开了几种方法，以便应用程序可以在运行时记录消息。其次，记录器对象根据严重性（默认过滤工具）或过滤器对象确定要处理的日志消息。第三，记录器对象将相关的日志消息传递给所有感兴趣的日志处理器。</p>
+<p>这些是最常见的配置方法：</p>
+<ul>
+<li>Logger.setLevel() 指定记录器将处理的最低严重性日志消息，其中 debug 是最低内置严重性级别， critical 是最高内置严重性级别。 例如，如果严重性级别为 INFO ，则记录器将仅处理 INFO 、 WARNING 、 ERROR 和 CRITICAL 消息，并将忽略 DEBUG 消息。</li>
+<li>Logger.addHandler() 和 Logger.removeHandler() 从记录器对象中添加和删除处理器对象。处理器在以下内容中有更详细的介绍 处理器 。</li>
+<li>Logger.addFilter() 和 Logger.removeFilter() 可以添加或移除记录器对象中的过滤器。 过滤器对象 包含更多的过滤器细节。</li>
+</ul>
+<h3 id="处理器"><a href="#处理器" class="headerlink" title="处理器"></a>处理器</h3><p><code>Handler</code> 对象负责将适当的日志消息（基于日志消息的严重性）分派给处理器的指定目标。 <code>Logger</code> 对象可以使用 <code>addHandler()</code> 方法向自己添加零个或多个处理器对象。作为示例场景，应用程序可能希望将所有日志消息发送到日志文件，将错误或更高的所有日志消息发送到标准输出，以及将所有关键消息发送至一个邮件地址。 此方案需要三个单独的处理器，其中每个处理器负责将特定严重性的消息发送到特定位置。</p>
+<p>常用的配置方法：</p>
+<ul>
+<li>setLevel() 方法，就像在记录器对象中一样，指定将被分派到适当目标的最低严重性。为什么有两个 setLevel() 方法？记录器中设置的级别确定将传递给其处理器的消息的严重性。每个处理器中设置的级别确定该处理器将发送哪些消息。</li>
+<li>setFormatter() 选择一个该处理器使用的 Formatter 对象。</li>
+<li>addFilter() 和 removeFilter() 分别在处理器上配置和取消配置过滤器对象。</li>
+</ul>
+<h3 id="格式器"><a href="#格式器" class="headerlink" title="格式器"></a>格式器</h3><p>格式化器对象配置日志消息的最终顺序、结构和内容。与 <code>logging.Handler</code> 类不同，应用程序代码可以实例化格式器类，但如果应用程序需要特殊行为，则可能会对格式化器进行子类化定制。构造函数有三个可选参数 —— <code>消息格式字符串</code>、<code>日期格式字符串</code>和<code>样式指示符</code>。</p>
+<p><code>logging.Formatter.__init__(fmt=None, datefmt=None, style=&#39;%&#39;)</code></p>
+<p>如果没有消息格式字符串，则默认使用原始消息。如果没有日期格式字符串，则默认日期格式为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%Y-%m-%d %H:%M:%S</span><br></pre></td></tr></table></figure>
+
+<p>最后加上毫秒数。 <code>style</code> 是 <code>％</code>，<code>&#39;&#123;&#39;</code> 或 <code>&#39;$&#39;</code> 之一。 如果未指定，则将使用 <code>&#39;％&#39;</code>。</p>
+<p>在 <code>3.2 </code>版更改: 添加 <code>style</code> 形参。</p>
+<p>以下消息格式字符串将以人类可读的格式记录时间、消息的严重性以及消息的内容，按此顺序:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;%(asctime)s - %(levelname)s - %(message)s&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>格式器通过用户可配置的函数将记录的创建时间转换为元组。 默认情况下，使用 <code>time.localtime()</code>；要为特定格式器实例更改此项，请将实例的 <code>converter</code> 属性设置为与 <code>time.localtime()</code> 或 <code>time.gmtime()</code> 具有相同签名的函数。</p>
+<h3 id="配置日志记录"><a href="#配置日志记录" class="headerlink" title="配置日志记录"></a>配置日志记录</h3><p>开发者可以通过三种方式配置日志记录：</p>
+<ol>
+<li>使用调用上面列出的配置方法的 <code>Python</code> 代码显式创建记录器、处理器和格式器。</li>
+<li>创建日志配置文件并使用 <code>fileConfig()</code> 函数读取它。</li>
+<li>创建配置信息字典并将其传递给 <code>dictConfig()</code> 函数。</li>
+</ol>
+<p>具体可参考官方文档。</p>
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/06/02/logging%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/06/02/logging%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97/";
+            const title         = "「logging日志模块」";
+            const excerpt       = `基础教程日志级别
+
+
+级别
+使用场景
+
+
+
+DEBUG
+细节信息，仅当诊断问题时适用
+
+
+INFO
+程序按预期运行
+
+
+WARNING
+表明有已经或即将发生的意外
+
+
+ERROR
+由于严重的问题，程序的某些功能已经不能正常执行
+
+
+C...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/logging/" rel="tag">logging</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-06-15</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" 南瑞103协议详解" href="/2021/06/01/南瑞103协议详解/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" Pyppeteer的使用" href="/2021/06/02/Pyppeteer的使用/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/my.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B"><span class="toc-text">基础教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB"><span class="toc-text">日志级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97%E5%88%B0%E6%96%87%E4%BB%B6"><span class="toc-text">记录日志到文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%8F%98%E9%87%8F%E6%95%B0%E6%8D%AE"><span class="toc-text">记录变量数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E6%98%BE%E7%A4%BA%E6%B6%88%E6%81%AF%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-text">更改显示消息的格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E6%B6%88%E6%81%AF%E4%B8%AD%E6%98%BE%E7%A4%BA%E6%97%A5%E6%9C%9F-%E6%97%B6%E9%97%B4"><span class="toc-text">在消息中显示日期&#x2F;时间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B"><span class="toc-text">进阶教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%B5%81%E7%A8%8B"><span class="toc-text">记录流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%99%A8"><span class="toc-text">记录器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-text">处理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%99%A8"><span class="toc-text">格式器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="toc-text">配置日志记录</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E6%A0%87%E5%87%86%E5%BA%93/">Python标准库</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%84%E5%AD%90/">庄子</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.7em;">Hexo</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.65em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.65em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.65em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.75em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.7em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.65em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.75em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.65em;">javascript</a> <a href="/tags/linux/" style="font-size: 0.65em;">linux</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE/"><i class="fa  fa-book"></i> Django入门-静态文件设置</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/15/%E5%86%85%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%8D%E9%81%A5%E6%B8%B8/"><i class="fa  fa-book"></i> 内篇（一）——逍遥游</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/15/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> python多线程基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/"><i class="fa  fa-book"></i> Django入门-视图函数</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/"><i class="fa  fa-book"></i> 抓取网易云音乐热评</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:espholychan@outlook.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            
+                        </div>
+                        <div>
+                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">鄂ICP备2021008617号-1</a></li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="81305697"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

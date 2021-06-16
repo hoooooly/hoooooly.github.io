@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="Zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/logo.webp">
+  <title>Django入门-系统设计 | Holy的个人站点</title>
+  <meta name="author" content="Holy Chan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="django" />
+  
+  <meta name="description" content="论坛项目在进入模型，视图等其它有趣的部分之前，先让我们花点时间，简要地讨论我们将要开发的这个项目。如果你已经有了Web 开发的经验并且觉得它太繁琐了，那么你可以浏览一下图片以了解我们将要构建的内容，然后直接跳转到本教程的模型部分。 用列图我们的项目是一个论坛系统，整个项目的构思是维护几个论坛版块（boards），每个版块像一个分类一样。在指定的版块里面，用户可以通过创建新主题（Topic）开始讨论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django入门-系统设计">
+<meta property="og:url" content="http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="Holy的个人站点">
+<meta property="og:description" content="论坛项目在进入模型，视图等其它有趣的部分之前，先让我们花点时间，简要地讨论我们将要开发的这个项目。如果你已经有了Web 开发的经验并且觉得它太繁琐了，那么你可以浏览一下图片以了解我们将要构建的内容，然后直接跳转到本教程的模型部分。 用列图我们的项目是一个论坛系统，整个项目的构思是维护几个论坛版块（boards），每个版块像一个分类一样。在指定的版块里面，用户可以通过创建新主题（Topic）开始讨论">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Screenshot_8.webp">
+<meta property="article:published_time" content="2021-06-09T01:56:24.000Z">
+<meta property="article:modified_time" content="2021-06-15T15:47:31.580Z">
+<meta property="article:author" content="Holy Chan">
+<meta property="article:tag" content="django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Screenshot_8.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="http://holychan.ltd:8000">个人网盘</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Holy的个人站点</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                
+                    <h1 class="kratos-entry-title text-center">Django入门-系统设计</h1>
+                
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-06-09</li>
+                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~2.12K
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1623772051580"></time> 前，其中的内容可能需要更新。
+                </div>
+                
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E5%9D%9B%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">论坛项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E5%88%97%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">用列图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9B%BE"><span class="toc-number">1.2.</span> <span class="toc-text">类图</span></a></li></ol></li></ol>
+                    </div>
+                
+                <hr />
+                <h2 id="论坛项目"><a href="#论坛项目" class="headerlink" title="论坛项目"></a>论坛项目</h2><p>在进入模型，视图等其它有趣的部分之前，先让我们花点时间，简要地讨论我们将要开发的这个项目。如果你已经有了Web 开发的经验并且觉得它太繁琐了，那么你可以浏览一下图片以了解我们将要构建的内容，然后直接跳转到本教程的模型部分。</p>
+<h3 id="用列图"><a href="#用列图" class="headerlink" title="用列图"></a>用列图</h3><p>我们的项目是一个论坛系统，整个项目的构思是维护几个论坛版块（boards），每个版块像一个分类一样。在指定的版块里面，用户可以通过创建新主题（Topic）开始讨论，其他用户可以参与讨论回复。我们需要找到一种方法来区分普通用户和管理员用户，因为只有管理员可以创建版块。下图概述了主要的用例和每种类型的用户角色∶</p>
+<p><img src="Screenshot_1.webp"></p>
+<p>从用例图中，我们可以开始思考项目所需的实体类有哪些。这些实体就是我们要创建的模型，它与我们的Django应用程序处理的数据非常密切。</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p>从用例图中，我们可以开始思考项目所需的实体类有哪些。这些实体就是我们要创建的模型，它与我们的Django应用程序处理的数据非常密切。</p>
+<p>为了能够实现上面描述的用例，我们需要至少实现下面几个模型∶ <code>Board</code>， <code>Topic</code>，<code>Post</code>和<code>User</code>。</p>
+<p><img src="Screenshot_2.webp"></p>
+<ul>
+<li><code>Board</code>∶ 版块</li>
+<li><code>Topic</code>∶主题</li>
+<li><code>Post</code>∶帖子（译注∶ 其实就是主题的回复或评论）</li>
+</ul>
+<p>类与类之间的实线告诉我们，在一个主题<code>（Topic）</code>中，我们需要有一个字段（译注∶其实就是通过外键来关联）来确定它属于哪个版块<code>（Board）</code>。同样，帖子<code>（Post）</code>也需要一个字段来表示它属于哪个主题，这样我们就可以列出在特定主题内创建的帖子。最后，我们需要一个字段来表示主题是谁发起的，帖子是谁发的。用户和版块之间也有联系，谁创建的版块。但是这些信息与应用程序无关。</p>
+<p>现在我们的类图有基本的表现形式，我们还要考虑这些模型将承载哪些信息。这很容易让事情变得复杂，所以试着先把重要的内容列出来，这些内容是我们启动项目需要的信息。后面我们再使用 <code>Django</code> 的迁移<code>（Migrations）</code>功能来改进模型，您将在下一节中详细了解这些内容。但就目前而言，这是模型最基本的内容∶</p>
+<p><img src="Screenshot_3.webp"></p>
+<p>这个类图强调的是模型之间的关系，这些线条和箭头最终会在稍后转换为字段。</p>
+<p>对于 <code>Board</code> 模型，我们将从两个字段开始∶ <code>name</code> 和 <code>description</code>。<code>name</code> 字段必须是唯一的，为了避免有重复的名称。 <code>description</code> 用于说明这个版块是做什么用的。</p>
+<p><code>Topic</code> 模型包括四个字段∶<code>subject</code> 表示主题内容，<code>last update</code> 用来定义话题的排序，<code>starter</code> 用来识别谁发起的话题，<code>board</code> 用于指定它属于哪个版块。</p>
+<p><code>Post</code> 模型有一个 <code>message</code> 字段，用于存储回复的内容，<code>created at</code> 在排序时候用 （最先发表的帖子排最前面），<code>updated at</code> 告诉用户是否更新了内容，同时，还需要有对应的 <code>User</code> <code>模型的引用，Post</code> 由谁创建的和谁更新的。</p>
+<p>最后是 <code>User</code> 模型。在类图中，我只提到了字段 <code>username</code>，<code>password</code>， <code>email</code>， <code>is superuser</code> 标志，因为这几乎是我们现在要使用的所有东西。</p>
+<p>需要注意的是，我们不需要创建 <code>User</code> 模型，因为<code>Django</code>已经在<code>contrib</code>包中内置了<code>User</code>模型，我们将直接拿来用。</p>
+<p>关于类图之间的对应关系（数字 1，0.* 等等），这里教你如何阅读∶</p>
+<p>一个 <code>topic</code> 必须与一个（1）<code>Board</code>（这意味着它不能为空）相关联，但是 <code>Board</code> 下面可能与许多个或者0个 <code>topic</code> 关联 （0.*）。这意味着 <code>Board</code> 下面可能没有主题。（译注∶ 一对多关系）</p>
+<p><img src="Screenshot_4.webp"></p>
+<p>一个 <code>Topic</code> 至少有一个 <code>Post</code>（发起话题时，同时会发布一个帖子），并且它也可能有许多 <code>Post</code>（1.*）。一个<code>Post</code>必须与一个并且只有一个<code>Topic（1）</code>相关联。</p>
+<p><img src="Screenshot_5.webp"></p>
+<p>一个 <code>Topic</code>必须有一个且只有一个<code>User</code>相关联，<code>topic</code>的发起者是（1）。而一个用户可能有很多或者没有 <code>topic</code> （0.*）。</p>
+<p><img src="Screenshot_6.webp"></p>
+<p><code>Post</code> 必须有一个并且只有一个与之关联的用户，用户可以有许多或没有 <code>Post</code>（0.*）。<code>Post</code>和<code>User</code>之间的第二个关联是直接关联（参见该行最后的箭头），就是 <code>Post</code> 可以被用户修改（<code>updated_by</code>），<code>updated_by</code>有可能是空（<code>Post</code> 没有被修改）。</p>
+<p>画这个类图的另一种方法是强调字段而不是模型之间的关系∶</p>
+<p><img src="Screenshot_7.webp"></p>
+<p>上面的表示方式与前面的表示方式是对等的，不过这种方式更接近我们将要使用 <code>Django Models API</code> 设计的内容。在这种表示方式中，我们可以更清楚地看到，在 <code>Post</code> 模型中，关联了 <code>Topic</code>，<code>created_by</code>（创建者）和 <code>updated by</code>（更新者）字段。另一个值得注意的事情是，在 <code>Topic</code> 模型中，有一个名为 <code>posts （</code>） 的操作（一个类方法）。我们将通过反向关系来实现这一目标，<code>Django</code> 将自动在数据库中执行查询以返回特定主题的所有帖子列表。</p>
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/";
+            const title         = "「Django入门-系统设计」";
+            const excerpt       = `论坛项目在进入模型，视图等其它有趣的部分之前，先让我们花点时间，简要地讨论我们将要开发的这个项目。如果你已经有了Web 开发的经验并且觉得它太繁琐了，那么你可以浏览一下图片以了解我们将要构建的内容，然后直接跳转到本教程的模型部分。
+用...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-06-15</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" spider的用法" href="/2021/06/08/spider的用法/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" Django入门-模型设计" href="/2021/06/09/Django入门-模型设计/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/my.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E5%9D%9B%E9%A1%B9%E7%9B%AE"><span class="toc-text">论坛项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E5%88%97%E5%9B%BE"><span class="toc-text">用列图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9B%BE"><span class="toc-text">类图</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E6%A0%87%E5%87%86%E5%BA%93/">Python标准库</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%84%E5%AD%90/">庄子</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.7em;">Hexo</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.65em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.65em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.65em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.75em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.7em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.65em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.75em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.65em;">javascript</a> <a href="/tags/linux/" style="font-size: 0.65em;">linux</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE/"><i class="fa  fa-book"></i> Django入门-静态文件设置</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/15/%E5%86%85%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%8D%E9%81%A5%E6%B8%B8/"><i class="fa  fa-book"></i> 内篇（一）——逍遥游</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/15/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> python多线程基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/"><i class="fa  fa-book"></i> Django入门-视图函数</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/"><i class="fa  fa-book"></i> 抓取网易云音乐热评</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:espholychan@outlook.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            
+                        </div>
+                        <div>
+                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">鄂ICP备2021008617号-1</a></li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="81305697"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

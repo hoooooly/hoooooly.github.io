@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="Zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/logo.webp">
+  <title>FastAPI教程-入门介绍 | Holy的个人站点</title>
+  <meta name="author" content="Holy Chan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="fastapi, python" />
+  
+  <meta name="description" content="第一步最简单的 FastAPI 文件可能像下面这样： 最简单的 FastAPI 文件可能像下面这样： 12345678from fastapi import FastAPIapp &#x3D; FastAPI()@app.get(&quot;&#x2F;&quot;)async def root():    return &amp;#123;&quot;message&quot;: &quot;Hello World&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastAPI教程-入门介绍">
+<meta property="og:url" content="http://example.com/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Holy的个人站点">
+<meta property="og:description" content="第一步最简单的 FastAPI 文件可能像下面这样： 最简单的 FastAPI 文件可能像下面这样： 12345678from fastapi import FastAPIapp &#x3D; FastAPI()@app.get(&quot;&#x2F;&quot;)async def root():    return &amp;#123;&quot;message&quot;: &quot;Hello World&amp;quo">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/logo.webp">
+<meta property="article:published_time" content="2021-05-30T11:57:07.000Z">
+<meta property="article:modified_time" content="2021-06-15T15:47:31.601Z">
+<meta property="article:author" content="Holy Chan">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="fastapi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/logo.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="http://holychan.ltd:8000">个人网盘</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Holy的个人站点</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                
+                    <h1 class="kratos-entry-title text-center">FastAPI教程-入门介绍</h1>
+                
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-05-30</li>
+                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~2.45K
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1623772051601"></time> 前，其中的内容可能需要更新。
+                </div>
+                
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">1.</span> <span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%AD%A5%E6%A6%82%E6%8B%AC"><span class="toc-number">2.</span> <span class="toc-text">分步概括</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A41%EF%BC%9A%E5%AF%BC%E5%85%A5FastAPI"><span class="toc-number">2.1.</span> <span class="toc-text">步骤1：导入FastAPI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-2%EF%BC%9A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-FastAPI%E3%80%8C%E5%AE%9E%E4%BE%8B%E3%80%8D"><span class="toc-number">2.2.</span> <span class="toc-text">步骤 2：创建一个 FastAPI「实例」</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-3%EF%BC%9A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C"><span class="toc-number">2.3.</span> <span class="toc-text">步骤 3：创建一个路径操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84"><span class="toc-number">2.3.1.</span> <span class="toc-text">路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-number">2.3.2.</span> <span class="toc-text">操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="toc-number">2.3.3.</span> <span class="toc-text">定义一个路径操作装饰器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-4%EF%BC%9A%E5%AE%9A%E4%B9%89%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">2.4.</span> <span class="toc-text">步骤 4：定义路径操作函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-5%EF%BC%9A%E8%BF%94%E5%9B%9E%E5%86%85%E5%AE%B9"><span class="toc-number">2.5.</span> <span class="toc-text">步骤 5：返回内容</span></a></li></ol></li></ol>
+                    </div>
+                
+                <hr />
+                <h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>最简单的 <code>FastAPI</code> 文件可能像下面这样：</p>
+<p>最简单的 FastAPI 文件可能像下面这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">root</span>():</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将其复制到 <code>main.py</code> 文件中。</p>
+<p>运行实时服务器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn main:app --reload</span><br></pre></td></tr></table></figure>
+
+<div class="panel panel-info">
+    <div class="panel-title">Note</div>
+    <div class="panel-body">
+        <p>uvicorn main:app 命令含义如下:</p>
+<ul>
+<li>main：main.py 文件（一个 Python「模块」）。</li>
+<li>app：在 main.py 文件中通过 app = FastAPI() 创建的对象。</li>
+<li>--reload：让服务器在更新代码后重新启动。仅在开发时使用该选项。</li>
+</ul>
+
+    </div>
+    </div>
+
+<h2 id="分步概括"><a href="#分步概括" class="headerlink" title="分步概括"></a>分步概括</h2><h3 id="步骤1：导入FastAPI"><a href="#步骤1：导入FastAPI" class="headerlink" title="步骤1：导入FastAPI"></a>步骤1：导入FastAPI</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br></pre></td></tr></table></figure>
+
+<p><code>FastAPI</code> 是一个为 <code>API</code> 提供了所有功能的 <code>Python</code> 类。</p>
+<div class="panel panel-info">
+    <div class="panel-title">技术细节</div>
+    <div class="panel-body">
+        <p>FastAPI 是直接从 Starlette 继承的类。<br>你可以通过 FastAPI 使用所有的 Starlette 的功能。</p>
+
+    </div>
+    </div>
+
+<h3 id="步骤-2：创建一个-FastAPI「实例」"><a href="#步骤-2：创建一个-FastAPI「实例」" class="headerlink" title="步骤 2：创建一个 FastAPI「实例」"></a>步骤 2：创建一个 FastAPI「实例」</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app = FastAPI()</span><br></pre></td></tr></table></figure>
+
+<p>这里的变量 <code>app</code> 会是 <code>FastAPI</code> 类的一个「实例」。</p>
+<p>这个实例将是创建你所有 <code>API</code> 的主要交互对象。</p>
+<p>这个 <code>app</code> 同样在如下命令中被 <code>uvicorn</code> 所引用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn main:app --reload</span><br></pre></td></tr></table></figure>
+
+<p>如果你像下面这样创建应用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">my_awesome_api = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@my_awesome_api.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">root</span>():</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将代码放入 <code>main.py</code> 文件中，然后你可以像下面这样运行 <code>uvicorn</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn main:my_awesome_api --reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="步骤-3：创建一个路径操作"><a href="#步骤-3：创建一个路径操作" class="headerlink" title="步骤 3：创建一个路径操作"></a>步骤 3：创建一个路径操作</h3><h4 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h4><p>这里的「路径」指的是 <code>URL</code> 中从第一个 <code>/</code> 起的后半部分。</p>
+<p>所以，在一个这样的 <code>URL</code> 中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://example.com/items/foo</span><br></pre></td></tr></table></figure>
+
+<p>…路径会是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/items/foo</span><br></pre></td></tr></table></figure>
+
+<div class="panel panel-info">
+    <div class="panel-title">info</div>
+    <div class="panel-body">
+        <p>「路径」也通常被称为「端点」或「路由」。</p>
+
+    </div>
+    </div>
+
+<p>开发 <code>API</code> 时，「路径」是用来分离「关注点」和「资源」的主要手段。</p>
+<h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><p>这里的「操作」指的是一种 <code>HTTP「方法」</code>。</p>
+<p>下列之一：</p>
+<ul>
+<li>POST</li>
+<li>GET</li>
+<li>PUT</li>
+<li>DELETE</li>
+</ul>
+<p>…以及更少见的几种：</p>
+<ul>
+<li>OPTIONS</li>
+<li>HEAD</li>
+<li>PATCH</li>
+<li>TRACE</li>
+</ul>
+<p>在 <code>HTTP</code> 协议中，你可以使用以上的其中一种（或多种）「方法」与每个路径进行通信。</p>
+<p>在开发 <code>API</code> 时，通常使用特定的 <code>HTTP</code> 方法去执行特定的行为。</p>
+<p>通常使用：</p>
+<ul>
+<li>POST：创建数据。</li>
+<li>GET：读取数据。</li>
+<li>PUT：更新数据。</li>
+<li>DELETE：删除数据。</li>
+</ul>
+<p>因此，在 <code>OpenAPI</code> 中，每一个 <code>HTTP</code> 方法都被称为<code>「操作」</code>。</p>
+<h4 id="定义一个路径操作装饰器"><a href="#定义一个路径操作装饰器" class="headerlink" title="定义一个路径操作装饰器"></a>定义一个路径操作装饰器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">root</span>():</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>@app.get(&quot;/&quot;)</code>告诉 <code>FastAPI</code> 在它下方的函数负责处理如下访问请求：</p>
+<ul>
+<li>请求路径为 <code>/</code></li>
+<li>使用 <code>get</code> 操作</li>
+</ul>
+<div class="panel panel-info">
+    <div class="panel-title">@decorator Info</div>
+    <div class="panel-body">
+        <p><code>@something</code>语法在 <code>Python</code> 中被称为「装饰器」。</p>
+<p>装饰器接收位于其下方的函数并且用它完成一些工作。</p>
+<p>在上面的例子中，这个装饰器告诉 <code>FastAPI</code> 位于其下方的函数对应着路径 <code>/</code> 加上 <code>get</code> 操作。</p>
+<p>它是一个「路径操作装饰器」。</p>
+
+    </div>
+    </div>
+
+<h3 id="步骤-4：定义路径操作函数"><a href="#步骤-4：定义路径操作函数" class="headerlink" title="步骤 4：定义路径操作函数"></a>步骤 4：定义路径操作函数</h3><p>这是「路径操作函数」：</p>
+<ul>
+<li>路径：是 <code>/</code>。</li>
+<li>操作：是 <code>get</code>。</li>
+<li>函数：是位于「装饰器」下方的函数（位于<code>@app.get(&quot;/&quot;)</code>下方）。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">root</span>():</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个 <code>Python</code> 函数。</p>
+<p>每当 <code>FastAPI</code> 接收一个使用 <code>GET</code> 方法访问 <code>URL「/」</code>的请求时这个函数会被调用。</p>
+<p>在这个例子中，它是一个 <code>async</code> 函数。当然也可以定义为常规函数。</p>
+<h3 id="步骤-5：返回内容"><a href="#步骤-5：返回内容" class="headerlink" title="步骤 5：返回内容"></a>步骤 5：返回内容</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以返回一个 <code>dict</code>、<code>list</code>，像 <code>str</code>、<code>int</code> 一样的单个值，等等。</p>
+<p>你还可以返回 <code>Pydantic</code> 模型（稍后你将了解更多）。</p>
+<p>还有许多其他将会自动转换为 <code>JSON</code> 的对象和模型（包括 <code>ORM</code> 对象等）。</p>
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/";
+            const title         = "「FastAPI教程-入门介绍」";
+            const excerpt       = `第一步最简单的 FastAPI 文件可能像下面这样：
+最简单的 FastAPI 文件可能像下面这样：
+12345678from fastapi import FastAPIapp = FastAPI()@app.get(&quot;/...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/fastapi/" rel="tag">fastapi</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-06-15</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" FastAPI安装和使用" href="/2021/05/30/FastAPI安装和使用/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" FastAPI教程-路径参数" href="/2021/05/30/FastAPI教程-路径参数/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/my.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%AD%A5%E6%A6%82%E6%8B%AC"><span class="toc-text">分步概括</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A41%EF%BC%9A%E5%AF%BC%E5%85%A5FastAPI"><span class="toc-text">步骤1：导入FastAPI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-2%EF%BC%9A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-FastAPI%E3%80%8C%E5%AE%9E%E4%BE%8B%E3%80%8D"><span class="toc-text">步骤 2：创建一个 FastAPI「实例」</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-3%EF%BC%9A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C"><span class="toc-text">步骤 3：创建一个路径操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84"><span class="toc-text">路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-text">操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="toc-text">定义一个路径操作装饰器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-4%EF%BC%9A%E5%AE%9A%E4%B9%89%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-text">步骤 4：定义路径操作函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-5%EF%BC%9A%E8%BF%94%E5%9B%9E%E5%86%85%E5%AE%B9"><span class="toc-text">步骤 5：返回内容</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E6%A0%87%E5%87%86%E5%BA%93/">Python标准库</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%84%E5%AD%90/">庄子</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.7em;">Hexo</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.65em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.65em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.65em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.75em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.7em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.65em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.75em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.65em;">javascript</a> <a href="/tags/linux/" style="font-size: 0.65em;">linux</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE/"><i class="fa  fa-book"></i> Django入门-静态文件设置</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/15/%E5%86%85%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%8D%E9%81%A5%E6%B8%B8/"><i class="fa  fa-book"></i> 内篇（一）——逍遥游</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/15/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> python多线程基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/"><i class="fa  fa-book"></i> Django入门-视图函数</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/"><i class="fa  fa-book"></i> 抓取网易云音乐热评</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:espholychan@outlook.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            
+                        </div>
+                        <div>
+                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">鄂ICP备2021008617号-1</a></li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="81305697"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

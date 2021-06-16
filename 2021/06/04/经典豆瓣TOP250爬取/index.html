@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="Zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/logo.webp">
+  <title>经典豆瓣TOP250爬取 | Holy的个人站点</title>
+  <meta name="author" content="Holy Chan" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="re, requests" />
+  
+  <meta name="description" content="经典案例每个学习爬虫的人都爬过的豆瓣电影TOP250，先看下长什么样。  开爬。 分析查看源代码，所有的数据都在页面源代码中，直接用requests请求拿过来页面源代码，再通过re匹配即可。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455imp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典豆瓣TOP250爬取">
+<meta property="og:url" content="http://example.com/2021/06/04/%E7%BB%8F%E5%85%B8%E8%B1%86%E7%93%A3TOP250%E7%88%AC%E5%8F%96/index.html">
+<meta property="og:site_name" content="Holy的个人站点">
+<meta property="og:description" content="经典案例每个学习爬虫的人都爬过的豆瓣电影TOP250，先看下长什么样。  开爬。 分析查看源代码，所有的数据都在页面源代码中，直接用requests请求拿过来页面源代码，再通过re匹配即可。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455imp">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/logo.webp">
+<meta property="article:published_time" content="2021-06-04T13:34:51.000Z">
+<meta property="article:modified_time" content="2021-06-15T15:47:31.641Z">
+<meta property="article:author" content="Holy Chan">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="requests">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/logo.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="http://holychan.ltd:8000">个人网盘</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Holy的个人站点</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        <section class="col-md-8">
+    <article>
+        <div class="kratos-hentry kratos-post-inner clearfix">
+            <header class="kratos-entry-header">
+                
+                    <h1 class="kratos-entry-title text-center">经典豆瓣TOP250爬取</h1>
+                
+                
+                <ul class="kratos-post-meta text-center">
+                    <li><i class="fa fa-calendar"></i> 2021-06-04</li>
+                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~26.94K
+                        
+                        字
+                    </li>
+                    
+                </ul>
+            </header>
+            <div class="kratos-post-content">
+                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                    本文最后编辑于 <time datetime="1623772051641"></time> 前，其中的内容可能需要更新。
+                </div>
+                
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E6%A1%88%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">经典案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a></li></ol>
+                    </div>
+                
+                <hr />
+                <h2 id="经典案例"><a href="#经典案例" class="headerlink" title="经典案例"></a>经典案例</h2><p>每个学习爬虫的人都爬过的豆瓣电影TOP250，先看下<a target="_blank" rel="noopener" href="https://movie.douban.com/top250">长什么样</a>。</p>
+<p><img src="Screenshot_1.webp"></p>
+<p>开爬。</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>查看源代码，所有的数据都在页面源代码中，直接用requests请求拿过来页面源代码，再通过re匹配即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 要抓取的目标网址，豆瓣电影TOP250</span></span><br><span class="line">BASE_URL = <span class="string">&quot;https://movie.douban.com/top250&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">request</span>(<span class="params">url</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取页面源代码</span></span><br><span class="line"><span class="string">        url: 目标网址</span></span><br><span class="line"><span class="string">        return: 页面源码&quot;&quot;&quot;</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.864.37&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    response = requests.get(url=url, headers=headers)</span><br><span class="line">    page_content = response.text</span><br><span class="line">    <span class="keyword">return</span> page_content</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">page_content</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;解析页面&quot;&quot;&quot;</span></span><br><span class="line">    partern = re.<span class="built_in">compile</span>(</span><br><span class="line">        <span class="string">r&#x27;&lt;li&gt;.*?&lt;div class=&quot;item&quot;&gt;.*?&lt;img width=&quot;100&quot;.*?src=&quot;(?P&lt;image_url&gt;.*?)&quot;&#x27;</span></span><br><span class="line">        <span class="string">r&#x27;.*?&lt;span class=&quot;title&quot;&gt;(?P&lt;name&gt;.*?)&#x27;</span></span><br><span class="line">        <span class="string">r&#x27;&lt;/span&gt;.*?&lt;p class=&quot;&quot;&gt;.*?&lt;br&gt;(?P&lt;year&gt;.*?)&amp;nbsp.*?&lt;span class=&quot;rating_num&quot; property=&quot;v:average&quot;&gt;(?P&lt;score&gt;.*?)&lt;/span&gt;.*?&#x27;</span></span><br><span class="line">        <span class="string">r&#x27;&lt;span&gt;(?P&lt;number&gt;.*?)人评价&lt;/span&gt;&#x27;</span>, re.S)</span><br><span class="line"></span><br><span class="line">    parse_result = partern.finditer(page_content)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> parse_result:</span><br><span class="line">        <span class="comment"># print(item.group(&quot;name&quot;))</span></span><br><span class="line">        <span class="comment"># print(item.group(&quot;year&quot;).strip())</span></span><br><span class="line">        <span class="comment"># print(item.group(&quot;score&quot;))</span></span><br><span class="line">        <span class="comment"># print(item.group(&quot;number&quot;))</span></span><br><span class="line">        <span class="comment"># print(item.group(&quot;image_url&quot;))</span></span><br><span class="line">        dic = item.groupdict()</span><br><span class="line">        dic[<span class="string">&#x27;year&#x27;</span>] = dic[<span class="string">&#x27;year&#x27;</span>].strip()</span><br><span class="line">        csv_writer(<span class="string">&quot;data.csv&quot;</span>, dic.values())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">csv_writer</span>(<span class="params">filename: <span class="built_in">str</span>, value: <span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;csv写入函数&quot;&quot;&quot;</span></span><br><span class="line">    f = codecs.<span class="built_in">open</span>(filename, mode=<span class="string">&quot;a&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">    csvwriter = csv.writer(f)</span><br><span class="line">    csvwriter.writerow(value)</span><br><span class="line">    f.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">        target_url = BASE_URL + <span class="string">&#x27;?start=&#123;&#125;&amp;filter=&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(i * <span class="number">25</span>))</span><br><span class="line">        <span class="comment"># print(target_url)</span></span><br><span class="line">        page_content = request(target_url)</span><br><span class="line">        parse(page_content)</span><br></pre></td></tr></table></figure>
+
+<p>保存到data.csv</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br></pre></td><td class="code"><pre><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p480747492.jpg,肖申克的救赎,1994,9.7,2363296</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2561716440.jpg,霸王别姬,1993,9.6,1759688</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2372307693.jpg,阿甘正传,1994,9.5,1780693</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p511118051.jpg,这个杀手不太冷,1994,9.4,1953794</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p457760035.jpg,泰坦尼克号,1997,9.4,1741778</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2578474613.jpg,美丽人生,1997,9.6,1094798</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2557573348.jpg,千与千寻,2001,9.4,1857168</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p492406163.jpg,辛德勒的名单,1993,9.5,908938</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2616355133.jpg,盗梦空间,2010,9.3,1717903</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p524964039.jpg,忠犬八公的故事,2009,9.4,1180113</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2614988097.jpg,星际穿越,2014,9.3,1390653</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p479682972.jpg,楚门的世界,1998,9.3,1307123</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2574551676.jpg,海上钢琴师,1998,9.3,1395475</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p579729551.jpg,三傻大闹宝莱坞,2009,9.2,1568001</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1461851991.jpg,机器人总动员,2008,9.3,1103099</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1910824951.jpg,放牛班的春天,2004,9.3,1087370</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2564556863.jpg,无间道,2002,9.3,1058718</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2614500649.jpg,疯狂动物城,2016,9.2,1535791</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2455050536.jpg,大话西游之大圣娶亲,1995,9.2,1270103</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1363250216.jpg,熔炉,2011,9.3,770798</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p616779645.jpg,教父,1972,9.3,772761</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2614359276.jpg,当幸福来敲门,2006,9.1,1260649</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2540924496.jpg,龙猫,1988,9.2,1051778</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p501177648.jpg,怦然心动,2010,9.1,1492708</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1505392928.jpg,控方证人,1957,9.6,371278</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1454261925.jpg,触不可及,2011,9.3,828170</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p462657443.jpg,蝙蝠侠：黑暗骑士,2008,9.2,861486</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p452089833.jpg,末代皇帝,1987,9.3,665966</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2614500706.jpg,寻梦环游记,2017,9.1,1307556</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2524040532.jpg,活着,1994,9.3,669518</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2642829472.jpg,指环王3：王者无敌,2003,9.2,653616</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1963126880.jpg,乱世佳人,1939,9.3,567787</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2555295759.jpg,何以为家,2018,9.1,830389</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2614949805.jpg,哈利·波特与魔法石,2001,9.1,882053</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p485887754.jpg,飞屋环游记,2009,9.0,1098265</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2118532944.jpg,素媛,2013,9.3,544710</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2401676338.jpg,摔跤吧！爸爸,2016,9.0,1298769</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1784592701.jpg,少年派的奇幻漂流,2012,9.1,1148125</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2173577632.jpg,十二怒汉,1957,9.4,381454</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2174346180.jpg,哈尔的移动城堡,2004,9.1,819033</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2553104888.jpg,鬼子来了,2000,9.3,508031</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2561305376.jpg,我不是药神,2018,9.0,1726641</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2561721372.jpg,大话西游之月光宝盒,1995,9.0,1011850</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1446261379.jpg,天空之城,1986,9.1,689301</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2550757929.jpg,闻香识女人,1992,9.1,706224</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2189265085.jpg,罗马假日,1953,9.0,800710</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2640236255.jpg,指环王2：双塔奇兵,2002,9.1,609036</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p453924541.jpg,猫鼠游戏,2002,9.1,734119</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2653054340.jpg,天堂电影院,1988,9.2,525154</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2158166535.jpg,辩护人,2013,9.2,500175</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2640234840.jpg,指环王1：护戒使者,2001,9.1,693680</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2184505167.jpg,大闹天宫,1961(中国大陆) / 1964(中国大陆) / 1978(中国大陆) / 2004(中国大陆),9.4,340208</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p792376093.jpg,钢琴家,2002,9.2,457919</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2277799019.jpg,狮子王,1994,9.1,679213</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2194138787.jpg,教父2,1974,9.2,433973</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2575465690.jpg,死亡诗社,1989,9.1,571996</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1910926158.jpg,搏击俱乐部,1999,9.0,704145</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p451926968.jpg,黑客帝国,1999,9.0,659879</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1512562287.jpg,让子弹飞,2010,8.9,1337990</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2549177902.jpg,绿皮书,2018,8.9,1284278</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1910899751.jpg,饮食男女,1994,9.1,485412</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1665997400.jpg,美丽心灵,2001,9.0,625114</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2554525534.jpg,海蒂和爷爷,2015,9.2,377506</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1808872109.jpg,窃听风暴,2006,9.2,462123</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p792443418.jpg,两杆大烟枪,1998,9.1,498097</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2192535722.jpg,本杰明·巴顿奇事,2008,8.9,811159</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2648230660.jpg,情书,1995,8.9,820384</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2498971355.jpg,看不见的客人,2016,8.8,998583</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p792238287.jpg,飞越疯人院,1975,9.1,473438</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1473670352.jpg,穿条纹睡衣的男孩,2008,9.1,425919</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2441988159.jpg,西西里的美丽传说,2000,8.9,801233</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1014542496.jpg,拯救大兵瑞恩,1998,9.0,530981</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2165511465.jpg,小鞋子,1997,9.2,333521</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p453788577.jpg,音乐之声,1965,9.1,491814</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2634997853.jpg,阿凡达,2009,8.8,1160560</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2559579779.jpg,海豚湾,2009,9.3,311697</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p480383375.jpg,致命魔术,2006,8.9,706971</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p477229647.jpg,美国往事,1984,9.2,340334</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1593414327.jpg,沉默的羔羊,1991,8.9,702654</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1832875827.jpg,禁闭岛,2010,8.8,779670</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2209066019.jpg,蝴蝶效应,2004,8.8,765655</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1910902213.jpg,低俗小说,1994,8.9,682056</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p480965695.jpg,心灵捕手,1997,8.9,577385</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2178872593.jpg,布达佩斯大饭店,2014,8.9,731182</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2219586434.jpg,七宗罪,1995,8.8,794001</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p465939041.jpg,春光乍泄,1997,8.9,515164</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p917846733.jpg,哈利·波特与死亡圣器(下),2011,8.9,639906</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2263408369.jpg,摩登时代,1936,9.3,237607</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p884763596.jpg,被嫌弃的松子的一生,2006,8.9,602295</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2579932167.jpg,喜剧之王,1999,8.8,788367</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2558364386.jpg,致命ID,2003,8.8,657787</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p657823840.jpg,杀人回忆,2003,8.9,557770</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1596085504.jpg,加勒比海盗,2003,8.8,715622</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p480956937.jpg,剪刀手爱德华,1990,8.7,898594</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2004174709.jpg,勇敢的心,1995,8.9,490782</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1546987967.jpg,狩猎,2012,9.1,306982</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2505525050.jpg,请以你的名字呼唤我,2017,8.9,557338</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p456825720.jpg,红辣椒,2006,9.0,349004</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2604889017.jpg,断背山,2005,8.8,600191</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1816276065.jpg,7号房的礼物,2013,8.9,446140</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2447590313.jpg,天使爱美丽,2001,8.7,848389</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1613191025.jpg,幽灵公主,1997,8.9,442085</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2564498893.jpg,小森林 夏秋篇,2014,9.0,349196</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2220184425.jpg,第六感,1999,8.9,451081</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2564685215.jpg,阳光灿烂的日子,1994,8.8,511391</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p792381411.jpg,重庆森林,1994,8.8,652297</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1305562621.jpg,超脱,2011,8.9,408428</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2219011938.jpg,功夫,2004,8.7,839875</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2357915564.jpg,唐伯虎点秋香,1993,8.7,864732</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2555762374.jpg,爱在黎明破晓前,1995,8.8,512829</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2544912792.jpg,人生果实,2017,9.5,139445</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2215147728.jpg,小森林 冬春篇,2015,9.0,313078</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2567845803.jpg,一一,2000,9.1,293722</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1706428744.jpg,蝙蝠侠：黑暗骑士崛起,2012,8.8,589732</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2620392435.jpg,菊次郎的夏天,1999,8.8,470519</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2635433927.jpg,入殓师,2008,8.9,483243</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2221768894.jpg,消失的爱人,2014,8.7,741730</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p661160053.jpg,无人知晓,2004,9.1,242934</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2414157745.jpg,倩女幽魂,1987,8.7,605138</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2614500883.jpg,超能陆战队,2014,8.7,826422</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p456692072.jpg,侧耳倾听,1995,8.9,379215</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1910812549.jpg,哈利·波特与阿兹卡班的囚徒,2004,8.8,512727</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2190556408.jpg,完美的世界,1993,9.1,233065</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p617533616.jpg,借东西的小人阿莉埃蒂,2010,8.8,448723</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2223011274.jpg,甜蜜蜜,1996,8.9,427414</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1675053073.jpg,萤火之森,2011,8.9,423345</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2561542458.jpg,爱在日落黄昏时,2004,8.9,425918</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2210954024.jpg,驯龙高手,2010,8.7,628179</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p488255145.jpg,玛丽和马克思,2009,8.9,367547</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p854757687.jpg,幸福终点站,2004,8.8,449926</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p689520756.jpg,告白,2010,8.7,584313</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2515539487.jpg,天书奇谭,1983(中国大陆),9.2,191303</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p692813374.jpg,大鱼,2003,8.8,474379</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2609063925.jpg,射雕英雄传之东成西就,1993,8.7,533159</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1374786017.jpg,阳光姐妹淘,2011,8.8,509665</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1082651990.jpg,哈利·波特与密室,2002,8.7,537063</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2513247938.jpg,怪兽电力公司,2001,8.7,539086</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2016930906.jpg,恐怖直播,2013,8.7,533277</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p792776858.jpg,神偷奶爸,2010,8.6,797755</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2070153774.jpg,时空恋旅人,2013,8.8,484144</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1283675359.jpg,玩具总动员3,2010,8.9,415735</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2016401659.jpg,傲慢与偏见,2005,8.7,640438</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2169664351.jpg,教父3,1990,8.9,289948</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2360940399.jpg,釜山行,2016,8.6,959976</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2532803206.jpg,哪吒闹海,1979,9.1,207231</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2398141939.jpg,血战钢锯岭,2016,8.7,657406</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2406624993.jpg,一个叫欧维的男人决定去死,2015,8.9,342088</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1800813767.jpg,被解救的姜戈,2012,8.8,495236</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2215886505.jpg,七武士,1954,9.3,157351</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2249048907.jpg,喜宴,1993,8.9,280196</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1351050722.jpg,未麻的部屋,1997,9.0,239227</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2565332644.jpg,电锯惊魂,2004,8.7,425479</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p652417775.jpg,我是山姆,2001,9.0,259653</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2516578307.jpg,头号玩家,2018,8.6,1138578</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1917567652.jpg,风之谷,1984,8.9,307063</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p455677490.jpg,上帝之城,2002,9.0,255707</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2504997087.jpg,英雄本色,1986,8.7,426643</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p792223507.jpg,谍影重重3,2007,8.8,351487</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1867084027.jpg,疯狂原始人,2013,8.7,712391</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p470419493.jpg,卢旺达饭店,2004,8.9,257402</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2510081688.jpg,三块广告牌,2017,8.7,684406</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1903379979.jpg,新世界,2013,8.9,300798</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1910828286.jpg,花样年华,2000,8.7,475583</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2255040492.jpg,模仿游戏,2014,8.7,504705</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2597918718.jpg,纵横四海,1991,8.8,338906</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p443461818.jpg,黑客帝国3：矩阵革命,2003,8.8,353561</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2166160837.jpg,达拉斯买家俱乐部,2013,8.8,369844</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p456666151.jpg,岁月神偷,2010,8.7,502534</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2276780256.jpg,心迷宫,2014,8.7,409481</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2266293606.jpg,头脑特工队,2015,8.7,488191</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2395733377.jpg,你的名字。,2016,8.4,1134874</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p641688453.jpg,记忆碎片,2000,8.7,508006</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2603716224.jpg,忠犬八公物语,1987,9.2,157136</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2584519452.jpg,荒蛮故事,2014,8.8,353965</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2561439800.jpg,寄生虫,2019,8.8,1125278</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2603364117.jpg,海街日记,2015,8.8,347104</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p475600770.jpg,真爱至上,2003,8.6,600244</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2220776342.jpg,爆裂鼓手,2014,8.7,465097</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2434249040.jpg,贫民窟的百万富翁,2008,8.6,630016</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1982176012.jpg,东邪西毒,1994,8.6,488030</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1021883305.jpg,惊魂记,1960,9.0,209421</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2237136718.jpg,萤火虫之墓,1988,8.7,352414</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p735391084.jpg,哈利·波特与火焰杯,2005,8.6,463960</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2549648344.jpg,黑天鹅,2010,8.6,687717</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2530599636.jpg,小偷家族,2018,8.7,684571</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p767586451.jpg,绿里奇迹,1999,8.9,249136</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1735642656.jpg,无敌破坏王,2012,8.7,437272</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p709670262.jpg,你看起来好像很好吃,2010,8.9,279807</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1910895719.jpg,冰川时代,2002,8.6,515039</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2074715729.jpg,爱在午夜降临前,2013,8.8,291034</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p648370300.jpg,九品芝麻官,1994,8.6,499623</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2353324612.jpg,雨人,1988,8.7,342625</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p712241453.jpg,疯狂的石头,2006,8.5,663816</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p483604864.jpg,恋恋笔记本,2004,8.5,542020</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p462470694.jpg,恐怖游轮,2009,8.5,655305</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1612355875.jpg,雨中曲,1952,9.0,170988</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p456676352.jpg,魔女宅急便,1989,8.7,378741</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2507709428.jpg,奇迹男孩,2017,8.6,472600</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p453716305.jpg,色，戒,2007,8.5,579145</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2399597512.jpg,虎口脱险,1966,8.9,198517</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2421855655.jpg,海边的曼彻斯特,2016,8.6,399115</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2560717825.jpg,2001太空漫游,1968,8.8,243088</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p792257137.jpg,人工智能,2001,8.7,362744</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2170238828.jpg,城市之光,1931,9.3,110942</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2363208684.jpg,可可西里,2004,8.8,244594</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2457609817.jpg,二十二,2015,8.7,242128</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2259715855.jpg,房间,2015,8.8,321691</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1598883511.jpg,罗生门,1950,8.8,252804</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1910909085.jpg,终结者2：审判日,1991,8.7,287626</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1505312273.jpg,初恋这件小事,2010,8.4,845669</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2505928032.jpg,大佛普拉斯,2017,8.7,341343</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1481879628.jpg,遗愿清单,2007,8.7,331269</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2549558913.jpg,波西米亚狂想曲,2018,8.7,478280</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p848381236.jpg,牯岭街少年杀人事件,1991,8.9,215299</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p988260245.jpg,源代码,2011,8.5,681677</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2351134499.jpg,魂断蓝桥,1940,8.8,228810</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1421018669.jpg,新龙门客栈,1992,8.6,364204</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2570901292.jpg,青蛇,1993,8.6,423044</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2236181653.jpg,疯狂的麦克斯4：狂暴之路,2015,8.6,429756</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2575043939.jpg,无耻混蛋,2009,8.6,392522</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1244017073.jpg,血钻,2006,8.7,302450</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2375245718.jpg,步履不停,2008,8.8,221179</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1023654037.jpg,燃情岁月,1994,8.8,241510</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2559581324.jpg,海洋,2009,9.1,140256</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p456703618.jpg,东京教父,2003,9.0,150187</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p958008320.jpg,无间道2,2003,8.6,346646</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2187896734.jpg,彗星来的那一夜,2013,8.5,432217</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p667644866.jpg,谍影重重2,2004,8.7,294670</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2079334286.jpg,穿越时空的少女,2006,8.6,326398</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p792282381.jpg,战争之王,2005,8.7,292534</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2525770523.jpg,阿飞正传,1990,8.5,412037</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1973489335.jpg,地球上的星星,2007,8.9,173201</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2522331945.jpg,完美陌生人,2016,8.5,451049</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1597183981.jpg,谍影重重,2002,8.6,352151</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2571500223.jpg,香水,2006,8.5,464907</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2195672555.jpg,千钧一发,1997,8.8,217710</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p443461390.jpg,黑客帝国2：重装上阵,2003,8.6,312981</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1925331564.jpg,东京物语,1953,9.2,109758</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2627847859.jpg,崖上的波妞,2008,8.6,382805</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1075591188.jpg,我爱你,2011,9.1,135121</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1140984198.jpg,朗读者,2008,8.6,397681</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2250287733.jpg,再次出发之纽约遇见你,2013,8.6,351101</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2393044761.jpg,驴得水,2016,8.3,765089</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2263822658.jpg,聚焦,2015,8.8,234727</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p1344888983.jpg,浪潮,2008,8.7,228081</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p513567548.jpg,猜火车,1996,8.5,363994</span><br><span class="line">https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2510956726.jpg,小萝莉的猴神大叔,2015,8.4,412418</span><br><span class="line">https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2561545031.jpg,追随,1998,8.9,152188</span><br><span class="line">https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1910900710.jpg,黑鹰坠落,2001,8.7,244341</span><br><span class="line">https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2542848758.jpg,网络谜踪,2018,8.5,439379</span><br></pre></td></tr></table></figure>
+
+            </div>
+            
+                <div class="kratos-copyright text-center clearfix">
+                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                </div>
+            
+            <footer class="kratos-entry-footer clearfix">
+                
+                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                    
+                    
+                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                        <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/06/04/%E7%BB%8F%E5%85%B8%E8%B1%86%E7%93%A3TOP250%E7%88%AC%E5%8F%96/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/06/04/%E7%BB%8F%E5%85%B8%E8%B1%86%E7%93%A3TOP250%E7%88%AC%E5%8F%96/";
+            const title         = "「经典豆瓣TOP250爬取」";
+            const excerpt       = `经典案例每个学习爬虫的人都爬过的豆瓣电影TOP250，先看下长什么样。
+
+开爬。
+分析查看源代码，所有的数据都在页面源代码中，直接用requests请求拿过来页面源代码，再通过re匹配即可。
+123456789101112131415...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                    
+                    </div>
+                
+                <div class="footer-tag clearfix">
+                    <div class="pull-left">
+                    <i class="fa fa-tags"></i>
+                        <a class="tag-none-link" href="/tags/re/" rel="tag">re</a>, <a class="tag-none-link" href="/tags/requests/" rel="tag">requests</a>
+                    </div>
+                    <div class="pull-date">
+                    <span>最后编辑：2021-06-15</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+            <nav class="navigation post-navigation clearfix" role="navigation">
+                
+                <div class="nav-previous clearfix">
+                    <a title=" 基于docker安装redis" href="/2021/06/04/基于docker安装redis/">&lt; 上一篇</a>
+                </div>
+                
+                
+                <div class="nav-next clearfix">
+                    <a title=" re正则表达式操作" href="/2021/06/04/re正则表达式操作/">下一篇 &gt;</a>
+                </div>
+                
+            </nav>
+        
+        
+    </article>
+</section>
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/my.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E6%A1%88%E4%BE%8B"><span class="toc-text">经典案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-text">分析</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E6%A0%87%E5%87%86%E5%BA%93/">Python标准库</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BA%84%E5%AD%90/">庄子</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.7em;">Hexo</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.65em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.65em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.65em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.75em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.7em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.65em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.75em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.65em;">javascript</a> <a href="/tags/linux/" style="font-size: 0.65em;">linux</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE/"><i class="fa  fa-book"></i> Django入门-静态文件设置</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/15/%E5%86%85%E7%AF%87%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E9%80%8D%E9%81%A5%E6%B8%B8/"><i class="fa  fa-book"></i> 内篇（一）——逍遥游</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/15/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"><i class="fa  fa-book"></i> python多线程基本原理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/"><i class="fa  fa-book"></i> Django入门-视图函数</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/"><i class="fa  fa-book"></i> 抓取网易云音乐热评</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:espholychan@outlook.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            
+                        </div>
+                        <div>
+                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">鄂ICP备2021008617号-1</a></li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+<script async src="/js/candy.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="81305697"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
