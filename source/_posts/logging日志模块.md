@@ -9,7 +9,7 @@ only:
   - category
   - tag
 date: 2021-06-02 09:34:05
-categories: Python标准库
+categories: Python库
 pic:
 ---
 

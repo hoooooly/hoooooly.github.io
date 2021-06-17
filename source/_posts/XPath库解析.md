@@ -11,7 +11,7 @@ only:
   - category
   - tag
 date: 2021-06-06 14:44:22
-categories: Python标准库
+categories: Python库
 pic:
 ---
 
