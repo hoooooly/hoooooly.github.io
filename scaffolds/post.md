@@ -2,16 +2,14 @@
 title: {{ title }}
 date: {{ date }}
 categories:
-tags:
-- tag0
+tags: [Hexo, Fluid]
 # sticky: 100
-pic:
+# 文章标题
+index_img:
+# 文章顶部banner标题 
+banner_img:
+# 开启评论，指定评论插件
 comments: true
-toc: true
-only:
-- home
-- category
-- tag
 ---
 
 

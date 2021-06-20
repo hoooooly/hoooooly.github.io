@@ -100,7 +100,7 @@ venv\Scripts\activate
 
 激活后，你的终端提示符会显示虚拟环境的名称。
 
-{% alertbox info "如果你使用的VS code，要在cmd命令行下激活虚拟环境，如果是power shell则不可以。" %}
+如果你使用的VS code，要在cmd命令行下激活虚拟环境，如果是power shell则不可以。
 
 ## 安装Flask
 

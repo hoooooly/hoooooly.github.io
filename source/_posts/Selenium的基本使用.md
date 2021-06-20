@@ -8,9 +8,9 @@ only:
   - home
   - category
   - tag
-date: 2021-05-25 21:15:51
+date: 2021-06-19 21:15:51
 categories: 爬虫
-pic:
+pic: selenium_logo_large.png
 ---
 
 在很多情况下，`Ajax`请求的接口通常会包含加密的参数，如`token`、`sign`等，如：[https://dynamic2.scrape.cuiqingcai.com/](https://dynamic2.scrape.cuiqingcai.com/)，它的`Ajax`接口是包含一个`token`参数的，如图所示。
@@ -28,7 +28,7 @@ pic:
 ### Selenium安装
 
 ```python
-pip3 install selenium
+pip install selenium
 ```
 
 ### chrome driver安装
@@ -112,6 +112,9 @@ browser = webdriver.Chrome()
 browser = webdriver.Firefox()
 browser = webdriver.Edge()
 browser = webdriver.Safari()
+
+# 如果你没有把chromedriver添加到系统环境变量中，executable_path参数要附上chromedriver的绝对路径
+browser = webdriver.Chrome(executable_path="D:/tools/chromedriver")
 ```
 
 这样就完成了浏览器对象的初始化并将其赋值为`browser`对象。接下来，要做的就是调用`browser`对象，让其执行各个动作以模拟浏览器操作。
@@ -397,5 +400,287 @@ browser.implicitly_wait(10)
 browser.get('https://dynamic2. scrape.cuiqingcai.com/') 
 input = browser.find_element_by_class_name('logo-image') 
 print(input)
+```
+
+## selenium提取数据
+
+### driver对象的常用属性和方法
+
+1. `driver.page_source` 当前标签页游览器渲染后的网页源代码
+2. `driver.current_url` 当前标签页的url
+3. `drive.close` 关闭当前标签页，如果只有一个标签页则关闭整个浏览器
+4. `drice.quit` 关闭浏览器
+5. `drive.forward` 页面前进
+6. `drive.back` 页面后退
+7. `drive.save_screenshot(imgname)` 页面截图
+
+```python
+import time
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver")
+
+driver.get("https://www.baidu.com")
+
+# # 在对话框输入python
+driver.find_element_by_id("kw").send_keys('python')
+
+# # 点击百度搜索
+driver.find_element_by_id("su").click()
+
+# time.sleep(6)
+# 保存搜索截图
+driver.save_screenshot("baidu_python.png")
+
+
+# 显示源码
+print(driver.page_source)
+
+# 显示响应对应的url
+print(driver.current_url)
+# https://www.baidu.com/
+
+# 显示标题
+print(driver.title)
+# 百度一下，你就知道
+
+time.sleep(2)
+driver.get('http://www.douban.com')
+time.sleep(2)
+driver.back()
+time.sleep(2)
+driver.foward()
+time.sleep(2)
+driver.close()
+
+driver.quit()
+```
+
+### driver对象定位标签元素获取标签对象的方法
+
+```python
+driver.find_element(s)_by_id()     # 返回一个元素
+driver.find_element(s)_by_class_name()   # 根据类名获取元素列表
+driver.find_element(s)_by_name()       # 根据标签的name属性返回包含标签对象元素的列表
+driver.find_element(s)_by_xpath()      # 返回一个包含元素的列表
+driver.find_element(s)_by_link_text()      # 根据链接文本获取元素列表
+driver.find_element(s)_by_partial_link_text()  # 根据链接包含的文本获取元素列表
+driver.find_element(s)_by_tag_name()   # 根据标签名获取元素列表
+driver.find_element(s)_by_css_selector()   #根据css选择器来获取元素
+```
+
+`find_element`和`find_elements`的区别在于，多了s就返回列表，没有s就返回匹配到的第一个标签对象。
+
+```python
+import time
+from selenium import webdriver
+
+
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver")
+
+url = "https://www.baidu.com"
+
+driver.get(url)
+
+# 通过xpath进行元素定位
+# driver.find_element_by_xpath('//*[@id="kw"]').send_keys("python")
+
+# 通过css选择器进行元素定位
+# driver.find_element_by_css_selector("#kw").send_keys("python")
+
+# 通过name属性值进行元素定位
+driver.find_element_by_name("wd").send_keys("python")
+
+# 目标元素在当前HTML是唯一标签的时候或者是众多定位出来的标签中的第一个的时候
+driver.find_element_by_tag_name("")
+
+driver.find_element_by_id("su").click()
+
+time.sleep(2)
+
+driver.quit()
+```
+
+### 标签对象提取文本内容和属性值
+
+- 获取文本`element.text`
+   - 通过定位获取的标签对象的`text`属性，获取文本内容
+
+- 获取属性值`element.get_attribute('属性名')
+   - 通过定位获取标签对象的`get_attribute`函数，获取文本内容
+
+代码实现：
+
+```python
+import time
+from selenium import webdriver
+
+
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver")
+
+driver.get("https://holychan.ltd/")
+
+title = driver.find_element_by_tag_name("h2")
+
+print(title.text)
+# Holy的个人站点
+
+email = driver.find_element_by_xpath("//*[@id='footer']/div[2]/div/div/ul[1]/li/a")
+
+print(email.get_attribute('href'))
+# mailto:espholychan@outlook.com
+
+driver.quit()
+```
+
+## selenium的其他用法
+
+### 标签页的切换
+
+当selenium打开多个标签页时，如何控制浏览器在不同的标签页中进行切换呢?
+
+- 获取所有标签页的窗口句柄
+
+- 利用窗口句柄切换到句柄指向的标签页
+
+
+具体方法：
+
+1. 获取当前所有标签页的句柄构成的列表
+
+```python
+current_windows = driver.window_handles
+```
+
+2. 根据标签页的句柄列表索引下标进行切换
+
+```python
+driver.switch_to.window(current_windows[0])
+```
+
+案列：
+
+```python
+import time
+from selenium import webdriver
+
+url = "https://sz.58.com/"
+
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver")
+
+driver.get(url)
+
+print(driver.current_url)
+print(driver.window_handles)
+
+# 定位并点击租房按钮
+driver.find_element_by_xpath('//*[@id="fcNav"]/em/a[1]').click()
+
+
+print(driver.current_url)
+print(driver.window_handles)
+
+time.sleep(3)
+current_windows = driver.window_handles
+
+driver.switch_to.window(current_windows[0])
+
+time.sleep(3)
+
+driver.quit()
+```
+
+### switch_to切换frame标签
+
+>iframe是html中常用的一种技术，即一个页面中嵌套着另外一个网页，selenium默认是访问不了frame中的内容的，对应的解决思路是 driver.switch_to.frame(frame_element)。
+
+ 登录QQ邮箱：
+
+ ```python
+import time
+from selenium import webdriver
+
+url = "https://mail.qq.com/"
+
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver")
+
+driver.get(url)
+
+# 切换当登陆的frame
+driver.switch_to.frame('login_frame')
+
+# 输入账号
+driver.find_element_by_xpath('//*[@id="u"]').send_keys("admin")
+# 输入密码
+driver.find_element_by_xpath('//*[@id="p"]').send_keys("=pass")
+# 点击登录
+driver.find_element_by_xpath('//*[@id="login_button"]').click()
+
+time.sleep(2)
+# 输入独立密码, 没设置独立密码的注释下面
+driver.find_element_by_xpath('//*[@id="pp"]').send_keys("pass")
+
+# 点击登录
+driver.find_element_by_xpath('//*[@id="btlogin"]').click()
+
+time.sleep(6)
+
+driver.quit()
+```
+
+### selenium对cookie的处理
+
+1. 获取cookie
+
+`driver.get_cookies()`返回列表信息，其中包含的是完整的cookie信息，光有Name、Value还有domain等cookie其他维度的信息。所以如果想要把获取到cookie信息和requests模块配合使用的话，需要转换为name、value作为键值对的cookie字典。
+
+```python
+# 获取当前标签页的全部cookie信息
+driver.get_cookies()
+# 把cookies转化成字典
+cookies_dict = {cookie['name']:cookie['value'] for cookie in driver.get_cookies()}
+```
+
+### selenium控制浏览器执行js代码
+
+`selelnium` 可以让浏览器执行我们规定的`js代码`，运行下列代码查看运行效果：
+
+```python
+import time
+from selenium import webdriver
+
+url = "https://www.holychan.ltd/"
+
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver")
+driver.get(url)
+time.sleep(1)
+
+# 定义一个js语句，滑动到页面底部
+js = "window.scrollTo(0, document.body.scrollHeight)"
+# 执行js的方法
+driver.execute_script(js)
+
+time.sleep(2)
+driver.quit()
+```
+
+### 页面等待
+
+**分类**
+
+1. 强制等待（了解）
+
+- 使用`time.sleep()`
+- 缺点：不智能，设置时间太短，元素还没有加载出来。设置时间太长，则会浪费时间。
+
+2. 隐式等待
+
+- 隐式等待针对的是元素定位，隐式等待设置了一个等待时间，在一段时间内判断元素是否定位成功，如果完成了就进行下一步。
+- 在设置的时间内没有定位成功，则会报超时加载
+
+示例代码：
+
+```python
+
 ```
 

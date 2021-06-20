@@ -51,11 +51,10 @@ async def read_item(item_id: int):
 
 在这个例子中，`item_id` 被声明为 `int` 类型。
 
-{% colorpanel success Check %}
 
 这将为你的函数提供编辑器支持，包括错误检查、代码补全等等。
 
-{% endcolorpanel %}
+
 
 ## 数据转换
 
@@ -65,13 +64,13 @@ async def read_item(item_id: int):
 {"item_id":3}
 ```
 
-{% colorpanel success Check %}
+
 
 注意函数接收（并返回）的值为 3，是一个 Python int 值，而不是字符串 "3"。
 
 所以，`FastAPI` 通过上面的类型声明提供了对请求的自动"解析"。
 
-{% endcolorpanel %}
+
 
 ## 数据校验
 
@@ -96,7 +95,6 @@ async def read_item(item_id: int):
 
 如果你提供的是 `float` 而非整数也会出现同样的错误，比如：[http://127.0.0.1:8000/items/1.2](http://127.0.0.1:8000/items/1.2)
 
-{% colorpanel success Check %}
 
 所以，通过同样的 Python 类型声明，FastAPI 提供了数据校验功能。
 
@@ -104,7 +102,7 @@ async def read_item(item_id: int):
 
 在开发和调试与你的 API 进行交互的代码时，这非常有用。
 
-{% endcolorpanel %}
+
 
 ## 文档
 
@@ -181,11 +179,9 @@ async def get_model(model_name: ModelName):
 
 可以使用 `model_name.value` 或通常来说 `your_enum_member.value` 来获取实际的值（在这个例子中为 str）。
 
-{% colorpanel warning Tip %}
 
 你也可以通过 ModelName.tony.value 来获取值 "tony"。
 
-{% endcolorpanel %}
 
 ### 返回枚举成员
 
@@ -222,9 +218,8 @@ async def read_file(file_path: str):
 {"file_path":"/root/holy"}
 ```
 
-{% colorpanel warning Tip %}
+
 
 可能会需要参数包含 /home/johndoe/myfile.txt，以斜杠（/）开头。
 
 在这种情况下，URL 将会是 /files//home/johndoe/myfile.txt，在files 和 home 之间有一个双斜杠（//）。
-{% endcolorpanel %}

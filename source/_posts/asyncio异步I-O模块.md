@@ -141,14 +141,11 @@ async def main():
 asyncio.run(main())
 ```
 
-{% colorpanel info 重要 %}
-
 "协程" 可用来表示两个紧密关联的概念:
-- 协程函数: 定义形式为 `async def` 的函数;
 
+- 协程函数: 定义形式为 `async def` 的函数;
 - 协程对象: 调用 `协程函数` 所返回的对象。
 
-{% endcolorpanel %}
 
 #### 任务
 

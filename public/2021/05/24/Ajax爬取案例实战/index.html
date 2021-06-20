@@ -1,178 +1,270 @@
+
+
 <!DOCTYPE html>
-<html lang="Zh">
-    <head>
-  <!-- 元数据 -->
-  <meta charset="utf-8">
-  <link rel="icon" href="/images/logo.webp">
-  <title>Ajax爬取案例实战 | Holy的个人站点</title>
-  <meta name="author" content="Holy Chan" />
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="robots" content="index,follow" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="format-detection" content="telphone=no, email=no" />
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-    <meta name="keywords" content="ajax, python" />
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
   
-  <meta name="description" content="准备工作 安装好Python 3（最低为 3.6 版本），并能成功运行Python 3程序。 了解PythonHTTP请求库requests的基本用法。 了解Ajax的基础知识和分析Ajax的基本方法。  爬取目标其链接为：https:&#x2F;&#x2F;dynamic1.scrape.cuiqingcai.com&#x2F;，页面如图所示。  需要完成的目标有：  分析页面数据的加载逻辑。 用requests实现Ajax">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Ajax爬取案例实战">
-<meta property="og:url" content="http://example.com/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/index.html">
-<meta property="og:site_name" content="Holy的个人站点">
-<meta property="og:description" content="准备工作 安装好Python 3（最低为 3.6 版本），并能成功运行Python 3程序。 了解PythonHTTP请求库requests的基本用法。 了解Ajax的基础知识和分析Ajax的基本方法。  爬取目标其链接为：https:&#x2F;&#x2F;dynamic1.scrape.cuiqingcai.com&#x2F;，页面如图所示。  需要完成的目标有：  分析页面数据的加载逻辑。 用requests实现Ajax">
-<meta property="og:locale">
-<meta property="og:image" content="http://example.com/images/logo.webp">
-<meta property="article:published_time" content="2021-05-24T12:13:23.000Z">
-<meta property="article:modified_time" content="2021-06-15T03:24:11.420Z">
-<meta property="article:author" content="Holy Chan">
-<meta property="article:tag" content="ajax">
-<meta property="article:tag" content="python">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/logo.webp">
-<meta name="twitter:site" content="@null">
-  
-  <!-- 站点验证相关 -->
+  <title>Ajax爬取案例实战 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
   
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
     
   
-  <!-- 样式表文件 -->
-  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+
   
-    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
   
-  
-  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
-  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
-  
-  
-    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
-  
-  <!-- 不得不预先加载的一些JS文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
-  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
-    <body class="custom-background">
-        <div id="kratos-wrapper">
-    <div id="kratos-page">
-        <div id="kratos-header">
-            <header id="kratos-desktop-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="nav-header">
-                        <nav id="kratos-menu-wrap">
-                            <ul id="kratos-primary-menu" class="sf-menu">
-                                
-                                    
-                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
-                                    
-                                
-                                    
-                                        <li>
-                                            <a><i class="fa fa-link"></i>链接</a>
-                                            <ul class="sub-menu">
-                                                
-                                                    
-                                                
-                                                    
-                                                        <li><a target="_blank" rel="noopener" href="http://holychan.ltd:8000">个人网盘</a></li>
-                                                    
-                                                
-                                            </ul>
-                                        </li>
-                                    
-                                
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </header>
-            <header id="kratos-mobile-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
-                    <div class="nav-toggle">
-                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
-                            <i></i>
-                        </a>
-                    </div>
-                </div>
-            </header>
-        </div>
-        <div class="kratos-start kratos-hero-2">
-            <!-- <div class="kratos-overlay"></div> -->
-            <div class="kratos-cover kratos-cover-2 text-center">
-                <div class="desc desc2 animate-box">
-                    <a href="/">
-                        <h2>Holy的个人站点</h2> <br />
-                        <span></span>
-                    </a>
-                </div>
-            </div>
-        </div>
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
 
-        <div id="kratos-blog-post">
-            <div class="container">
-                <div id="main" class="row">
-                    
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-        <section class="col-md-8">
-    <article>
-        <div class="kratos-hentry kratos-post-inner clearfix">
-            <header class="kratos-entry-header">
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 
-                    <h1 class="kratos-entry-title text-center">Ajax爬取案例实战</h1>
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
                 
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
                 
-                <ul class="kratos-post-meta text-center">
-                    <li><i class="fa fa-calendar"></i> 2021-05-24</li>
-                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
-                    <li>
-                        <i class="fa fa-edit"></i> 
-                        
-                        
-                            ~4.18K
-                        
-                        字
-                    </li>
-                    
-                </ul>
-            </header>
-            <div class="kratos-post-content">
-                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1623727451420"></time> 前，其中的内容可能需要更新。
-                </div>
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
                 
-                    <div class="kratos-post-inner-toc">
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E5%8F%96%E7%9B%AE%E6%A0%87"><span class="toc-number">2.</span> <span class="toc-text">爬取目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E5%8F%96%E5%88%97%E8%A1%A8%E9%A1%B5"><span class="toc-number">3.</span> <span class="toc-text">爬取列表页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E5%8F%96%E8%AF%A6%E6%83%85%E9%A1%B5"><span class="toc-number">4.</span> <span class="toc-text">爬取详情页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-number">5.</span> <span class="toc-text">保存数据</span></a></li></ol>
-                    </div>
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Ajax爬取案例实战">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-05-24 20:13" pubdate>
+        2021年5月24日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Ajax爬取案例实战</h1>
+            
+              <p class="note note-info">
                 
-                <hr />
-                <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+                  本文最后更新于：2021年6月15日 上午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
 <li>安装好<code>Python 3</code>（最低为 3.6 版本），并能成功运行<code>Python 3</code>程序。</li>
 <li>了解<code>PythonHTTP</code>请求库<code>requests</code>的基本用法。</li>
 <li>了解<code>Ajax</code>的基础知识和分析<code>Ajax</code>的基本方法。</li>
 </ul>
 <h2 id="爬取目标"><a href="#爬取目标" class="headerlink" title="爬取目标"></a>爬取目标</h2><p>其链接为：<a target="_blank" rel="noopener" href="https://dynamic1.scrape.cuiqingcai.com/">https://dynamic1.scrape.cuiqingcai.com/</a>，页面如图所示。</p>
-<p><img src="Screenshot_1.webp"></p>
+<p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
 <p>需要完成的目标有：</p>
 <ul>
 <li>分析页面数据的加载逻辑。</li>
@@ -180,21 +272,21 @@
 <li>将每部电影的数据保存成一个<code>JSON</code>数据文件。</li>
 </ul>
 <h2 id="爬取列表页"><a href="#爬取列表页" class="headerlink" title="爬取列表页"></a>爬取列表页</h2><p>打开浏览器开发者工具，切换到<code>Network</code>面板，勾选上<code>「Preserve Log」</code>并切换到<code>「XHR」</code>选项卡，如图所示。</p>
-<p><img src="Screenshot_2.webp"></p>
+<p><img src="Screenshot_2.webp" srcset="/img/loading.gif" lazyload></p>
 <p>点开第<code>2</code>个结果，观察到其<code>Ajax</code>接口请求的<code>URL</code>地址为：<code>https://dynamic1.scrape.cuiqingcai.com/api/movie/?limit=10&amp;offset=10</code>，这里有两个参数，一个是<code>limit</code>，其值为<code>10</code>，一个是<code>offset</code>，它的值也是<code>10</code>。</p>
 <p>切换到<code>Preview</code>选项卡，结果如图所示。</p>
-<p><img src="Screenshot_3.webp"></p>
+<p><img src="Screenshot_3.webp" srcset="/img/loading.gif" lazyload></p>
 <p>可以看到结果是一些<code>JSON</code>数据，它有一个<code>results</code>字段，这是一个列表，列表的每一个元素都是一个字典。观察一下字典的内容，可以看到对应的电影数据的字段了，如<code>name</code>、<code>alias</code>、<code>cover</code>、 <code>categories</code>，对比下浏览器中的真实数据，各个内容是完全一致的，而且这个数据已经非常结构化了，完全就是我们想要爬取的数据。</p>
 <p>导入一些所需的库并定义一些配置，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.INFO,</span><br><span class="line">                    <span class="built_in">format</span>=<span class="string">&#x27;%(asctime)s-%(levelname)s:%(message)s&#x27;</span>)</span><br><span class="line"></span><br><span class="line">INDEX_URL = <span class="string">&#x27;https://dynamic1.scrape.cuiqingcai.com/api/movie/?limit=&#123;limit&#125;&amp;offset=&#123;offset&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> logging<br><br>logging.basicConfig(level=logging.INFO,<br>                    <span class="hljs-built_in">format</span>=<span class="hljs-string">&#x27;%(asctime)s-%(levelname)s:%(message)s&#x27;</span>)<br><br>INDEX_URL = <span class="hljs-string">&#x27;https://dynamic1.scrape.cuiqingcai.com/api/movie/?limit=&#123;limit&#125;&amp;offset=&#123;offset&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <p>引入了<code>requests</code>和<code>logging</code>库，并定义了<code>logging</code>的基本配置，接着定义<code>INDEX_URL</code>，这里把<code>limit</code>和<code>offset</code>预留出来变成占位符，可以动态传入参数构造成一个完整的列表页<code>URL</code>。</p>
 <p>下面来实现一下列表页的爬取，先定义一个通用的爬取方法，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scrape_api</span>(<span class="params">url</span>):</span></span><br><span class="line">    logging.info(<span class="string">&#x27;scraping %s...&#x27;</span>, url)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = requests.get(url, verify=<span class="literal">False</span>)</span><br><span class="line">        <span class="keyword">if</span> response.status_code == <span class="number">200</span>:</span><br><span class="line">            <span class="keyword">return</span> response.json()</span><br><span class="line">        logging.error(<span class="string">&#x27;get invalid status code %s while scraping %s&#x27;</span>,</span><br><span class="line">                      response.status_code, url)</span><br><span class="line">    <span class="keyword">except</span> requests.RequestException:</span><br><span class="line">        logging.error(<span class="string">&#x27;error occurred while scraping %s&#x27;</span>, url, exc_info=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">scrape_api</span>(<span class="hljs-params">url</span>):</span><br>    logging.info(<span class="hljs-string">&#x27;scraping %s...&#x27;</span>, url)<br>    <span class="hljs-keyword">try</span>:<br>        response = requests.get(url, verify=<span class="hljs-literal">False</span>)<br>        <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:<br>            <span class="hljs-keyword">return</span> response.json()<br>        logging.error(<span class="hljs-string">&#x27;get invalid status code %s while scraping %s&#x27;</span>,<br>                      response.status_code, url)<br>    <span class="hljs-keyword">except</span> requests.RequestException:<br>        logging.error(<span class="hljs-string">&#x27;error occurred while scraping %s&#x27;</span>, url, exc_info=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
 
 <p>定义一个<code>scrape_api</code>方法，和之前不同的是，这个方法专门用来处理<code>JSON</code>接口，最后的<code>response</code>调用的是<code>json</code>方法，它可以解析响应的内容并将其转化成<code>JSON</code>字符串。</p>
 <p>在这个基础之上，定义一个爬取列表页的方法，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LIMIT = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scrape_index</span>(<span class="params">page</span>):</span></span><br><span class="line">    url = INDEX_URL.<span class="built_in">format</span>(limit=LIMIT, offset=LIMIT*(page-<span class="number">1</span>))</span><br><span class="line">    <span class="keyword">return</span> scrape_api(url)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">LIMIT = <span class="hljs-number">10</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">scrape_index</span>(<span class="hljs-params">page</span>):</span><br>    url = INDEX_URL.<span class="hljs-built_in">format</span>(limit=LIMIT, offset=LIMIT*(page-<span class="hljs-number">1</span>))<br>    <span class="hljs-keyword">return</span> scrape_api(url)<br></code></pre></td></tr></table></figure>
 
 <p>定义了一个<code>scrape_index</code>方法，用来接收参数<code>page</code>，<code>page</code>代表列表页的页码。</p>
 <p>先构造了一个<code>URL</code>，通过字符串的<code>format</code>方法，传入<code>limit</code>和<code>offset</code>的值。这里的<code>limit</code>直接使用了全局变量<code>LIMIT</code>的值，<code>offset</code>则是动态计算的，计算方法是页码数减1再乘以<code>limit</code>，比如第1页的<code>offset</code>值就是<code>0</code>，第2页的<code>offset</code>值就是<code>10</code>，以此类推。构造好<code>URL</code>之后，直接调用<code>scrape_api</code>方法并返回结果即可。</p>
@@ -203,439 +295,355 @@
 <h2 id="爬取详情页"><a href="#爬取详情页" class="headerlink" title="爬取详情页"></a>爬取详情页</h2><p>这时候已经可以拿到每一页的电影数据了，但是实际上这些数据还缺少一些想要的信息，如剧情简介等，所以需要进一步进入到详情页来获取这些内容。</p>
 <p>这时候点击任意一部电影，如《教父》，进入到其详情页面，这时候可以发现页面的<code>URL</code>已经变成了<a target="_blank" rel="noopener" href="https://dynamic1.scrape.cuiqingcai.com/detail/40"></a>，页面也成功展示了详情页的信息</p>
 <p>先定义一个详情页的爬取逻辑吧，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DETAIL_URL = <span class="string">&#x27;https://dynamic1.scrape.cuiqingcai.com/api/movie/&#123;id&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scrape_detail</span>(<span class="params"><span class="built_in">id</span></span>):</span></span><br><span class="line">    url = DETAIL_URL.<span class="built_in">format</span>(<span class="built_in">id</span>=<span class="built_in">id</span>)</span><br><span class="line">    <span class="keyword">return</span> scrape_api(url)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">DETAIL_URL = <span class="hljs-string">&#x27;https://dynamic1.scrape.cuiqingcai.com/api/movie/&#123;id&#125;&#x27;</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">scrape_detail</span>(<span class="hljs-params"><span class="hljs-built_in">id</span></span>):</span><br>    url = DETAIL_URL.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">id</span>=<span class="hljs-built_in">id</span>)<br>    <span class="hljs-keyword">return</span> scrape_api(url)<br></code></pre></td></tr></table></figure>
 
 <p>定义了一个<code>scrape_detail</code>方法，它接收参数<code>id</code>。这里的实现也非常简单，先根据定义好的<code>DETAIL_UR</code>L加上<code>id</code>，构造一个真实的详情页<code>Ajax</code>请求的<code>URL</code>，然后直接调用<code>scrape_api</code>方法传入这个<code>URL</code>即可。接着，定义一个总的调用方法，将以上的方法串联调用起来，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">for</span> page <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, TOTAL_PAGE+<span class="number">1</span>):</span><br><span class="line">        index_data = scrape_index(page)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> index_data.get(<span class="string">&#x27;results&#x27;</span>):</span><br><span class="line">            <span class="built_in">id</span> = item.get(<span class="string">&#x27;id&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">id</span>)</span><br><span class="line">            detail_data = scrape_detail(<span class="built_in">id</span>)</span><br><span class="line">            logging.info(<span class="string">&#x27;detail data %s&#x27;</span>, detail_data)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    <span class="hljs-keyword">for</span> page <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, TOTAL_PAGE+<span class="hljs-number">1</span>):<br>        index_data = scrape_index(page)<br>        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> index_data.get(<span class="hljs-string">&#x27;results&#x27;</span>):<br>            <span class="hljs-built_in">id</span> = item.get(<span class="hljs-string">&#x27;id&#x27;</span>)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>)<br>            detail_data = scrape_detail(<span class="hljs-built_in">id</span>)<br>            logging.info(<span class="hljs-string">&#x27;detail data %s&#x27;</span>, detail_data)<br></code></pre></td></tr></table></figure>
 
 <p>定义了一个<code>main</code>方法，首先遍历获取页码<code>page</code>，然后把<code>page</code>当成参数传递给<code>scrape_index</code>方法，得到列表页的数据。接着我遍历所有列表页的结果，获取每部电影的<code>id</code>，然后把<code>id</code>当作参数传递给<code>scrape_detail</code>方法，来爬取每部电影的详情数据，赋值为<code>detail_data</code>，输出即可。</p>
 <h2 id="保存数据"><a href="#保存数据" class="headerlink" title="保存数据"></a>保存数据</h2><p>定义一个数据保存的方法，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> makedirs</span><br><span class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> exists</span><br><span class="line"></span><br><span class="line">RESULT_DIR = <span class="string">&#x27;results&#x27;</span></span><br><span class="line"></span><br><span class="line">exists(RESULT_DIR) <span class="keyword">or</span> makedirs(RESULT_DIR)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_data</span>(<span class="params">data</span>):</span></span><br><span class="line">    name = data.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">    data_path = <span class="string">f&#x27;<span class="subst">&#123;RESULT_DIR&#125;</span>/<span class="subst">&#123;name&#125;</span>.json&#x27;</span></span><br><span class="line">    json.dump(data, <span class="built_in">open</span>(data_path, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>), ensure_ascii=<span class="literal">False</span>, indent=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">from</span> os <span class="hljs-keyword">import</span> makedirs<br><span class="hljs-keyword">from</span> os.path <span class="hljs-keyword">import</span> exists<br><br>RESULT_DIR = <span class="hljs-string">&#x27;results&#x27;</span><br><br>exists(RESULT_DIR) <span class="hljs-keyword">or</span> makedirs(RESULT_DIR)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_data</span>(<span class="hljs-params">data</span>):</span><br>    name = data.get(<span class="hljs-string">&#x27;name&#x27;</span>)<br>    data_path = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;RESULT_DIR&#125;</span>/<span class="hljs-subst">&#123;name&#125;</span>.json&#x27;</span><br>    json.dump(data, <span class="hljs-built_in">open</span>(data_path, <span class="hljs-string">&#x27;w&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>), ensure_ascii=<span class="hljs-literal">False</span>, indent=<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
 
 <p>首先定义了数据保存的文件夹<code>RESULTS_DIR</code>，注意，先要判断这个文件夹是否存在，如果不存在则需要创建。</p>
 <p>接着，定义了保存数据的方法<code>save_data</code>，首先获取数据的<code>name</code>字段，即电影的名称，把电影名称作为<code>JSON</code>文件的名称，接着构造<code>JSON</code>文件的路径，然后用<code>json</code>的<code>dump</code>方法将数据保存成文本格式。<code>dump</code>的方法设置了两个参数，一个是<code>ensure_ascii</code>，将其设置为<code>False</code>，它可以保证中文字符在文件中能以正常的中文文本呈现，而不是<code>unicode</code>字符；另一个是<code>indent</code>，它的数值为2，这代表生成的<code>JSON</code>数据结果有两个空格缩进，让它的格式显得更加美观。</p>
 <p>最后，<code>main</code>方法再调用下<code>save_data</code>方法即可，实现如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">for</span> page <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, TOTAL_PAGE+<span class="number">1</span>):</span><br><span class="line">        index_data = scrape_index(page)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> index_data.get(<span class="string">&#x27;results&#x27;</span>):</span><br><span class="line">            <span class="built_in">id</span> = item.get(<span class="string">&#x27;id&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">id</span>)</span><br><span class="line">            detail_data = scrape_detail(<span class="built_in">id</span>)</span><br><span class="line">            logging.info(<span class="string">&#x27;detail data %s&#x27;</span>, detail_data)</span><br><span class="line">            save_data(detail_data)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    <span class="hljs-keyword">for</span> page <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, TOTAL_PAGE+<span class="hljs-number">1</span>):<br>        index_data = scrape_index(page)<br>        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> index_data.get(<span class="hljs-string">&#x27;results&#x27;</span>):<br>            <span class="hljs-built_in">id</span> = item.get(<span class="hljs-string">&#x27;id&#x27;</span>)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>)<br>            detail_data = scrape_detail(<span class="hljs-built_in">id</span>)<br>            logging.info(<span class="hljs-string">&#x27;detail data %s&#x27;</span>, detail_data)<br>            save_data(detail_data)<br></code></pre></td></tr></table></figure>
 
 <p>本地<code>results</code>文件夹下出现了各个电影的<code>JSON</code>文件，如图所示。</p>
-<p><img src="Screenshot_4.webp"></p>
+<p><img src="Screenshot_4.webp" srcset="/img/loading.gif" lazyload></p>
 
             </div>
-            
-                <div class="kratos-copyright text-center clearfix">
-                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
-                </div>
-            
-            <footer class="kratos-entry-footer clearfix">
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
                 
-                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/ajax/">ajax</a>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
                     
                     
-                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
-                        <div class="share-wrap" style="display: none;">
-    <div class="share-group">
-        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-qq"></i>
+                      <a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">腾讯云主机CPU占用100%</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/24/Ajax%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/">
+                        <span class="hidden-mobile">Ajax的原理和解析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
-        </a>
-        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-star"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weixin"></i>
-            </div>
-            <div class="share-int">
-                <div class="qrcode" id="wechat-qr"></div>
-                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weibo"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-facebook"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-twitter"></i>
-            </div>
-        </a>
-    </div>
-    <script type="text/javascript">
-        $(()=>{
-            new QRCode("wechat-qr", {
-                text: "http://example.com/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/",
-                width: 150,
-                height: 150,
-                correctLevel : QRCode.CorrectLevel.H
-            });
-        });
-        function share(dest) {
-            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
-            const weiboBase     = "https://service.weibo.com/share/share.php?";
-            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
-            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
-            const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/";
-            const title         = "「Ajax爬取案例实战」";
-            const excerpt       = `准备工作
-安装好Python 3（最低为 3.6 版本），并能成功运行Python 3程序。
-了解PythonHTTP请求库requests的基本用法。
-了解Ajax的基础知识和分析Ajax的基本方法。
 
-爬取目标其链接为：https...`;
-            let _URL;
-            switch (dest) {
-                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
-                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
-                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
-                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
-                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
-            }
-            window.open(_URL);
-        };
-    </script>
-</div>
-                    
-                    </div>
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
                 
-                <div class="footer-tag clearfix">
-                    <div class="pull-left">
-                    <i class="fa fa-tags"></i>
-                        <a class="tag-none-link" href="/tags/ajax/" rel="tag">ajax</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
-                    </div>
-                    <div class="pull-date">
-                    <span>最后编辑：2021-06-15</span>
-                    </div>
-                </div>
-            </footer>
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
         </div>
-        
-            <nav class="navigation post-navigation clearfix" role="navigation">
-                
-                <div class="nav-previous clearfix">
-                    <a title=" Ajax的原理和解析" href="/2021/05/24/Ajax的原理和解析/">&lt; 上一篇</a>
-                </div>
-                
-                
-                <div class="nav-next clearfix">
-                    <a title=" 腾讯云主机CPU占用100%" href="/2021/05/25/腾讯云主机CPU占用百分百/">下一篇 &gt;</a>
-                </div>
-                
-            </nav>
-        
-        
-    </article>
-</section>
-
-                
-            
-
-<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
-    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-    
-                <aside id="krw-about" class="widget widget-kratos-about clearfix">
-    <div class="photo-background"></div>
-    <div class="photo-wrapper clearfix">
-        <div class="photo-wrapper-tip text-center">
-            <img class="about-photo" src="/images/my.webp" />
-        </div>
-    </div>
-    <div class="textwidget">
-        <p class="text-center"></p>
-    </div>
-</aside>
-            
-                    <div class="sticky-area">
-                
-                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
-    <div class="photo-background"></div>
-    <h4 class="widget-title no-after">
-        <i class="fa fa-compass"></i>
-        文章目录
-        <span class="toc-progress-bar"></span>
-    </h4>
-    <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E5%8F%96%E7%9B%AE%E6%A0%87"><span class="toc-text">爬取目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E5%8F%96%E5%88%97%E8%A1%A8%E9%A1%B5"><span class="toc-text">爬取列表页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E5%8F%96%E8%AF%A6%E6%83%85%E9%A1%B5"><span class="toc-text">爬取详情页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-text">保存数据</span></a></li></ol>
-    </div>
-</aside>
-                
-                
-  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
-    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E5%BA%93/">Python库</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
-  </aside>
-
-
-            
-                
-  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
-    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
-      <div class="tag-clouds">
-        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.68em;">Hexo</a> <a href="/tags/MD5/" style="font-size: 0.6em;">MD5</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.64em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.64em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.64em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.72em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.68em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.64em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.76em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.64em;">javascript</a>
       </div>
-  </aside>
-
-            
-                
-  <aside id="krw-posts" class="widget widget-kratos-posts">
-  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
-  <div class="tab-content">
-      <ul class="list-group">
-        
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/17/Requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> Requests库</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/"><i class="fa  fa-book"></i> 爬虫去重策略</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E5%92%8C%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 深度优先和广度优先算法</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-URL%E5%88%86%E5%8F%91/"><i class="fa  fa-book"></i> Django入门-URL分发</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-Django-Admin/"><i class="fa  fa-book"></i> Django入门-Django Admin</a>
-            
-          
-        
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-      </ul>
-  </div>
-  </aside>
-
-            
     </div>
-</section>
-        
-        </div>
-    </div>
-</div>
-<footer>
-    <div id="footer"  class="ap-lrc"  >
-        <div class="kr-tool text-center">
-            <div class="tool">
-                
-                    <div class="box search-box">
-                        <a href="/search/">
-                            <span class="fa fa-search"></span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="box theme-box" id="darkmode-switch">
-                        <span class="fa fa-adjust"></span>
-                    </div>
-                
-                
-            </div>
-            <div class="box gotop-box">
-                <span class="fa fa-chevron-up"></span>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 footer-list text-center">
-                    <ul class="kratos-social-icons">
-                        
-                        <li><a href="mailto:espholychan@outlook.com"><i class="fa fa-envelope"></i></a></li>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                    <ul class="kratos-copyright">
-                        <div>
-                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
-                            <li>本站已运行<span id="span_dt">Loading...</span></li>
-                        </div>
-                        <div>
-                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
-                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
-                        </div>
-                        <div>
-                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
-                            
-                        </div>
-                        <div>
-                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">鄂ICP备2021008617号-1</a></li>
-                            
-                        </div>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-</div>
-</div>
-
-        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
-<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
-
-    <div>
-        <canvas id="snow"></canvas>
-        <script async type="text/javascript" src="/js/snow.min.js"></script>
-    </div>
-
-<script async src="/js/candy.min.js"></script>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
     
-    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-    <meting-js
-        server="netease"
-        type="playlist"
-        id="81305697"
-        order="random"
-        fixed="true"
-    >
-    </meting-js>
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
-    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
-<script defer src="/js/kratosr.min.js"></script>
-<script defer src="/js/pjax.min.js"></script>
-
-
-    <script defer src="/js/kr-dark.min.js"></script>
+  
 
 
 
-<!-- Extra support for third-party plguins  -->
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
-    </body>
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

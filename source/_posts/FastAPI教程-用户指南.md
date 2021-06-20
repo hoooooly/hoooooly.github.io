@@ -40,7 +40,7 @@ async def root():
 uvicorn main:app --reload
 ```
 
-{% colorpanel info Note %}
+
 
 uvicorn main:app 命令含义如下:
 
@@ -48,7 +48,7 @@ uvicorn main:app 命令含义如下:
 - app：在 main.py 文件中通过 app = FastAPI() 创建的对象。
 - \-\-reload：让服务器在更新代码后重新启动。仅在开发时使用该选项。
 
-{% endcolorpanel %}
+
 
 ## 分步概括
 
@@ -60,12 +60,12 @@ from fastapi import FastAPI
 
 `FastAPI` 是一个为 `API` 提供了所有功能的 `Python` 类。
 
-{% colorpanel info 技术细节 %}
+
 
 FastAPI 是直接从 Starlette 继承的类。
 你可以通过 FastAPI 使用所有的 Starlette 的功能。
 
-{% endcolorpanel %}
+
 
 ### 步骤 2：创建一个 FastAPI「实例」
 
@@ -119,11 +119,11 @@ https://example.com/items/foo
 /items/foo
 ```
 
-{% colorpanel info info %}
+
 
 「路径」也通常被称为「端点」或「路由」。
 
-{% endcolorpanel %}
+
 
 开发 `API` 时，「路径」是用来分离「关注点」和「资源」的主要手段。
 
@@ -175,7 +175,7 @@ async def root():
 - 请求路径为 `/`
 - 使用 `get` 操作
 
-{% colorpanel info "@decorator Info" %}
+
 
 `@something`语法在 `Python` 中被称为「装饰器」。
 
@@ -185,7 +185,6 @@ async def root():
 
 它是一个「路径操作装饰器」。
 
-{% endcolorpanel %}
 
 ### 步骤 4：定义路径操作函数
 

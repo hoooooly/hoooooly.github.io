@@ -1,174 +1,266 @@
+
+
 <!DOCTYPE html>
-<html lang="Zh">
-    <head>
-  <!-- 元数据 -->
-  <meta charset="utf-8">
-  <link rel="icon" href="/images/logo.webp">
-  <title>Django入门-模型设计 | Holy的个人站点</title>
-  <meta name="author" content="Holy Chan" />
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="robots" content="index,follow" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="format-detection" content="telphone=no, email=no" />
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-    <meta name="keywords" content="django, python" />
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
   
-  <meta name="description" content="模型这些模型基本上代表了应用程序的数据库设计。在本节中要做的是创建 Django 所表示的类，这些类就是在上一节中建模的类∶ Board，Topic和 Post。User 模型被命名为内置应用叫 auth，它以命名空间 django.contrib.auth 的形式出现在 INSTALLED_APPS配置中。 我们要做的工作都在 boards&#x2F;models.py 文件中。以下是我们在Django应">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Django入门-模型设计">
-<meta property="og:url" content="http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/index.html">
-<meta property="og:site_name" content="Holy的个人站点">
-<meta property="og:description" content="模型这些模型基本上代表了应用程序的数据库设计。在本节中要做的是创建 Django 所表示的类，这些类就是在上一节中建模的类∶ Board，Topic和 Post。User 模型被命名为内置应用叫 auth，它以命名空间 django.contrib.auth 的形式出现在 INSTALLED_APPS配置中。 我们要做的工作都在 boards&#x2F;models.py 文件中。以下是我们在Django应">
-<meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/Screenshot_8.webp">
-<meta property="article:published_time" content="2021-06-09T13:29:50.000Z">
-<meta property="article:modified_time" content="2021-06-16T09:29:06.007Z">
-<meta property="article:author" content="Holy Chan">
-<meta property="article:tag" content="python">
-<meta property="article:tag" content="django">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/Screenshot_8.webp">
-<meta name="twitter:site" content="@null">
-  
-  <!-- 站点验证相关 -->
+  <title>Django入门-模型设计 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
   
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
     
   
-  <!-- 样式表文件 -->
-  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+
   
-    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
   
-  
-  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
-  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
-  
-  
-    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
-  
-  <!-- 不得不预先加载的一些JS文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
-  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
-    <body class="custom-background">
-        <div id="kratos-wrapper">
-    <div id="kratos-page">
-        <div id="kratos-header">
-            <header id="kratos-desktop-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="nav-header">
-                        <nav id="kratos-menu-wrap">
-                            <ul id="kratos-primary-menu" class="sf-menu">
-                                
-                                    
-                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
-                                    
-                                
-                                    
-                                        <li>
-                                            <a><i class="fa fa-link"></i>链接</a>
-                                            <ul class="sub-menu">
-                                                
-                                                    
-                                                
-                                                    
-                                                        <li><a target="_blank" rel="noopener" href="http://holychan.ltd:8000">个人网盘</a></li>
-                                                    
-                                                
-                                            </ul>
-                                        </li>
-                                    
-                                
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </header>
-            <header id="kratos-mobile-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
-                    <div class="nav-toggle">
-                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
-                            <i></i>
-                        </a>
-                    </div>
-                </div>
-            </header>
-        </div>
-        <div class="kratos-start kratos-hero-2">
-            <!-- <div class="kratos-overlay"></div> -->
-            <div class="kratos-cover kratos-cover-2 text-center">
-                <div class="desc desc2 animate-box">
-                    <a href="/">
-                        <h2>Holy的个人站点</h2> <br />
-                        <span></span>
-                    </a>
-                </div>
-            </div>
-        </div>
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
 
-        <div id="kratos-blog-post">
-            <div class="container">
-                <div id="main" class="row">
-                    
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-        <section class="col-md-8">
-    <article>
-        <div class="kratos-hentry kratos-post-inner clearfix">
-            <header class="kratos-entry-header">
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 
-                    <h1 class="kratos-entry-title text-center">Django入门-模型设计</h1>
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
                 
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
                 
-                <ul class="kratos-post-meta text-center">
-                    <li><i class="fa fa-calendar"></i> 2021-06-09</li>
-                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
-                    <li>
-                        <i class="fa fa-edit"></i> 
-                        
-                        
-                            ~7.22K
-                        
-                        字
-                    </li>
-                    
-                </ul>
-            </header>
-            <div class="kratos-post-content">
-                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1623835746007"></time> 前，其中的内容可能需要更新。
-                </div>
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
                 
-                    <div class="kratos-post-inner-toc">
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%81%E7%A7%BB%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">迁移模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%95%E9%AA%8C-Models-API"><span class="toc-number">3.</span> <span class="toc-text">试验 Models API</span></a></li></ol>
-                    </div>
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Django入门-模型设计">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-09 21:29" pubdate>
+        2021年6月9日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      29
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Django入门-模型设计</h1>
+            
+              <p class="note note-info">
                 
-                <hr />
-                <h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><p>这些模型基本上代表了应用程序的数据库设计。在本节中要做的是创建 <code>Django</code> 所表示的类，这些类就是在上一节中建模的类∶ <code>Board</code>，<code>Topic</code>和 <code>Post</code>。<code>User</code> 模型被命名为内置应用叫 <code>auth</code>，它以命名空间 <code>django.contrib.auth</code> 的形式出现在 <code>INSTALLED_APPS</code>配置中。</p>
+                  本文最后更新于：2021年6月16日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><p>这些模型基本上代表了应用程序的数据库设计。在本节中要做的是创建 <code>Django</code> 所表示的类，这些类就是在上一节中建模的类∶ <code>Board</code>，<code>Topic</code>和 <code>Post</code>。<code>User</code> 模型被命名为内置应用叫 <code>auth</code>，它以命名空间 <code>django.contrib.auth</code> 的形式出现在 <code>INSTALLED_APPS</code>配置中。</p>
 <p>我们要做的工作都在 <code>boards/models.py 文</code>件中。以下是我们在<code>Django应用程序</code>中如何表示类图的代码∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your models here.</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Board</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">30</span>, unique=<span class="literal">True</span>)</span><br><span class="line">    description = models.CharField(max_length=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Topic</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    subject = models.CharField(max_length=<span class="number">255</span>)</span><br><span class="line">    last_updated = models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line">    board = models.ForeignKey(Board, related_name=<span class="string">&#x27;topics&#x27;</span>, on_delete=models.CASCADE)</span><br><span class="line">    starter = models.ForeignKey(User, related_name=<span class="string">&#x27;topics&#x27;</span>, on_delete=models.CASCADE)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Post</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    message = models.TextField(max_length=<span class="number">4000</span>)</span><br><span class="line">    topic = models.ForeignKey(Topic, related_name=<span class="string">&#x27;posts&#x27;</span>, on_delete=models.CASCADE)</span><br><span class="line">    created_at = models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line">    updated_at = models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line">    create_by = models.ForeignKey(User, related_name=<span class="string">&#x27;posts&#x27;</span>, on_delete=models.CASCADE)</span><br><span class="line">    updated_by = models.ForeignKey(User, null=<span class="literal">True</span>, related_name=<span class="string">&#x27;+&#x27;</span>, on_delete=models.CASCADE)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.db <span class="hljs-keyword">import</span> models<br><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br><br><span class="hljs-comment"># Create your models here.</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Board</span>(<span class="hljs-params">models.Model</span>):</span><br>    name = models.CharField(max_length=<span class="hljs-number">30</span>, unique=<span class="hljs-literal">True</span>)<br>    description = models.CharField(max_length=<span class="hljs-number">100</span>)<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Topic</span>(<span class="hljs-params">models.Model</span>):</span><br>    subject = models.CharField(max_length=<span class="hljs-number">255</span>)<br>    last_updated = models.DateTimeField(auto_now_add=<span class="hljs-literal">True</span>)<br>    board = models.ForeignKey(Board, related_name=<span class="hljs-string">&#x27;topics&#x27;</span>, on_delete=models.CASCADE)<br>    starter = models.ForeignKey(User, related_name=<span class="hljs-string">&#x27;topics&#x27;</span>, on_delete=models.CASCADE)<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span>(<span class="hljs-params">models.Model</span>):</span><br>    message = models.TextField(max_length=<span class="hljs-number">4000</span>)<br>    topic = models.ForeignKey(Topic, related_name=<span class="hljs-string">&#x27;posts&#x27;</span>, on_delete=models.CASCADE)<br>    created_at = models.DateTimeField(auto_now_add=<span class="hljs-literal">True</span>)<br>    updated_at = models.DateTimeField(auto_now_add=<span class="hljs-literal">True</span>)<br>    create_by = models.ForeignKey(User, related_name=<span class="hljs-string">&#x27;posts&#x27;</span>, on_delete=models.CASCADE)<br>    updated_by = models.ForeignKey(User, null=<span class="hljs-literal">True</span>, related_name=<span class="hljs-string">&#x27;+&#x27;</span>, on_delete=models.CASCADE)<br></code></pre></td></tr></table></figure>
 
 <p>所有模型都是<code>django.db.models.Model</code>类的子类。每个类将被转换为<strong>数据库表</strong>。每个字段由 <code>django.db.models.Field</code>子类（内置在<code>Django core</code>）的实例表示，它们并将被转换为数据库的列。</p>
 <p><code>字段 CharField</code>，<code>DateTimeField</code>等等，都是 <code>django.db.models.Field</code> 的子类，包含在<code>Django</code>的核心里面-随时可以使用。</p>
@@ -182,79 +274,79 @@
 <p><code>Django</code>自动创建这种反向关系， <code>related_name</code> 是可选项。但是，如果我们不为它设置一个名称，<code>Django</code>会自动生成它∶<code>（class_name）_set</code> 。例如，在 <code>Board</code> 模型中，所有 <code>Topic</code> 列表将用 <code>topic_set</code> 属性表示。而这里我们将其重新命名为了 <code>topics</code> ，以使其感觉更自然。</p>
 <p>在 <code>Post</code> 模型中，该 <code>updated_by</code> 字段设置 <code>related_name=&#39;+&#39;</code>。这指示 <code>Django</code>我们不需要这种反向关系，所以它会被忽略（注∶也就是说我们不需要关系用户修改过哪些帖子）。</p>
 <p>下面您可以看到类图和Django模型的源代码之间的比较，绿线表示我们如何处理反向关系。</p>
-<p><img src="Screenshot_1.webp"></p>
+<p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
 <h2 id="迁移模型"><a href="#迁移模型" class="headerlink" title="迁移模型"></a>迁移模型</h2><p>下一步是告诉<code>Django</code>创建数据库，以便我们可以开始使用它。打开终端，激活虚拟环境，转到<code> manage.py</code>文件所在的文件夹，然后运行以下命令∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage. py makemigrations</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage. py makemigrations<br></code></pre></td></tr></table></figure>
 
 <p>你会看到输出的内容是∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Migrations <span class="keyword">for</span> <span class="string">&#x27;boards&#x27;</span>:</span><br><span class="line">  boards\migrations\0001_initial.py</span><br><span class="line">    - Create model Board</span><br><span class="line">    - Create model Topic</span><br><span class="line">    - Create model Post</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">Migrations <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;boards&#x27;</span>:<br>  boards\migrations\0001_initial.py<br>    - Create model Board<br>    - Create model Topic<br>    - Create model Post<br></code></pre></td></tr></table></figure>
 
 <p>此时， <code>Django</code> 在 <code>boards/migrations</code> 目录创建了一个名为 <code>0001_initial.py</code> 的文件。它代表了应用程序模型的当前状态。在下一步，<code>Django</code>将使用该文件创建表和列。</p>
 <p>迁移文件将被翻译成SQL语句。如果您熟悉SQL，则可以运行以下命令来检验将是要被数据库执行的SQL指令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py sqlmigrate boards 0001</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage.py sqlmigrate boards 0001<br></code></pre></td></tr></table></figure>
 
 <p>如果你不熟悉SQL，也不要担心。所有的工作都将使用<code>Django ORM</code>来完成，它是一个与数据库进行通信的抽象层。下一步是将我们生成的迁移文件应用到数据库∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage.py migrate<br></code></pre></td></tr></table></figure>
 
 <p>输出结果如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Operations to perform:</span><br><span class="line">  Apply <span class="built_in">all</span> migrations: admin, auth, boards, contenttypes, sessions</span><br><span class="line">Running migrations:</span><br><span class="line">  Applying contenttypes<span class="number">.0001</span>_initial... OK</span><br><span class="line">  Applying auth<span class="number">.0001</span>_initial... OK</span><br><span class="line">  Applying admin<span class="number">.0001</span>_initial... OK</span><br><span class="line">  Applying admin<span class="number">.0002</span>_logentry_remove_auto_add... OK</span><br><span class="line">  Applying admin<span class="number">.0003</span>_logentry_add_action_flag_choices... OK</span><br><span class="line">  Applying contenttypes<span class="number">.0002</span>_remove_content_type_name... OK</span><br><span class="line">  Applying auth<span class="number">.0002</span>_alter_permission_name_max_length... OK</span><br><span class="line">  Applying auth<span class="number">.0003</span>_alter_user_email_max_length... OK</span><br><span class="line">  Applying auth<span class="number">.0004</span>_alter_user_username_opts... OK</span><br><span class="line">  Applying auth<span class="number">.0005</span>_alter_user_last_login_null... OK</span><br><span class="line">  Applying auth<span class="number">.0006</span>_require_contenttypes_0002... OK</span><br><span class="line">  Applying auth<span class="number">.0007</span>_alter_validators_add_error_messages... OK</span><br><span class="line">  Applying auth<span class="number">.0008</span>_alter_user_username_max_length... OK</span><br><span class="line">  Applying auth<span class="number">.0009</span>_alter_user_last_name_max_length... OK</span><br><span class="line">  Applying auth<span class="number">.0010</span>_alter_group_name_max_length... OK</span><br><span class="line">  Applying auth<span class="number">.0011</span>_update_proxy_permissions... OK</span><br><span class="line">  Applying auth<span class="number">.0012</span>_alter_user_first_name_max_length... OK</span><br><span class="line">  Applying boards<span class="number">.0001</span>_initial... OK</span><br><span class="line">  Applying sessions<span class="number">.0001</span>_initial... OK</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python">Operations to perform:<br>  Apply <span class="hljs-built_in">all</span> migrations: admin, auth, boards, contenttypes, sessions<br>Running migrations:<br>  Applying contenttypes<span class="hljs-number">.0001</span>_initial... OK<br>  Applying auth<span class="hljs-number">.0001</span>_initial... OK<br>  Applying admin<span class="hljs-number">.0001</span>_initial... OK<br>  Applying admin<span class="hljs-number">.0002</span>_logentry_remove_auto_add... OK<br>  Applying admin<span class="hljs-number">.0003</span>_logentry_add_action_flag_choices... OK<br>  Applying contenttypes<span class="hljs-number">.0002</span>_remove_content_type_name... OK<br>  Applying auth<span class="hljs-number">.0002</span>_alter_permission_name_max_length... OK<br>  Applying auth<span class="hljs-number">.0003</span>_alter_user_email_max_length... OK<br>  Applying auth<span class="hljs-number">.0004</span>_alter_user_username_opts... OK<br>  Applying auth<span class="hljs-number">.0005</span>_alter_user_last_login_null... OK<br>  Applying auth<span class="hljs-number">.0006</span>_require_contenttypes_0002... OK<br>  Applying auth<span class="hljs-number">.0007</span>_alter_validators_add_error_messages... OK<br>  Applying auth<span class="hljs-number">.0008</span>_alter_user_username_max_length... OK<br>  Applying auth<span class="hljs-number">.0009</span>_alter_user_last_name_max_length... OK<br>  Applying auth<span class="hljs-number">.0010</span>_alter_group_name_max_length... OK<br>  Applying auth<span class="hljs-number">.0011</span>_update_proxy_permissions... OK<br>  Applying auth<span class="hljs-number">.0012</span>_alter_user_first_name_max_length... OK<br>  Applying boards<span class="hljs-number">.0001</span>_initial... OK<br>  Applying sessions<span class="hljs-number">.0001</span>_initial... OK<br></code></pre></td></tr></table></figure>
 
 <p>好了数据库就迁移成功了。</p>
 <h2 id="试验-Models-API"><a href="#试验-Models-API" class="headerlink" title="试验 Models API"></a>试验 Models API</h2><p>使用Python进行开发的一个重要优点是<code>交互式shell</code>。我一直在使用它。这是一种快速尝试和试验API的方法。</p>
 <p>可以使用<code>manage.py</code>工具加载我们的项目来启动 <code>Python shell</code> ∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage. py shell</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage. py shell<br></code></pre></td></tr></table></figure>
 
 <p>这与直接输入 <code>python</code> 指令来调用交互式控制台是非常相似的，除此之外，项目将被添加到 <code>sys.path</code> 并加载Django。这意味着我们可以在项目中导入我们的模型和其他资源并使用它。</p>
 <p>让我们从导入<code>Board类</code>开始∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> boards.models <span class="keyword">import</span> Board</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> boards.models <span class="hljs-keyword">import</span> Board<br></code></pre></td></tr></table></figure>
 
 
 <p>要创建新的 <code>board</code> 对象，我们可以执行以下操作∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">board = Board(name=<span class="string">&#x27;Django&#x27;</span>,description=<span class="string">&#x27;This is a board abo ut Django.&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">board = Board(name=<span class="hljs-string">&#x27;Django&#x27;</span>,description=<span class="hljs-string">&#x27;This is a board abo ut Django.&#x27;</span>)<br></code></pre></td></tr></table></figure>
 
 <p>为了将这个对象保存在数据库中，我们必须调用<code>save</code>方法∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">board.save()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">board.save()<br></code></pre></td></tr></table></figure>
 
 <p><code>save</code> 方法用于创建和更新对象。这里Django创建了一个新对象，因为这时 <code>Board</code> 实例没有<code>id</code>。第一次保存后，Django会自动设置<code>ID</code>∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>board.<span class="built_in">id</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>board.<span class="hljs-built_in">id</span><br><span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 
 <p>您可以将其余的字段当做Python属性访问∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>board.name</span><br><span class="line"><span class="string">&#x27;Django&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>board.description</span><br><span class="line"><span class="string">&#x27;This is a board about django&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>board.name<br><span class="hljs-string">&#x27;Django&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>board.description<br><span class="hljs-string">&#x27;This is a board about django&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <p>要更新一个值，我们可以这样做∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">board.description =<span class="string">&#x27;Django discussion board&#x27;</span></span><br><span class="line">board.save()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>board.description </span><br><span class="line"><span class="string">&#x27;this is new description&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">board.description =<span class="hljs-string">&#x27;Django discussion board&#x27;</span><br>board.save()<br><span class="hljs-meta">&gt;&gt;&gt; </span>board.description <br><span class="hljs-string">&#x27;this is new description&#x27;</span><br></code></pre></td></tr></table></figure>
 <p>每个Django模型都带有一个特殊的属性；我们称之为<code>模型管理器（Model Manager）</code>。你可以通过属性 <code>objects</code> 来访问这个管理器，它主要用于数据库操作。例如，我们可以使用它来直接创建一个新的<code>Board</code>对象∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>board = Board.objects.create(name=<span class="string">&#x27;Python&#x27;</span>, description=<span class="string">&#x27;id 2 for django model&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>board.save()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>board.<span class="built_in">id</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>board = Board.objects.create(name=<span class="hljs-string">&#x27;Python&#x27;</span>, description=<span class="hljs-string">&#x27;id 2 for django model&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>board.save()<br><span class="hljs-meta">&gt;&gt;&gt; </span>board.<span class="hljs-built_in">id</span><br><span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 
 <p>所以，现在我们有两个版块了。我们可以使用 <code>objects</code> 列出数据库中所有现有的版块</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>Board.objects.<span class="built_in">all</span>()</span><br><span class="line">&lt;QuerySet [&lt;Board: Board <span class="built_in">object</span> (<span class="number">1</span>)&gt;, &lt;Board: Board <span class="built_in">object</span> (<span class="number">2</span>)&gt;]&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>Board.objects.<span class="hljs-built_in">all</span>()<br>&lt;QuerySet [&lt;Board: Board <span class="hljs-built_in">object</span> (<span class="hljs-number">1</span>)&gt;, &lt;Board: Board <span class="hljs-built_in">object</span> (<span class="hljs-number">2</span>)&gt;]&gt;<br></code></pre></td></tr></table></figure>
 
 <p>结果是一个<code>QuerySet</code>。稍后我们会进一步了解。基本上，它是从数据库中查询的对象列表。我们看到有两个对象，但显示的名称是 <code>Board object</code>。这是因为我们尚未实现 <code>Board</code> 的 <code>__str___</code> 方法。</p>
 <p><code>_str__ </code>方法是对象的字符串表示形式。我们可以使用版块的名称来表示它。</p>
 <p>首先，退出交互式控制台∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">exit()<br></code></pre></td></tr></table></figure>
 
 <p>现在编辑<code>boards app</code>中的 <code>models.py</code> 文件:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Board</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">30</span>, unique=<span class="literal">True</span>)</span><br><span class="line">    description = models.CharField(max_length=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Board</span>(<span class="hljs-params">models.Model</span>):</span><br>    name = models.CharField(max_length=<span class="hljs-number">30</span>, unique=<span class="hljs-literal">True</span>)<br>    description = models.CharField(max_length=<span class="hljs-number">100</span>)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__str__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">return</span> self.name<br><br></code></pre></td></tr></table></figure>
 
 <p>再进入交互台，查询：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">boards</span>.<span class="title">models</span>.<span class="title">Board</span>&#x27;&gt;</span></span><br><span class="line"><span class="class">&gt;&gt;&gt; <span class="title">Board</span>.<span class="title">objects</span>.<span class="title">all</span>()</span></span><br><span class="line"><span class="class">&lt;<span class="title">QuerySet</span> [&lt;<span class="title">Board</span>:</span> Django&gt;, &lt;Board: Python&gt;]&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> &#x27;<span class="hljs-title">boards</span>.<span class="hljs-title">models</span>.<span class="hljs-title">Board</span>&#x27;&gt;</span><br><span class="hljs-class">&gt;&gt;&gt; <span class="hljs-title">Board</span>.<span class="hljs-title">objects</span>.<span class="hljs-title">all</span>()</span><br><span class="hljs-class">&lt;<span class="hljs-title">QuerySet</span> [&lt;<span class="hljs-title">Board</span>:</span> Django&gt;, &lt;Board: Python&gt;]&gt;<br></code></pre></td></tr></table></figure>
 
 <p>这样是不是好多了呢。</p>
 <p>我们可以将这个<code>QuerySet</code>看作一个列表。假设我们想遍历它并打印每个版块的描述∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">boards_list = Board.objects.<span class="built_in">all</span>() </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>board_list = Board.objects.<span class="built_in">all</span>()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> board <span class="keyword">in</span> board_list:</span><br><span class="line"><span class="meta">... </span>    <span class="built_in">print</span>(board.description)</span><br><span class="line"><span class="meta">... </span></span><br><span class="line">this <span class="keyword">is</span> new description</span><br><span class="line"><span class="built_in">id</span> <span class="number">2</span> <span class="keyword">for</span> django model</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">boards_list = Board.objects.<span class="hljs-built_in">all</span>() <br><span class="hljs-meta">&gt;&gt;&gt; </span>board_list = Board.objects.<span class="hljs-built_in">all</span>()<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> board <span class="hljs-keyword">in</span> board_list:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(board.description)<br><span class="hljs-meta">... </span><br>this <span class="hljs-keyword">is</span> new description<br><span class="hljs-built_in">id</span> <span class="hljs-number">2</span> <span class="hljs-keyword">for</span> django model<br></code></pre></td></tr></table></figure>
 
 <p>同样，我们可以使用模型的 <code>管理器（Manager）</code>来查询数据库并返回单个对象。为此，我们要使用 <code>get</code> 方法∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>django_board = Board.objects.get(<span class="built_in">id</span>=<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>django_board</span><br><span class="line">&lt;Board: Django&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>django_board.name</span><br><span class="line"><span class="string">&#x27;Django&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>django_board.description</span><br><span class="line"><span class="string">&#x27;this is new description&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>django_board = Board.objects.get(<span class="hljs-built_in">id</span>=<span class="hljs-string">&#x27;1&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>django_board<br>&lt;Board: Django&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>django_board.name<br><span class="hljs-string">&#x27;Django&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>django_board.description<br><span class="hljs-string">&#x27;this is new description&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <p>但我们必须小心这种操作。如果我们试图查找一个不存在的对象，例如，查找<code>id=3</code>的版块，它会引发一个异常∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>django_board = Board.objects.get(<span class="built_in">id</span>=<span class="string">&#x27;3&#x27;</span>) </span><br><span class="line">boards.models.Board.DoesNotExist: Board matching query does <span class="keyword">not</span> exist.</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>django_board = Board.objects.get(<span class="hljs-built_in">id</span>=<span class="hljs-string">&#x27;3&#x27;</span>) <br>boards.models.Board.DoesNotExist: Board matching query does <span class="hljs-keyword">not</span> exist.<br></code></pre></td></tr></table></figure>
 
 <p><code>get</code> 方法的参数可以是模型的任何字段，但最好使用可唯一标识对象的字段来查询。否则，查询可能会返回多个对象，这也会导致异常。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Board.objects.get(name=<span class="string">&#x27;Django&#x27;</span>)</span><br><span class="line">&lt;Board: Django&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">Board.objects.get(name=<span class="hljs-string">&#x27;Django&#x27;</span>)<br>&lt;Board: Django&gt;<br></code></pre></td></tr></table></figure>
 
 <p>请注意，查询区分大小写，小写”django”不匹配∶</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Board.objects.get (name=<span class="string">&#x27;django&#x27;</span>)</span><br><span class="line">boards.models.DoesNotExist: Board matching query does <span class="keyword">not</span> exist.</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Python">Board.objects.get (name=<span class="hljs-string">&#x27;django&#x27;</span>)<br>boards.models.DoesNotExist: Board matching query does <span class="hljs-keyword">not</span> exist.<br></code></pre></td></tr></table></figure>
 
 
 
@@ -274,416 +366,337 @@
 
 
             </div>
-            
-                <div class="kratos-copyright text-center clearfix">
-                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
-                </div>
-            
-            <footer class="kratos-entry-footer clearfix">
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
                 
-                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
                     
+                      <a class="hover-with-bg" href="/categories/Django/">Django</a>
                     
-                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
-                        <div class="share-wrap" style="display: none;">
-    <div class="share-group">
-        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-qq"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-star"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weixin"></i>
-            </div>
-            <div class="share-int">
-                <div class="qrcode" id="wechat-qr"></div>
-                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weibo"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-facebook"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-twitter"></i>
-            </div>
-        </a>
-    </div>
-    <script type="text/javascript">
-        $(()=>{
-            new QRCode("wechat-qr", {
-                text: "http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/",
-                width: 150,
-                height: 150,
-                correctLevel : QRCode.CorrectLevel.H
-            });
-        });
-        function share(dest) {
-            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
-            const weiboBase     = "https://service.weibo.com/share/share.php?";
-            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
-            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
-            const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/";
-            const title         = "「Django入门-模型设计」";
-            const excerpt       = `模型这些模型基本上代表了应用程序的数据库设计。在本节中要做的是创建 Django 所表示的类，这些类就是在上一节中建模的类∶ Board，Topic和 Post。User 模型被命名为内置应用叫 auth，它以命名空间 django....`;
-            let _URL;
-            switch (dest) {
-                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
-                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
-                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
-                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
-                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
-            }
-            window.open(_URL);
-        };
-    </script>
-</div>
-                    
-                    </div>
+                  </div>
                 
-                <div class="footer-tag clearfix">
-                    <div class="pull-left">
-                    <i class="fa fa-tags"></i>
-                        <a class="tag-none-link" href="/tags/django/" rel="tag">django</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
-                    </div>
-                    <div class="pull-date">
-                    <span>最后编辑：2021-06-16</span>
-                    </div>
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/django/">django</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">抓取网易云音乐热评</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
+                        <span class="hidden-mobile">Django入门-系统设计</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
                 </div>
-            </footer>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
         </div>
-        
-            <nav class="navigation post-navigation clearfix" role="navigation">
-                
-                <div class="nav-previous clearfix">
-                    <a title=" Django入门-系统设计" href="/2021/06/09/Django入门-系统设计/">&lt; 上一篇</a>
-                </div>
-                
-                
-                <div class="nav-next clearfix">
-                    <a title=" 抓取网易云音乐热评" href="/2021/06/10/抓取网易云音乐热评/">下一篇 &gt;</a>
-                </div>
-                
-            </nav>
-        
-        
-    </article>
-</section>
-
-                
-            
-
-<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
-    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-    
-                <aside id="krw-about" class="widget widget-kratos-about clearfix">
-    <div class="photo-background"></div>
-    <div class="photo-wrapper clearfix">
-        <div class="photo-wrapper-tip text-center">
-            <img class="about-photo" src="/images/my.webp" />
-        </div>
-    </div>
-    <div class="textwidget">
-        <p class="text-center"></p>
-    </div>
-</aside>
-            
-                    <div class="sticky-area">
-                
-                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
-    <div class="photo-background"></div>
-    <h4 class="widget-title no-after">
-        <i class="fa fa-compass"></i>
-        文章目录
-        <span class="toc-progress-bar"></span>
-    </h4>
-    <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B"><span class="toc-text">模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%81%E7%A7%BB%E6%A8%A1%E5%9E%8B"><span class="toc-text">迁移模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%95%E9%AA%8C-Models-API"><span class="toc-text">试验 Models API</span></a></li></ol>
-    </div>
-</aside>
-                
-                
-  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
-    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E5%BA%93/">Python库</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
-  </aside>
-
-
-            
-                
-  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
-    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
-      <div class="tag-clouds">
-        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.68em;">Hexo</a> <a href="/tags/MD5/" style="font-size: 0.6em;">MD5</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.64em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.64em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.64em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.72em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.68em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.64em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.76em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.64em;">javascript</a>
       </div>
-  </aside>
-
-            
-                
-  <aside id="krw-posts" class="widget widget-kratos-posts">
-  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
-  <div class="tab-content">
-      <ul class="list-group">
-        
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/17/Requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> Requests库</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/"><i class="fa  fa-book"></i> 爬虫去重策略</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E5%92%8C%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 深度优先和广度优先算法</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-URL%E5%88%86%E5%8F%91/"><i class="fa  fa-book"></i> Django入门-URL分发</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-Django-Admin/"><i class="fa  fa-book"></i> Django入门-Django Admin</a>
-            
-          
-        
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-      </ul>
-  </div>
-  </aside>
-
-            
     </div>
-</section>
-        
-        </div>
-    </div>
-</div>
-<footer>
-    <div id="footer"  class="ap-lrc"  >
-        <div class="kr-tool text-center">
-            <div class="tool">
-                
-                    <div class="box search-box">
-                        <a href="/search/">
-                            <span class="fa fa-search"></span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="box theme-box" id="darkmode-switch">
-                        <span class="fa fa-adjust"></span>
-                    </div>
-                
-                
-            </div>
-            <div class="box gotop-box">
-                <span class="fa fa-chevron-up"></span>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 footer-list text-center">
-                    <ul class="kratos-social-icons">
-                        
-                        <li><a href="mailto:espholychan@outlook.com"><i class="fa fa-envelope"></i></a></li>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                    <ul class="kratos-copyright">
-                        <div>
-                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
-                            <li>本站已运行<span id="span_dt">Loading...</span></li>
-                        </div>
-                        <div>
-                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
-                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
-                        </div>
-                        <div>
-                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
-                            
-                        </div>
-                        <div>
-                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">鄂ICP备2021008617号-1</a></li>
-                            
-                        </div>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-</div>
-</div>
-
-        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
-<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
-
-    <div>
-        <canvas id="snow"></canvas>
-        <script async type="text/javascript" src="/js/snow.min.js"></script>
-    </div>
-
-<script async src="/js/candy.min.js"></script>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
     
-    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-    <meting-js
-        server="netease"
-        type="playlist"
-        id="81305697"
-        order="random"
-        fixed="true"
-    >
-    </meting-js>
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
-    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
-<script defer src="/js/kratosr.min.js"></script>
-<script defer src="/js/pjax.min.js"></script>
-
-
-    <script defer src="/js/kr-dark.min.js"></script>
+  
 
 
 
-<!-- Extra support for third-party plguins  -->
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
-    </body>
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

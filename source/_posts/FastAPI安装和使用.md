@@ -76,7 +76,6 @@ def read_item(item_id: int, q: Optional[str] = None):
     return {"item_id": item_id, "q": q}
 ```
 
-{% collapse 或者使用 async def... %}
 
 如果你的代码里会出现 async / await，请使用 async def：
 
@@ -98,7 +97,7 @@ async def read_item(item_id: int, q: Optional[str] = None):
     return {"item_id": item_id, "q": q}
 ```
 
-{% endcollapse %}
+
 
 ## 运行
 
