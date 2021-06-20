@@ -339,6 +339,23 @@
                   
                 
                 
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
 
               </article>
             
