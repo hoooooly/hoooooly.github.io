@@ -1,674 +1,510 @@
+
+
 <!DOCTYPE html>
-<html lang="Zh">
-    <head>
-  <!-- 元数据 -->
-  <meta charset="utf-8">
-  <link rel="icon" href="/images/logo.webp">
-  <title>FastAPI教程-路径参数 | Holy的个人站点</title>
-  <meta name="author" content="Holy Chan" />
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="robots" content="index,follow" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="format-detection" content="telphone=no, email=no" />
+<html lang="Zh" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-    <meta name="keywords" content="fastapi" />
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
   
-  <meta name="description" content="可以使用与 Python 格式化字符串相同的语法来声明路径”参数”或”变量”： 12345678from fastapi import FastAPIapp &#x3D; FastAPI()@app.get(&quot;&#x2F;items&#x2F;&amp;#123;item_id&amp;#125;&quot;)async def read_item(item_id):    return &amp;#123;&quot;item_id&amp;qu">
-<meta property="og:type" content="article">
-<meta property="og:title" content="FastAPI教程-路径参数">
-<meta property="og:url" content="http://example.com/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/index.html">
-<meta property="og:site_name" content="Holy的个人站点">
-<meta property="og:description" content="可以使用与 Python 格式化字符串相同的语法来声明路径”参数”或”变量”： 12345678from fastapi import FastAPIapp &#x3D; FastAPI()@app.get(&quot;&#x2F;items&#x2F;&amp;#123;item_id&amp;#125;&quot;)async def read_item(item_id):    return &amp;#123;&quot;item_id&amp;qu">
-<meta property="og:locale">
-<meta property="og:image" content="http://example.com/images/logo.webp">
-<meta property="article:published_time" content="2021-05-30T14:47:15.000Z">
-<meta property="article:modified_time" content="2021-06-15T15:47:31.601Z">
-<meta property="article:author" content="Holy Chan">
-<meta property="article:tag" content="fastapi">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/logo.webp">
-<meta name="twitter:site" content="@null">
-  
-  <!-- 站点验证相关 -->
+  <title>FastAPI教程-路径参数 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
   
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
     
   
-  <!-- 样式表文件 -->
-  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+
   
-    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
   
-  
-  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
-  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
-  
-  
-    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
-  
-  <!-- 不得不预先加载的一些JS文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
-  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
-    <body class="custom-background">
-        <div id="kratos-wrapper">
-    <div id="kratos-page">
-        <div id="kratos-header">
-            <header id="kratos-desktop-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="nav-header">
-                        <nav id="kratos-menu-wrap">
-                            <ul id="kratos-primary-menu" class="sf-menu">
-                                
-                                    
-                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
-                                    
-                                
-                                    
-                                        <li>
-                                            <a><i class="fa fa-link"></i>链接</a>
-                                            <ul class="sub-menu">
-                                                
-                                                    
-                                                
-                                                    
-                                                        <li><a target="_blank" rel="noopener" href="http://holychan.ltd:8000">个人网盘</a></li>
-                                                    
-                                                
-                                            </ul>
-                                        </li>
-                                    
-                                
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </header>
-            <header id="kratos-mobile-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
-                    <div class="nav-toggle">
-                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
-                            <i></i>
-                        </a>
-                    </div>
-                </div>
-            </header>
-        </div>
-        <div class="kratos-start kratos-hero-2">
-            <!-- <div class="kratos-overlay"></div> -->
-            <div class="kratos-cover kratos-cover-2 text-center">
-                <div class="desc desc2 animate-box">
-                    <a href="/">
-                        <h2>Holy的个人站点</h2> <br />
-                        <span></span>
-                    </a>
-                </div>
-            </div>
-        </div>
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
 
-        <div id="kratos-blog-post">
-            <div class="container">
-                <div id="main" class="row">
-                    
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-        <section class="col-md-8">
-    <article>
-        <div class="kratos-hentry kratos-post-inner clearfix">
-            <header class="kratos-entry-header">
-                
-                    <h1 class="kratos-entry-title text-center">FastAPI教程-路径参数</h1>
-                
-                
-                <ul class="kratos-post-meta text-center">
-                    <li><i class="fa fa-calendar"></i> 2021-05-30</li>
-                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
-                    <li>
-                        <i class="fa fa-edit"></i> 
-                        
-                        
-                            ~3.98K
-                        
-                        字
-                    </li>
-                    
-                </ul>
-            </header>
-            <div class="kratos-post-content">
-                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1623772051601"></time> 前，其中的内容可能需要更新。
-                </div>
-                
-                    <div class="kratos-post-inner-toc">
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">有类型的路径参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.</span> <span class="toc-text">数据转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="toc-number">3.</span> <span class="toc-text">数据校验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%A1%A3"><span class="toc-number">4.</span> <span class="toc-text">文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.</span> <span class="toc-text">路径操作的顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E8%AE%BE%E5%80%BC"><span class="toc-number">6.</span> <span class="toc-text">预设值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-Enum-%E7%B1%BB"><span class="toc-number">6.1.</span> <span class="toc-text">创建一个 Enum 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%9E%9A%E4%B8%BE%E5%80%BC"><span class="toc-number">6.2.</span> <span class="toc-text">获取枚举值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E6%9E%9A%E4%B8%BE%E6%88%90%E5%91%98"><span class="toc-number">6.3.</span> <span class="toc-text">返回枚举成员</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E8%B7%AF%E5%BE%84%E7%9A%84%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text">包含路径的路径参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">7.1.</span> <span class="toc-text">路径转换器</span></a></li></ol></li></ol>
-                    </div>
-                
-                <hr />
-                <p>可以使用与 <code>Python</code> 格式化字符串相同的语法来声明路径”参数”或”变量”：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">read_item</span>(<span class="params">item_id</span>):</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Startseite
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archiv
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Kategorie
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Etiketten
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                Über mich
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FastAPI教程-路径参数">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-05-30 22:47" pubdate>
+        May 30, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FastAPI教程-路径参数</h1>
+            
+            <div class="markdown-body">
+              <p>可以使用与 <code>Python</code> 格式化字符串相同的语法来声明路径”参数”或”变量”：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br>app = FastAPI()<br><br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_item</span>(<span class="hljs-params">item_id</span>):</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;item_id&quot;</span>: item_id&#125;<br></code></pre></td></tr></table></figure>
 
 <p>路径参数 <code>item_id</code> 的值将作为参数 <code>item_id</code> 传递给你的函数。</p>
 <p>所以，运行示例并访问 <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/items/foo">http://127.0.0.1:8000/items/foo</a>，将会看到如下响应：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;item_id&quot;</span>:<span class="string">&quot;foo&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<span class="hljs-string">&quot;item_id&quot;</span>:<span class="hljs-string">&quot;foo&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="有类型的路径参数"><a href="#有类型的路径参数" class="headerlink" title="有类型的路径参数"></a>有类型的路径参数</h2><p>可以使用标准的 <code>Python</code> 类型标注为函数中的路径参数声明类型。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br>app = FastAPI()<br><br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_item</span>(<span class="hljs-params">item_id: <span class="hljs-built_in">int</span></span>):</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;item_id&quot;</span>: item_id&#125;<br></code></pre></td></tr></table></figure>
 
 <p>在这个例子中，<code>item_id</code> 被声明为 <code>int</code> 类型。</p>
-<div class="panel panel-success">
-    <div class="panel-title">Check</div>
-    <div class="panel-body">
-        <p>这将为你的函数提供编辑器支持，包括错误检查、代码补全等等。</p>
-
-    </div>
-    </div>
-
+<p>这将为你的函数提供编辑器支持，包括错误检查、代码补全等等。</p>
 <h2 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h2><p>如果运行示例并打开浏览器访问<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/items/3">http://127.0.0.1:8000/items/3</a>，将得到如下响应：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;item_id&quot;</span>:<span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<span class="hljs-string">&quot;item_id&quot;</span>:<span class="hljs-number">3</span>&#125;<br></code></pre></td></tr></table></figure>
 
-<div class="panel panel-success">
-    <div class="panel-title">Check</div>
-    <div class="panel-body">
-        <p>注意函数接收（并返回）的值为 3，是一个 Python int 值，而不是字符串 “3”。</p>
+
+
+<p>注意函数接收（并返回）的值为 3，是一个 Python int 值，而不是字符串 “3”。</p>
 <p>所以，<code>FastAPI</code> 通过上面的类型声明提供了对请求的自动”解析”。</p>
-
-    </div>
-    </div>
-
 <h2 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h2><p>但如果你通过浏览器访问<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/items/foo">http://127.0.0.1:8000/items/foo</a>，你会看到一个清晰可读的 HTTP 错误：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;detail&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;path&quot;</span>,</span><br><span class="line">                <span class="string">&quot;item_id&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;value is not a valid integer&quot;</span>,</span><br><span class="line">            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;type_error.integer&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<br>    <span class="hljs-string">&quot;detail&quot;</span>: [<br>        &#123;<br>            <span class="hljs-string">&quot;loc&quot;</span>: [<br>                <span class="hljs-string">&quot;path&quot;</span>,<br>                <span class="hljs-string">&quot;item_id&quot;</span><br>            ],<br>            <span class="hljs-string">&quot;msg&quot;</span>: <span class="hljs-string">&quot;value is not a valid integer&quot;</span>,<br>            <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;type_error.integer&quot;</span><br>        &#125;<br>    ]<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>因为路径参数 <code>item_id</code> 传入的值为 <code>&quot;foo&quot;</code>，它不是一个 <code>int</code>。</p>
 <p>如果你提供的是 <code>float</code> 而非整数也会出现同样的错误，比如：<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/items/1.2">http://127.0.0.1:8000/items/1.2</a></p>
-<div class="panel panel-success">
-    <div class="panel-title">Check</div>
-    <div class="panel-body">
-        <p>所以，通过同样的 Python 类型声明，FastAPI 提供了数据校验功能。</p>
+<p>所以，通过同样的 Python 类型声明，FastAPI 提供了数据校验功能。</p>
 <p>注意上面的错误同样清楚地指出了校验未通过的具体原因。</p>
 <p>在开发和调试与你的 API 进行交互的代码时，这非常有用。</p>
-
-    </div>
-    </div>
-
 <h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p>打开浏览器访问<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/docs">http://127.0.0.1:8000/docs</a>，你将看到自动生成的交互式 <code>API</code> 文档：</p>
-<p><img src="Screenshot_1.webp"></p>
+<p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
 <h2 id="路径操作的顺序"><a href="#路径操作的顺序" class="headerlink" title="路径操作的顺序"></a>路径操作的顺序</h2><p>在创建路径操作时，你会发现有些情况下路径是固定的。</p>
 <p>比如 <code>/users/me</code>，我们假设它用来获取关于当前用户的数据.</p>
 <p>然后，你还可以使用路径 <code>/users/&#123;user_id&#125;</code> 来通过用户 <code>ID</code> 获取关于特定用户的数据。</p>
 <p>由于路径操作是按顺序依次运行的，你需要确保路径 <code>/users/me</code> 声明在路径 <code>/users/&#123;user_id&#125;</code>之前：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/users/me&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">read_user_me</span>():</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;user_id&quot;</span>: <span class="string">&quot;the current user&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/users/&#123;user_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">read_user</span>(<span class="params">user_id: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;user_id&quot;</span>: user_id&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br>app = FastAPI()<br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/users/me&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_user_me</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;user_id&quot;</span>: <span class="hljs-string">&quot;the current user&quot;</span>&#125;<br><br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/users/&#123;user_id&#125;&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_user</span>(<span class="hljs-params">user_id: <span class="hljs-built_in">str</span></span>):</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;user_id&quot;</span>: user_id&#125;<br></code></pre></td></tr></table></figure>
 
 <p>否则，<code>/users/&#123;user_id&#125;</code> 的路径还将与 <code>/users/me</code> 相匹配，”认为”自己正在接收一个值为 <code>&quot;me&quot;</code> 的 <code>user_id</code> 参数。</p>
 <h2 id="预设值"><a href="#预设值" class="headerlink" title="预设值"></a>预设值</h2><p>如果你有一个接收路径参数的路径操作，但你希望预先设定可能的有效参数值，则可以使用标准的 <code>Python Enum</code> 类型。</p>
 <h3 id="创建一个-Enum-类"><a href="#创建一个-Enum-类" class="headerlink" title="创建一个 Enum 类"></a>创建一个 Enum 类</h3><p>导入 <code>Enum</code> 并创建一个继承自 <code>str</code> 和 <code>Enum</code> 的子类。</p>
 <p>通过从 <code>str</code> 继承，<code>API</code>文档将能够知道这些值必须为 <code>string</code> 类型并且能够正确地展示出来。</p>
 <p>然后创建具有固定值的类属性，这些固定值将是可用的有效值：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> enum <span class="keyword">import</span> Enum</span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ModelName</span>(<span class="params"><span class="built_in">str</span>, Enum</span>):</span></span><br><span class="line">    holy = <span class="string">&quot;holy&quot;</span></span><br><span class="line">    jack = <span class="string">&quot;jack&quot;</span></span><br><span class="line">    tony = <span class="string">&quot;tony&quot;</span></span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/model/&#123;model_name&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">get_model</span>(<span class="params">model_name: ModelName</span>):</span></span><br><span class="line">    <span class="keyword">if</span> model_name == ModelName.holy:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;model_name&quot;</span>: model_name, <span class="string">&quot;messagge&quot;</span>: <span class="string">&quot;好好学习！&quot;</span>&#125;</span><br><span class="line">    <span class="keyword">if</span> model_name == ModelName.jack:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;model_name&quot;</span>: model_name, <span class="string">&quot;message&quot;</span>: <span class="string">&quot;我对钱没有兴趣！&quot;</span>&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;model_name&quot;</span>: model_name, <span class="string">&quot;message&quot;</span>: <span class="string">&quot;欢乐时光就要来临了！&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> enum <span class="hljs-keyword">import</span> Enum<br><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ModelName</span>(<span class="hljs-params"><span class="hljs-built_in">str</span>, Enum</span>):</span><br>    holy = <span class="hljs-string">&quot;holy&quot;</span><br>    jack = <span class="hljs-string">&quot;jack&quot;</span><br>    tony = <span class="hljs-string">&quot;tony&quot;</span><br><br>app = FastAPI()<br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/model/&#123;model_name&#125;&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_model</span>(<span class="hljs-params">model_name: ModelName</span>):</span><br>    <span class="hljs-keyword">if</span> model_name == ModelName.holy:<br>        <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;model_name&quot;</span>: model_name, <span class="hljs-string">&quot;messagge&quot;</span>: <span class="hljs-string">&quot;好好学习！&quot;</span>&#125;<br>    <span class="hljs-keyword">if</span> model_name == ModelName.jack:<br>        <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;model_name&quot;</span>: model_name, <span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;我对钱没有兴趣！&quot;</span>&#125;<br>    <br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;model_name&quot;</span>: model_name, <span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;欢乐时光就要来临了！&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>输出结果：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;model_name&quot;</span>:<span class="string">&quot;jack&quot;</span>,<span class="string">&quot;message&quot;</span>:<span class="string">&quot;我对钱没有兴趣！&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<span class="hljs-string">&quot;model_name&quot;</span>:<span class="hljs-string">&quot;jack&quot;</span>,<span class="hljs-string">&quot;message&quot;</span>:<span class="hljs-string">&quot;我对钱没有兴趣！&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="获取枚举值"><a href="#获取枚举值" class="headerlink" title="获取枚举值"></a>获取枚举值</h3><p>可以使用 <code>model_name.value</code> 或通常来说 <code>your_enum_member.value</code> 来获取实际的值（在这个例子中为 str）。</p>
-<div class="panel panel-warning">
-    <div class="panel-title">Tip</div>
-    <div class="panel-body">
-        <p>你也可以通过 ModelName.tony.value 来获取值 “tony”。</p>
-
-    </div>
-    </div>
-
+<p>你也可以通过 ModelName.tony.value 来获取值 “tony”。</p>
 <h3 id="返回枚举成员"><a href="#返回枚举成员" class="headerlink" title="返回枚举成员"></a>返回枚举成员</h3><p>你以从路径操作中返回枚举成员，即使嵌套在 <code>JSON</code> 结构中（例如一个 <code>dict</code> 中）。</p>
 <h2 id="包含路径的路径参数"><a href="#包含路径的路径参数" class="headerlink" title="包含路径的路径参数"></a>包含路径的路径参数</h2><h3 id="路径转换器"><a href="#路径转换器" class="headerlink" title="路径转换器"></a>路径转换器</h3><p>可以使用直接来自 <code>Starlette</code> 的选项来声明一个包含路径的路径参数：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/files/&#123;file_path:path&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">/files/&#123;file_path:path&#125;<br></code></pre></td></tr></table></figure>
 
 <p>在这种情况下，参数的名称为 <code>file_path</code>，结尾部分的 :<code>path</code> 说明该参数应匹配任意的路径。</p>
 <p>因此，可以这样使用它：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/files/&#123;file_path:path&#125;&quot;</span></span>)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">read_file</span>(<span class="params">file_path: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;file_path&quot;</span>: file_path&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br>app = FastAPI()<br><br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/files/&#123;file_path:path&#125;&quot;</span></span>)</span><br><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_file</span>(<span class="hljs-params">file_path: <span class="hljs-built_in">str</span></span>):</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;file_path&quot;</span>: file_path&#125;<br></code></pre></td></tr></table></figure>
 
 <p>访问<code>http://127.0.0.1:8000/files/linux/holy</code>输出结果如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;file_path&quot;</span>:<span class="string">&quot;/root/holy&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<span class="hljs-string">&quot;file_path&quot;</span>:<span class="hljs-string">&quot;/root/holy&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
 
-<div class="panel panel-warning">
-    <div class="panel-title">Tip</div>
-    <div class="panel-body">
-        <p>可能会需要参数包含 /home/johndoe/myfile.txt，以斜杠（/）开头。</p>
+
+
+<p>可能会需要参数包含 /home/johndoe/myfile.txt，以斜杠（/）开头。</p>
 <p>在这种情况下，URL 将会是 /files//home/johndoe/myfile.txt，在files 和 home 之间有一个双斜杠（//）。</p>
 
-    </div>
-    </div>
             </div>
-            
-                <div class="kratos-copyright text-center clearfix">
-                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
-                </div>
-            
-            <footer class="kratos-entry-footer clearfix">
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
                 
-                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
                     
+                      <a class="hover-with-bg" href="/categories/FastAPI/">FastAPI</a>
                     
-                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
-                        <div class="share-wrap" style="display: none;">
-    <div class="share-group">
-        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-qq"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-star"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weixin"></i>
-            </div>
-            <div class="share-int">
-                <div class="qrcode" id="wechat-qr"></div>
-                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weibo"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-facebook"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-twitter"></i>
-            </div>
-        </a>
-    </div>
-    <script type="text/javascript">
-        $(()=>{
-            new QRCode("wechat-qr", {
-                text: "http://example.com/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/",
-                width: 150,
-                height: 150,
-                correctLevel : QRCode.CorrectLevel.H
-            });
-        });
-        function share(dest) {
-            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
-            const weiboBase     = "https://service.weibo.com/share/share.php?";
-            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
-            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
-            const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/";
-            const title         = "「FastAPI教程-路径参数」";
-            const excerpt       = `可以使用与 Python 格式化字符串相同的语法来声明路径”参数”或”变量”：
-12345678from fastapi import FastAPIapp = FastAPI()@app.get(&quot;/items/&#123...`;
-            let _URL;
-            switch (dest) {
-                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
-                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
-                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
-                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
-                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
-            }
-            window.open(_URL);
-        };
-    </script>
-</div>
-                    
-                    </div>
+                  </div>
                 
-                <div class="footer-tag clearfix">
-                    <div class="pull-left">
-                    <i class="fa fa-tags"></i>
-                        <a class="tag-none-link" href="/tags/fastapi/" rel="tag">fastapi</a>
-                    </div>
-                    <div class="pull-date">
-                    <span>最后编辑：2021-06-15</span>
-                    </div>
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/fastapi/">fastapi</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/31/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">异步爬虫的原理和解析</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/">
+                        <span class="hidden-mobile">FastAPI教程-入门介绍</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
                 </div>
-            </footer>
+              
+            </div>
+
+            
+          </article>
         </div>
-        
-            <nav class="navigation post-navigation clearfix" role="navigation">
-                
-                <div class="nav-previous clearfix">
-                    <a title=" FastAPI教程-入门介绍" href="/2021/05/30/FastAPI教程-用户指南/">&lt; 上一篇</a>
-                </div>
-                
-                
-                <div class="nav-next clearfix">
-                    <a title=" 异步爬虫的原理和解析" href="/2021/05/31/异步爬虫的原理和解析/">下一篇 &gt;</a>
-                </div>
-                
-            </nav>
-        
-        
-    </article>
-</section>
-
-                
-            
-
-<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
-    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-    
-                <aside id="krw-about" class="widget widget-kratos-about clearfix">
-    <div class="photo-background"></div>
-    <div class="photo-wrapper clearfix">
-        <div class="photo-wrapper-tip text-center">
-            <img class="about-photo" src="/images/my.webp" />
-        </div>
-    </div>
-    <div class="textwidget">
-        <p class="text-center"></p>
-    </div>
-</aside>
-            
-                    <div class="sticky-area">
-                
-                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
-    <div class="photo-background"></div>
-    <h4 class="widget-title no-after">
-        <i class="fa fa-compass"></i>
-        文章目录
-        <span class="toc-progress-bar"></span>
-    </h4>
-    <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0"><span class="toc-text">有类型的路径参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="toc-text">数据转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="toc-text">数据校验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%A1%A3"><span class="toc-text">文档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-text">路径操作的顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E8%AE%BE%E5%80%BC"><span class="toc-text">预设值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-Enum-%E7%B1%BB"><span class="toc-text">创建一个 Enum 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%9E%9A%E4%B8%BE%E5%80%BC"><span class="toc-text">获取枚举值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E6%9E%9A%E4%B8%BE%E6%88%90%E5%91%98"><span class="toc-text">返回枚举成员</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E8%B7%AF%E5%BE%84%E7%9A%84%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0"><span class="toc-text">包含路径的路径参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-text">路径转换器</span></a></li></ol></li></ol>
-    </div>
-</aside>
-                
-                
-  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
-    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E5%BA%93/">Python库</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
-  </aside>
-
-
-            
-                
-  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
-    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
-      <div class="tag-clouds">
-        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.68em;">Hexo</a> <a href="/tags/MD5/" style="font-size: 0.6em;">MD5</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.64em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.64em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.64em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.72em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.68em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.64em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.76em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.64em;">javascript</a>
       </div>
-  </aside>
-
-            
-                
-  <aside id="krw-posts" class="widget widget-kratos-posts">
-  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
-  <div class="tab-content">
-      <ul class="list-group">
-        
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/17/Requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> Requests库</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/"><i class="fa  fa-book"></i> 爬虫去重策略</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E5%92%8C%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 深度优先和广度优先算法</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-URL%E5%88%86%E5%8F%91/"><i class="fa  fa-book"></i> Django入门-URL分发</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-Django-Admin/"><i class="fa  fa-book"></i> Django入门-Django Admin</a>
-            
-          
-        
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-      </ul>
-  </div>
-  </aside>
-
-            
     </div>
-</section>
-        
-        </div>
-    </div>
-</div>
-<footer>
-    <div id="footer"  class="ap-lrc"  >
-        <div class="kr-tool text-center">
-            <div class="tool">
-                
-                    <div class="box search-box">
-                        <a href="/search/">
-                            <span class="fa fa-search"></span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="box theme-box" id="darkmode-switch">
-                        <span class="fa fa-adjust"></span>
-                    </div>
-                
-                
-            </div>
-            <div class="box gotop-box">
-                <span class="fa fa-chevron-up"></span>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 footer-list text-center">
-                    <ul class="kratos-social-icons">
-                        
-                        <li><a href="mailto:espholychan@outlook.com"><i class="fa fa-envelope"></i></a></li>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                    <ul class="kratos-copyright">
-                        <div>
-                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
-                            <li>本站已运行<span id="span_dt">Loading...</span></li>
-                        </div>
-                        <div>
-                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
-                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
-                        </div>
-                        <div>
-                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
-                            
-                        </div>
-                        <div>
-                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">鄂ICP备2021008617号-1</a></li>
-                            
-                        </div>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-</div>
-</div>
-
-        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
-<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
-
-    <div>
-        <canvas id="snow"></canvas>
-        <script async type="text/javascript" src="/js/snow.min.js"></script>
-    </div>
-
-<script async src="/js/candy.min.js"></script>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
     
-    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-    <meting-js
-        server="netease"
-        type="playlist"
-        id="81305697"
-        order="random"
-        fixed="true"
-    >
-    </meting-js>
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
-    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
-<script defer src="/js/kratosr.min.js"></script>
-<script defer src="/js/pjax.min.js"></script>
-
-
-    <script defer src="/js/kr-dark.min.js"></script>
+  
 
 
 
-<!-- Extra support for third-party plguins  -->
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
-    </body>
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>

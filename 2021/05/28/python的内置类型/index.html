@@ -1,187 +1,250 @@
+
+
 <!DOCTYPE html>
-<html lang="Zh">
-    <head>
-  <!-- 元数据 -->
-  <meta charset="utf-8">
-  <link rel="icon" href="/images/logo.webp">
-  <title>python的内置类型 | Holy的个人站点</title>
-  <meta name="author" content="Holy Chan" />
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="robots" content="index,follow" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="format-detection" content="telphone=no, email=no" />
+<html lang="Zh" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-    <meta name="keywords" content="python" />
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
   
-  <meta name="description" content="字符串与字节Python3中只有一种能够保存文本信息的数据类型，就是str(string，字符串)。它是不可变的序列，保存的Unicode码位(code point)。 字符串可以保存的数据类型有非常明确的限制，就是Unicode文本。 bytes以及可变的bytearray与str不同，只能用字节作为序列值，即0&lt;&#x3D;x&lt;256范围内的整数。 12&gt;&gt;&gt; bytes(">
-<meta property="og:type" content="article">
-<meta property="og:title" content="python的内置类型">
-<meta property="og:url" content="http://example.com/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/index.html">
-<meta property="og:site_name" content="Holy的个人站点">
-<meta property="og:description" content="字符串与字节Python3中只有一种能够保存文本信息的数据类型，就是str(string，字符串)。它是不可变的序列，保存的Unicode码位(code point)。 字符串可以保存的数据类型有非常明确的限制，就是Unicode文本。 bytes以及可变的bytearray与str不同，只能用字节作为序列值，即0&lt;&#x3D;x&lt;256范围内的整数。 12&gt;&gt;&gt; bytes(">
-<meta property="og:locale">
-<meta property="og:image" content="http://example.com/images/logo.webp">
-<meta property="article:published_time" content="2021-05-28T15:52:16.000Z">
-<meta property="article:modified_time" content="2021-06-15T03:24:11.493Z">
-<meta property="article:author" content="Holy Chan">
-<meta property="article:tag" content="python">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/logo.webp">
-<meta name="twitter:site" content="@null">
-  
-  <!-- 站点验证相关 -->
+  <title>python的内置类型 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
   
     
     
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
     
   
-  <!-- 样式表文件 -->
-  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+
   
-    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
   
-  
-  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
-  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-  
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
-  
-  
-    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
-  
-  <!-- 不得不预先加载的一些JS文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
-  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
-    <body class="custom-background">
-        <div id="kratos-wrapper">
-    <div id="kratos-page">
-        <div id="kratos-header">
-            <header id="kratos-desktop-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="nav-header">
-                        <nav id="kratos-menu-wrap">
-                            <ul id="kratos-primary-menu" class="sf-menu">
-                                
-                                    
-                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/archives/"><i class="fa fa-file"></i>归档</a></li>
-                                    
-                                
-                                    
-                                        <li><a href="/about/"><i class="fa fa-paw"></i>关于我</a></li>
-                                    
-                                
-                                    
-                                        <li>
-                                            <a><i class="fa fa-link"></i>链接</a>
-                                            <ul class="sub-menu">
-                                                
-                                                    
-                                                
-                                                    
-                                                        <li><a target="_blank" rel="noopener" href="http://holychan.ltd:8000">个人网盘</a></li>
-                                                    
-                                                
-                                            </ul>
-                                        </li>
-                                    
-                                
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </header>
-            <header id="kratos-mobile-topnav" class="kratos-topnav">
-                <div class="container">
-                    <div class="color-logo"><a href="/">Holy的个人站点</a></div>
-                    <div class="nav-toggle">
-                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
-                            <i></i>
-                        </a>
-                    </div>
-                </div>
-            </header>
-        </div>
-        <div class="kratos-start kratos-hero-2">
-            <!-- <div class="kratos-overlay"></div> -->
-            <div class="kratos-cover kratos-cover-2 text-center">
-                <div class="desc desc2 animate-box">
-                    <a href="/">
-                        <h2>Holy的个人站点</h2> <br />
-                        <span></span>
-                    </a>
-                </div>
-            </div>
-        </div>
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
 
-        <div id="kratos-blog-post">
-            <div class="container">
-                <div id="main" class="row">
-                    
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-        <section class="col-md-8">
-    <article>
-        <div class="kratos-hentry kratos-post-inner clearfix">
-            <header class="kratos-entry-header">
-                
-                    <h1 class="kratos-entry-title text-center">python的内置类型</h1>
-                
-                
-                <ul class="kratos-post-meta text-center">
-                    <li><i class="fa fa-calendar"></i> 2021-05-28</li>
-                    <li><i class="fa fa-user"></i> 作者 Holy Chan</li>
-                    <li>
-                        <i class="fa fa-edit"></i> 
-                        
-                        
-                            ~5.42K
-                        
-                        字
-                    </li>
-                    
-                </ul>
-            </header>
-            <div class="kratos-post-content">
-                <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1623727451493"></time> 前，其中的内容可能需要更新。
-                </div>
-                
-                    <div class="kratos-post-inner-toc">
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E5%AD%97%E8%8A%82"><span class="toc-number">1.</span> <span class="toc-text">字符串与字节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5"><span class="toc-number">1.1.</span> <span class="toc-text">字符串拼接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84"><span class="toc-number">2.1.</span> <span class="toc-text">列表和元组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC"><span class="toc-number">2.1.1.</span> <span class="toc-text">列表推导</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%B9%A0%E8%AF%AD"><span class="toc-number">2.1.2.</span> <span class="toc-text">其他习语</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E8%A7%A3%E5%8C%85%EF%BC%88sequence-unpacking%EF%BC%89"><span class="toc-number">2.1.3.</span> <span class="toc-text">序列解包（sequence unpacking）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">2.2.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-number">2.3.</span> <span class="toc-text">集合</span></a></li></ol></li></ol>
-                    </div>
-                
-                <hr />
-                <h2 id="字符串与字节"><a href="#字符串与字节" class="headerlink" title="字符串与字节"></a>字符串与字节</h2><p><code>Python3</code>中只有一种能够保存文本信息的数据类型，就是<code>str</code>(<code>string</code>，字符串)。它是不可变的序列，保存的<code>Unicode</code>码位(<code>code point</code>)。</p>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Startseite
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archiv
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Kategorie
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Etiketten
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                Über mich
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="python的内置类型">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-05-28 23:52" pubdate>
+        May 28, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python的内置类型</h1>
+            
+            <div class="markdown-body">
+              <h2 id="字符串与字节"><a href="#字符串与字节" class="headerlink" title="字符串与字节"></a>字符串与字节</h2><p><code>Python3</code>中只有一种能够保存文本信息的数据类型，就是<code>str</code>(<code>string</code>，字符串)。它是不可变的序列，保存的<code>Unicode</code>码位(<code>code point</code>)。</p>
 <p>字符串可以保存的数据类型有非常明确的限制，就是<code>Unicode</code>文本。</p>
 <p><code>bytes</code>以及可变的<code>bytearray</code>与<code>str</code>不同，只能用字节作为序列值，即<code>0&lt;=x&lt;256</code>范围内的整数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">bytes</span>([<span class="number">102</span>,<span class="number">111</span>,<span class="number">111</span>])</span><br><span class="line"><span class="string">b&#x27;foo&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">bytes</span>([<span class="hljs-number">102</span>,<span class="hljs-number">111</span>,<span class="hljs-number">111</span>])<br><span class="hljs-string">b&#x27;foo&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <p>对于<code>bytes</code>和<code>bytearray</code>，在转换为另一种序列类型（例如<code>list</code>或<code>tuple</code>）时可以显示出其本来面目：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">list</span>(<span class="string">b&#x27;foo bar&#x27;</span>)</span><br><span class="line">[<span class="number">102</span>, <span class="number">111</span>, <span class="number">111</span>, <span class="number">32</span>, <span class="number">98</span>, <span class="number">97</span>, <span class="number">114</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">tuple</span>(<span class="string">b&#x27;foo bar&#x27;</span>)</span><br><span class="line">(<span class="number">102</span>, <span class="number">111</span>, <span class="number">111</span>, <span class="number">32</span>, <span class="number">98</span>, <span class="number">97</span>, <span class="number">114</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">list</span>(<span class="hljs-string">b&#x27;foo bar&#x27;</span>)<br>[<span class="hljs-number">102</span>, <span class="hljs-number">111</span>, <span class="hljs-number">111</span>, <span class="hljs-number">32</span>, <span class="hljs-number">98</span>, <span class="hljs-number">97</span>, <span class="hljs-number">114</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">tuple</span>(<span class="hljs-string">b&#x27;foo bar&#x27;</span>)<br>(<span class="hljs-number">102</span>, <span class="hljs-number">111</span>, <span class="hljs-number">111</span>, <span class="hljs-number">32</span>, <span class="hljs-number">98</span>, <span class="hljs-number">97</span>, <span class="hljs-number">114</span>)<br></code></pre></td></tr></table></figure>
 
 <p>从<code>Python3.0</code>开始，所有没有前缀的字符串都是<code>Unicode</code>。因此，所有用单引号（’）、双引号（”）或成组的3个引号（单引号或双引号）包围且没有前缀的值都表示<code>str</code>数据类型：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(<span class="string">&quot;some string&quot;</span>)</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">str</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">type</span>(<span class="hljs-string">&quot;some string&quot;</span>)<br>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> &#x27;<span class="hljs-title">str</span>&#x27;&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>字节也被单引号、双引号或三引号包围，但必须有一个<code>b</code>或<code>B</code>前缀：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(<span class="string">b&quot;some bytes&quot;</span>)</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">bytes</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">type</span>(<span class="hljs-string">b&quot;some bytes&quot;</span>)<br>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> &#x27;<span class="hljs-title">bytes</span>&#x27;&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p><code>Python</code>字符串是不可变的。字节序列也是如此。<code>bytearray</code>是<code>bytes</code>的可变版本，不存在这样的问题。字节数组可以通过元素赋值来进行原处修改（无需创建新对象），其大小也可以像列表一样动态地变化（利用<code>append</code>、<code>pop</code>、<code>inseer</code>等方法）。</p>
 <h3 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h3><p>用<code>str.join()</code>方法。它接受可迭代的字符串作为参数，返回合并后的字符串。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;,&#x27;</span>.join([<span class="string">&#x27;some&#x27;</span>,<span class="string">&#x27;one&#x27;</span>,<span class="string">&#x27;like&#x27;</span>,<span class="string">&#x27;you&#x27;</span>,<span class="string">&#x27;forever&#x27;</span>])</span><br><span class="line"><span class="string">&#x27;some,one,like,you,forever&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">&#x27;,&#x27;</span>.join([<span class="hljs-string">&#x27;some&#x27;</span>,<span class="hljs-string">&#x27;one&#x27;</span>,<span class="hljs-string">&#x27;like&#x27;</span>,<span class="hljs-string">&#x27;you&#x27;</span>,<span class="hljs-string">&#x27;forever&#x27;</span>])<br><span class="hljs-string">&#x27;some,one,like,you,forever&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <p>因为<code>join()</code>方法速度更快（对于大型列表来说更是如此），并不意味着在所有需要拼接两个字符串的情况下都应该使用这一方法。虽然这是一种广为认可的做法，但并不会提高代码的可读性。可读性是很重要的！在某些情况下，<code>join()</code>的性能可能还不如利用加法的普通拼接。</p>
 <h2 id="集合类型"><a href="#集合类型" class="headerlink" title="集合类型"></a>集合类型</h2><h3 id="列表和元组"><a href="#列表和元组" class="headerlink" title="列表和元组"></a>列表和元组</h3><p>列表是动态的，其大小可以改变；而元组是不可变的，一旦创建就不能修改。</p>
@@ -191,8 +254,8 @@
 <li>利用<code>list.insert</code>方法在任意位置插入一个元素——复杂度为<code>O(n)</code>。</li>
 <li>利用<code>list.delete</code>或<code>del</code>删除一个元素——复杂度为<code>O(n)</code>。</li>
 </ul>
-<p><img src="Screenshot_1.webp"></p>
-<h4 id="列表推导"><a href="#列表推导" class="headerlink" title="列表推导"></a>列表推导</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>evens = []</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">if</span> i%<span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line"><span class="meta">... </span>            evens.append(i)</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>evens</span><br><span class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]</span><br></pre></td></tr></table></figure>
+<p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
+<h4 id="列表推导"><a href="#列表推导" class="headerlink" title="列表推导"></a>列表推导</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>evens = []<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> i%<span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br><span class="hljs-meta">... </span>            evens.append(i)<br>...<br><span class="hljs-meta">&gt;&gt;&gt; </span>evens<br>[<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>]<br></code></pre></td></tr></table></figure>
 
 <p>这种写法可能适用于<code>C</code>语言，但在<code>Python</code>中的实际运行速度很慢，原因如下。</p>
 <ul>
@@ -201,26 +264,26 @@
 <li>由于<code>append()</code>是一个列表方法，所以每次遍历时还需要额外执行一个查询函数。</li>
 </ul>
 <p>列表推导正是解决这个问题的正确方法。它使用编排好的功能对上述语法的一部分做了自动化处理：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>[i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>) <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>[i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">if</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>]<br>[<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>]<br></code></pre></td></tr></table></figure>
 
 <p>这种写法除了更加高效之外，也更加简短，涉及的语法元素也更少。在大型程序中，这意味着更少的错误，代码也更容易阅读和理解。</p>
 <h4 id="其他习语"><a href="#其他习语" class="headerlink" title="其他习语"></a>其他习语</h4><p><code>Python</code>习语的另一个典型例子是使用<code>enumerate</code>（枚举）。在循环中使用序列时，这个内置函数可以很方便地获取其索引。以下面这段代码为例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> element <span class="keyword">in</span> [<span class="string">&#x27;one&#x27;</span>,<span class="string">&#x27;two&#x27;</span>,<span class="string">&#x27;three&#x27;</span>]:</span><br><span class="line"><span class="meta">... </span>    <span class="built_in">print</span>(i, element)</span><br><span class="line"><span class="meta">... </span>    i += <span class="number">1</span></span><br><span class="line">...</span><br><span class="line"><span class="number">0</span> one</span><br><span class="line"><span class="number">1</span> two</span><br><span class="line"><span class="number">2</span> three</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> element <span class="hljs-keyword">in</span> [<span class="hljs-string">&#x27;one&#x27;</span>,<span class="hljs-string">&#x27;two&#x27;</span>,<span class="hljs-string">&#x27;three&#x27;</span>]:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(i, element)<br><span class="hljs-meta">... </span>    i += <span class="hljs-number">1</span><br>...<br><span class="hljs-number">0</span> one<br><span class="hljs-number">1</span> two<br><span class="hljs-number">2</span> three<br></code></pre></td></tr></table></figure>
 
 <p>它可以替换为下面这段更短的代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i, element <span class="keyword">in</span> <span class="built_in">enumerate</span>([<span class="string">&#x27;one&#x27;</span>,<span class="string">&#x27;two&#x27;</span>,<span class="string">&#x27;three&#x27;</span>]):</span><br><span class="line"><span class="meta">... </span>    <span class="built_in">print</span>(i, element)</span><br><span class="line">...</span><br><span class="line"><span class="number">0</span> one</span><br><span class="line"><span class="number">1</span> two</span><br><span class="line"><span class="number">2</span> three</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i, element <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>([<span class="hljs-string">&#x27;one&#x27;</span>,<span class="hljs-string">&#x27;two&#x27;</span>,<span class="hljs-string">&#x27;three&#x27;</span>]):<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(i, element)<br>...<br><span class="hljs-number">0</span> one<br><span class="hljs-number">1</span> two<br><span class="hljs-number">2</span> three<br></code></pre></td></tr></table></figure>
 
 <h4 id="序列解包（sequence-unpacking）"><a href="#序列解包（sequence-unpacking）" class="headerlink" title="序列解包（sequence unpacking）"></a>序列解包（sequence unpacking）</h4><p>这种方法并不限于列表和元组，而是适用于任意序列类型（甚至包括字符串和字节序列）。只要赋值运算符左边的变量数目与序列中的元素数目相等，你都可以用这种方法将元素序列解包到另一组变量中：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>first, second, third = <span class="string">&quot;holy&quot;</span>, <span class="string">&quot;chan&quot;</span>, <span class="number">100</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>first</span><br><span class="line"><span class="string">&#x27;holy&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>second</span><br><span class="line"><span class="string">&#x27;chan&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>third</span><br><span class="line"><span class="number">100</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>first, second, third = <span class="hljs-string">&quot;holy&quot;</span>, <span class="hljs-string">&quot;chan&quot;</span>, <span class="hljs-number">100</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>first<br><span class="hljs-string">&#x27;holy&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>second<br><span class="hljs-string">&#x27;chan&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>third<br><span class="hljs-number">100</span><br></code></pre></td></tr></table></figure>
 
 <p>解包还可以利用带星号的表达式获取单个变量中的多个元素，只要它的解释没有歧义即可。还可以对嵌套序列进行解包。特别是在遍历由序列构成的复杂数据结构时，这种方法非常实用。下面是一些更复杂的解包示例</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="comment"># 带星号的表达式可以获取序列的剩余部分</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>first, second, *rest = <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>first</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>second</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>rest</span><br><span class="line">[<span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="comment"># 带星号的表达式可以获取序列的中间部分</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>first, *inner, last = <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>first</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>inner</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>last</span><br><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="comment"># 嵌套解包</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(a,b), (c,d) = (<span class="number">1</span>,<span class="number">2</span>), (<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b, c, d</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-comment"># 带星号的表达式可以获取序列的剩余部分</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>first, second, *rest = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>first<br><span class="hljs-number">0</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>second<br><span class="hljs-number">1</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>rest<br>[<span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-comment"># 带星号的表达式可以获取序列的中间部分</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>first, *inner, last = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>first<br><span class="hljs-number">0</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>inner<br>[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span>last<br><span class="hljs-number">3</span><br><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-comment"># 嵌套解包</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>(a,b), (c,d) = (<span class="hljs-number">1</span>,<span class="hljs-number">2</span>), (<span class="hljs-number">3</span>,<span class="hljs-number">4</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>a, b, c, d<br>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>)<br></code></pre></td></tr></table></figure>
 
 <h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><p>字典是<code>Python</code>中最通用的数据结构之一。<code>dict</code>可以将一组唯一键映射到对应的值，如下所示：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="number">1</span>: <span class="string">&#x27;one&#x27;</span>,</span><br><span class="line">  <span class="number">2</span>: <span class="string">&#x27;two&#x27;</span>,</span><br><span class="line">  <span class="number">3</span>: <span class="string">&#x27;three&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<br>  <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;one&#x27;</span>,<br>  <span class="hljs-number">2</span>: <span class="hljs-string">&#x27;two&#x27;</span>,<br>  <span class="hljs-number">3</span>: <span class="hljs-string">&#x27;three&#x27;</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>可以用和前面列表推导类似的推导来创建一个新的字典。这里有一个非常简单的例子如下所示：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>squares = &#123;number: number ** <span class="number">2</span> <span class="keyword">for</span> number <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>squares</span><br><span class="line">&#123;<span class="number">0</span>: <span class="number">0</span>, <span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="number">4</span>, <span class="number">3</span>: <span class="number">9</span>, <span class="number">4</span>: <span class="number">16</span>, <span class="number">5</span>: <span class="number">25</span>, <span class="number">6</span>: <span class="number">36</span>, <span class="number">7</span>: <span class="number">49</span>, <span class="number">8</span>: <span class="number">64</span>, <span class="number">9</span>: <span class="number">81</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>squares = &#123;number: number ** <span class="hljs-number">2</span> <span class="hljs-keyword">for</span> number <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)&#125;<br><span class="hljs-meta">&gt;&gt;&gt; </span>squares<br>&#123;<span class="hljs-number">0</span>: <span class="hljs-number">0</span>, <span class="hljs-number">1</span>: <span class="hljs-number">1</span>, <span class="hljs-number">2</span>: <span class="hljs-number">4</span>, <span class="hljs-number">3</span>: <span class="hljs-number">9</span>, <span class="hljs-number">4</span>: <span class="hljs-number">16</span>, <span class="hljs-number">5</span>: <span class="hljs-number">25</span>, <span class="hljs-number">6</span>: <span class="hljs-number">36</span>, <span class="hljs-number">7</span>: <span class="hljs-number">49</span>, <span class="hljs-number">8</span>: <span class="hljs-number">64</span>, <span class="hljs-number">9</span>: <span class="hljs-number">81</span>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>在许多情况下，字典推导要更加高效、更加简短、更加整洁。对于更复杂的代码而言，需要用到许多<code>if</code>语句或函数调用来创建一个字典，这时最好使用简单的<code>for</code>循环，尤其是它还提高了可读性。</p>
 <p>对于<code>python3</code>，字典的<code>keys()</code>、<code>values()</code>和<code>items()</code>3个方法的返回值类型不再是列表。此外，与之对应的<code>iterkeys()</code>、<code>itervalues()</code>和<code>iteritems()</code>本来返回的是迭代器，而<code>Python3</code>中并没有这3个方法。现在<code>keys()</code>、<code>values()</code>和<code>items()</code>返回的是视图对象（<code>viewobjects</code>）。</p>
@@ -230,7 +293,7 @@
 <li>items()：返回dict_items对象，可以查看字典所有的(key, value)二元元组。</li>
 </ul>
 <p>视图对象可以动态查看字典的内容，因此每次字典发生变化时，视图都会相应改变，见下面这个例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>words = &#123;<span class="string">&#x27;foo1&#x27;</span>:<span class="string">&#x27;bar&#x27;</span>, <span class="string">&#x27;fizz&#x27;</span>:<span class="string">&#x27;bazz&#x27;</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>items = words.items()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>words[<span class="string">&#x27;spam&#x27;</span>] = <span class="string">&#x27;eggs&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>items</span><br><span class="line">dict_items([(<span class="string">&#x27;foo1&#x27;</span>, <span class="string">&#x27;bar&#x27;</span>), (<span class="string">&#x27;fizz&#x27;</span>, <span class="string">&#x27;bazz&#x27;</span>), (<span class="string">&#x27;spam&#x27;</span>, <span class="string">&#x27;eggs&#x27;</span>)])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>words = &#123;<span class="hljs-string">&#x27;foo1&#x27;</span>:<span class="hljs-string">&#x27;bar&#x27;</span>, <span class="hljs-string">&#x27;fizz&#x27;</span>:<span class="hljs-string">&#x27;bazz&#x27;</span>&#125;<br><span class="hljs-meta">&gt;&gt;&gt; </span>items = words.items()<br><span class="hljs-meta">&gt;&gt;&gt; </span>words[<span class="hljs-string">&#x27;spam&#x27;</span>] = <span class="hljs-string">&#x27;eggs&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>items<br>dict_items([(<span class="hljs-string">&#x27;foo1&#x27;</span>, <span class="hljs-string">&#x27;bar&#x27;</span>), (<span class="hljs-string">&#x27;fizz&#x27;</span>, <span class="hljs-string">&#x27;bazz&#x27;</span>), (<span class="hljs-string">&#x27;spam&#x27;</span>, <span class="hljs-string">&#x27;eggs&#x27;</span>)])<br></code></pre></td></tr></table></figure>
 
 <p>视图对象既有旧的<code>keys()</code>、<code>values()</code>和<code>items()</code>方法返回的列表的特性，也有旧的<code>iterkeys()</code>、<code>itervalues()</code>和<code>iteritems()</code>方法返回的迭代器的特性。视图无需冗余地将所有值都保存在内存里（像列表那样），但你仍然可以获取其长度（使用<code>len</code>），也可以测试元素是否包含其中（使用<code>in</code>子句）。当然，视图是可迭代的。最后一件重要的事情是，在<code>keys()</code>和<code>values()</code>方法返回的视图中，键和值的顺序是完全对应的。</p>
 <h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><p>集合是一种鲁棒性很好的数据结构，当元素顺序的重要性不如元素的唯一性和测试元素是否包含在集合中的效率时，大部分情况下这种数据结构是很有用的。它与数学上的集合概念非常类似。<code>Python</code>的内置集合类型有两种。</p>
@@ -239,10 +302,10 @@
 <li>frozenset()：一种不可变的、可哈希的、无序的集合，其元素是唯一的、不可变的（可哈希的）对象。</li>
 </ul>
 <p>由于<code>frozenset()</code>具有不变性，它可以用作字典的键，也可以作为其他<code>set()</code>和<code>frozenset()</code>的元素。在一个<code>set()</code>或<code>frozenset()</code>中不能包含另一个普通的可变<code>set()</code>，因为这会引发<code>TypeError</code>：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">set</span>([<span class="built_in">set</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]),<span class="built_in">set</span>([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])])</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: unhashable <span class="built_in">type</span>: <span class="string">&#x27;set&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">set</span>([<span class="hljs-built_in">set</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]),<span class="hljs-built_in">set</span>([<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>])])<br>Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="hljs-number">1</span>, <span class="hljs-keyword">in</span> &lt;module&gt;<br>TypeError: unhashable <span class="hljs-built_in">type</span>: <span class="hljs-string">&#x27;set&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <p>下面这种集合初始化的方法是完全正确的：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">set</span>([<span class="built_in">frozenset</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]),<span class="built_in">frozenset</span>([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])])</span><br><span class="line">&#123;<span class="built_in">frozenset</span>(&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;), <span class="built_in">frozenset</span>(&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;)&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">set</span>([<span class="hljs-built_in">frozenset</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]),<span class="hljs-built_in">frozenset</span>([<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>])])<br>&#123;<span class="hljs-built_in">frozenset</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;), <span class="hljs-built_in">frozenset</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>&#125;)&#125;<br></code></pre></td></tr></table></figure>
 
 <p>创建可变集合方法有以下3种，如下所示。</p>
 <ul>
@@ -253,417 +316,219 @@
 <p>使用集合的字面值和推导要格外小心，因为它们在形式上与字典的字面值和推导非常相似。此外，空的集合对象是没有字面值的。空的花括号{}表示的是空的字典字面值。</p>
 
             </div>
-            
-                <div class="kratos-copyright text-center clearfix">
-                    <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
-                </div>
-            
-            <footer class="kratos-entry-footer clearfix">
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
                 
-                    <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
                     
+                      <a class="hover-with-bg" href="/categories/Python/">Python</a>
                     
-                        <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
-                        <div class="share-wrap" style="display: none;">
-    <div class="share-group">
-        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-qq"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-star"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weixin"></i>
-            </div>
-            <div class="share-int">
-                <div class="qrcode" id="wechat-qr"></div>
-                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-weibo"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-facebook"></i>
-            </div>
-        </a>
-        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
-            <div class="icon-wrap">
-                <i class="fa fa-twitter"></i>
-            </div>
-        </a>
-    </div>
-    <script type="text/javascript">
-        $(()=>{
-            new QRCode("wechat-qr", {
-                text: "http://example.com/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/",
-                width: 150,
-                height: 150,
-                correctLevel : QRCode.CorrectLevel.H
-            });
-        });
-        function share(dest) {
-            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
-            const weiboBase     = "https://service.weibo.com/share/share.php?";
-            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
-            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
-            const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/";
-            const title         = "「python的内置类型」";
-            const excerpt       = `字符串与字节Python3中只有一种能够保存文本信息的数据类型，就是str(string，字符串)。它是不可变的序列，保存的Unicode码位(code point)。
-字符串可以保存的数据类型有非常明确的限制，就是Unicode文本...`;
-            let _URL;
-            switch (dest) {
-                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
-                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
-                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
-                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
-                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
-            }
-            window.open(_URL);
-        };
-    </script>
-</div>
-                    
-                    </div>
+                  </div>
                 
-                <div class="footer-tag clearfix">
-                    <div class="pull-left">
-                    <i class="fa fa-tags"></i>
-                        <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
-                    </div>
-                    <div class="pull-date">
-                    <span>最后编辑：2021-06-15</span>
-                    </div>
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">scrapy框架介绍</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/26/go%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85/">
+                        <span class="hidden-mobile">go语言的下载和安装</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
                 </div>
-            </footer>
+              
+            </div>
+
+            
+          </article>
         </div>
-        
-            <nav class="navigation post-navigation clearfix" role="navigation">
-                
-                <div class="nav-previous clearfix">
-                    <a title=" go语言的下载和安装" href="/2021/05/26/go语言的下载和安装/">&lt; 上一篇</a>
-                </div>
-                
-                
-                <div class="nav-next clearfix">
-                    <a title=" scrapy框架介绍" href="/2021/05/29/scrapy框架介绍/">下一篇 &gt;</a>
-                </div>
-                
-            </nav>
-        
-        
-    </article>
-</section>
-
-                
-            
-
-<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
-    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-    
-                <aside id="krw-about" class="widget widget-kratos-about clearfix">
-    <div class="photo-background"></div>
-    <div class="photo-wrapper clearfix">
-        <div class="photo-wrapper-tip text-center">
-            <img class="about-photo" src="/images/my.webp" />
-        </div>
-    </div>
-    <div class="textwidget">
-        <p class="text-center"></p>
-    </div>
-</aside>
-            
-                    <div class="sticky-area">
-                
-                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
-    <div class="photo-background"></div>
-    <h4 class="widget-title no-after">
-        <i class="fa fa-compass"></i>
-        文章目录
-        <span class="toc-progress-bar"></span>
-    </h4>
-    <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E5%AD%97%E8%8A%82"><span class="toc-text">字符串与字节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5"><span class="toc-text">字符串拼接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-text">集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84"><span class="toc-text">列表和元组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC"><span class="toc-text">列表推导</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%B9%A0%E8%AF%AD"><span class="toc-text">其他习语</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E8%A7%A3%E5%8C%85%EF%BC%88sequence-unpacking%EF%BC%89"><span class="toc-text">序列解包（sequence unpacking）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88"><span class="toc-text">集合</span></a></li></ol></li></ol>
-    </div>
-</aside>
-                
-                
-  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
-    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Django/">Django</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FastAPI/">FastAPI</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flask/">Flask</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Go/">Go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python%E5%BA%93/">Python库</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a><span class="category-list-count">1</span></li></ul>
-  </aside>
-
-
-            
-                
-  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
-    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
-      <div class="tag-clouds">
-        <a href="/tags/Git/" style="font-size: 0.6em;">Git</a> <a href="/tags/Hexo/" style="font-size: 0.68em;">Hexo</a> <a href="/tags/MD5/" style="font-size: 0.6em;">MD5</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/ajax/" style="font-size: 0.64em;">ajax</a> <a href="/tags/asyncio/" style="font-size: 0.64em;">asyncio</a> <a href="/tags/bs4/" style="font-size: 0.64em;">bs4</a> <a href="/tags/css/" style="font-size: 0.6em;">css</a> <a href="/tags/django/" style="font-size: 0.8em;">django</a> <a href="/tags/docker/" style="font-size: 0.72em;">docker</a> <a href="/tags/fastapi/" style="font-size: 0.68em;">fastapi</a> <a href="/tags/flask/" style="font-size: 0.64em;">flask</a> <a href="/tags/git/" style="font-size: 0.6em;">git</a> <a href="/tags/go/" style="font-size: 0.6em;">go</a> <a href="/tags/html/" style="font-size: 0.6em;">html</a> <a href="/tags/http/" style="font-size: 0.76em;">http</a> <a href="/tags/https/" style="font-size: 0.6em;">https</a> <a href="/tags/javascript/" style="font-size: 0.64em;">javascript</a>
       </div>
-  </aside>
-
-            
-                
-  <aside id="krw-posts" class="widget widget-kratos-posts">
-  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
-  <div class="tab-content">
-      <ul class="list-group">
-        
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/17/Requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> Requests库</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/"><i class="fa  fa-book"></i> 爬虫去重策略</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E5%92%8C%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/"><i class="fa  fa-book"></i> 深度优先和广度优先算法</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-URL%E5%88%86%E5%8F%91/"><i class="fa  fa-book"></i> Django入门-URL分发</a>
-            
-          
-        
-          
-          
-            <a class="list-group-item" href="/2021/06/16/Django%E5%85%A5%E9%97%A8-Django-Admin/"><i class="fa  fa-book"></i> Django入门-Django Admin</a>
-            
-          
-        
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-      </ul>
-  </div>
-  </aside>
-
-            
     </div>
-</section>
-        
-        </div>
-    </div>
-</div>
-<footer>
-    <div id="footer"  class="ap-lrc"  >
-        <div class="kr-tool text-center">
-            <div class="tool">
-                
-                    <div class="box search-box">
-                        <a href="/search/">
-                            <span class="fa fa-search"></span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="box theme-box" id="darkmode-switch">
-                        <span class="fa fa-adjust"></span>
-                    </div>
-                
-                
-            </div>
-            <div class="box gotop-box">
-                <span class="fa fa-chevron-up"></span>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 footer-list text-center">
-                    <ul class="kratos-social-icons">
-                        
-                        <li><a href="mailto:espholychan@outlook.com"><i class="fa fa-envelope"></i></a></li>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                    <ul class="kratos-copyright">
-                        <div>
-                            <li>&copy; 2021 Holy的个人站点 版权所有.</li>
-                            <li>本站已运行<span id="span_dt">Loading...</span></li>
-                        </div>
-                        <div>
-                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
-                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Holy Chan.</li>
-                        </div>
-                        <div>
-                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
-                            
-                        </div>
-                        <div>
-                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">鄂ICP备2021008617号-1</a></li>
-                            
-                        </div>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-</div>
-</div>
-
-        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
-<script>const notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));</script>
-
-    <div>
-        <canvas id="snow"></canvas>
-        <script async type="text/javascript" src="/js/snow.min.js"></script>
-    </div>
-
-<script async src="/js/candy.min.js"></script>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
     
-    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-    <meting-js
-        server="netease"
-        type="playlist"
-        id="81305697"
-        order="random"
-        fixed="true"
-    >
-    </meting-js>
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
-    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
-<script defer src="/js/kratosr.min.js"></script>
-<script defer src="/js/pjax.min.js"></script>
-
-
-    <script defer src="/js/kr-dark.min.js"></script>
+  
 
 
 
-<!-- Extra support for third-party plguins  -->
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
 
 
-    </body>
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
 </html>
