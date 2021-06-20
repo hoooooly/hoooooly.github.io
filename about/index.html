@@ -18,7 +18,7 @@
   <meta name="author" content="Holy Chan">
   <meta name="keywords" content="">
   
-  <title>关于我 - Holy的个人站点</title>
+  <title>关于 - Holy的个人站点</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -54,7 +54,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -177,7 +177,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="关于我">
+            <span class="h2" id="subtitle" title="个人网站/博客日志/技术文档">
               
             </span>
 
@@ -196,17 +196,70 @@
         <div class="py-5" id="board"
           >
           
+            <div class="about-avatar">
+              <img src="/img/my.webp" srcset="/img/loading.gif" lazyload
+                   class="img-fluid" alt="avatar">
+            </div>
+          
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<article class="page-content">
-  <p>苦逼的工科生，学电子的却爱鼓捣计算机的东西。</p>
-<p>目前从事城市轨道交通的自动化行业，和PLC和Modscan打交道比较多，还有各种奇怪的网络设备，服务器和软件。半个网络工程师、半个运维工程师，啥都会干啥都感觉不太精通（╮(╯▽╰)╭）。</p>
-<p>工作之余专心学习<code>python</code>和<code>go</code>语言，专注爬虫方向，<strong>爬天，爬地，爬空气</strong>。</p>
+<div class="text-center">
+  <div class="about-info">
+    <div class="about-name">Holy</div>
+    <div class="about-intro"></div>
+    <div class="about-icons">
+      
+        
+        
+        
+        <a href=https://github.com/hoooooly class="
+           hint--bottom hint--rounded"
+           aria-label=GitHub
+           target="_blank"
+        >
+          <i class="iconfont icon-github-fill" aria-hidden="true"></i>
+          
+        </a>
+      
+        
+        
+        
+        <a href=mailto:espholychan@look.com class="
+           hint--bottom hint--rounded"
+           aria-label=邮箱
+           target="_blank"
+        >
+          <i class="iconfont icon-mail" aria-hidden="true"></i>
+          
+        </a>
+      
+        
+        
+        
+        <a  class="qr-trigger
+           "
+           
+           target="_self"
+        >
+          <i class="iconfont icon-wechat-fill" aria-hidden="true"></i>
+          
+            <img class="qr-img" src="/img/wechat.jpg" srcset="/img/loading.gif" lazyload alt="qrcode" />
+          
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+<article class="about-content page-content mt-5">
+  <div class="markdown-body">
+    <p>专心学习<code>python</code>和<code>go</code>语言，专注爬虫方向，<strong>爬天，爬地，爬空气</strong>。</p>
 <p>愿世界和平，大家都发财！</p>
 
+  </div>
 
   
 </article>
@@ -249,11 +302,17 @@
     
 
     
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
   </main>
 
   <footer class="text-center mt-5 py-3">
   <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p>我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
   <div class="statistics">
