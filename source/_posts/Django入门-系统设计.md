@@ -10,7 +10,7 @@ only:
   - tag
 date: 2021-06-09 09:56:24
 categories: Django
-pic: Screenshot_8.webp
+index_img: /2021/06/09/Django入门-系统设计/Screenshot_8.webp
 ---
 
 ## 论坛项目

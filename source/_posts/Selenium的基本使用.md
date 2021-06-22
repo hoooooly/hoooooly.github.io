@@ -10,7 +10,7 @@ only:
   - tag
 date: 2021-06-19 21:15:51
 categories: 爬虫
-pic: selenium_logo_large.png
+index_img: /2021/06/19/Selenium的基本使用/selenium.png
 ---
 
 在很多情况下，`Ajax`请求的接口通常会包含加密的参数，如`token`、`sign`等，如：[https://dynamic2.scrape.cuiqingcai.com/](https://dynamic2.scrape.cuiqingcai.com/)，它的`Ajax`接口是包含一个`token`参数的，如图所示。
@@ -699,8 +699,11 @@ print(el)
 driver.quit()
 ```
 
-3. 显式等待
+3. 显式等待(了解)
 
 每经过多少秒就查看一次等待条件是否达成，如果达成就停止等待，继续执行后续代码。
+
+4. 手动实现页面等待
+
 
 

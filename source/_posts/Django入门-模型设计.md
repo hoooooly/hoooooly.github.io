@@ -11,7 +11,7 @@ only:
   - tag
 date: 2021-06-09 21:29:50
 categories: Django
-pic: Screenshot_8.webp
+index_img: /2021/06/09/Django入门-模型设计/Screenshot_8.webp
 ---
 
 ## 模型

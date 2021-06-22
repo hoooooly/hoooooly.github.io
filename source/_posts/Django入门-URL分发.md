@@ -11,7 +11,7 @@ only:
   - tag
 date: 2021-06-16 14:18:11
 categories: Django
-pic: Screenshot_8.webp
+index_img: /2021/06/16/Django入门-URL分发/Screenshot_8.webp
 ---
 
 ## URLs

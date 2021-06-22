@@ -11,7 +11,7 @@ only:
   - tag
 date: 2021-06-07 15:56:49
 categories: Django
-pic: Screenshot_8.webp
+index_img: /2021/06/07/django入门及环境搭建/Screenshot_8.webp
 ---
 
 ## 为什么要使用Django?

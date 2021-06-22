@@ -10,7 +10,7 @@ only:
   - tag
 date: 2021-06-11 13:45:32
 categories: Django
-pic: Screenshot_8.webp
+index_img: /2021/06/11/Django入门-视图函数/Screenshot_8.webp
 ---
 
 ## 第一个视图函数

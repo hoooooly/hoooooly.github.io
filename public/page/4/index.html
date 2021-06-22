@@ -47,7 +47,7 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
-<body>
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
   <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
@@ -191,6 +191,61 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/30/Flask%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_self">
+          Flask快速上手
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/30/Flask%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_self">
+          
+          
+            
+          
+          一个最小的应用一个最小的Flask应用如下:
+123456from flask import Flaskapp = Flask(__name__)@app.route(&#x27;/&#x27;)def hello_world():    return &#x27;Hello, World!&#x27;
+
+那么，这些代码是什么意思呢？
+
+首先我们导入了Flask类。 该类的实例将会成为我们的WSG
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-30 14:56" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -711,67 +766,6 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/23/request%E3%80%81pyquest%E5%92%8Cpymongodb%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
-          request、pyquest和pymongodb案例实战
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/23/request%E3%80%81pyquest%E5%92%8Cpymongodb%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
-          
-          
-            
-          
-          准备工作在本节课开始之前，我们需要做好如下的准备工作：
-
-安装好Python3（最低为 3.6 版本），并能成功运行Python3程序。
-了解Python多进程的基本原理。
-了解PythonHTTP请求库requests的基本用法。
-了解正则表达式的用法和Python中正则表达式库re的基本用法。
-了解PythonHTML解析库pyquery的基本用法。
-了解MongoDB并安装和启动MongoD
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-23 21:12" pubdate>
-              2021-05-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/request/">request</a>
-            
-              <a href="/tags/pyquest/">pyquest</a>
-            
-              <a href="/tags/pymongodb/">pymongodb</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -830,7 +824,7 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
 
   <footer class="text-center mt-5 py-3">
   <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p>我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
   <div class="statistics">
@@ -979,5 +973,7 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
 <script  src="/js/boot.js" ></script>
 
 
-</body>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
 </html>

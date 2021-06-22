@@ -11,7 +11,7 @@ only:
   - tag
 date: 2021-06-16 12:47:04
 categories: Django
-pic: Screenshot_8.webp
+index_img: /2021/06/16/Django入门-Django-Admin/Screenshot_8.webp
 ---
 
 ## Django Admin 简介

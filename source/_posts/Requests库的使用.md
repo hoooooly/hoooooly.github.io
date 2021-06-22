@@ -11,7 +11,7 @@ only:
   - tag
 date: 2021-06-17 19:53:38
 categories: Python库
-pic: requests-sidebar.png
+index_img: /2021/06/17/Requests库的使用/requests-sidebar.png
 ---
 
 > Requests is an elegant and simple HTTP library for Python, built for human beings.

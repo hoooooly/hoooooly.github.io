@@ -11,7 +11,7 @@ only:
   - tag
 date: 2021-06-16 00:01:36
 categories: Django
-pic: Screenshot_8.webp
+index_img: /2021/06/16/Django入门-静态文件设置/Screenshot_8.webp
 ---
 
 静态文件设置静态文件是指 `CSS`，`JavaScript`，`字体`，`图片`或者是用`来组成用户界面的任何其他资源`。
