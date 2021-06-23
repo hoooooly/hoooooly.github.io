@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      985 字
+      1k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      11
        分钟
     </span>
   
@@ -253,13 +253,24 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年6月15日 上午
+                  本文最后更新于：2021年6月23日 晚上
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="Scrapy介绍"><a href="#Scrapy介绍" class="headerlink" title="Scrapy介绍"></a>Scrapy介绍</h2><p><code>Scrapy</code>是一个基于<code>Twisted</code>的异步处理框架，是纯<code>Python</code>实现的爬虫框架，其架构清晰，模块之间的耦合程度低，可扩展性极强，可以灵活完成各种需求。只需要定制开发几个模块就可以轻松实现一个爬虫。</p>
-<p>首先来看下<code>Scrapy</code>框架的架构，如图所示：</p>
+<p><code>Scrapy</code>框架主要实现下面的流程：</p>
+<pre><code class=" mermaid">graph RL
+    A[内容提取]--url---&gt;B[url队列]
+    B--url---&gt;C[发送请求]
+    C--respone---&gt;A
+    D[提取URL]---&gt;A
+    E[提取数据]---&gt;A
+    A--数据---&gt;F[数据队列]
+    F---&gt;G[保存数据]
+</code></pre>
+
+<p>来看下<code>Scrapy</code>框架的架构，如图所示：</p>
 <p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
 <p>它可以分为如下的几个部分。</p>
 <ul>
