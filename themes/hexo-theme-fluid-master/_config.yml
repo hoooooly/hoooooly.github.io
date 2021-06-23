@@ -145,7 +145,7 @@ color:
 
   # 全局字体色
   # Color of global text
-  text_color: "#3c4858"
+  text_color: "#2c3e50"
   text_color_dark: "#c4c6c9"
 
   # 全局次级字体色（摘要、简介等位置）

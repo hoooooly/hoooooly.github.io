@@ -10,7 +10,7 @@ only:
   - tag
 date: 2021-06-19 21:15:51
 categories: 爬虫
-index_img: /2021/06/19/Selenium的基本使用/selenium.png
+index_img:
 ---
 
 在很多情况下，`Ajax`请求的接口通常会包含加密的参数，如`token`、`sign`等，如：[https://dynamic2.scrape.cuiqingcai.com/](https://dynamic2.scrape.cuiqingcai.com/)，它的`Ajax`接口是包含一个`token`参数的，如图所示。
@@ -705,5 +705,105 @@ driver.quit()
 
 4. 手动实现页面等待
 
+### 开启无界面模式
 
+开启无界面模式的方法：
+
+- 实列化配置对象
+   - options = webdriver.ChromeOptions()
+- 配置对象添加开启无界面浏览器的命令
+   - options.add_argument("--headless")
+- 配置对象添加禁用`GPU`命令
+   - options.add_argument("--disable-gpu")
+- 实例化带有配置对象的driver对象
+   - driver = webdriver.Chrome(options=options)
+
+注意：`Chrome`浏览器版本必须在59+版本以上。
+
+参考代码：
+
+```python
+from selenium import webdriver
+
+# 实例化配置对象
+options = webdriver.ChromeOptions()
+
+# 添加配置对象
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
+
+# 创建浏览器对象，添加配置对象
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver", options=options)
+
+driver.get('https://www.baidu.com')
+
+driver.save_screenshot("百度-无头模式.png")
+
+driver.quit()
+```
+
+### 使用代理IP
+
+使用代理IP的方法：
+
+- 实例化配置对象
+   - options = webdriver.ChromeOptions()
+- 配置对象添加使用代理IP命令
+   - options.add_argument('--proxy-server=http://202.20.16.82:8527')
+- 实例化带有配置对象的driver对象
+   - driver = webdriver.Chrome('./chromedriver, options=option)
+
+参考代码：
+
+```python
+from selenium import webdriver
+
+# 实例化配置对象
+options = webdriver.ChromeOptions()
+
+# 添加配置对象
+# 更换IP代理必须重新启动浏览器
+options.add_argument('--proxy-server=http://113.254.44.242:8382')
+
+# 创建浏览器对象，添加配置对象
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver", options=options)
+
+driver.get('https://www.baidu.com')
+
+driver.save_screenshot("百度-无头模式.png")
+
+driver.quit()
+```
+
+### 替换user-agent
+
+替换`user-agent`的方法：
+
+- 实列化配置对象
+   - options = webdriver.ChromeOptions()
+- 配置对象添加替换`UA`命令
+   - options.add_argument('--user-agent=Mozilla/5.0 python')
+- 实例化带有配置对象的driver对象
+   - driver = webdriver.Chrome('./chromedriver, options=option)
+
+参考代码：
+
+```python
+from selenium import webdriver
+
+# 实例化配置对象
+options = webdriver.ChromeOptions()
+
+# 添加配置对象
+options.add_argument('--user-agent=Mozilla/5.0 python')
+
+# 创建浏览器对象，添加配置对象
+driver = webdriver.Chrome(executable_path="D:/tools/chromedriver", options=options)
+
+driver.get('https://www.baidu.com')
+
+driver.save_screenshot("百度-无头模式.png")
+
+driver.quit()
+```
 

@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.7k 字
+      6.2k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      78
+      85
        分钟
     </span>
   
@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年6月22日 中午
+                  本文最后更新于：2021年6月23日 下午
                 
               </p>
             
@@ -459,6 +459,65 @@
 <ol start="4">
 <li>手动实现页面等待</li>
 </ol>
+<h3 id="开启无界面模式"><a href="#开启无界面模式" class="headerlink" title="开启无界面模式"></a>开启无界面模式</h3><p>开启无界面模式的方法：</p>
+<ul>
+<li>实列化配置对象<ul>
+<li>options = webdriver.ChromeOptions()</li>
+</ul>
+</li>
+<li>配置对象添加开启无界面浏览器的命令<ul>
+<li>options.add_argument(“–headless”)</li>
+</ul>
+</li>
+<li>配置对象添加禁用<code>GPU</code>命令<ul>
+<li>options.add_argument(“–disable-gpu”)</li>
+</ul>
+</li>
+<li>实例化带有配置对象的driver对象<ul>
+<li>driver = webdriver.Chrome(options=options)</li>
+</ul>
+</li>
+</ul>
+<p>注意：<code>Chrome</code>浏览器版本必须在59+版本以上。</p>
+<p>参考代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver<br><br><span class="hljs-comment"># 实例化配置对象</span><br>options = webdriver.ChromeOptions()<br><br><span class="hljs-comment"># 添加配置对象</span><br>options.add_argument(<span class="hljs-string">&#x27;--headless&#x27;</span>)<br>options.add_argument(<span class="hljs-string">&#x27;--disable-gpu&#x27;</span>)<br><br><span class="hljs-comment"># 创建浏览器对象，添加配置对象</span><br>driver = webdriver.Chrome(executable_path=<span class="hljs-string">&quot;D:/tools/chromedriver&quot;</span>, options=options)<br><br>driver.get(<span class="hljs-string">&#x27;https://www.baidu.com&#x27;</span>)<br><br>driver.save_screenshot(<span class="hljs-string">&quot;百度-无头模式.png&quot;</span>)<br><br>driver.quit()<br></code></pre></td></tr></table></figure>
+
+<h3 id="使用代理IP"><a href="#使用代理IP" class="headerlink" title="使用代理IP"></a>使用代理IP</h3><p>使用代理IP的方法：</p>
+<ul>
+<li>实例化配置对象<ul>
+<li>options = webdriver.ChromeOptions()</li>
+</ul>
+</li>
+<li>配置对象添加使用代理IP命令<ul>
+<li>options.add_argument(‘–proxy-server=<a href="http://202.20.16.82:8527&#39;">http://202.20.16.82:8527&#39;</a>)</li>
+</ul>
+</li>
+<li>实例化带有配置对象的driver对象<ul>
+<li>driver = webdriver.Chrome(‘./chromedriver, options=option)</li>
+</ul>
+</li>
+</ul>
+<p>参考代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver<br><br><span class="hljs-comment"># 实例化配置对象</span><br>options = webdriver.ChromeOptions()<br><br><span class="hljs-comment"># 添加配置对象</span><br><span class="hljs-comment"># 更换IP代理必须重新启动浏览器</span><br>options.add_argument(<span class="hljs-string">&#x27;--proxy-server=http://113.254.44.242:8382&#x27;</span>)<br><br><span class="hljs-comment"># 创建浏览器对象，添加配置对象</span><br>driver = webdriver.Chrome(executable_path=<span class="hljs-string">&quot;D:/tools/chromedriver&quot;</span>, options=options)<br><br>driver.get(<span class="hljs-string">&#x27;https://www.baidu.com&#x27;</span>)<br><br>driver.save_screenshot(<span class="hljs-string">&quot;百度-无头模式.png&quot;</span>)<br><br>driver.quit()<br></code></pre></td></tr></table></figure>
+
+<h3 id="替换user-agent"><a href="#替换user-agent" class="headerlink" title="替换user-agent"></a>替换user-agent</h3><p>替换<code>user-agent</code>的方法：</p>
+<ul>
+<li>实列化配置对象<ul>
+<li>options = webdriver.ChromeOptions()</li>
+</ul>
+</li>
+<li>配置对象添加替换<code>UA</code>命令<ul>
+<li>options.add_argument(‘–user-agent=Mozilla/5.0 python’)</li>
+</ul>
+</li>
+<li>实例化带有配置对象的driver对象<ul>
+<li>driver = webdriver.Chrome(‘./chromedriver, options=option)</li>
+</ul>
+</li>
+</ul>
+<p>参考代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver<br><br><span class="hljs-comment"># 实例化配置对象</span><br>options = webdriver.ChromeOptions()<br><br><span class="hljs-comment"># 添加配置对象</span><br>options.add_argument(<span class="hljs-string">&#x27;--user-agent=Mozilla/5.0 python&#x27;</span>)<br><br><span class="hljs-comment"># 创建浏览器对象，添加配置对象</span><br>driver = webdriver.Chrome(executable_path=<span class="hljs-string">&quot;D:/tools/chromedriver&quot;</span>, options=options)<br><br>driver.get(<span class="hljs-string">&#x27;https://www.baidu.com&#x27;</span>)<br><br>driver.save_screenshot(<span class="hljs-string">&quot;百度-无头模式.png&quot;</span>)<br><br>driver.quit()<br></code></pre></td></tr></table></figure>
+
 
             </div>
             <hr>
