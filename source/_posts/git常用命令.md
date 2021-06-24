@@ -3,7 +3,7 @@ title: Git常用命令
 date: 2021-05-08 18:03:19
 categories: Git
 tags:
-- Git
+- git
 # sticky: 100
 pic:
 comments: true
