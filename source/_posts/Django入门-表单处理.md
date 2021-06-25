@@ -137,6 +137,8 @@ message = reqeust.POST['message']
 ```pyth
 ```
 
+这里发生了一些问题，先回头再深入学习下ORM模型。
+
 
 
 
