@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年6月15日 上午
+                  本文最后更新于：2021年6月25日 凌晨
                 
               </p>
             
@@ -295,7 +295,7 @@
 <p>这里定义了三个字段，将类的名称修改为<code>QuoteItem</code>，接下来爬取时会使用到这个<code>Item</code>。</p>
 <h2 id="解析Response"><a href="#解析Response" class="headerlink" title="解析Response"></a>解析Response</h2><p><code>parse</code>方法的参数<code>response</code>是<code>start_urls</code>里面的链接爬取后的结果。所以在<code>parse</code>方法中，可以直接对<code>response</code>变量包含的内容进行解析，比如浏览请求结果的网页源代码，或者进一步分析源代码内容，或者找出结果中的链接而得到下一个请求。</p>
 <p>首先看看网页结构，如图所示。每一页都有多个<code>class</code>为<code>quote</code>的区块，每个区块内都包含<code>text</code>、<code>author</code>、<code>tags</code>。那么先找出所有的<code>quote</code>，然后提取每一个<code>quote</code>中的内容。</p>
-<p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
+<p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload alt="Screenshot_1"></p>
 <p>提取的方式可以是<code>CSS</code>选择器或<code>XPath</code>选择器。在这里使用<code>CSS</code>选择器进行选择，<code>parse</code>方法的改写如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QuotesSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    name = <span class="hljs-string">&#x27;quotes&#x27;</span><br>    allowed_domains = [<span class="hljs-string">&#x27;http://quotes.toscrape.com/&#x27;</span>]<br>    start_urls = [<span class="hljs-string">&#x27;http://http://quotes.toscrape.com//&#x27;</span>]<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        quotes = response.css(<span class="hljs-string">&#x27;.quote&#x27;</span>)<br>        <span class="hljs-keyword">for</span> quote <span class="hljs-keyword">in</span> quotes:<br>            text = quote.css(<span class="hljs-string">&#x27;.text::text&#x27;</span>).extract_first()<br>            author = quote.css(<span class="hljs-string">&#x27;.author::text&#x27;</span>).extract_first()<br>            tags = quote.css(<span class="hljs-string">&#x27;.tags .tag::text&#x27;</span>).extract()<br></code></pre></td></tr></table></figure>
 
