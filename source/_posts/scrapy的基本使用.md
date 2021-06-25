@@ -11,6 +11,7 @@ only:
 date: 2021-05-29 22:49:55
 categories: 爬虫
 pic:
+typora-root-url: ./
 ---
 
 ## 抓取目标
@@ -110,7 +111,7 @@ class QuoteItem(scrapy.Item):
 
 首先看看网页结构，如图所示。每一页都有多个`class`为`quote`的区块，每个区块内都包含`text`、`author`、`tags`。那么先找出所有的`quote`，然后提取每一个`quote`中的内容。
 
-![](Screenshot_1.webp)
+![Screenshot_1](Screenshot_1.webp)
 
 提取的方式可以是`CSS`选择器或`XPath`选择器。在这里使用`CSS`选择器进行选择，`parse`方法的改写如下所示：
 

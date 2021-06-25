@@ -13,6 +13,7 @@ only:
 date: 2021-05-23 21:12:36
 categories: 爬虫
 pic:
+typora-root-url: Ajax的原理和解析
 ---
 
 ## 准备工作
