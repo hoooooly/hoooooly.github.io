@@ -195,6 +195,71 @@
   <div class="row mx-auto index-card">
     
     
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/25/Django%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/" target="_self">
+          Django模型详解
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/25/Django%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/" target="_self">
+          
+          
+            
+          
+          首先，快速创建一个Django工程。
+1django-admin startproject learn_test
+
+然后在工程里面创建一个叫做things的应用。
+12cd learn_testpython manage.py startapp things
+
+模型模型准确且唯一的描述了数据。它包含您储存的数据的重要字段和行为。一般来说，每一个模型都映射一张数据库表。
+基础：
+
+每个模型都是一个 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-25 22:59" pubdate>
+              2021-06-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Django/">Django</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/django/">django</a>
+            
+              <a href="/tags/model/">model</a>
+            
+              <a href="/tags/orm/">orm</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/06/25/Django%E5%85%A5%E9%97%A8-%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86/" target="_self">
           <img src="/2021/06/25/Django%E5%85%A5%E9%97%A8-%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86/1.webp" srcset="/img/loading.gif" lazyload alt="Django入门-表单处理">
@@ -722,71 +787,6 @@ Requests 唯一的一个非转基因的 Python HTTP 库，人类可以安全享�
               <a href="/tags/http/">http</a>
             
               <a href="/tags/requests/">requests</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/" target="_self">
-          爬虫去重策略
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/" target="_self">
-          
-          
-            
-          
-          
-将访问过的URL保存到数据库
-
-将访问过的URL保存到set中，只需要O(1)的代价就可以查询到URL，100000000*2byte*50个字符/1024/1024/1024 = 9G 
-
-URL经过md5等方法哈希保存到set中
-
-用bitmap方法，将访问过的URL通过hash函数映射到某一位
-
-bloomfilter方法对bitmap进行改进，多重hash函数降低冲突
-
-
-
-    ta
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-17 18:48" pubdate>
-              2021-06-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/MD5/">MD5</a>
             
           </div>
         

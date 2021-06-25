@@ -18,7 +18,7 @@
   <meta name="author" content="Holy Chan">
   <meta name="keywords" content="">
   
-  <title>Django入门-表单处理 - Holy的个人站点</title>
+  <title>Django模型详解 - Holy的个人站点</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -179,7 +179,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Django入门-表单处理">
+            <span class="h2" id="subtitle" title="Django模型详解">
               
             </span>
 
@@ -189,8 +189,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-25 16:36" pubdate>
-        2021年6月25日 下午
+      <time datetime="2021-06-25 22:59" pubdate>
+        2021年6月25日 晚上
       </time>
     </span>
   
@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      645 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15
+      7
        分钟
     </span>
   
@@ -249,7 +249,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Django入门-表单处理</h1>
+            <h1 style="display: none">Django模型详解</h1>
             
               <p class="note note-info">
                 
@@ -258,40 +258,38 @@
               </p>
             
             <div class="markdown-body">
-              <p><code>Forms(表单)</code>用来处理我们的输入。这在任何<code>web</code>应用或者网站中都有很常见的任务。标准的做法通过<code>HTML</code>表单实现，用户输入一些数据，提交给服务器，然后服务器处理它。</p>
-<p><code>Django Forms API</code> 使整个过程变的更加简单，从而实现了大量工作的自动化。而且，最终的结果比大多数程序员自己去实现的代码更加安全。所以，不管 <code>HTML</code> 的表单多么简单，总是使用<code>Form API</code>。</p>
-<h2 id="手动实现一个表单"><a href="#手动实现一个表单" class="headerlink" title="手动实现一个表单"></a>手动实现一个表单</h2><p>首先，创建一个新的<code>URL</code>路由，命名为<code>new_topic</code>：</p>
-<p><strong>boards/urls.py</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pyth">from django.urls import path, re_path<br>from . import views<br><br>urlpatterns = [<br>    path(&#x27;&#x27;, views.home, name=&#x27;home&#x27;),<br>    re_path(r&#x27;^boards/(?P&lt;pk&gt;\d+)/$&#x27;, views.board_topics, name=&#x27;board_topics&#x27;),<br>    re_path(r&#x27;^boards/(?P&lt;pk&gt;\d+)/new/$&#x27;, views.new_topic, name=&#x27;now_topics&#x27;),<br>]<br></code></pre></td></tr></table></figure>
+              <p>首先，快速创建一个<code>Django</code>工程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">django-admin startproject learn_test<br></code></pre></td></tr></table></figure>
 
-<p>创建<code>new_topic</code>的视图函数：</p>
-<p><strong>boards/views.py</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render, get_object_or_404<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Board<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">home</span>(<span class="hljs-params">request</span>):</span><br>    boards = Board.objects.<span class="hljs-built_in">all</span>()<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;home.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;boards&#x27;</span>: boards&#125;)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">board_topics</span>(<span class="hljs-params">request, pk</span>):</span><br>    board = Board.objects.get(pk=pk)<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;topics.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;boards&#x27;</span>: board&#125;)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">new_topic</span>(<span class="hljs-params">request, pk</span>):</span><br>    board = get_object_or_404(Board, pk=pk)<br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;new_topics.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;board&#x27;</span>: board&#125;)<br></code></pre></td></tr></table></figure>
+<p>然后在工程里面创建一个叫做<code>things</code>的应用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pytho">cd learn_test<br>python manage.py startapp things<br></code></pre></td></tr></table></figure>
 
-<p>接下来命名一个名为<code>new_topic.html</code>的模板：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% extends <span class="hljs-string">&#x27;base.html&#x27;</span> %&#125;<br><br>&#123;% block title %&#125;Start a new Topic&#123;% endblock %&#125;<br><br>&#123;% block breadcrumb %&#125;<br>&lt;li <span class="hljs-class"><span class="hljs-keyword">class</span>=&quot;<span class="hljs-title">breadcrumb</span>-<span class="hljs-title">item</span>&quot;&gt;&lt;<span class="hljs-title">a</span> <span class="hljs-title">href</span>=&quot;&#123;% <span class="hljs-title">url</span> &#x27;<span class="hljs-title">home</span>&#x27; %&#125;&quot;&gt;<span class="hljs-title">Boards</span>&lt;/<span class="hljs-title">a</span>&gt;&lt;/<span class="hljs-title">li</span>&gt;</span><br><span class="hljs-class">&lt;<span class="hljs-title">li</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">breadcrumb</span>-<span class="hljs-title">item</span>&quot;&gt;&lt;<span class="hljs-title">a</span> <span class="hljs-title">href</span>=&quot;&#123;% <span class="hljs-title">url</span> &#x27;<span class="hljs-title">board_topics</span>&#x27; <span class="hljs-title">board</span>.<span class="hljs-title">pk</span> %&#125;&quot;&gt;&#123;&#123; <span class="hljs-title">board</span>.<span class="hljs-title">name</span> &#125;&#125;&lt;/<span class="hljs-title">a</span>&gt;&lt;/<span class="hljs-title">li</span>&gt;</span><br><span class="hljs-class">&lt;<span class="hljs-title">li</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">breadcrumb</span>-<span class="hljs-title">item</span> <span class="hljs-title">active</span>&quot;&gt;<span class="hljs-title">New</span> <span class="hljs-title">topic</span>&lt;/<span class="hljs-title">li</span>&gt;</span><br><span class="hljs-class">&#123;% <span class="hljs-title">endblock</span> %&#125;</span><br><span class="hljs-class"></span><br><span class="hljs-class">&#123;% <span class="hljs-title">block</span> <span class="hljs-title">content</span> %&#125;</span><br><span class="hljs-class"></span><br><span class="hljs-class">&#123;% <span class="hljs-title">endblock</span> %&#125;</span><br></code></pre></td></tr></table></figure>
+<h1 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h1><p>模型准确且唯一的描述了数据。它包含您储存的数据的重要字段和行为。一般来说，每一个模型都映射一张数据库表。</p>
+<p>基础：</p>
+<ul>
+<li>每个模型都是一个 Python 的类，这些类继承 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/#django.db.models.Model"><code>django.db.models.Model</code></a></li>
+<li>模型类的每个属性都相当于一个数据库的字段。</li>
+<li>利用这些，<code>Django</code> 提供了一个自动生成访问数据库的 <code>API</code>；请参阅 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/db/queries/">执行查询</a>。</li>
+</ul>
+<h2 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h2><p>在<code>things/modles.py</code>中定义了一个 <code>Person</code> 模型，拥有 <code>first_name</code> 和 <code>last_name</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.db <span class="hljs-keyword">import</span> models<br><br><br><span class="hljs-comment"># Create your models here.</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>(<span class="hljs-params">models.Model</span>):</span><br>    first_name = models.CharField(max_length=<span class="hljs-number">50</span>)<br>    last_name = models.CharField(max_length=<span class="hljs-number">30</span>)<br></code></pre></td></tr></table></figure>
 
-<p>接下来，创建表单：</p>
-<p><strong>new_topic.html</strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% extends &#x27;base.html&#x27; %&#125;<br><br>&#123;% block title %&#125;Start a new Topic&#123;% endblock %&#125;<br><br>&#123;% block breadcrumb %&#125;<br><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;breadcrumb-item&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&#123;% url &#x27;home&#x27; %&#125;&quot;</span>&gt;</span>Boards<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;breadcrumb-item&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&#123;% url &#x27;board_topics&#x27; board.pk %&#125;&quot;</span>&gt;</span>&#123;&#123; board.name &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;breadcrumb-item active&quot;</span>&gt;</span>New topic<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>&#123;% endblock %&#125;<br><br>&#123;% block content %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span><br>        &#123;% csrf_token %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-group&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;id_subject&quot;</span>&gt;</span>Subject<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;id_subject&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;subject&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-group&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;id_message&quot;</span>&gt;</span>Message<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;id_message&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message&quot;</span> <span class="hljs-attr">rows</span>=<span class="hljs-string">&quot;5&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-success&quot;</span>&gt;</span>Post<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>&#123;% endblock %&#125;<br></code></pre></td></tr></table></figure>
+<p><code>first_name</code> 和 <code>last_name</code> 是模型的 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/db/models/#fields">字段</a>。每个字段都被指定为一个类属性，并且每个属性映射为一个数据库列。</p>
+<p>上面的 <code>Person</code> 模型会创建一个如下的数据库表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> myapp_person (<br>    &quot;id&quot; serial <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">PRIMARY</span> KEY,<br>    &quot;first_name&quot; <span class="hljs-type">varchar</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,<br>    &quot;last_name&quot; <span class="hljs-type">varchar</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span><br>);<br></code></pre></td></tr></table></figure>
 
-<p><img src="image-20210625174259256.png" srcset="/img/loading.gif" lazyload alt="image-20210625174259256"></p>
-<p>在<code>&lt;form&gt;</code>标签中，我们定义了<code>method</code>属性。它会告诉浏览器我们想如何与浏览器通信。<code>HTTP</code>规范定义了几种<code>request methods</code>(请求方法)。大部分情况下，只需要使用<code>GET</code>和<code>POST</code>两种<code>requests</code>（请求）类型。</p>
-<p><code>GET</code>是最常见的请求类型。它用于从服务器请求数据。每当你点击了一个链接或者直接在浏览器中输入了一个网址，你就创建了一个<code>GET</code>请求。</p>
-<p><code>POST</code>用于当我们想更改服务器上的数据的时候，一般来说，每次我们发送数据给服务器都会导致资源状态的变化。</p>
-<p><code>Django</code>使用<code>CSPF Token</code>(Cross-Site Request Forgery Token)<code>保护所有的</code>POST<code>请求。这是避免外部站点或者应用程序向我们的应用程序提交数据的安全措施。应用程序每次接受一个POST时，都先检查</code>CSPF Token`。如果这个request没有token，或者这个token是无效的，它会抛弃提交的数据。</p>
-<p><code>CSPF Token</code>的模板标签：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;% csrf_token %&#125;<br></code></pre></td></tr></table></figure>
+<p>一些技术上的说明：</p>
+<ul>
+<li>该表的名称 <code>myapp_person</code> 是自动从某些模型元数据中派生出来，但可以被改写。参阅 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/options/#table-names">表名称</a> 获取更多信息。</li>
+<li>一个 <code>id</code> 字段会被自动添加，但是这种行为可以被改写。请参阅 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/db/models/#automatic-primary-key-fields">自动设置主键</a>。</li>
+<li>本例子中 <code>创建数据表</code> 的语法是 <code>PostgreSQL</code> 格式的。值得注意的是，<code>Django</code> 依据你在 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/settings/">配置文件</a> 中指定的数据库后端生成对应的 <code>SQL</code> 语句。</li>
+</ul>
+<h2 id="使用模型"><a href="#使用模型" class="headerlink" title="使用模型"></a>使用模型</h2><p>一旦你定义了你的模型，你需要告诉 <code>Django</code> 你准备 <em>使用</em> 这些模型。你需要修改设置文件中的 <code>INSTALLED_APPS</code> ，在这个设置中添加包含 <code>models.py</code> 文件的模块名称。</p>
+<p>例如，若模型位于项目中的 <code>things.models</code> 模块（ 此包结构由 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/django-admin/#django-admin-startapp"><code>manage.py startapp</code></a> 命令创建）， <code>INSTALLED_APPS</code> 应设置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pytho">INSTALLED_APPS = [<br>    &#x27;django.contrib.admin&#x27;,<br>    &#x27;django.contrib.auth&#x27;,<br>    &#x27;django.contrib.contenttypes&#x27;,<br>    &#x27;django.contrib.sessions&#x27;,<br>    &#x27;django.contrib.messages&#x27;,<br>    &#x27;django.contrib.staticfiles&#x27;,<br>    &#x27;things&#x27;,<br>]<br></code></pre></td></tr></table></figure>
 
-<p>它是与其他表单数据一起提交的隐藏字段。</p>
-<p>另外，我们需要设置HTML输入<code>name</code>，<code>name</code>将被用来在服务器获取数据。</p>
-<p>下面示范我们如何检索数据：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py">subject = reqeust.POST[<span class="hljs-string">&#x27;subject&#x27;</span>]<br>message = reqeust.POST[<span class="hljs-string">&#x27;message&#x27;</span>]<br></code></pre></td></tr></table></figure>
-
-<p>从HTML获取数据并且开始一个型的<code>topic</code>视图的简单实现如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pyth"><br></code></pre></td></tr></table></figure>
-
-<p>这里发生了一些问题，先回头再深入学习下ORM模型。</p>
+<p>当你向 <code>INSTALLED_APPS</code> 添加新的应用的时候，请务必运行 <code>manage.py migrate</code>，此外你也可以先使用以下命令进行迁移 <code>manage.py makemigrations</code>。</p>
+<h2 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h2><p>模型中最重要且唯一必要的是数据库的字段定义。字段在类属性中定义。定义字段名时应小心避免使用与 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/"><code>模型 API</code></a> 冲突的名称， 如 <code>clean</code>, <code>save</code>, or <code>delete</code> 等.</p>
 <style>
     table
     {
@@ -307,13 +305,24 @@
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Django/">Django</a>
+                    
+                  </div>
+                
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Hexo/">Hexo</a>
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
                     
-                      <a class="hover-with-bg" href="/tags/Fluid/">Fluid</a>
+                      <a class="hover-with-bg" href="/tags/django/">django</a>
+                    
+                      <a class="hover-with-bg" href="/tags/model/">model</a>
+                    
+                      <a class="hover-with-bg" href="/tags/orm/">orm</a>
                     
                   </div>
                 
@@ -330,18 +339,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/06/25/Django%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Django模型详解</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/06/25/Django%E5%85%A5%E9%97%A8-%E5%A4%8D%E7%94%A8%E6%A8%A1%E6%9D%BF/">
-                        <span class="hidden-mobile">Django入门-复用模板</span>
+                      <a href="/2021/06/25/Django%E5%85%A5%E9%97%A8-%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86/">
+                        <span class="hidden-mobile">Django入门-表单处理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
