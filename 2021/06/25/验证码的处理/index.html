@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      552 字
+      643 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6
+      7
        分钟
     </span>
   
@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年6月25日 下午
+                  本文最后更新于：2021年6月28日 下午
                 
               </p>
             
@@ -290,8 +290,33 @@
 <ul>
 <li>Window环境下的安装通过<code>exe</code>安装包安装，下载地址在<code>Github</code>项目中的<code>wiki</code>中找到。</li>
 </ul>
+<p>安装包也可以在这个网址获取<a target="_blank" rel="noopener" href="https://digi.bib.uni-mannheim.de/tesseract/">Index of /tesseract (uni-mannheim.de)</a>。</p>
+</li>
+<li><p>Python库的安装</p>
 </li>
 </ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pytho"># PIL库安装<br>pip install pillow<br><br># pytesseract模块用于从图片解析数据<br>pip install pytesseract<br></code></pre></td></tr></table></figure>
+
+<p>2.3 图片识别引擎的使用</p>
+<ul>
+<li>通过<code>pytesseract</code>模块的<code>image_to_string</code>方法能将打开的图片文件中的数据转成字符串数据，具体方法如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
     table
     {
