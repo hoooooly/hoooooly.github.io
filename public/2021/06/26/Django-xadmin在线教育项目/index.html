@@ -18,7 +18,7 @@
   <meta name="author" content="Holy Chan">
   <meta name="keywords" content="">
   
-  <title>Django模型详解 - Holy的个人站点</title>
+  <title>Django+xadmin在线教育项目 - Holy的个人站点</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -179,7 +179,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Django模型详解">
+            <span class="h2" id="subtitle" title="Django+xadmin在线教育项目">
               
             </span>
 
@@ -189,8 +189,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-25 22:59" pubdate>
-        2021年6月25日 晚上
+      <time datetime="2021-06-26 22:55" pubdate>
+        2021年6月26日 晚上
       </time>
     </span>
   
@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      645 字
+      676 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      10
        分钟
     </span>
   
@@ -249,47 +249,80 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Django模型详解</h1>
+            <h1 style="display: none">Django+xadmin在线教育项目</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年6月25日 晚上
+                  本文最后更新于：2021年6月28日 早上
                 
               </p>
             
             <div class="markdown-body">
-              <p>首先，快速创建一个<code>Django</code>工程。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">django-admin startproject learn_test<br></code></pre></td></tr></table></figure>
-
-<p>然后在工程里面创建一个叫做<code>things</code>的应用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pytho">cd learn_test<br>python manage.py startapp things<br></code></pre></td></tr></table></figure>
-
-<h1 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h1><p>模型准确且唯一的描述了数据。它包含您储存的数据的重要字段和行为。一般来说，每一个模型都映射一张数据库表。</p>
-<p>基础：</p>
-<ul>
-<li>每个模型都是一个 Python 的类，这些类继承 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/#django.db.models.Model"><code>django.db.models.Model</code></a></li>
-<li>模型类的每个属性都相当于一个数据库的字段。</li>
-<li>利用这些，<code>Django</code> 提供了一个自动生成访问数据库的 <code>API</code>；请参阅 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/db/queries/">执行查询</a>。</li>
+              <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><p>使用<code>Django</code>和<code>xadmin</code>开发一个在线教育网站。</p>
+<h1 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h1><ul>
+<li><p><code>django app</code>设计</p>
+<p>主要有四个模块，用户、课程、授课机构（讲师）、用户操作信息。</p>
+</li>
+<li><p><code>user models.py</code>编写</p>
+</li>
+<li><p><code>couser models.py</code>编写</p>
+</li>
+<li><p><code>organization models.py</code>编写</p>
+</li>
+<li><p><code>operation models.py</code>编写</p>
+</li>
 </ul>
-<h2 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h2><p>在<code>things/modles.py</code>中定义了一个 <code>Person</code> 模型，拥有 <code>first_name</code> 和 <code>last_name</code>:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.db <span class="hljs-keyword">import</span> models<br><br><br><span class="hljs-comment"># Create your models here.</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>(<span class="hljs-params">models.Model</span>):</span><br>    first_name = models.CharField(max_length=<span class="hljs-number">50</span>)<br>    last_name = models.CharField(max_length=<span class="hljs-number">30</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">django-admin startproject mxonline<br></code></pre></td></tr></table></figure>
 
-<p><code>first_name</code> 和 <code>last_name</code> 是模型的 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/db/models/#fields">字段</a>。每个字段都被指定为一个类属性，并且每个属性映射为一个数据库列。</p>
-<p>上面的 <code>Person</code> 模型会创建一个如下的数据库表：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> myapp_person (<br>    &quot;id&quot; serial <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">PRIMARY</span> KEY,<br>    &quot;first_name&quot; <span class="hljs-type">varchar</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,<br>    &quot;last_name&quot; <span class="hljs-type">varchar</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span><br>);<br></code></pre></td></tr></table></figure>
+<h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shel">python manage.py startapp courses<br><br>python manage.py startapp users<br><br>python manage.py startapp operations<br><br>python manage.py startapp organizations<br></code></pre></td></tr></table></figure>
 
-<p>一些技术上的说明：</p>
-<ul>
-<li>该表的名称 <code>myapp_person</code> 是自动从某些模型元数据中派生出来，但可以被改写。参阅 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/options/#table-names">表名称</a> 获取更多信息。</li>
-<li>一个 <code>id</code> 字段会被自动添加，但是这种行为可以被改写。请参阅 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/db/models/#automatic-primary-key-fields">自动设置主键</a>。</li>
-<li>本例子中 <code>创建数据表</code> 的语法是 <code>PostgreSQL</code> 格式的。值得注意的是，<code>Django</code> 依据你在 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/settings/">配置文件</a> 中指定的数据库后端生成对应的 <code>SQL</code> 语句。</li>
+<p>新建一个<code>apps</code>包，把上面创建的四个应用放到这个文件夹下面，这样项目的结构就更加清晰。这样需要在<code>seeting``中设置如下配置，把</code>apps`添加到系统路径路面去。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> os<br><br>sys.path.insert(<span class="hljs-number">0</span>, os.path.join(BASE_DIR, <span class="hljs-string">&#x27;apps&#x27;</span>))<br></code></pre></td></tr></table></figure>
+
+<p>将这四个应用配置到<code>INSTALLED_APPS</code>中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">INSTALLED_APPS = [<br>    <span class="hljs-string">&#x27;django.contrib.admin&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.auth&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.contenttypes&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.sessions&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.messages&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.staticfiles&#x27;</span>,<br>    <span class="hljs-string">&#x27;apps.courses.apps.CourseConfig&#x27;</span>,<br>    <span class="hljs-string">&#x27;apps.users.apps.UsersConfig&#x27;</span>,<br>    <span class="hljs-string">&#x27;apps.operations.apps.OperationsConfig&#x27;</span>,<br>    <span class="hljs-string">&#x27;apps.organizations.apps.OrganizationsConfig&#x27;</span>,<br>]<br></code></pre></td></tr></table></figure>
+
+<p>安装<code>mysqlclient</code>模块，这个才能建立数据库模型。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shel">pip install mysqlclient<br></code></pre></td></tr></table></figure>
+
+<p> 可以尝试运行，<code>python manage.py runserver</code>，没有报错说明以上配置都是正确的。</p>
+<p><img src="image-20210627123046439.png" srcset="/img/loading.gif" lazyload alt="image-20210627123046439"></p>
+<h2 id="设计Users-models覆盖默认的用户表"><a href="#设计Users-models覆盖默认的用户表" class="headerlink" title="设计Users.models覆盖默认的用户表"></a>设计<code>Users.models</code>覆盖默认的用户表</h2><p>在<code>user.mogels.py</code>创建用户表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.db <span class="hljs-keyword">import</span> models<br><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> AbstractUser<br><br>GENDER_CHOICES = &#123;<br>    (<span class="hljs-string">&quot;male&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>),<br>    (<span class="hljs-string">&quot;female&quot;</span>, <span class="hljs-string">&quot;女&quot;</span>)<br>&#125;<br><br><br><span class="hljs-comment"># 定义用户表</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserProfile</span>(<span class="hljs-params">AbstractUser</span>):</span><br>    nick_name = models.CharField(max_length=<span class="hljs-number">50</span>, verbose_name=<span class="hljs-string">&quot;昵称&quot;</span>, default=<span class="hljs-string">&quot;&quot;</span>)<br>    birthday = models.DateField(verbose_name=<span class="hljs-string">&quot;生日&quot;</span>, null=<span class="hljs-literal">True</span>, blank=<span class="hljs-literal">True</span>)<br>    gender = models.CharField(verbose_name=<span class="hljs-string">&quot;性别&quot;</span>, choices=GENDER_CHOICES, max_length=<span class="hljs-number">6</span>)<br>    address = models.CharField(max_length=<span class="hljs-number">100</span>, verbose_name=<span class="hljs-string">&quot;地址&quot;</span>, default=<span class="hljs-string">&quot;&quot;</span>)<br>    mobile = models.CharField(max_length=<span class="hljs-number">11</span>, verbose_name=<span class="hljs-string">&quot;手机号码&quot;</span>, unique=<span class="hljs-literal">True</span>)<br>    image = models.ImageField(upload_to=<span class="hljs-string">&quot;head_image/%Y/%m&quot;</span>, default=<span class="hljs-string">&quot;head_image/uploaded.jpg&quot;</span>, verbose_name=<span class="hljs-string">&quot;头像&quot;</span>)<br><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Meta</span>:</span><br>        verbose_name = <span class="hljs-string">&quot;用户信息&quot;</span><br>        verbose_name_plural = verbose_name<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__str__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">if</span> self.nick_name:<br>            <span class="hljs-keyword">return</span> self.nick_name<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> self.username<br></code></pre></td></tr></table></figure>
+
+<p>注意，要在<code>seetings</code>中修改默认的<code>user</code>模块,，添加下面的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">AUTH_USER_MODEL = <span class="hljs-string">&quot;users.UserProfile&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后再生成数据库，首先运行<code>pip install Pillow</code>安装<code>Pillow</code>模块提供对头像的支持。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage.py python manage.py makemigrations<br>python manage.py migrate<br></code></pre></td></tr></table></figure>
+
+<p>用<code>Navicat</code>查看数据库，就可以看到所有的用户信息创建到<code>user_userprofile</code>的表中了。</p>
+<p><img src="/image-20210627142531138.png" srcset="/img/loading.gif" lazyload alt="image-20210627142531138"></p>
+<h2 id="Model设计中要注意的问题"><a href="#Model设计中要注意的问题" class="headerlink" title="Model设计中要注意的问题"></a>Model设计中要注意的问题</h2><h3 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h3><pre><code class=" mermaid">graph TB
+	A(&quot;User models.py(UserCourse)&quot;)--course---&gt;B(&quot;Course models.py(CourseComment)&quot;)
+	B--user---&gt;A
+</code></pre>
+
+<p>为什么要设计<code>operations</code>这个<code>model</code>？避免循环引用的情况发生。</p>
+<h3 id="分层设计"><a href="#分层设计" class="headerlink" title="分层设计"></a>分层设计</h3><pre><code class=" mermaid">graph TB
+	A(&quot;operation&quot;)
+	B(&quot;course&quot;)
+	C(&quot;organizaton&quot;)
+	D(&quot;users&quot;)
+	A--&gt;B
+	A--&gt;C
+	B--&gt;D
+	A--&gt;D
+	C--&gt;D
+</code></pre>
+
+<p>上层可以引用下层，下层不能引用上层。</p>
+<h2 id="设计Course-models课程信息表"><a href="#设计Course-models课程信息表" class="headerlink" title="设计Course.models课程信息表"></a>设计<code>Course.models</code>课程信息表</h2><ul>
+<li><code>Course</code>-课程的基本信息</li>
+<li><code>Lesson</code>-章节信息</li>
+<li><code>Video</code>-视频</li>
+<li><code>CourseResource</code>-课程资源</li>
 </ul>
-<h2 id="使用模型"><a href="#使用模型" class="headerlink" title="使用模型"></a>使用模型</h2><p>一旦你定义了你的模型，你需要告诉 <code>Django</code> 你准备 <em>使用</em> 这些模型。你需要修改设置文件中的 <code>INSTALLED_APPS</code> ，在这个设置中添加包含 <code>models.py</code> 文件的模块名称。</p>
-<p>例如，若模型位于项目中的 <code>things.models</code> 模块（ 此包结构由 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/django-admin/#django-admin-startapp"><code>manage.py startapp</code></a> 命令创建）， <code>INSTALLED_APPS</code> 应设置如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pytho">INSTALLED_APPS = [<br>    &#x27;django.contrib.admin&#x27;,<br>    &#x27;django.contrib.auth&#x27;,<br>    &#x27;django.contrib.contenttypes&#x27;,<br>    &#x27;django.contrib.sessions&#x27;,<br>    &#x27;django.contrib.messages&#x27;,<br>    &#x27;django.contrib.staticfiles&#x27;,<br>    &#x27;things&#x27;,<br>]<br></code></pre></td></tr></table></figure>
-
-<p>当你向 <code>INSTALLED_APPS</code> 添加新的应用的时候，请务必运行 <code>manage.py migrate</code>，此外你也可以先使用以下命令进行迁移 <code>manage.py makemigrations</code>。</p>
-<h2 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h2><p>模型中最重要且唯一必要的是数据库的字段定义。字段在类属性中定义。定义字段名时应小心避免使用与 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/instances/"><code>模型 API</code></a> 冲突的名称， 如 <code>clean</code>, <code>save</code>, or <code>delete</code> 等.</p>
 <style>
     table
     {
@@ -308,7 +341,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Django/">Django</a>
+                      <a class="hover-with-bg" href="/categories/Django%E5%AE%9E%E6%88%98/">Django实战</a>
                     
                   </div>
                 
@@ -316,13 +349,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/python/">python</a>
-                    
                       <a class="hover-with-bg" href="/tags/django/">django</a>
                     
-                      <a class="hover-with-bg" href="/tags/model/">model</a>
-                    
-                      <a class="hover-with-bg" href="/tags/orm/">orm</a>
+                      <a class="hover-with-bg" href="/tags/xadmin/">xadmin</a>
                     
                   </div>
                 
@@ -338,6 +367,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/06/28/%E9%97%AD%E5%8C%85%E5%92%8C%E8%A3%85%E9%A5%B0%E5%99%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">闭包和装饰器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

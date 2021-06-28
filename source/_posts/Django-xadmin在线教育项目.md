@@ -1,0 +1,191 @@
+---
+title: Django+xadmin在线教育项目
+tags:
+  - django
+  - xadmin
+comments: true
+date: 2021-06-26 22:55:56
+categories: Django实战
+index_img:
+banner_img:
+typora-root-url: Django-xadmin在线教育项目
+---
+
+#  目标
+
+使用`Django`和`xadmin`开发一个在线教育网站。
+
+# 数据库设计
+
+- `django app`设计
+
+  主要有四个模块，用户、课程、授课机构（讲师）、用户操作信息。
+
+- `user models.py`编写
+
+- `couser models.py`编写
+
+- `organization models.py`编写
+
+- `operation models.py`编写
+
+## 创建项目
+
+```python
+django-admin startproject mxonline
+```
+
+## 创建应用
+
+```shel
+python manage.py startapp courses
+
+python manage.py startapp users
+
+python manage.py startapp operations
+
+python manage.py startapp organizations
+```
+
+新建一个`apps`包，把上面创建的四个应用放到这个文件夹下面，这样项目的结构就更加清晰。这样需要在`seeting``中设置如下配置，把`apps`添加到系统路径路面去。
+
+```python
+import sys
+import os
+
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+```
+
+将这四个应用配置到`INSTALLED_APPS`中。
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'apps.courses.apps.CourseConfig',
+    'apps.users.apps.UsersConfig',
+    'apps.operations.apps.OperationsConfig',
+    'apps.organizations.apps.OrganizationsConfig',
+]
+```
+
+安装`mysqlclient`模块，这个才能建立数据库模型。
+
+```shel
+pip install mysqlclient
+```
+
+ 可以尝试运行，`python manage.py runserver`，没有报错说明以上配置都是正确的。
+
+![image-20210627123046439](image-20210627123046439.png)
+
+## 设计`Users.models`覆盖默认的用户表
+
+在`user.mogels.py`创建用户表。
+
+```python
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+GENDER_CHOICES = {
+    ("male", "男"),
+    ("female", "女")
+}
+
+
+# 定义用户表
+class UserProfile(AbstractUser):
+    nick_name = models.CharField(max_length=50, verbose_name="昵称", default="")
+    birthday = models.DateField(verbose_name="生日", null=True, blank=True)
+    gender = models.CharField(verbose_name="性别", choices=GENDER_CHOICES, max_length=6)
+    address = models.CharField(max_length=100, verbose_name="地址", default="")
+    mobile = models.CharField(max_length=11, verbose_name="手机号码", unique=True)
+    image = models.ImageField(upload_to="head_image/%Y/%m", default="head_image/uploaded.jpg", verbose_name="头像")
+
+    class Meta:
+        verbose_name = "用户信息"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        if self.nick_name:
+            return self.nick_name
+        else:
+            return self.username
+```
+
+注意，要在`seetings`中修改默认的`user`模块,，添加下面的代码。
+
+```python
+AUTH_USER_MODEL = "users.UserProfile"
+```
+
+然后再生成数据库，首先运行`pip install Pillow`安装`Pillow`模块提供对头像的支持。
+
+```python
+python manage.py python manage.py makemigrations
+python manage.py migrate
+```
+
+用`Navicat`查看数据库，就可以看到所有的用户信息创建到`user_userprofile`的表中了。
+
+![image-20210627142531138](/image-20210627142531138.png)
+
+## Model设计中要注意的问题
+
+### 循环引用
+
+```mermaid
+graph TB
+	A("User models.py(UserCourse)")--course--->B("Course models.py(CourseComment)")
+	B--user--->A
+```
+
+为什么要设计`operations`这个`model`？避免循环引用的情况发生。
+
+### 分层设计
+
+```mermaid
+graph TB
+	A("operation")
+	B("course")
+	C("organizaton")
+	D("users")
+	A-->B
+	A-->C
+	B-->D
+	A-->D
+	C-->D
+```
+
+上层可以引用下层，下层不能引用上层。
+
+## 设计`Course.models`课程信息表
+
+- `Course`-课程的基本信息
+- `Lesson`-章节信息
+- `Video`-视频
+- `CourseResource`-课程资源
+
+
+
+
+
+
+
+
+
+
+[//]:#(设置表格整体居中显示)
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
