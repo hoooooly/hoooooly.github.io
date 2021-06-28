@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年6月28日 早上
+                  本文最后更新于：2021年6月28日 下午
                 
               </p>
             
@@ -297,7 +297,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage.py python manage.py makemigrations<br>python manage.py migrate<br></code></pre></td></tr></table></figure>
 
 <p>用<code>Navicat</code>查看数据库，就可以看到所有的用户信息创建到<code>user_userprofile</code>的表中了。</p>
-<p><img src="/image-20210627142531138.png" srcset="/img/loading.gif" lazyload alt="image-20210627142531138"></p>
+<p><img src="image-20210627142531138.png" srcset="/img/loading.gif" lazyload alt="image-20210627142531138"></p>
 <h2 id="Model设计中要注意的问题"><a href="#Model设计中要注意的问题" class="headerlink" title="Model设计中要注意的问题"></a>Model设计中要注意的问题</h2><h3 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h3><pre><code class=" mermaid">graph TB
 	A(&quot;User models.py(UserCourse)&quot;)--course---&gt;B(&quot;Course models.py(CourseComment)&quot;)
 	B--user---&gt;A
