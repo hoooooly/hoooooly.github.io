@@ -83,9 +83,9 @@ pip install mysqlclient
 
 ![image-20210627123046439](image-20210627123046439.png)
 
-## 设计`Users.models`覆盖默认的用户表
+## 设计`Users.models`用户表
 
-在`user.mogels.py`创建用户表。
+在`user.mogels.py`创建用户表覆盖默认的用户表。
 
 ```python
 from datetime import datetime
@@ -138,7 +138,7 @@ AUTH_USER_MODEL = "users.UserProfile"
 然后再生成数据库，首先运行`pip install Pillow`安装`Pillow`模块提供对头像的支持。
 
 ```python
-python manage.py python manage.py makemigrations
+python manage.py makemigrations
 python manage.py migrate
 ```
 
@@ -306,6 +306,124 @@ teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name="讲
 ```
 
 ## 设计`operations.models`用户操作
+
+```python
+from django.db import models
+from django.contrib.auth import get_user_model
+from users.models import BaseModel
+from courses.models import Course
+
+# 获取User
+User = get_user_model()
+
+
+class UserAsk(BaseModel):
+    """用户咨询信息"""
+    name = models.CharField(max_length=20, verbose_name="姓名")
+    mobile = models.CharField(max_length=11, verbose_name="手机")
+    course_name = models.CharField(max_length=50, verbose_name="课程名")
+
+    class Meta:
+        verbose_name = "用户咨询"
+        verbose_name_plural = verbose_name
+
+
+class CourseComments(BaseModel):
+    """用户评论信息"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="课程")
+    comments = models.CharField(max_length=200, verbose_name="评论内容")
+
+    class Meta:
+        verbose_name = "课程评论"
+        verbose_name_plural = verbose_name
+
+
+class UserFavorite(BaseModel):
+    """用户收藏信息"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="课程")
+    fav_id = models.IntegerField(verbose_name="数据ID")
+    fav_type = models.IntegerField(choices=((1, "课程"), (2, "课程机构"), (3, "讲师")), default=1, verbose_name="收藏")
+
+    class Meta:
+        verbose_name = "用户收藏"
+        verbose_name_plural = verbose_name
+
+
+class UserMessage(BaseModel):
+    """用户消息信息"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
+    message = models.CharField(max_length=200, verbose_name="用户消息")
+    has_read = models.BooleanField(default=False, verbose_name="是否已读")
+
+    class Meta:
+        verbose_name = "用户消息"
+        verbose_name_plural = verbose_name
+
+
+class UserCourses(BaseModel):
+    """用户课程信息"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="课程")
+
+    class Meta:
+        verbose_name = "用户课程"
+        verbose_name_plural = verbose_name
+```
+
+以上，这四个`model`大致设计完成，后面根据需要进行优化。
+
+接下来重新`makegrations`和`migrate`一下生成数据库表结构。
+
+```python
+python manage.py makemigrations
+python manage.py migrate
+```
+
+# 使用`xadmin`快速搭建后台管理系统
+
+- 权限管理
+- 少前端样式
+- 快速开发
+
+## 创建管理用户
+
+```python
+>>> python manage.py createsuperuser
+Username: Holy
+Email address: espholychan@outlook.com
+Password:
+Password (again):
+The password is too similar to the username.
+This password is too short. It must contain at least 8 characters.
+Bypass password validation and create user anyway? [y/N]: y
+Superuser created successfully.
+```
+
+可以看到这个用户添加到`user_userprofile`表中。
+
+![image-20210630230602382](/image-20210630230602382.png)
+
+`is_staff`带表用户是否能登录管理系统，这个值为1代表用户有权限登录。
+
+![image-20210630231133316](/image-20210630231133316.png)
+
+输入用户名密码之后进入后台系统，可以看到目前是英文界面。
+
+![image-20210630231045211](/image-20210630231045211.png)
+
+将`seeting.py`中下面三个参数修改，这样就可以显示为中文。
+
+```python
+LANGUAGE_CODE = 'zh-hans'
+
+TIME_ZONE = 'Asia/Shanghai'
+
+USE_TZ = False
+```
+
+<img src="/image-20210630231450759.png" alt="image-20210630231450759" />
 
 
 
