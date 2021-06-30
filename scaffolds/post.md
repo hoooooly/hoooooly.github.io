@@ -10,6 +10,8 @@ index_img:
 banner_img:
 # 开启评论，指定评论插件
 comments: true
+
+typora-root-url: {{ title }}
 ---
 
 

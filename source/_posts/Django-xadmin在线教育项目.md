@@ -88,8 +88,19 @@ pip install mysqlclient
 在`user.mogels.py`创建用户表。
 
 ```python
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+
+
+# model的继承机制
+class BaseModel(models.Model):
+    add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
+
+    # 防止生成独立的表
+    class Meta:
+        abstract = True
+
 
 GENDER_CHOICES = {
     ("male", "男"),
@@ -99,6 +110,7 @@ GENDER_CHOICES = {
 
 # 定义用户表
 class UserProfile(AbstractUser):
+    """昵称，生日，性别，地址，手机号，用户图像"""
     nick_name = models.CharField(max_length=50, verbose_name="昵称", default="")
     birthday = models.DateField(verbose_name="生日", null=True, blank=True)
     gender = models.CharField(verbose_name="性别", choices=GENDER_CHOICES, max_length=6)
@@ -132,7 +144,7 @@ python manage.py migrate
 
 用`Navicat`查看数据库，就可以看到所有的用户信息创建到`user_userprofile`的表中了。
 
-![image-20210627142531138](/image-20210627142531138.png)
+![image-20210627142531138](image-20210627142531138.png)
 
 ## Model设计中要注意的问题
 
@@ -163,12 +175,137 @@ graph TB
 
 上层可以引用下层，下层不能引用上层。
 
-## 设计`Course.models`课程信息表
+## 设计`Courses.models`课程信息表
 
 - `Course`-课程的基本信息
 - `Lesson`-章节信息
 - `Video`-视频
 - `CourseResource`-课程资源
+
+```pytho
+from django.db import models
+from users.models import BaseModel
+
+
+class Course(BaseModel):
+    """定义课程信息"""
+    name = models.CharField(verbose_name="课程名", max_length=50)
+    desc = models.CharField(verbose_name="课程描述", max_length=300)
+    learn_times = models.IntegerField(default=0, verbose_name="学习时长（分钟数）")
+    degree = models.CharField(verbose_name="难度", choices=(("cj", "初级"), ("zj", "中级"), ("gj", "高级")), max_length=2)
+    students = models.IntegerField(default=0, verbose_name="学习人数")
+    fav_nums = models.IntegerField(default=0, verbose_name="收藏人数")
+    click_nums = models.IntegerField(default=0, verbose_name="点击数")
+    category = models.CharField(default="后端开发", max_length=120, verbose_name="课程类别")
+    tag = models.CharField(default="", verbose_name="课程标签", max_length=10)
+    youneed_know = models.CharField(default="", max_length=300, verbose_name="课程须知")
+    teacher_tell = models.CharField(default="", max_length=300, verbose_name="老师告诉你")
+    details = models.TextField(verbose_name="课程详情")
+    image = models.ImageField(upload_to="corse/%Y/%m", verbose_name="封面图", max_length=100)
+
+    class Meta:
+        verbose_name = "课程信息"
+        verbose_name_plural = verbose_name
+
+
+class Lesson(BaseModel):
+    """定义章节信息"""
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)  # on_delete表示对应的外键数据被删除，当前的数据也删除
+    name = models.CharField(max_length=100, verbose_name="章节名称")
+    learn_times = models.IntegerField(default=0, verbose_name="学习时长（分钟数）")
+
+    class Meta:
+        verbose_name = "课程章节"
+        verbose_name_plural = verbose_name
+
+
+class Video(BaseModel):
+    """章节中的视频信息"""
+    lessons = models.ForeignKey(Lesson, verbose_name="章节", on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, verbose_name="视频名")
+    learn_times = models.IntegerField(default=0, verbose_name="学习时长（分钟数）")
+    url = models.CharField(max_length=200, verbose_name="访问地址")
+
+    class Meta:
+        verbose_name = "视频"
+        verbose_name_plural = verbose_name
+
+
+class CourseResource(BaseModel):
+    """定义课程资源"""
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="课程")
+    name = models.CharField(max_length=100, verbose_name="名称")
+    file = models.FileField(upload_to="course/resource/%Y/%m", verbose_name="下载地址", max_length=200)
+
+    class Meta:
+        verbose_name = "课程资源"
+        verbose_name_plural = verbose_name
+```
+
+## 设计`organizations.models`授课机构
+
+```python
+from django.db import models
+from users.models import BaseModel
+
+
+class City(BaseModel):
+    """定义城市信息"""
+    name = models.CharField(max_length=20, verbose_name="城市")
+    desc = models.CharField(max_length=200, verbose_name="描述")
+
+    class Meta:
+        verbose_name = "城市"
+        verbose_name_plural = verbose_name
+
+
+class CourseOrg(BaseModel):
+    """定义机构信息"""
+    name = models.CharField(max_length=50, verbose_name="机构名称")
+    desc = models.TextField(verbose_name="描述")
+    tag = models.CharField(default="全国知名", max_length=10, verbose_name="机构标签")
+    category = models.CharField(default="pxjg", verbose_name="机构类别", max_length=4,
+                                choices=(("pxjg", "培训机构"), ("gr", "个人"), ("gx", "高校")))
+    click_nums = models.IntegerField(default=0, verbose_name="点击数")
+    fav_nums = models.IntegerField(default=0, verbose_name="收藏数")
+    image = models.ImageField(upload_to="org/%y/%m", verbose_name="logo", max_length=100)
+    address = models.CharField(max_length=200, verbose_name="机构地址")
+    students = models.IntegerField(default=0, verbose_name="学习人数")
+    course_nums = models.IntegerField(default=0, verbose_name="课程数")
+    city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name="所在城市")
+
+    class Meta:
+        verbose_name = "课程机构"
+        verbose_name_plural = verbose_name
+
+
+class Teacher(BaseModel):
+    """定义讲师信息"""
+    org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name="所属机构")
+    name = models.CharField(max_length=50, verbose_name="教师名")
+    work_years = models.IntegerField(default=0, verbose_name="工作年限")
+    work_company = models.CharField(max_length=50, verbose_name="就职公司")
+    work_position = models.CharField(max_length=50, verbose_name="公司职位")
+    points = models.CharField(max_length=50, verbose_name="教学特点")
+    click_nums = models.IntegerField(default=0, verbose_name="点击数")
+    fav_nums = models.IntegerField(default=0, verbose_name="收藏数")
+    age = models.IntegerField(default=18, verbose_name="年龄")
+    image = models.ImageField(default='', upload_to="teacher/%Y/%m", verbose_name="头像", max_length=100)
+
+
+
+    class Meta:
+        verbose_name = "讲师"
+        verbose_name_plural = verbose_name
+```
+
+相应的，`Courses.models`添加`teacher`的外键。
+
+```python
+teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name="讲师")
+```
+
+## 设计`operations.models`用户操作
 
 
 
