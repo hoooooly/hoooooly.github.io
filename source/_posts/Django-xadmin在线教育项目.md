@@ -425,6 +425,99 @@ USE_TZ = False
 
 <img src="/image-20210630231450759.png" alt="image-20210630231450759" />
 
+### 注册模型到`admin`
+
+在`users.models.py`中加入下面的代码。
+
+```python
+from django.contrib import admin
+from .models import UserProfile
+
+
+# Register your models here.
+class UserProfileAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(UserProfile, UserProfileAdmin)
+```
+
+然后刷新浏览器，可以看到`USERS`用户信息就添加进去了。
+
+![image-20210701085038706](/image-20210701085038706.png)
+
+这里的`User`代表我们创建的`app`的名称，如果要修改成中文，可以在`users.apps.py`中添加`verbose_name="用户"`。
+
+```python
+from django.apps import AppConfig
+
+
+class UsersConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'users'
+    verbose_name = "用户"
+```
+
+## 使用`xadmin`替代`Django-admin`
+
+#### 安装
+
+```python
+pip install https://codeload.github.com/sshwsfc/xadmin/zip/django2
+```
+
+如果报错 `Using legacy setup.py install for xadmin, since package 'wheel' is not installed.` 只需要 `pip install wheel`。
+
+使用源码安装，在`apps`同级目录新建`extra_apps`文件夹，将获取的`xadmin`包放进去。
+
+在配置文件中导入包：
+
+```python
+sys.path.insert(1, os.path.join(BASE_DIR, 'extra_apps'))
+```
+
+在配置文件中注册如下应用：
+
+```python
+INSTALLED_APPS = [
+    ...
+    'xadmin',
+    'crispy_forms',
+    'reversion',
+    ...
+]
+```
+
+`xadmin`有建立自己的数据库模型类，需要进行数据库迁移
+
+```shell
+python manage.py makemigrations
+python manage.py migrate
+```
+
+在总路由中添加`xadmin`的路由信息
+
+```python
+import xadmin
+xadmin.autodiscover()
+
+# version模块自动注册需要版本控制的 Model
+from xadmin.plugins import xversion
+xversion.register_models()
+
+urlpatterns = [
+    path(r'xadmin/', xadmin.site.urls),
+]
+```
+
+经过一番腾讯，配置好了，详细的过程没法记录。主要是依靠百度。重新换了个数据库，又将`Django`降级为2.2版本，之前默认是最新的3.2版本，有很多兼容性问题。接着往下走。
+
+![image-20210701141717201](/image-20210701141717201.png)
+
+
+
+
+
 
 
 
