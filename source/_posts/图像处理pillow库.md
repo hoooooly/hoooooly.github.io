@@ -155,7 +155,7 @@ conF = im.filter(ImageFilter.CONTOUR)
 conF.show()
 ```
 
-![image-20210630172021291](/image-20210630172021291.png)
+![image-20210630172021291](image-20210630172021291.png)
 
 #### DETAIL：细节滤波
 
@@ -181,7 +181,7 @@ embF = im.filter(ImageFilter.EMBOSS)
 embF.show()
 ```
 
-![image-20210630172930687](/image-20210630172930687.png)
+![image-20210630172930687](image-20210630172930687.png)
 
 #### FIND_EDGES：寻找边界滤波（找寻图像的边界信息）
 
@@ -191,7 +191,7 @@ fdeF = im.filter(ImageFilter.FIND_EDGES)
 fdeF.show()
 ```
 
-![image-20210630173055303](/image-20210630173055303.png)
+![image-20210630173055303](image-20210630173055303.png)
 
 #### SMOOTH：平滑滤波
 
@@ -225,7 +225,7 @@ gbF = im.filter(ImageFilter.GaussianBlur(radius=10))
 gbF.show()
 ```
 
-![image-20210630173451367](/image-20210630173451367.png)
+![image-20210630173451367](image-20210630173451367.png)
 
 
 

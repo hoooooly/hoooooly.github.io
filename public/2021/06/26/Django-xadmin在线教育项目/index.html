@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年7月1日 下午
+                  本文最后更新于：2021年7月2日 下午
                 
               </p>
             
@@ -344,21 +344,20 @@
 <h2 id="创建管理用户"><a href="#创建管理用户" class="headerlink" title="创建管理用户"></a>创建管理用户</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>python manage.py createsuperuser<br>Username: Holy<br>Email address: espholychan@outlook.com<br>Password:<br>Password (again):<br>The password <span class="hljs-keyword">is</span> too similar to the username.<br>This password <span class="hljs-keyword">is</span> too short. It must contain at least <span class="hljs-number">8</span> characters.<br>Bypass password validation <span class="hljs-keyword">and</span> create user anyway? [y/N]: y<br>Superuser created successfully.<br></code></pre></td></tr></table></figure>
 
 <p>可以看到这个用户添加到<code>user_userprofile</code>表中。</p>
-<p><img src="/image-20210630230602382.png" srcset="/img/loading.gif" lazyload alt="image-20210630230602382"></p>
+<p><img src="image-20210630230602382.png" srcset="/img/loading.gif" lazyload></p>
 <p><code>is_staff</code>带表用户是否能登录管理系统，这个值为1代表用户有权限登录。</p>
-<p><img src="/image-20210630231133316.png" srcset="/img/loading.gif" lazyload alt="image-20210630231133316"></p>
+<p><img src="image-20210630231133316.png" srcset="/img/loading.gif" lazyload></p>
 <p>输入用户名密码之后进入后台系统，可以看到目前是英文界面。</p>
-<p><img src="/image-20210630231045211.png" srcset="/img/loading.gif" lazyload alt="image-20210630231045211"></p>
+<p><img src="image-20210630231045211.png" srcset="/img/loading.gif" lazyload></p>
 <p>将<code>seeting.py</code>中下面三个参数修改，这样就可以显示为中文。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">LANGUAGE_CODE = <span class="hljs-string">&#x27;zh-hans&#x27;</span><br><br>TIME_ZONE = <span class="hljs-string">&#x27;Asia/Shanghai&#x27;</span><br><br>USE_TZ = <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
 
-<img src="/image-20210630231450759.png" srcset="/img/loading.gif" lazyload alt="image-20210630231450759" />
-
+<p><img src="image-20210630231450759.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="注册模型到admin"><a href="#注册模型到admin" class="headerlink" title="注册模型到admin"></a>注册模型到<code>admin</code></h3><p>在<code>users.models.py</code>中加入下面的代码。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> UserProfile<br><br><br><span class="hljs-comment"># Register your models here.</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserProfileAdmin</span>(<span class="hljs-params">admin.ModelAdmin</span>):</span><br>    <span class="hljs-keyword">pass</span><br><br><br>admin.site.register(UserProfile, UserProfileAdmin)<br></code></pre></td></tr></table></figure>
 
 <p>然后刷新浏览器，可以看到<code>USERS</code>用户信息就添加进去了。</p>
-<p><img src="/image-20210701085038706.png" srcset="/img/loading.gif" lazyload alt="image-20210701085038706"></p>
+<p><img src="image-20210701085038706.png" srcset="/img/loading.gif" lazyload></p>
 <p>这里的<code>User</code>代表我们创建的<code>app</code>的名称，如果要修改成中文，可以在<code>users.apps.py</code>中添加<code>verbose_name=&quot;用户&quot;</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.apps <span class="hljs-keyword">import</span> AppConfig<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UsersConfig</span>(<span class="hljs-params">AppConfig</span>):</span><br>    default_auto_field = <span class="hljs-string">&#x27;django.db.models.BigAutoField&#x27;</span><br>    name = <span class="hljs-string">&#x27;users&#x27;</span><br>    verbose_name = <span class="hljs-string">&quot;用户&quot;</span><br></code></pre></td></tr></table></figure>
 
@@ -379,7 +378,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> xadmin<br>xadmin.autodiscover()<br><br><span class="hljs-comment"># version模块自动注册需要版本控制的 Model</span><br><span class="hljs-keyword">from</span> xadmin.plugins <span class="hljs-keyword">import</span> xversion<br>xversion.register_models()<br><br>urlpatterns = [<br>    path(<span class="hljs-string">r&#x27;xadmin/&#x27;</span>, xadmin.site.urls),<br>]<br></code></pre></td></tr></table></figure>
 
 <p>经过一番腾讯，配置好了，详细的过程没法记录。主要是依靠百度。重新换了个数据库，又将<code>Django</code>降级为2.2版本，之前默认是最新的3.2版本，有很多兼容性问题。接着往下走。</p>
-<p><img src="/image-20210701141717201.png" srcset="/img/loading.gif" lazyload alt="image-20210701141717201"></p>
+<p><img src="image-20210701141717201.png" srcset="/img/loading.gif" lazyload></p>
 <style>
     table
     {

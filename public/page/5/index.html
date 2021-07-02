@@ -198,6 +198,170 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/" target="_self">
+          FastAPI教程-路径参数
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/" target="_self">
+          
+          
+            
+          
+          可以使用与 Python 格式化字符串相同的语法来声明路径”参数”或”变量”：
+12345678from fastapi import FastAPIapp = FastAPI()@app.get(&quot;/items/&#123;item_id&#125;&quot;)async def read_item(item_id):    return &#123;&quot;item_id&qu
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-30 22:47" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/FastAPI/">FastAPI</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/fastapi/">fastapi</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/" target="_self">
+          FastAPI教程-入门介绍
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/" target="_self">
+          
+          
+            
+          
+          第一步最简单的 FastAPI 文件可能像下面这样：
+最简单的 FastAPI 文件可能像下面这样：
+12345678from fastapi import FastAPIapp = FastAPI()@app.get(&quot;/&quot;)async def root():    return &#123;&quot;message&quot;: &quot;Hello World&quo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-30 19:57" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/FastAPI/">FastAPI</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/fastapi/">fastapi</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/30/FastAPI%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" target="_self">
+          FastAPI安装和使用
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/30/FastAPI%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" target="_self">
+          
+          
+            
+          
+          简介FastAPI 是一个用于构建 API 的现代、快速（高性能）的 web 框架，使用 Python 3.6+ 并基于标准的 Python 类型提示。
+关键特性:
+
+快速：可与 NodeJS 和 Go 比肩的极高性能（归功于 Starlette 和 Pydantic）。最快的 Python web 框架之一。
+
+高效编码：提高功能开发速度约 200％ 至 300％。*
+
+更少 bug：减少约 4
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-30 15:51" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/FastAPI/">FastAPI</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/fastapi/">fastapi</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/05/30/Flask%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_self">
           Flask快速上手
         </a>
@@ -587,189 +751,11 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/" target="_self">
-          腾讯云主机CPU占用100%
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/" target="_self">
-          
-          
-            
-          
-          异常情况使用ssh登录发现连接很缓慢，排除网络问题。登陆后使用top查看进程，发现git用户的两个进程占用了95%的CPU。
-
-网上查了下，kswapd0被植入挖矿病毒，立马kill这个进程，CPU的负荷马上降了下来。
-查看进程端口1netstat -anltp|grep kswapd0
-
-查看程序路径1ls -l /proc/3882/exe
-
-定时器查看1crontab -l -u git
-
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-25 16:32" pubdate>
-              2021-05-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Linux/">Linux</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/linux/">linux</a>
-            
-              <a href="/tags/git/">git</a>
-            
-              <a href="/tags/%E7%97%85%E6%AF%92/">病毒</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
-          Ajax爬取案例实战
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
-          
-          
-            
-          
-          准备工作
-安装好Python 3（最低为 3.6 版本），并能成功运行Python 3程序。
-了解PythonHTTP请求库requests的基本用法。
-了解Ajax的基础知识和分析Ajax的基本方法。
-
-爬取目标其链接为：https://dynamic1.scrape.cuiqingcai.com/，页面如图所示。
-
-需要完成的目标有：
-
-分析页面数据的加载逻辑。
-用requests实现Ajax
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-24 20:13" pubdate>
-              2021-05-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ajax/">ajax</a>
-            
-              <a href="/tags/python/">python</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/24/Ajax%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/" target="_self">
-          Ajax的原理和解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/24/Ajax%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/" target="_self">
-          
-          
-            
-          
-          什么是Ajax？Ajax，全称为Asynchronous JavaScriptand XML，即异步的JavaScript和XML。它不是一门编程语言，而是利用JavaScript在保证页面不被刷新、页面链接不改变的情况下与服务器交换数据并更新部分网页的技术。
-传统的网页，如果你想更新其内容，那么必须要刷新整个页面。有了Ajax，便可以在页面不被全部刷新的情况下更新其内容。在这个过程中，页面实际上
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-24 16:33" pubdate>
-              2021-05-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ajax/">ajax</a>
-            
-              <a href="/tags/javascript/">javascript</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/4/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/6/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/4/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><a class="page-number" href="/page/8/#board">8</a><a class="extend next" rel="next" href="/page/6/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
