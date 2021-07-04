@@ -510,13 +510,230 @@ urlpatterns = [
 ]
 ```
 
-经过一番腾讯，配置好了，详细的过程没法记录。主要是依靠百度。重新换了个数据库，又将`Django`降级为2.2版本，之前默认是最新的3.2版本，有很多兼容性问题。接着往下走。
+经过一番折腾，配置好了，详细的过程没法记录。主要是依靠百度。重新换了个数据库，又将`Django`降级为2.2版本，之前默认是最新的3.2版本，有很多兼容性问题。接着往下走。
 
 ![](image-20210701141717201.png)
 
+### `adminx`注册
+
+在`courses`下面新建一个`adminx.py`的文件，添加下面的代码：
+
+```python
+from extra_apps import xadmin
+
+from .models import Course
 
 
+class CourseAdmin(object):
+    pass
 
+
+xadmin.site.register(Course, CourseAdmin)
+```
+
+访问`xadmin`管理界面。
+
+![](image-20210703101031532.png)
+
+在`organizations`下面新建一个`adminx.py`的文件，添加下面的代码：
+
+```python
+from extra_apps import xadmin
+
+from .models import Teacher, CourseOrg, City
+
+
+class CityAdmin(object):
+    # 显示的model里面的字段，要和里面的一致
+    list_display = ["id", "name", "desc", "add_time"]
+    # 搜索字段设置
+    search_fields = ["name", "desc"]
+    # 过滤字段设置
+    list_filter = ["name", "desc", "add_time"]
+    # 可编辑
+    list_editable = ["name", "desc"]
+
+
+class CourseOrgAdmin(object):
+    pass
+
+
+class TeacherAdmin(object):
+    pass
+
+
+xadmin.site.register(City, CityAdmin)
+xadmin.site.register(CourseOrg, CourseOrgAdmin)
+xadmin.site.register(Teacher, TeacherAdmin)
+```
+
+重载后的效果：
+
+![](image-20210703112550014.png)
+
+## 注册所有的`models`
+
+### `courses.adminx.py`
+
+```python
+from extra_apps import xadmin
+
+from .models import Course, Lesson, Video, CourseResource
+
+
+class CourseAdmin(object):
+    list_display = ["name", "desc", "details", "degree", "learn_times", "students", "teacher"]
+    search_fields = ["name", "desc", "details", "learn_times", "students", "teacher"]
+    list_filter = ["degree"]
+    list_editable = ["desc", "degree"]
+
+
+class LessonAdmin(object):
+    list_display = ["name", "course", "learn_times"]
+    search_fields = ["name", "course"]
+    list_editable = ["name", "learn_times"]
+
+
+class VideoAdmin(object):
+    list_display = ["lessons", "name", "learn_times", "url"]
+    search_fields = ["lessons", "name"]
+    list_editable = ["lessons", "url"]
+
+
+class CourseResourceAdmin(object):
+    list_display = ["course", "name", "file"]
+    search_fields = ["course", "name"]
+    list_editable = ["course", "file"]
+
+
+xadmin.site.register(Course, CourseAdmin)
+xadmin.site.register(Lesson, LessonAdmin)
+xadmin.site.register(Video, VideoAdmin)
+xadmin.site.register(CourseResource, CourseResourceAdmin)
+```
+
+### `oragnizationsm.adminx.py`
+
+```python
+from extra_apps import xadmin
+
+from .models import Teacher, CourseOrg, City
+
+
+class CityAdmin(object):
+    # 显示的model里面的字段，要和里面的一致
+    list_display = ["id", "name", "desc", "add_time"]
+    # 搜索字段设置
+    search_fields = ["name", "desc"]
+    # 过滤字段设置
+    list_filter = ["name", "desc", "add_time"]
+    # 可编辑
+    list_editable = ["name", "desc"]
+
+
+class CourseOrgAdmin(object):
+    list_display = ["name", "desc", "click_nums", "fav_nums"]
+    search_fields = ["name", "desc", "click_nums", "fav_nums"]
+    list_filter = ["name", "desc", "click_nums", "fav_nums"]
+
+
+class TeacherAdmin(object):
+    list_display = ["org", "name", "work_years", "work_company"]
+    search_fields = ["org", "name", "work_years", "work_company"]
+    list_filter = ["org", "name", "work_years", "work_company"]
+
+
+xadmin.site.register(City, CityAdmin)
+xadmin.site.register(CourseOrg, CourseOrgAdmin)
+xadmin.site.register(Teacher, TeacherAdmin)
+```
+
+ `operations.adminx.py`
+
+```python
+from extra_apps import xadmin
+
+from .models import UserAsk, CourseComments, UserFavorite, UserMessage, UserCourses
+
+
+class UserAskAdmin(object):
+    list_display = ["name", "mobile", "course_name", "add_time"]
+    search_fields = ["name", "mobile", "course_name"]
+    list_filter = ["name", "mobile", "course_name", "add_time"]
+
+
+class CourseCommentsAdmin(object):
+    list_display = ["user", "course", "comments", "add_time"]
+    search_fields = ["user", "course", "comments"]
+    list_filter = ["user", "course", "comments", "add_time"]
+
+
+class UserFavoriteAdmin(object):
+    list_display = ["user", "course", "fav_id", "fav_type"]
+    search_fields = ["user", "course", "fav_id", "fav_type"]
+    list_filter = ["user", "course", "fav_id", "fav_type"]
+
+
+class UserMessageAdmin(object):
+    list_display = ["user", "message", "has_read", "add_time"]
+    search_fields = ["user", "message", "has_read", "add_time"]
+    list_filter = ["user", "message", "has_read", "add_time"]
+
+
+class UserCoursesAdmin(object):
+    list_display = ["user", "course", "add_time"]
+    search_fields = ["user", "course"]
+    list_filter = ["user", "course", "add_time"]
+
+
+xadmin.site.register(UserAsk, UserAskAdmin)
+xadmin.site.register(CourseComments, CourseCommentsAdmin)
+xadmin.site.register(UserFavorite, UserFavoriteAdmin)
+xadmin.site.register(UserMessage, UserMessageAdmin)
+xadmin.site.register(UserCourses, UserCoursesAdmin)
+```
+
+ `organizations.adminx.py`
+
+```python
+from extra_apps import xadmin
+
+from .models import Teacher, CourseOrg, City
+
+
+class CityAdmin(object):
+    # 显示的model里面的字段，要和里面的一致
+    list_display = ["id", "name", "desc", "add_time"]
+    # 搜索字段设置
+    search_fields = ["name", "desc"]
+    # 过滤字段设置
+    list_filter = ["name", "desc", "add_time"]
+    # 可编辑
+    list_editable = ["name", "desc"]
+
+
+class CourseOrgAdmin(object):
+    list_display = ["name", "desc", "click_nums", "fav_nums"]
+    search_fields = ["name", "desc", "click_nums", "fav_nums"]
+    list_filter = ["name", "desc", "click_nums", "fav_nums"]
+
+
+class TeacherAdmin(object):
+    list_display = ["org", "name", "work_years", "work_company"]
+    search_fields = ["org", "name", "work_years", "work_company"]
+    list_filter = ["org", "name", "work_years", "work_company"]
+
+
+xadmin.site.register(City, CityAdmin)
+xadmin.site.register(CourseOrg, CourseOrgAdmin)
+xadmin.site.register(Teacher, TeacherAdmin)
+
+```
+
+ `users.adminx.py`
+
+```python
+```
 
 
 
