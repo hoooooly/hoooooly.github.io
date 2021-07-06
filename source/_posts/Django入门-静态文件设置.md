@@ -16,7 +16,6 @@ index_img: /2021/06/16/Django入门-静态文件设置/Screenshot_8.webp
 
 静态文件设置静态文件是指 `CSS`，`JavaScript`，`字体`，`图片`或者是用`来组成用户界面的任何其他资源`。
 
-
 `Django` 本身是不负责处理这些文件的，但是为了让我们的开发过程更轻松，`Django` 提供了一些功能来帮助我们管理静态文件。这些功能可在 `INSTALLED_APPS` 的` django.contrib.staticfiles` 应用程序中找到。实际上，`Django`为了使得开发方便，也可以处理静态文件，而在生产环境下，静态文件一般直接由 `Nginx` 等反向代理服务器处理，而应用工服务器专心负责处理它擅长的业务逻辑。
 
 市面上很多优秀前端组件框架，我们没有理由继续用简陋的HTML文档来渲染。我们可以轻松地将`Bootstrap 4`添加到我们的项目中。`Bootstrap`是—个用`HTML`，`CSS`和`JavaScript`开发的前端开源工具包。
@@ -141,7 +140,7 @@ STATICFILES_DIRS = [
 
 显示效果：
 
-![](2.png)
+![](2.PNG)
 
 [//]:#(设置表格整体居中显示)
 <style>

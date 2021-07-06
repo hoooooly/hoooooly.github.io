@@ -6,7 +6,7 @@ tags:
 comments: true
 date: 2021-06-26 22:55:56
 categories: Django实战
-index_img:
+index_img: /2021/06/26/Django-xadmin在线教育项目/1.png
 banner_img:
 typora-root-url: Django-xadmin在线教育项目
 ---
@@ -612,7 +612,7 @@ xadmin.site.register(Video, VideoAdmin)
 xadmin.site.register(CourseResource, CourseResourceAdmin)
 ```
 
-### `oragnizationsm.adminx.py`
+### `oragnizations.adminx.py`
 
 ```python
 from extra_apps import xadmin
@@ -648,7 +648,7 @@ xadmin.site.register(CourseOrg, CourseOrgAdmin)
 xadmin.site.register(Teacher, TeacherAdmin)
 ```
 
- `operations.adminx.py`
+###  `operations.adminx.py`
 
 ```python
 from extra_apps import xadmin
@@ -690,50 +690,78 @@ xadmin.site.register(UserAsk, UserAskAdmin)
 xadmin.site.register(CourseComments, CourseCommentsAdmin)
 xadmin.site.register(UserFavorite, UserFavoriteAdmin)
 xadmin.site.register(UserMessage, UserMessageAdmin)
-xadmin.site.register(UserCourses, UserCoursesAdmin)
+xadmin.site.register(UserCourses, UserCoursesAdmin
 ```
 
- `organizations.adminx.py`
+## `xadmin`的全局配置
 
 ```python
-from extra_apps import xadmin
-
-from .models import Teacher, CourseOrg, City
-
-
-class CityAdmin(object):
-    # 显示的model里面的字段，要和里面的一致
-    list_display = ["id", "name", "desc", "add_time"]
-    # 搜索字段设置
-    search_fields = ["name", "desc"]
-    # 过滤字段设置
-    list_filter = ["name", "desc", "add_time"]
-    # 可编辑
-    list_editable = ["name", "desc"]
+# 定义全局参数
+class GlobalSettings(object):
+    site_title = "向日葵后台管理系统"
+    site_footer = "向日葵学习网"
+    menu_style = "accordion"
 
 
-class CourseOrgAdmin(object):
-    list_display = ["name", "desc", "click_nums", "fav_nums"]
-    search_fields = ["name", "desc", "click_nums", "fav_nums"]
-    list_filter = ["name", "desc", "click_nums", "fav_nums"]
-
-
-class TeacherAdmin(object):
-    list_display = ["org", "name", "work_years", "work_company"]
-    search_fields = ["org", "name", "work_years", "work_company"]
-    list_filter = ["org", "name", "work_years", "work_company"]
-
-
-xadmin.site.register(City, CityAdmin)
-xadmin.site.register(CourseOrg, CourseOrgAdmin)
-xadmin.site.register(Teacher, TeacherAdmin)
-
+class BaseSettings(object):
+    enable_themes = True
+    use_booswatch = True
+    
+xadmin.site.register(xadmin.views.CommAdminView, GlobalSettings)
+xadmin.site.register(xadmin.views.BaseAdminView, BaseSettings)
 ```
 
- `users.adminx.py`
+上面的代码设置了管理系统的名称和页脚的名称，激活主体更换功能，可以自定义主体样式。
+
+### 对于外键的过滤
 
 ```python
+class CourseAdmin(object):
+    list_display = ["name", "desc", "details", "degree", "learn_times", "students", "teacher"]
+    search_fields = ["name", "desc", "details", "learn_times", "students", "teacher"]
+    # 对于外键的过滤，使用双下划线
+    list_filter = ["degree", "teacher__name"]
+    list_editable = ["desc", "degree"]
 ```
+
+对于外键的过滤，使用双下划线。
+
+![](image-20210706143451576.png)
+
+# 登录注册的实现
+
+- 静态文件设置
+
+`seetings.py`中的配置。
+
+```
+STATIC_URL = '/static/'
+
+# 添加静态文件
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+```
+
+![](image-20210706154213643.png)
+
+## 首页的配置
+
+## 首页的配置
+
+`urls.py`中添加路由。
+
+```python
+path('', TemplateView.as_view(template_name="index.html")),
+```
+
+`templates/index.html`
+
+
+
+
+
+## 登录页面的配置
 
 
 
