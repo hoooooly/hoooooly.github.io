@@ -226,6 +226,14 @@ LineChart.setOption(line_option);
 
 <div id="pie1" style="width: 95%;height:400px;margin-left: 2.5%;margin-right:2.5%;margin-bottom: 20px;"></div>
 
+### 词云图
+
+
+
+
+
+
+
 <script type="text/javascript" >
     // 柱形图图
     // 基于准备好的dom，初始化echarts实例

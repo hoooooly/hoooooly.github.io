@@ -757,15 +757,129 @@ path('', TemplateView.as_view(template_name="index.html")),
 
 `templates/index.html`
 
+```html
+{% if request.user.is_authenticated %}
+<div class="personal">
+    <dl class="user fr">
+        <dd>bobby<img class="down fr" src="/static/images/top_down.png"/></dd>
+        <dt><img width="20" height="20" src="/static/media/image/2016/12/default_big_14.png"/></dt>
+    </dl>
+    <div class="userdetail">
+        <dl>
+            <dt><img width="80" height="80" src="/static/media/image/2016/12/default_big_14.png"/>
+            </dt>
+            <dd>
+                <h2>django</h2>
+                <p>bobby</p>
+            </dd>
+        </dl>
+        <div class="btn">
+            <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
+            <a class="fr" href="/logout/">退出</a>
+        </div>
+    </div>
+</div>
+{% else %}
+
+    <a style="color:white" class="fr registerbtn" href="register">注册</a>
+    <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
+
+{% endif %}
+```
+
+`request.user.is_authenticated`判断用户是否登录。
+
+## 登录逻辑
+
+### 表单验证
+
+设计一个`form`，在`users`文件夹下新建一个`forms.py`文件。
+
+```python
+from django import forms
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True, max_length=20, min_length=2)
+    password = forms.CharField(required=True, max_length=20, min_length=3)
+```
+`user.views.py`
+```python
+from django.shortcuts import render
+from django.views import View
+# 验证用户方法
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from apps.users.forms import LoginForm
 
 
-## 登录页面的配置
+# Create your views here.
+class LoginView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "login.html")
 
+    def post(self, request, *args, **kwargs):
+        login_form = LoginForm(request.POST)
+        # user_name = request.POST.get('username', '')
+        # password = request.POST.get('password', '')
 
+        # 表单验证
+        if login_form.is_valid():
+            # 用户通过用户名和密码查询用户是否存在
+            user = authenticate(username=login_form.cleaned_data["username"],
+                                password=login_form.cleaned_data["password"])
+            if user is not None:
+                # 查询到用户
+                login(request, user)
+                # 登录成功之后怎么返回页面
+                return HttpResponseRedirect(reverse("index"))
+            else:
+                # 未查询到用户
+                return render(request, "login.html", {"msg": "用户名或密码错误", "login_form": login_form})
+        else:
+            return render(request, "login.html", {"login_form": login_form})
+```
 
+`login.html`
 
+```html
+<form class="tab-form" action="{% url 'login' %}" method="post" autocomplete="off" id="form1">
+    <div class="form-group marb20 {% if login_form.errors.username %}errorput{% endif %}">
+        <input name="username" id="account_l" value="{{ login_form.username.value }}" type="text" placeholder="手机号/邮箱"/>
+    </div>
+    <div class="form-group marb8 {% if login_form.errors.password %}errorput{% endif %}">
+        <input name="password" id="password_l" value="{{ login_form.password.value }}" type="password" placeholder="请输入您的密码"/>
+    </div>
+    <div class="error btns login-form-tips" id="jsLoginTips">
+        {% if login_form.errors %}
+                {% for key,error in login_form.errors.items %}
+                    {{ error }}
+                {% endfor %}
+            {% else %}
+                {{ msg }}
+        {% endif %}
+    </div>
+    <div class="auto-box marb38">
+        <a class="fr" href="forgetpwd">忘记密码？</a>
+    </div>
+    <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 > "/>
+    {% csrf_token %}
+</form>
+```
+
+### 退出登录
+
+```python
+class LogoutiVew(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return HttpResponseRedirect(reverse('index'))
+```
+
+### 动态验证码登录
+
+云片网审核不通过不支持
 
 
 
