@@ -196,78 +196,6 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/06/26/Django-xadmin%E5%9C%A8%E7%BA%BF%E6%95%99%E8%82%B2%E9%A1%B9%E7%9B%AE/" target="_self">
-          <img src="/2021/06/26/Django-xadmin%E5%9C%A8%E7%BA%BF%E6%95%99%E8%82%B2%E9%A1%B9%E7%9B%AE/1.png" srcset="/img/loading.gif" lazyload alt="Django+xadmin在线教育项目">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/26/Django-xadmin%E5%9C%A8%E7%BA%BF%E6%95%99%E8%82%B2%E9%A1%B9%E7%9B%AE/" target="_self">
-          Django+xadmin在线教育项目
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/26/Django-xadmin%E5%9C%A8%E7%BA%BF%E6%95%99%E8%82%B2%E9%A1%B9%E7%9B%AE/" target="_self">
-          
-          
-            
-          
-          目标使用Django和xadmin开发一个在线教育网站。
-数据库设计
-django app设计
-主要有四个模块，用户、课程、授课机构（讲师）、用户操作信息。
-
-user models.py编写
-
-couser models.py编写
-
-organization models.py编写
-
-operation models.py编写
-
-
-创建项目1django-admin startproject m
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-26 22:55" pubdate>
-              2021-06-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Django%E5%AE%9E%E6%88%98/">Django实战</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/django/">django</a>
-            
-              <a href="/tags/xadmin/">xadmin</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/06/25/Django%E5%85%A5%E9%97%A8-%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86/" target="_self">
           <img src="/2021/06/25/Django%E5%85%A5%E9%97%A8-%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86/1.webp" srcset="/img/loading.gif" lazyload alt="Django入门-表单处理">
         </a>
@@ -794,6 +722,71 @@ Requests 唯一的一个非转基因的 Python HTTP 库，人类可以安全享�
               <a href="/tags/http/">http</a>
             
               <a href="/tags/requests/">requests</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/" target="_self">
+          爬虫去重策略
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/" target="_self">
+          
+          
+            
+          
+          
+将访问过的URL保存到数据库
+
+将访问过的URL保存到set中，只需要O(1)的代价就可以查询到URL，100000000*2byte*50个字符/1024/1024/1024 = 9G 
+
+URL经过md5等方法哈希保存到set中
+
+用bitmap方法，将访问过的URL通过hash函数映射到某一位
+
+bloomfilter方法对bitmap进行改进，多重hash函数降低冲突
+
+
+
+    ta
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-17 18:48" pubdate>
+              2021-06-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/MD5/">MD5</a>
             
           </div>
         
