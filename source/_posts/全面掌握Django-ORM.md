@@ -376,10 +376,73 @@ def course_view(request):
     return render(request, 'course.html')
 ```
 
+## 返回新的`QuerySet`的`API`
+
+```python
+"""返回QuerySet API"""
+# 1.all(), filter(),order_by(),exclude(),reverse(),distinct()
+print(Teacher.objects.all().exclude(nickname='Henry'))
+# <QuerySet [<Teacher: Teacher object (holy)>, <Teacher: Teacher object (Jack)>, <Teacher: Teacher obj
+# ect (Allen)>]>
+
+# 2.extra(), defer(), only() 实现字段名，排除一些字段，选择一些字段
+teacher1 = Teacher.objects.all().extra(select={'name': 'nickname'})
+for t in teacher1:
+    print(t.name, t.fans)
+    # holy 0
+    # Jack 666
+    # Allen 123
+    # Henry 899
+
+teacher2 = Teacher.objects.all().only('fans')
+for t in teacher2:
+    print(t)
+    # Teacher object (holy)
+    # Teacher object (Jack)
+    # Teacher object (Allen)
+    # Teacher object (Henry)
+
+# 3.value(), value_list() 获取字典或元组形式的查询集
+print(Teacher.objects.values('nickname', 'fans'))
+print(Teacher.objects.values_list('nickname', 'fans'))
+print(Teacher.objects.values_list('nickname', flat=True))
+# <QuerySet [{'nickname': 'holy', 'fans': 0}, {'nickname': 'Jack', 'fans': 666}, {'nickname': 'Allen',
+#  'fans': 123}, {'nickname': 'Henry', 'fans': 899}]>
+# <QuerySet [('holy', 0), ('Jack', 666), ('Allen', 123), ('Henry', 899)]>
+# <QuerySet ['Allen', 'Henry', 'Jack', 'holy']>
+
+# 4.dates(), datetimes() 获取时间日期查询集
+print(Teacher.objects.dates('created_at', 'year', order='DESC'))
+# <QuerySet [datetime.date(2021, 1, 1)]>
+print(Teacher.objects.datetimes('created_at', 'year', order='DESC'))
+# <QuerySet [datetime.datetime(2021, 1, 1, 0, 0, tzinfo=<UTC>)]>
+
+# union(), intersection(), difference() 并集，交集，差集
+p_240 = Teacher.objects.filter(fans__gte=240)
+p_300 = Teacher.objects.filter(fans__lte=300)
+print(p_240.union(p_300))
+print(p_240.intersection(p_300))
+print(p_240.difference(p_300))
+# <QuerySet [<Teacher: Teacher object (Allen)>, <Teacher: Teacher object (Henry)>, <Teacher: Teacher o
+# bject (Jack)>, <Teacher: Teacher object (holy)>]>
+# <QuerySet []>
+# <QuerySet [<Teacher: Teacher object (Henry)>, <Teacher: Teacher object (Jack)>]>
+
+# 6.select_related() 一对、多对、查询优化、prefetch_related() 一对多，多对多查询优化；反向查询
+students = Student.objects.filter(age__lt=30).prefetch_related('course')
+for s in students:
+    print(s.course.all())
+print(Teacher.objects.get(nickname='Jack').course_set.all())
+
+# 7.annotate() 使用聚合计数，求和、平均数 raw() 执行原生的SQL
+print(Course.objects.values('teacher').annotate(vol=sum('volume')))
+print(Course.objects.values('teacher').annotate(pri=Avg('price')))
+```
 
 
 
 [//]:#(设置表格整体居中显示)
+
 <style>
     table
     {

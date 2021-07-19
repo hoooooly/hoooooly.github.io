@@ -198,71 +198,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/" target="_self">
-          爬虫去重策略
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/" target="_self">
-          
-          
-            
-          
-          
-将访问过的URL保存到数据库
-
-将访问过的URL保存到set中，只需要O(1)的代价就可以查询到URL，100000000*2byte*50个字符/1024/1024/1024 = 9G 
-
-URL经过md5等方法哈希保存到set中
-
-用bitmap方法，将访问过的URL通过hash函数映射到某一位
-
-bloomfilter方法对bitmap进行改进，多重hash函数降低冲突
-
-
-
-    ta
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-17 18:48" pubdate>
-              2021-06-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/MD5/">MD5</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2021/06/16/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E5%92%8C%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/" target="_self">
           深度优先和广度优先算法
         </a>
@@ -768,6 +703,62 @@ boards/views.py
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/django/">django</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/" target="_self">
+          spider的用法
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/" target="_self">
+          
+          
+            
+          
+          Spider 的用法在 Scrapy 中，要抓取网站的链接配置、抓取逻辑、解析逻辑等其实都是在 Spider 中配置的。
+Spider运行流程在实现 Scrapy 爬虫项目时，最核心的类便是 Spider 类了，它定义了如何爬取某个网站的流程和解析方式。简单来讲， Spider 要做的事就是如下两件： 
+
+定义爬取网站的动作； 
+分析爬取下来的网页。 
+
+对于 Spider 类来说，整个爬取循环如
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-08 00:49" pubdate>
+              2021-06-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/scarpy/">scarpy</a>
             
           </div>
         
