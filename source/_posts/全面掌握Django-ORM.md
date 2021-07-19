@@ -7,7 +7,7 @@ comments: true
 
 date: 2021-07-17 21:18:10
 categories:
-index_img:
+index_img: 2021/07/17/全面掌握Django-ORM/5e64d5dc0001020119201080.jpg
 banner_img:
 typora-root-url: 全面掌握Django-ORM
 ---
