@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>Django的一些最佳实践</title>
+    <link href="/2021/07/21/Django%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
+    <url>/2021/07/21/Django%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Pipenv项目管理"><a href="#Pipenv项目管理" class="headerlink" title="Pipenv项目管理"></a><code>Pipenv</code>项目管理</h1><p>首先，安装<code>pipenv</code>。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip3 install pipenv<br></code></pre></td></tr></table></figure><p>创建文件夹<code>mkdir myproject</code>。</p><p>进入文件下<code>cd myproject</code>，创建虚拟环境<code>pipenv --python 3.7</code>，虚拟环境的<code>python</code>版本必须在系统中安装。</p><p>需要在虚拟环境中安装包的话只需要在项目目录中使用<code>pipenv install 包名</code>即可。</p><p>比如这里安装<code>pipenv install dajngo</code>==2.2，这个过程有点慢，因为这里没有更改<code>pipenv</code>源。</p><p>在创建虚拟环境后，会在当前文件夹下生成一个名为<code>Pipfile</code>的文件。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">[[source]]<br>url = &quot;https://pypi.org/simple&quot;<br>verify_ssl = true<br>name = &quot;pypi&quot;<br><br>[packages]<br><br>[dev-packages]<br><br>[requires]<br>python_version = &quot;3.9&quot;<br></code></pre></td></tr></table></figure><p>在这里我们可以修改<code>[source]</code>中的<code>url</code>为其他源。<code>[dev-packages]</code>指开发环境中需要用到的包，<code>[packages]</code>指生产环境中需要用到的包。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">url = <span class="hljs-string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span><br></code></pre></td></tr></table></figure><p>安装包后文件下面会生成<code>Pipfile.lock</code>文件，显示包安装的哈希值。</p><p>使用<code>pipenv graph</code>会显示包与包之间的依赖关系。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> pipenv graph</span><br>Django==2.2<br>  - pytz [required: Any, installed: 2021.1]<br>  - sqlparse [required: Any, installed: 0.4.1]<br></code></pre></td></tr></table></figure><p>每次使用<code>pipenv</code>安装包的时候会更新<code>Pipfile</code>和<code>Pipfile.lock</code>这两个文件。</p><p>可以使用<code>pipenv install requests --skip-lock</code>跳过<code>lock</code>文件的更新，在安装完所有的包后一次更新。</p><p>使用<code>pipenv</code>不需要每次都激活虚拟环境。</p><p>如果你需要激活虚拟环境使用<code>pipenv shell</code>即可，退出使用<code>exit</code>命令。</p><p>如果你想安装开发环境使用的包，比如测试用的包。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pipenv install --dev pytest --skip-lock<br></code></pre></td></tr></table></figure><p>这个包就会安装到生产环境。</p><p><code>pipenv --where</code>定位项目路径。</p><p><code>pipenv --venv</code>定位虚拟环境保持的路径。</p><p><code>pipenv --py</code>虚拟解释器的路径。</p><p><code>pipenv --update</code>更新所有的包。</p><p><code>pipenv --rm</code>删除虚拟环境。</p><p><code>pipenv --check</code>检查包的安全漏洞。</p><h1 id="自定义用户模型"><a href="#自定义用户模型" class="headerlink" title="自定义用户模型"></a>自定义用户模型</h1><h1 id="优先使用通用类视图（Class-based-Generic-Views）"><a href="#优先使用通用类视图（Class-based-Generic-Views）" class="headerlink" title="优先使用通用类视图（Class-based Generic Views）"></a>优先使用通用类视图（<code>Class-based Generic Views</code>）</h1><h1 id="在系统环境变量中保存敏感信息"><a href="#在系统环境变量中保存敏感信息" class="headerlink" title="在系统环境变量中保存敏感信息"></a>在系统环境变量中保存敏感信息</h1><style>    table    {        margin: auto;        font-size: 80%;    }</style>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>django</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>全面掌握Django ORM</title>
     <link href="/2021/07/17/%E5%85%A8%E9%9D%A2%E6%8E%8C%E6%8F%A1Django-ORM/"/>
     <url>/2021/07/17/%E5%85%A8%E9%9D%A2%E6%8E%8C%E6%8F%A1Django-ORM/</url>
