@@ -90,19 +90,103 @@ pipenv install --dev pytest --skip-lock
 
 # 自定义用户模型
 
+继承`BaseUserManager`和`AbstractBaseUser`，指定`AUTH_USER_MODEL`。
 
+```python
+class User(AbstractUser):
+    """自定义用户模型"""
+    nickname = models.CharField(null=True, blank=True,max_length=255, verbose_name="昵称")
+```
 
+如果要求显示用户的昵称：
 
+```python 
+class Meta:
+    verbose_name = '用户'
+    verbose_name_plural = verbose_name
+	username_filed = 'nickname'
+    require_fields = ['', '']
+```
+
+定义用户的权限：
+
+```pytho 
+def has_perm(self, perm, obj=None):
+	"""定义用户具体的权限"""
+	pass
+```
+
+自定义用户管理：
+
+```python
+class MyUserManager(BaseUserManager):
+    def creat_user(self, username, password=None):
+        pass
+    	return
+   	def creat_superuser(self, username, password):
+        pass
+    	return user
+```
+
+`objects = MyUserManager()`放到`User`类的上面。
 
 # 优先使用通用类视图（`Class-based Generic Views`）
+
+## 函数视图（`FBV`）
+
+```python
+# 函数视图
+def my_view(request):
+    if request.method == 'GET':
+        return HttpResponse('result')
+    elif request.method == 'POST':
+        return HttpResponse('result')
+    elif request.method == 'DELETE':
+        return HttpResponse('result')
+```
+
+## 类视图（`CBV`）
+
+```python
+# 类视图
+from django.views.generic import View
+
+
+class MyView(View):
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
+```
+
+所有基于类的视图都有`as_view`方法，用来作为类调用的入口。
+
+```python
+urlpatterns = [
+    path('myview', MyView.as_view(a=1), name='detail')
+]
+```
+
+## 通用类视图（`CBGV`）
 
 
 
 # 在系统环境变量中保存敏感信息
 
+项目中的敏感信息和项目分离。
 
+进入项目目录，安装一个包
 
+```shell
+ pipenv install django-environ --skip-lock
+```
 
+在项目文件夹`.env`文件，定义了项目的绝大部分的项目配置。
+
+# 为不同环境分别配置`settings.py`文件
+
+开发，测试，生产环境的配置文件分离。
 
 
 
