@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年7月31日 下午
+                  本文最后更新于：2021年8月2日 早上
                 
               </p>
             
@@ -270,11 +270,11 @@
 <blockquote>
 <p>为了增强安全性，密钥不应该直接写入源码，而要保存在环境变量中。</p>
 </blockquote>
-<h2 id="表单类"><a href="#表单类" class="headerlink" title="表单类"></a>表单类</h2><p>使用Flask-WTF时，在服务器端，每个Web表单都由一个继承自FlaskForm的类表示。这个类定义表单中的一组字段，每个字段都用对象表示。字段对象可附属一个或多个验证函数。验证函数用于验证用户提交的数据是否有效。</p>
+<h2 id="表单类"><a href="#表单类" class="headerlink" title="表单类"></a>表单类</h2><p>使用Flask-WTF时，在服务器端，每个Web表单都由一个继承自<code>FlaskForm</code>的类表示。这个类定义表单中的一组字段，每个字段都用对象表示。字段对象可附属一个或多个验证函数。验证函数用于验证用户提交的数据是否有效。</p>
 <p>定义表单类：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 定义一个表单类</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoginForm</span>(<span class="hljs-params">FlaskForm</span>):</span><br>    <span class="hljs-comment"># 定义一个文本框，提示信息为用户名，validators设置验证规则，参数是一个列表，可以添加多个验证函数，DataRequired不能为空验证函数</span><br>    name = StringField(<span class="hljs-string">&quot;用户名：&quot;</span>, validators=[DataRequired()])<br>    <span class="hljs-comment"># 定义一个提交按钮</span><br>    submit = SubmitField(<span class="hljs-string">&quot;提交&quot;</span>)<br></code></pre></td></tr></table></figure>
 
-<p>LoginForm表单中有一个名为name的文本字段和一个名为submit的提交按钮。StringField类表示属性为type=”text”的HTML <input>元素。SubmitField类表示属性为type=”submit”的HTML <input>元素。字段构造函数的第一个参数是把表单渲染成HTML时使用的标注（label）。</p>
+<p><code>LoginForm</code>表单中有一个名为<code>name</code>的文本字段和一个名为<code>submit</code>的提交按钮。StringField类表示属性为<code>type=&quot;text&quot;</code>的HTML <code>&lt;input&gt;</code>元素。SubmitField类表示属性为type=”submit”的HTML <code>&lt;input&gt;</code>元素。字段构造函数的第一个参数是把表单渲染成HTML时使用的标注（label）。</p>
 <p>StringField构造函数中的可选参数validators指定一个由验证函数组成的列表，在接受用户提交的数据之前验证数据。验证函数DataRequired()确保提交的字段内容不为空。</p>
 <blockquote>
 <p>FlaskForm基类由Flask-WTF扩展定义，所以要从flask wtf中导入。然而，字段和验证函数却是直接从WTForms包中导入的。</p>
