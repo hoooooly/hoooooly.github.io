@@ -128,6 +128,73 @@ app.route装饰器中多出的methods参数告诉Flask，在URL映射中把这�
 
 ![](image-20210731132446805.png)
 
+## 重定向和用户会话
+
+使用重定向作为POST请求的响应，而不是使用常规响应。重定向是一种特殊的响应，响应内容包含的是URL，而不是HTML代码的字符串。浏览器收到这种响应时，会向重定向的URL发起GET请求，显示页面的内容。这个页面的加载可能要多花几毫秒，因为要先把第二个请求发给服务器。除此之外，用户不会察觉到有什么不同。现在，前一个请求是GET请求，所以刷新命令能像预期的那样正常运作了。这个技巧称为`Post /重定向/Get模式`。
+
+但这种方法又会引起另一个问题。应用处理POST请求时，可以通过`form.name.data`获取用户输入的名字，然而一旦这个请求结束，数据也就不见了。因为这个POST请求使用重定向处理，所以应用需要保存输入的名字，这样重定向后的请求才能获得并使用这个名字，从而构建真正的响应。
+
+应用可以把数据存储在用户会话中，以便在请求之间“记住”数据。用户会话是一种私有存储，每个连接到服务器的客户端都可访问。用户会话，它是请求上下文中的变量，名为`session`，像标准的Python字典一样操作。
+
+> 默认情况下，用户会话保存在客户端cookie中，使用前面设置的密钥加密签名。如果篡改了cookie的内容，签名就会失效，会话也将随之失效。
+
+实现重定向和用户会话。
+
+```python
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = LoginForm()
+    print(form.validate_on_submit)
+    if form.validate_on_submit():
+        # name = form.name.data
+        session['name'] = form.name.data
+        return redirect(url_for('index'))
+        print(url_for('index'))
+    return render_template('index.html', form=form, name=session.get('name'), current_time=datetime.utcnow())
+```
+
+应用的前一个版本在局部变量name中存储用户在表单中输入的名字。这个变量现在保存在用户会话中，即`session['name']`，所以在两次请求之间能记住输入的值。
+
+现在，包含有效表单数据的请求最后会使视图函数调用`redirect()`函数。这是`Flask`提供的辅助函数，用于生成`HTTP`重定向响应。`redirect()`函数的参数是重定向的URL，这里使用的重定向`URL`是应用的根`URL`，因此重定向响应本可以写得更简单一些，写成`redirect('/')`，不过这里却使用了Flask提供的URL生成函数`url_for()`。`url_for()`函数的第一个且唯一必须指定的参数是端点名，即路由的内部名称。默认情况下，路由的端点是相应视图函数的名称。在这个示例中，处理根URL的视图函数是`index()`，因此传给`url_for()`函数的名字是index。
+
+最后一处改动位于`render_template()`函数中，现在我们使用`session.get('name')`直接从会话中读取name参数的值。与普通的字典一样，这里使用get()获取字典中键对应的值，可以避免未找到键时抛出异常。如果指定的键不存在，则`get()`方法返回默认值None。
+
+## 闪现消息
+
+请求完成后，有时需要让用户知道状态发生了变化，可以是确认消息、警告或者错误提醒。一个典型例子是，用户提交有一项错误的登录表单后，服务器发回的响应重新渲染登录表单，并在表单上面显示一个消息，提示用户名或密码无效。Flask本身内置这个功能。`flash()`函数可实现这种效果。
+
+```python
+from flask import flash
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # name = form.name.data
+        old_name = session.get('name')
+        if old_name is not None and old_name != form.name.data:
+            flash('密码不正确，请好好想想！')
+        session['name'] = form.name.data
+        return redirect(url_for('index'))
+        print(url_for('index'))
+    return render_template('index.html', form=form, name=session.get('name'), current_time=datetime.utcnow())
+```
+
+每次提交的名字都会和存储在用户会话中的名字进行比较，而会话中存储的名字是前一次在这个表单中提交的数据。如果两个名字不一样，就会调用`flash()`函数，在发给客户端的下一个响应中显示一个消息。
+
+仅调用`flash()`函数并不能把消息显示出来，应用的模板必须渲染这些消息。最好在基模板中渲染闪现消息，因为这样所有页面都能显示需要显示的消息。Flask把`get_flashed_messages()`函数开放给模板，用于获取并渲染闪现消息。
+
+```html
+ {% for message in get_flashed_messages() %}
+	<div class="alert alert-warning">
+      <button type="button" class="close">&times;</button>
+        {{ message }}
+    </div>
+{% endfor %}
+```
+
+这里使用了循环，因为在之前的请求循环中每次调用`flash()`函数时都会生成一个消息，所以可能有多个消息在排队等待显示。`get_flashed_messages()`函数获取的消息在下次调用时不会再次返回，因此闪现消息只显示一次，然后就消失了。
+
 
 
 
