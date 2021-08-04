@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      214 字
+      2.7k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      32
        分钟
     </span>
   
@@ -253,12 +253,12 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年8月2日 晚上
+                  本文最后更新于：2021年8月4日 晚上
                 
               </p>
             
             <div class="markdown-body">
-              <p>关系型数据库把数据存储在<strong>表</strong>中，表为应用中不同的实体建模。例如，订单管理应用的数据库中可能有<code>customers</code>、<code>products</code>和<code>orders</code>等表。</p>
+              <h1 id="关系型数据库"><a href="#关系型数据库" class="headerlink" title="关系型数据库"></a>关系型数据库</h1><p>关系型数据库把数据存储在<strong>表</strong>中，表为应用中不同的实体建模。例如，订单管理应用的数据库中可能有<code>customers</code>、<code>products</code>和<code>orders</code>等表。</p>
 <p>表中的列数是固定的，行数是可变的。列定义表所表示的实体的数据属性。例如，customers表中可能有name、address、phone等列。表中的行定义部分或所有列对应的真实数据。</p>
 <p>表中有个特殊的列，称为<strong>主键</strong>，其值为表中各行的唯一标识符。表中还可以有称为<strong>外键</strong>的列，引用同一个表或不同表中某一行的主键。行之间的这种联系称为关系，这正是关系型数据库模型的基础。</p>
 <pre><code class=" mermaid">classDiagram
@@ -276,14 +276,259 @@
 	
 </code></pre>
 
+<p>数据库结构的这种图示法称为<strong>实体-关系图</strong>。其中，方框表示数据库表，里面列出表的属性（或列）。<code>roles</code>表存储所有可用的用户角色，每个角色都使用一个唯一的<code>id</code>值（即表的主键）进行标识。<code>users</code>表存储用户，每个用户也有唯一的<code>id</code>值。除了<code>id</code>主键之外，<code>roles</code>表中还有<code>name</code>列，<code>users</code>表中还有<code>username</code>和<code>password</code>列。</p>
+<h2 id="Python数据库框架"><a href="#Python数据库框架" class="headerlink" title="Python数据库框架"></a>Python数据库框架</h2><p>Flask并不限制你使用何种类型的数据库包，因此你可以根据自己的喜好选择使用<code>MySQL</code>、<code>Postgres</code>、<code>SQLite</code>、<code>Redis</code>、<code>MongoDB</code>、<code>CouchDB</code>或<code>DynamoDB</code>。</p>
+<p>如果这些都无法满足需求，还有一些数据库抽象层代码包供选择，例如<code>SQLAlchemy</code>和<code>MongoEngine</code>。你可以使用这些抽象包直接处理高等级的Python对象，而不用处理如表、文档或查询语言之类的数据库实体。</p>
+<h2 id="使用Flask-SQLAlchemy管理数据库"><a href="#使用Flask-SQLAlchemy管理数据库" class="headerlink" title="使用Flask-SQLAlchemy管理数据库"></a>使用<code>Flask-SQLAlchemy</code>管理数据库</h2><p><code>Flask-SQLAlchemy</code>是一个Flask扩展，简化了在Flask应用中使用<code>SQLAlchemy</code>的操作。<code>SQLAlchemy</code>是一个强大的关系型数据库框架，支持多种数据库后台。<code>SQLAlchemy</code>提供了高层<code>ORM</code>，也提供了使用数据库原生<code>SQL</code>的低层功能。</p>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">(venv) $ pip install flask-sqlalchemy<br></code></pre></td></tr></table></figure>
 
+<p>在<code>Flask-SQLAlchemy</code>中，数据库使用URL指定。</p>
+<table>
+<thead>
+<tr>
+<th>数据库引擎</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>MySQL</code></td>
+<td><code>mysql://username:password@hostname/databse</code></td>
+</tr>
+<tr>
+<td><code>Postgres</code></td>
+<td><code>postgresql://username:password@hostname/database</code></td>
+</tr>
+<tr>
+<td><code>SQLite(linux, macos)</code></td>
+<td><code>sqlite:////absolute/path/to/database</code></td>
+</tr>
+<tr>
+<td><code>SQLite(windows)</code></td>
+<td><code>sqlite:///c:/absolute/path/to/database</code></td>
+</tr>
+</tbody></table>
+<p>在这些URL中，<code>hostname</code>表示数据库服务所在的主机，可以是本地主机<code>（localhost）</code>，也可以是远程服务器。数据库服务器上可以托管多个数据库，因此<code>database</code>表示要使用的数据库名。如果数据库需要验证身份，使用<code>username</code>和<code>password</code>提供数据库用户的凭据。</p>
+<blockquote>
+<p><code>SQLite</code>数据库没有服务器，因此不用指定<code>hostname</code>、<code>username</code>和<code>password</code>。URL中的<code>database</code>是磁盘中的文件名。</p>
+</blockquote>
+<p>应用使用的数据库URL必须保存到Flask配置对象的<code>SQLALCHEMY_DATABASEURI</code>键中。<code>Flask-SQLAlchemy</code>文档还建议把<code>SQLALCHEMY_TRACKMODIFICATIONS</code>键设为False，以便在不需要跟踪对象变化时降低内存消耗。其他配置选项的作用参阅<code>Flask-SQLAlchemy</code>的文档。</p>
+<p>配置数据库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 数据库</span><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">from</span> flask_sqlalchemy <span class="hljs-keyword">import</span> SQLAlchemy<br><br>basedir = os.path.abspath(os.path.dirname(__file__))<br><br>app = Flask(__name__)<br>app.config[<span class="hljs-string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = <span class="hljs-string">&#x27;sqlite:///&#x27;</span> + os.path.join(basedir, <span class="hljs-string">&#x27;data.sqlite&#x27;</span>)<br>app.config[<span class="hljs-string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="hljs-literal">False</span><br><br>db = SQLAlchemy(app)<br></code></pre></td></tr></table></figure>
 
+<p><code>db</code>对象是<code>SQLAlchemy</code>类的实例，表示应用使用的数据库，通过它可获得<code>Flask-SQLAlchemy</code>提供的所有功能。</p>
+<h2 id="定义模型"><a href="#定义模型" class="headerlink" title="定义模型"></a>定义模型</h2><p>模型这个术语表示应用使用的持久化实体。在<code>ORM</code>中，模型一般是一个Python类，类中的属性对应于数据库表中的列。</p>
+<p><code>Flask-SQLAlchemy</code>创建的数据库实例为模型提供了一个基类以及一系列辅助类和辅助函数，可用于定义模型的结构。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Role</span>(<span class="hljs-params">db.Model</span>):</span><br>    __tablename__ = <span class="hljs-string">&#x27;roles&#x27;</span><br>    <span class="hljs-built_in">id</span> = db.Column(db.Integer, primary_key=<span class="hljs-literal">True</span>)<br>    name = db.Column(db.String(<span class="hljs-number">64</span>), unique=<span class="hljs-literal">True</span>)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__repr__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&lt;Role %r&gt;&#x27;</span> % self.name<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>(<span class="hljs-params">db.Model</span>):</span><br>    __tablename__ = <span class="hljs-string">&#x27;users&#x27;</span><br>    <span class="hljs-built_in">id</span> = db.Column(db.Integer, primary_key=<span class="hljs-literal">True</span>)<br>    username = db.Column(db.String(<span class="hljs-number">64</span>), unique=<span class="hljs-literal">True</span>, index=<span class="hljs-literal">True</span>)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__repr__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&lt;User %r&gt;&#x27;</span> % self.username<br></code></pre></td></tr></table></figure>
 
+<p>类变量<code>tablename</code>定义在数据库中使用的表名。如果没有定义<code>tablename</code> , <code>Flask-SQLAlchemy</code>会使用一个默认名称，但默认的表名没有遵守流行的使用复数命名的约定，所以最好由我们自己来指定表名。其余的类变量都是该模型的属性，定义为<code>db.Column</code>类的实例。</p>
+<p><code>db.Column</code>类构造函数的第一个参数是数据库列和模型属性的类型。</p>
+<p>常用的列类型以及在模型中使用的Python类型。</p>
+<table>
+<thead>
+<tr>
+<th>类型名</th>
+<th>Python类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Integer</code></td>
+<td><code>int</code></td>
+<td>普通整数，通常是32位</td>
+</tr>
+<tr>
+<td><code>SmallInteger</code></td>
+<td><code>int</code></td>
+<td>取值范围小的整数，通常是16位</td>
+</tr>
+<tr>
+<td><code>BigInteger</code></td>
+<td><code>int或long</code></td>
+<td>不限制精度的整数</td>
+</tr>
+<tr>
+<td><code>Float</code></td>
+<td><code>float</code></td>
+<td>浮点数</td>
+</tr>
+<tr>
+<td><code>Numeric</code></td>
+<td><code>decimal.Decimal</code></td>
+<td>定点数</td>
+</tr>
+<tr>
+<td><code>String</code></td>
+<td><code>str</code></td>
+<td>变长字符串</td>
+</tr>
+<tr>
+<td>Text``</td>
+<td><code>str</code></td>
+<td>变长字符串，对较长或不限长度的字符串做了优化</td>
+</tr>
+<tr>
+<td><code>Unicode</code></td>
+<td><code>unicode</code></td>
+<td>变长Unicode字符串</td>
+</tr>
+<tr>
+<td><code>UnicodeText</code></td>
+<td><code>unicode</code></td>
+<td>变长Unicode字符串</td>
+</tr>
+<tr>
+<td><code>Boolean</code></td>
+<td><code>bool</code></td>
+<td>布尔值</td>
+</tr>
+<tr>
+<td><code>Date</code></td>
+<td><code>datatime.date</code></td>
+<td>日期</td>
+</tr>
+<tr>
+<td><code>Time</code></td>
+<td><code>datatime.time</code></td>
+<td>时间</td>
+</tr>
+<tr>
+<td><code>DateTime</code></td>
+<td><code>datetime.datetime</code></td>
+<td>时间和日期</td>
+</tr>
+<tr>
+<td><code>Interval</code></td>
+<td><code>datetime.timedelta</code></td>
+<td>时间间隔</td>
+</tr>
+<tr>
+<td><code>Enum</code></td>
+<td><code>str</code></td>
+<td>一组字符串</td>
+</tr>
+<tr>
+<td><code>PickleType</code></td>
+<td><code>任何Python对象</code></td>
+<td>自动使用<code>Pcikle</code>序列化</td>
+</tr>
+<tr>
+<td><code>LargeBinary</code></td>
+<td><code>str</code></td>
+<td>二进制blob</td>
+</tr>
+</tbody></table>
+<p><code>db.Column</code>的其余参数指定属性的配置选项。</p>
+<table>
+<thead>
+<tr>
+<th>选项名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>primary_key</td>
+<td>如果设为True，列为表的主键</td>
+</tr>
+<tr>
+<td>unique</td>
+<td>如果设为True，列不允许出现重复的值</td>
+</tr>
+<tr>
+<td>index</td>
+<td>如果设为True，为列创建索引，提升查询效率</td>
+</tr>
+<tr>
+<td>nullable</td>
+<td>如果设置为True，列允许使用空值，如果设为False，列不允许有空值</td>
+</tr>
+<tr>
+<td>default</td>
+<td>为列定义默认值</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>Flask-SQLAlchemy</code>要求每个模型都定义主键，这一列经常命名为<code>id</code>。</p>
+</blockquote>
+<p>虽然没有强制要求，但这两个模型都定义了<code>repr()</code> 方法，返回一个具有可读性的字符串表示模型，供调试和测试时使用。</p>
+<h2 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h2><p>关系型数据库使用关系把不同表中的行联系起来。关系图表示用户和角色之间的一种简单关系。这是角色到用户的<strong>一对多</strong>关系，因为一个角色可属于多个用户，而每个用户都只能有一个角色。</p>
+<p>在数据库模型中定义关系：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Role</span>(<span class="hljs-params">db.Model</span>):</span><br>   	<span class="hljs-comment"># ...</span><br>    users = db.relationship(<span class="hljs-string">&#x27;Users&#x27;</span>, backref=<span class="hljs-string">&#x27;role&#x27;</span>)<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>(<span class="hljs-params">db.Model</span>):</span><br>	<span class="hljs-comment"># ...</span><br>    role_id = db.Column(db.Integer, db.ForeignKey(<span class="hljs-string">&#x27;roles.id&#x27;</span>))<br></code></pre></td></tr></table></figure>
 
+<p>关系使用<code>users</code>表中的外键连接两行。添加到<code>User</code>模型中的<code>role_id</code>列被定义为外键，就是这个外键建立起了关系。传给<code>db.ForeignKey()</code>的参数<code>’roles.id’</code>表明，这列的值是<code>roles</code>表中相应行的<code>id</code>值。</p>
+<p><code>db.relationship()</code>中的<code>backref</code>参数向<code>User</code>模型中添加一个<code>role</code>属性，从而定义反向关系。通过<code>User</code>实例的这个属性可以获取对应的<code>Role</code>模型对象，而不用再通过<code>role_id</code>外键获取。</p>
+<h3 id="定义关系中的常用配置选项"><a href="#定义关系中的常用配置选项" class="headerlink" title="定义关系中的常用配置选项"></a>定义关系中的常用配置选项</h3><table>
+<thead>
+<tr>
+<th>选项名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>backref</code></td>
+<td>在关系的另一个模型中添加反向引用</td>
+</tr>
+<tr>
+<td><code>primaryjoin</code></td>
+<td>明确指定两个模型之间使用的联结条件，只在模棱两可的关系中需要指定</td>
+</tr>
+<tr>
+<td><code>lazy</code></td>
+<td>指定如何加载相关记录，可选值有select（首次访问时加载）、immediate(源对象加载后就加载)、joined（加载记录，使用联结）、subquery（立即加载，但使用子查询）、noload（永不加载）和dynamic（不加载记录，但提供加载记录的查询）</td>
+</tr>
+<tr>
+<td><code>uselist</code></td>
+<td>如果设置为FALSE，不使用列表，而使用标量值</td>
+</tr>
+<tr>
+<td><code>order_by</code></td>
+<td>指定关系中记录的排序方式</td>
+</tr>
+<tr>
+<td><code>secondary</code></td>
+<td>指定多对多关系中关联表的名称</td>
+</tr>
+<tr>
+<td><code>secondaryjoin</code></td>
+<td><code>SQLAlchemy</code>无法自行决定时，指定多对多关系中的二级联结条件</td>
+</tr>
+</tbody></table>
+<h2 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h2><p>设置环境变量<code>set FLASK_APP=run.py</code>，进入<code>flask shell</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">from run import db<br>db.create_all()<br></code></pre></td></tr></table></figure>
 
+<p>现在查看应用目录，你会发现有个名为<code>data.sqlite</code>的文件，文件名与配置中指定的一样。如果数据库表已经存在于数据库中，那么<code>db.create all()</code>不会重新创建或者更新相应的表。如果修改模型后要把改动应用到现有的数据库中，这一行为会带来不便。更新现有数据库表的蛮力方式是先删除旧表再重新创建：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">db.drop_all()<br>db.create_all()<br></code></pre></td></tr></table></figure>
 
+<p><img src="image-20210804124308055.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="插入行"><a href="#插入行" class="headerlink" title="插入行"></a>插入行</h3><p>下面这段代码创建一些角色和用户：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> run <span class="hljs-keyword">import</span> Role,User<br><span class="hljs-meta">&gt;&gt;&gt; </span>admin_role = Role(name=<span class="hljs-string">&#x27;Admin&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>mod_role = Role(name=<span class="hljs-string">&#x27;Moderator&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user_role = Role(name=<span class="hljs-string">&#x27;User&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user_john = User(username=<span class="hljs-string">&#x27;john&#x27;</span>, role=admin_role)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user_susan = User(username=<span class="hljs-string">&#x27;susan&#x27;</span>, role=user_role)<br><span class="hljs-meta">&gt;&gt;&gt; </span>user_david = User(username=<span class="hljs-string">&#x27;david&#x27;</span>, role=user_role)<br></code></pre></td></tr></table></figure>
 
+<p>模型的构造函数接受的参数是使用关键字参数指定的模型属性初始值。注意，role属性也可使用，虽然它不是真正的数据库列，但却是一对多关系的高级表示。新建对象时没有明确设定id属性，因为在多数数据库中主键由数据库自身管理。现在这些对象只存在于Python中，还未写入数据库。因此，id尚未赋值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(admin_role.<span class="hljs-built_in">id</span>)<br><span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
 
+<p>对数据库的改动通过数据库会话管理，在<code>Flask-SQLAlchemy</code>中，会话由<code>db.session</code>表示。准备把对象写入数据库之前，要先将其添加到会话中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.add(admin_role)<br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.add(mod_role)<br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.add(user_role)<br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.add(user_john)<br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.add(user_susan)<br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.add(user_david)<br></code></pre></td></tr></table></figure>
+
+<p>或者简写成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.add_all([admin_role,mod_role,user_role,user_john,user_susan,user_david])<br></code></pre></td></tr></table></figure>
+
+<p>为了把对象写入数据库，我们要调用<code>commit()</code>方法提交会话：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.commit()<br></code></pre></td></tr></table></figure>
+
+<p>提交数据后再查看id属性，现在它们已经赋值了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(admin_role.<span class="hljs-built_in">id</span>)<br><span class="hljs-number">1</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(user_john.<span class="hljs-built_in">id</span>)<br><span class="hljs-number">1</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(user_role.<span class="hljs-built_in">id</span>)<br><span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>数据库会话<code>db.session</code>和<code>Flask session</code>对象没有关系。数据库会话也称为事务。</p>
+<p>数据库会话也可回滚。调用<code>db.session.rollback()</code>后，添加到数据库会话中的所有对象都将还原到它们在数据库中的状态。</p>
+</blockquote>
+<h3 id="修改行"><a href="#修改行" class="headerlink" title="修改行"></a>修改行</h3><p>在数据库会话上调用<code>add()</code>方法也能更新模型。我们继续在之前的shell会话中进行操作，下面这个例子把<code>&quot;Admin&quot;</code>角色重命名为<code>&quot;Administrator&quot;</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>admin_role.name = <span class="hljs-string">&#x27;Administrator&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.add(admin_role)<br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.commit()<br></code></pre></td></tr></table></figure>
+
+<h3 id="删除行"><a href="#删除行" class="headerlink" title="删除行"></a>删除行</h3><p>数据库会话还有个<code>delete()</code>方法。下面这个例子把<code>&quot;Moderator&quot;</code>角色从数据库中删除：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.delete(mod_role)<br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.commit()<br></code></pre></td></tr></table></figure>
+
+<p>注意，删除与插入和更新一样，提交数据库会话后才会执行。</p>
 <style>
     table
     {
