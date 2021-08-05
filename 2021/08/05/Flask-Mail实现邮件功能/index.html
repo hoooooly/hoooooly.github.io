@@ -18,7 +18,7 @@
   <meta name="author" content="Holy Chan">
   <meta name="keywords" content="">
   
-  <title>优美图库抓取 - Holy的个人站点</title>
+  <title>Flask-Mail实现邮件功能 - Holy的个人站点</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -179,7 +179,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="优美图库抓取">
+            <span class="h2" id="subtitle" title="Flask-Mail实现邮件功能">
               
             </span>
 
@@ -189,8 +189,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-06 13:56" pubdate>
-        2021年6月6日 下午
+      <time datetime="2021-08-05 13:21" pubdate>
+        2021年8月5日 下午
       </time>
     </span>
   
@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      317 字
+      416 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      6
        分钟
     </span>
   
@@ -249,22 +249,69 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">优美图库抓取</h1>
+            <h1 style="display: none">Flask-Mail实现邮件功能</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年6月15日 晚上
+                  本文最后更新于：2021年8月5日 下午
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="抓取思路"><a href="#抓取思路" class="headerlink" title="抓取思路"></a>抓取思路</h2><p>1.拿到主页面的源代码，然后提取子页面的链接接地址，<code>href</code><br>2.通过<code>href</code>拿到子页面的内容，从子页面中找到图片的下载地址 <code>img -&gt; src</code><br>3.下载图片并保存</p>
-<p>实现代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><br>url = <span class="hljs-string">&quot;https://www.umei.net/weimeitupian/hunshatupian/&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main_spider</span>(<span class="hljs-params">url</span>):</span><br>    resp = requests.get(url, verify=<span class="hljs-literal">False</span>)<br>    resp.encoding = <span class="hljs-string">&quot;utf-8&quot;</span><br>    <span class="hljs-comment"># print(resp.text)</span><br>    <span class="hljs-keyword">return</span> resp.text<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">content</span>):</span><br>    main_page = BeautifulSoup(content, <span class="hljs-string">&quot;html.parser&quot;</span>)<br>    a_list = main_page.find(<span class="hljs-string">&quot;div&quot;</span>, class_=<span class="hljs-string">&quot;TypeList&quot;</span>).find_all(<span class="hljs-string">&quot;a&quot;</span>)<br>    <span class="hljs-comment"># print(a_list)</span><br>    <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> a_list:<br>        href = <span class="hljs-string">&quot;https://www.umei.net&quot;</span> + a.get(<span class="hljs-string">&quot;href&quot;</span>)<br>        <span class="hljs-comment"># 接下来子页面源代码</span><br>        child_page_text = main_spider(href)<br>        <span class="hljs-comment"># 从子页面中获取图片的下载路径</span><br>        child_page = BeautifulSoup(child_page_text, <span class="hljs-string">&quot;html.parser&quot;</span>)<br>        image_name = child_page.find(<span class="hljs-string">&quot;h1&quot;</span>, class_=<span class="hljs-string">&quot;inline&quot;</span>).text<br>        image_href = child_page.find(<span class="hljs-string">&quot;div&quot;</span>, class_=<span class="hljs-string">&quot;ImageBody&quot;</span>).find(<span class="hljs-string">&quot;img&quot;</span>).get(<span class="hljs-string">&quot;src&quot;</span>)<br>        <span class="hljs-built_in">print</span>(image_name, image_href)<br>        <span class="hljs-comment"># 下载图片</span><br>        image_resp = requests.get(image_href).content<br>        <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">&quot;./images&quot;</span>) == <span class="hljs-literal">False</span>:<br>            os.mkdir(<span class="hljs-string">&quot;./images&quot;</span>)<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span> (<span class="hljs-string">&quot;./images/&quot;</span>+ image_name + <span class="hljs-string">&quot;.jpg&quot;</span>, mode=<span class="hljs-string">&quot;wb&quot;</span>) <span class="hljs-keyword">as</span> f:<br>            f.write(image_resp) <span class="hljs-comment"># 图片保存到文件</span><br>        f.close()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#123;&#125;.jpg保存成功&quot;</span>.<span class="hljs-built_in">format</span>(image_name))<br>        time.sleep(<span class="hljs-number">1</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    parse(main_spider(url))<br></code></pre></td></tr></table></figure>
+              <h1 id="使用Flask-Mail提供电子邮件支持"><a href="#使用Flask-Mail提供电子邮件支持" class="headerlink" title="使用Flask-Mail提供电子邮件支持"></a>使用Flask-Mail提供电子邮件支持</h1><p>虽然Python标准库中的<code>smtplib</code>包可用于在Flask应用中发送电子邮件，但包装了<code>smtplib</code>的<code>Flask-Mail</code>扩展能更好地与Flask集成。<code>Flask-Mail</code>使用<code>pip</code>安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">(venv)$</span><span class="bash"> pip install falsk-mail</span><br></code></pre></td></tr></table></figure>
 
-<p>没有做进一步的爬取，只爬取了一个页面。</p>
-<p>所有图片保存到文件夹<code>images</code>。</p>
-<p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
+<p><code>Flask-Mail</code>连接到简单邮件传输协议<code>（SMTP, simple mail transfer protocol）</code>服务器，把邮件交给这个服务器发送。如果不进行配置，则<code>Flask-Mail</code>连接<code>localhost</code>上的<code>25</code>端口，无须验证身份即可发送电子邮件。</p>
+<p><code>Flask-Mail</code> SMTP服务器的配置:</p>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MAIL_SERVER</td>
+<td>localhost</td>
+<td>电子邮件服务器的主机名或IP地址</td>
+</tr>
+<tr>
+<td>MAIL_PORT</td>
+<td>25</td>
+<td>电子邮件服务器的端口</td>
+</tr>
+<tr>
+<td>MAIL_USE_TLS</td>
+<td>FALSE</td>
+<td>启用传输层安全（<code>TLS，transoprt layer security</code>）协议</td>
+</tr>
+<tr>
+<td>MAIL_USE_SSL</td>
+<td>False</td>
+<td>启用安全套接层（SSL，secure sockets layer）协议</td>
+</tr>
+<tr>
+<td>MAIL_USERNAME</td>
+<td>None</td>
+<td>邮件账户的用户名</td>
+</tr>
+<tr>
+<td>MAIL_PASSWORD</td>
+<td>None</td>
+<td>邮件账户的密码</td>
+</tr>
+</tbody></table>
+<p>在开发过程中，连接到外部SMTP服务器可能更方便。</p>
+<p>配置Flask-Mail使用<code>GMAIL</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">app.config[<span class="hljs-string">&#x27;MAIL_SERVER&#x27;</span>] = <span class="hljs-string">&#x27;smtp.googlemail.com&#x27;</span><br>app.config[<span class="hljs-string">&#x27;MAIL_PORT&#x27;</span>] = <span class="hljs-number">587</span><br>app.config[<span class="hljs-string">&#x27;MAIL_USE_TLS&#x27;</span>] = <span class="hljs-literal">True</span><br>app.config[<span class="hljs-string">&#x27;MAIL_USERNAME&#x27;</span>] = os.environ.get(<span class="hljs-string">&#x27;MAIL_USERNAME&#x27;</span>)<br>app.config[<span class="hljs-string">&#x27;MAIL_PASSWORD&#x27;</span>] = os.environ.get(<span class="hljs-string">&#x27;MAIL_PASSWORD&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>初始化方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Mail<br>mail = Mail(app)<br></code></pre></td></tr></table></figure>
+
+<h2 id="在python-shell中发送电子邮件"><a href="#在python-shell中发送电子邮件" class="headerlink" title="在python shell中发送电子邮件"></a>在python shell中发送电子邮件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">(venv)$falsk shell<br>&gt;&gt;&gt;<span class="hljs-keyword">from</span> flask_mail <span class="hljs-keyword">import</span> Message<br>&gt;&gt;&gt;<span class="hljs-keyword">from</span> run <span class="hljs-keyword">import</span> mail<br>&gt;&gt;&gt;msg = Message(<span class="hljs-string">&#x27;test mail&#x27;</span>, sender=<span class="hljs-string">&#x27;you@example.com&#x27;</span>, recipients=[<span class="hljs-string">&#x27;you@example.com&#x27;</span>])<br>&gt;&gt;&gt;msg.body = <span class="hljs-string">&#x27;This is the plain text body&#x27;</span><br>&gt;&gt;&gt;msg.html = <span class="hljs-string">&#x27;This is the &lt;b&gt;HTML&lt;/b&gt; body&#x27;</span><br>&gt;&gt;&gt;<span class="hljs-keyword">with</span> app.app_context():<br>...		mail.send(msg)<br>...		<br></code></pre></td></tr></table></figure>
+
+<p>注意，<code>Flask-Mail</code>的<code>send()</code>函数使用<code>current_app</code>，因此要在激活的应用上下文中执行。</p>
 <style>
     table
     {
@@ -272,6 +319,9 @@
         font-size: 80%;
     }
 </style>
+
+
+
             </div>
             <hr>
             <div>
@@ -280,7 +330,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                      <a class="hover-with-bg" href="/categories/Flask/">Flask</a>
                     
                   </div>
                 
@@ -288,11 +338,11 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/bs4/">bs4</a>
-                    
                       <a class="hover-with-bg" href="/tags/python/">python</a>
                     
-                      <a class="hover-with-bg" href="/tags/requests/">requests</a>
+                      <a class="hover-with-bg" href="/tags/flask/">flask</a>
+                    
+                      <a class="hover-with-bg" href="/tags/mail/">mail</a>
                     
                   </div>
                 
@@ -309,9 +359,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/06/06/XPath%E5%BA%93%E8%A7%A3%E6%9E%90/">
+                      <a href="/2021/08/05/%E5%A4%A7%E5%9E%8B%E5%BA%94%E7%94%A8%E7%9A%84%E7%BB%93%E6%9E%84/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">XPath库解析</span>
+                        <span class="hidden-mobile">大型应用的结构</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -319,8 +369,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/06/05/Beautiful-Soup%E5%BA%93/">
-                        <span class="hidden-mobile">Beautiful Soup4库</span>
+                      <a href="/2021/08/02/flask%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="hidden-mobile">flask数据库</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

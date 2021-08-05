@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.7k 字
+      5.7k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      32
+      70
        分钟
     </span>
   
@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年8月4日 晚上
+                  本文最后更新于：2021年8月5日 下午
                 
               </p>
             
@@ -529,6 +529,160 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.delete(mod_role)<br><span class="hljs-meta">&gt;&gt;&gt; </span>db.session.commit()<br></code></pre></td></tr></table></figure>
 
 <p>注意，删除与插入和更新一样，提交数据库会话后才会执行。</p>
+<h3 id="查询行"><a href="#查询行" class="headerlink" title="查询行"></a>查询行</h3><p><code>Flask-SQLAlchemy</code>为每个模型类都提供了<code>query</code>对象。最基本的模型查询是使用<code>all()</code>方法取回对应表中的所有记录：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>Role.query.<span class="hljs-built_in">all</span>()<br>[&lt;Role <span class="hljs-string">&#x27;Administrator&#x27;</span>&gt;, &lt;Role <span class="hljs-string">&#x27;Moderator&#x27;</span>&gt;, &lt;Role <span class="hljs-string">&#x27;User&#x27;</span>&gt;]<br><span class="hljs-meta">&gt;&gt;&gt; </span>User.query.<span class="hljs-built_in">all</span>()<br>[&lt;User <span class="hljs-string">&#x27;john&#x27;</span>&gt;, &lt;User <span class="hljs-string">&#x27;susan&#x27;</span>&gt;, &lt;User <span class="hljs-string">&#x27;david&#x27;</span>&gt;]<br></code></pre></td></tr></table></figure>
+
+<p>使用<strong>过滤器</strong>可以配置<code>query</code>对象进行更精确的数据库查询。下面这个例子查找角色为”<code>User</code>“的所有用户：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>User.query.filter_by(role_id=<span class="hljs-string">&#x27;3&#x27;</span>).<span class="hljs-built_in">all</span>()<br>[&lt;User <span class="hljs-string">&#x27;susan&#x27;</span>&gt;, &lt;User <span class="hljs-string">&#x27;david&#x27;</span>&gt;]<br></code></pre></td></tr></table></figure>
+
+<p>若想查看<code>SQLAlchemy</code>为查询生成的原生<code>SQL</code>查询语句，只需把<code>query</code>对象转换成字符串：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">str</span>(User.query.filter_by(role_id=<span class="hljs-string">&#x27;3&#x27;</span>))<br><span class="hljs-string">&#x27;SELECT users.id AS users_id, users.username AS users_username, users.role_id AS users_role_id \nFROM users \nWHERE users.role_id = ?&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果你退出了shell会话，前面这些例子中创建的对象就不会以Python对象的形式存在，但在数据库表中仍有对应的行。如果打开一个新的shell会话，要从数据库中读取行，重新创建Python对象。下面这个例子发起一个查询，加载名为”User”的用户角色：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>user_role = Role.query.filter_by(name=<span class="hljs-string">&#x27;User&#x27;</span>).first()<br><span class="hljs-meta">&gt;&gt;&gt; </span>user_role<br>&lt;Role <span class="hljs-string">&#x27;User&#x27;</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>这里发起查询的不是<code>all()</code>方法，而是<code>first()</code>方法。<code>all()</code>方法返回所有结果构成的列表，而first()方法只返回第一个结果，如果没有结果的话，则返回<code>None</code>。因此，如果知道查询最多返回一个结果，就可以用这个方法。</p>
+<p><code>filter_by()</code>等过滤器在<code>query</code>对象上调用，返回一个更精确的<code>query</code>对象。多个过滤器可以一起调用，直到获得所需结果。</p>
+<p>常用的过滤器：</p>
+<table>
+<thead>
+<tr>
+<th>过滤器</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>filter()</td>
+<td>把过滤器添加到原查询上，返回一个新查询</td>
+</tr>
+<tr>
+<td>filter_by()</td>
+<td>把等值过滤器添加到原查询上，返回一个新查询</td>
+</tr>
+<tr>
+<td>limit()</td>
+<td>使用指定的值限制原查询返回的结果数量，返回一个新查询</td>
+</tr>
+<tr>
+<td>offset()</td>
+<td>偏移量查询返回的结果，返回一个新查询</td>
+</tr>
+<tr>
+<td>order_by()</td>
+<td>根据指定条件对原查询结果进行排序，返回一个新查询</td>
+</tr>
+<tr>
+<td>group_by()</td>
+<td>根据指定条件对原查询结果进行分组，返回一个新查询</td>
+</tr>
+</tbody></table>
+<p>在查询上应用指定的过滤器后，调用<code>all()</code>方法将执行查询，以列表的形式返回结果。除了<code>all()</code>方法之外，还有其他方法能触发查询执行。</p>
+<p>常用的<code>SQLAlchemy</code>查询执行方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>all()</td>
+<td>以列表形式返回所有查询结果</td>
+</tr>
+<tr>
+<td>first()</td>
+<td>返回查询的第一个结果，如果没有结果，则返回None</td>
+</tr>
+<tr>
+<td>first_or_404()</td>
+<td>返回查询的第一个结果，如果没有结果，则请求终止，返回404错误码</td>
+</tr>
+<tr>
+<td>get()</td>
+<td>返回指定主键对应的行，如果没有对应的行，则返回None</td>
+</tr>
+<tr>
+<td>get_or_404()</td>
+<td>返回指定主键对应的行，如果没有找到指定的主键，则请求终止，返回404错误码</td>
+</tr>
+<tr>
+<td>count()</td>
+<td>返回查询结果的数量</td>
+</tr>
+<tr>
+<td>pageinate()</td>
+<td>返回一个Paginate对象，包含指定范围内的结果</td>
+</tr>
+</tbody></table>
+<p>关系与查询的处理方式类似。下面这个例子分别从关系的两端查询角色和用户之间的一对多关系：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>users = user_role.users<br><span class="hljs-meta">&gt;&gt;&gt; </span>users<br>[&lt;User <span class="hljs-string">&#x27;susan&#x27;</span>&gt;, &lt;User <span class="hljs-string">&#x27;david&#x27;</span>&gt;]<br><span class="hljs-meta">&gt;&gt;&gt; </span>users[<span class="hljs-number">0</span>].role<br>&lt;Role <span class="hljs-string">&#x27;User&#x27;</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>这个例子中的<code>user_role.users</code>查询有个小问题。执行<code>user_role.users</code>表达式时，隐式的查询会调用<code>all()</code>方法，返回一个用户列表。此时，<code>query</code>对象是隐藏的，无法指定更精确的查询过滤器。就这个示例而言，返回一个按照字母顺序排列的用户列表可能更好。我们修改下关系的设置，加入<code>lazy=&#39;dynamic’</code>参数，从而禁止自动执行查询。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Role</span>(<span class="hljs-params">db.Model</span>):</span><br>    <span class="hljs-comment"># ...</span><br>    users = db.relationship(<span class="hljs-string">&#x27;User&#x27;</span>, backref=<span class="hljs-string">&#x27;role&#x27;</span>, lazy=<span class="hljs-string">&#x27;dynamic&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这样配置关系之后，<code>user_role.users</code>将返回一个尚未执行的查询，因此可以在其上添加过滤器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>user_role.users.order_by(User.username).<span class="hljs-built_in">all</span>()<br>[&lt;User <span class="hljs-string">&#x27;susan&#x27;</span>&gt;, &lt;User <span class="hljs-string">&#x27;david&#x27;</span>&gt;]<br><span class="hljs-meta">&gt;&gt;&gt; </span>user_role.users.count()<br><span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="在视图函数中操作数据库"><a href="#在视图函数中操作数据库" class="headerlink" title="在视图函数中操作数据库"></a>在视图函数中操作数据库</h2><p>在这个修改后的版本中，提交表单后，应用会使用<code>filter_by()</code>查询过滤器在数据库中查找提交的名字。变量<code>known</code>被写入用户会话中，因此重定向之后，可以把数据传给模板，用于显示自定义的欢迎消息。注意，为了让应用正常运行，必须按照前面介绍的方法，在<code>Python shell</code>中创建数据库表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span>, methods=[<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;POST&#x27;</span>]</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span>():</span><br>    form = LoginForm()<br>    <span class="hljs-keyword">if</span> form.validate_on_submit():<br>        user = User.query.filter_by(username=form.name.data).first()<br>        <span class="hljs-keyword">if</span> user <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            user = User(username=form.name.data)<br>            db.session.add(user)<br>            db.session.commit()<br>            session[<span class="hljs-string">&#x27;known&#x27;</span>] = <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">else</span>:<br>            session[<span class="hljs-string">&#x27;known&#x27;</span>] = <span class="hljs-literal">True</span><br>        session[<span class="hljs-string">&#x27;name&#x27;</span>] = form.name.data<br>        form.name.data = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">return</span> redirect(url_for(<span class="hljs-string">&#x27;index&#x27;</span>))<br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;index.html&#x27;</span>, form=form, name=session.get(<span class="hljs-string">&#x27;name&#x27;</span>), known=session.get(<span class="hljs-string">&#x27;known&#x27;</span>, <span class="hljs-literal">False</span>),<br>                           current_time=datetime.utcnow())<br></code></pre></td></tr></table></figure>
+
+<p>这个模板使用<code>known</code>参数在欢迎消息中加入了第二行，从而对已知用户和新用户显示不同的内容。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;content&quot;</span>&gt;</span><br>    &#123;% for message in get_flashed_messages() %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;alert alert-warning&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;close&quot;</span>&gt;</span><span class="hljs-symbol">&amp;times;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>            &#123;&#123; message &#125;&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    &#123;% endfor %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, &#123;% if name %&#125;&#123;&#123; name &#125;&#125;&#123;% else %&#125;Stranger&#123;% endif %&#125;!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>    &#123;% if not known %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Pleased to meet you!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    &#123;% else %&#125;<br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Pleased to see you again!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    &#123;% endif %&#125;<br>    &#123;&#123; wtf.quick_form(form) &#125;&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="集成Python-shell"><a href="#集成Python-shell" class="headerlink" title="集成Python shell"></a>集成Python shell</h2><p>若想把对象添加到导入列表中，必须使用<code>shell_context_processor</code>装饰器创建并注册一个<code>shell</code>上下文处理器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@app.shell_context_processor</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_shell_context</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">dict</span>(db=db, User=User, Role=Role)<br></code></pre></td></tr></table></figure>
+
+<p>这个<code>shell</code>上下文处理器函数返回一个字典，包含数据库实例和模型。除了默认导入的<code>app</code>之外，<code>flask shell</code>命令将自动把这些对象导入<code>shell</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>app<br>&lt;Flask <span class="hljs-string">&#x27;run&#x27;</span>&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>db<br>&lt;SQLAlchemy engine=sqlite:///D:\PycharmProjects\Flask_Projects\second_app\data.sqlite&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>User<br>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> &#x27;<span class="hljs-title">run</span>.<span class="hljs-title">User</span>&#x27;&gt;</span><br><span class="hljs-class">&gt;&gt;&gt; <span class="hljs-title">Role</span></span><br><span class="hljs-class">&lt;<span class="hljs-title">class</span> &#x27;<span class="hljs-title">run</span>.<span class="hljs-title">Role</span>&#x27;&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="使用Flask-Migrate实现数据库迁移"><a href="#使用Flask-Migrate实现数据库迁移" class="headerlink" title="使用Flask-Migrate实现数据库迁移"></a>使用Flask-Migrate实现数据库迁移</h2><p>在开发应用的过程中，你会发现有时需要修改数据库模型，而且修改之后还要更新数据库。仅当数据库表不存在时，<code>Flask-SQLAlchemy</code>才会根据模型创建。因此，更新表的唯一方式就是先删除旧表，但是这样做会丢失数据库中的全部数据。</p>
+<p>更新表更好的方法是使<strong>数据库迁移</strong>框架。源码版本控制工具可以跟踪源码文件的变化；类似地，数据库迁移框架能跟踪数据库<strong>模式</strong>的变化，然后以增量的方式把变化应用到数据库中。</p>
+<p><code>SQLAlchemy</code>的开发人员编写了一个迁移框架，名为<code>Alembic</code>。除了直接使用<code>Alembic</code>之外，Flask应用还可使用<code>Flask-Migrate</code>扩展。这个扩展是对<code>Alembic</code>的轻量级包装，并与<code>flask</code>命令做了集成。</p>
+<h3 id="创建迁移仓库"><a href="#创建迁移仓库" class="headerlink" title="创建迁移仓库"></a>创建迁移仓库</h3><p>首先，要在虚拟环境中安装<code>Flask-Migrate</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">(venv) $ pip install flask-migrate<br></code></pre></td></tr></table></figure>
+
+<p>初始化方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask_migrate <span class="hljs-keyword">import</span> Migrate<br><br><span class="hljs-comment"># ...</span><br><br>migrate = Migrate(app, db)<br></code></pre></td></tr></table></figure>
+
+<p>了开放数据库迁移相关的命令，<code>Flask-Migrate</code>添加了flask_db命令和几个子命令。在新项目中可以使用init子命令添加数据库迁移支持：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">(vnev) $ flask db init<br>Creating directory D:\PycharmProjects\Flask_Projects\second_app\migrations ...  done<br>Creating directory D:\PycharmProjects\Flask_Projects\second_app\migrations\versions ...  done<br>Generating D:\PycharmProjects\Flask_Projects\second_app\migrations\alembic.ini ...  done<br>Generating D:\PycharmProjects\Flask_Projects\second_app\migrations\env.py ...  done<br>Generating D:\PycharmProjects\Flask_Projects\second_app\migrations\README ...  done<br>Generating D:\PycharmProjects\Flask_Projects\second_app\migrations\script.py.mako ...  done<br>Please edit configuration/connection/logging settings in &#x27;D:\\PycharmProjects\\Flask_Projects\\second_app\\migrations\\alembic.ini&#x27; before proceeding.<br></code></pre></td></tr></table></figure>
+
+<p>这个命令会创建<code>migrations</code>目录，所有迁移脚本都存放在这里。</p>
+<h3 id="创建迁移脚本"><a href="#创建迁移脚本" class="headerlink" title="创建迁移脚本"></a>创建迁移脚本</h3><p>在<code>Alembic</code>中，数据库迁移用<strong>迁移脚本</strong>表示。脚本中有两个函数，分别是<code>upgrade()</code>和<code>downgrade()</code>。<code>upgrade()</code>函数把迁移中的改动应用到数据库中，<code>downgrade()</code>函数则将改动删除。<code>Alembic</code>具有添加和删除改动的能力，意味着数据库可重设到修改历史的任意一点。我们可以使用<code>revision</code>命令手动创建<code>Alembic</code>迁移，也可使用<code>migrate</code>命令自动创建。手动创建的迁移只是一个骨架，<code>upgrade()</code>和<code>downgrade()</code>函数都是空的，开发者要使用<code>Alembic</code>提供的<code>Operations</code>对象指令实现具体操作。自动创建的迁移会根据模型定义和数据库当前状态之间的差异尝试生成<code>upgrade()</code>和<code>downgrade()</code>函数的内容。</p>
+<blockquote>
+<p>自动创建的迁移不一定总是正确的，有可能会漏掉一些细节。比如说我们重命名了一列，自动生成的迁移可能会把这当作删除了一列，然后又新增了一列。如果原封不动地使用自动生成的迁移，这一列中的数据就会丢失！鉴于此，自动生成迁移脚本后一定要进行检查，把不准确的部分手动改过来。</p>
+</blockquote>
+<p>使用Flask-Migrate管理数据库模式变化的步骤如下。</p>
+<ol>
+<li>对模型类做必要的修改。</li>
+<li> 执行flask db migrate命令，自动创建一个迁移脚本。</li>
+<li> 检查自动生成的脚本，根据对模型的实际改动进行调整。</li>
+<li>把迁移脚本纳入版本控制。</li>
+<li> 执行flask db upgrade命令，把迁移应用到数据库中。</li>
+</ol>
+<p><code>flask db migrate</code>子命令用于自动创建迁移脚本:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">flask db migrate -m <span class="hljs-string">&quot;initial migrations&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="更新数据库"><a href="#更新数据库" class="headerlink" title="更新数据库"></a>更新数据库</h3><p>检查并修正好迁移脚本之后，执行<code>flask db upgrade</code>命令，把迁移应用到数据库中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">(venv) $ flask db upgrade<br>INFO  [alembic.runtime.migration] Context impl SQLiteImpl.<br>INFO  [alembic.runtime.migration] Will assume non-transactional DDL.<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你按照之前的说明操作过，那么已经使用<code>db.create all()</code>函数创建了数据库文件。此时，<code>flask db upgrade</code>命令将失败，因为它试图创建已经存在的数据库表。一种简单的处理方法是，把<code>data.sqlite</code>数据库文件删掉，然后执行<code>flask dbupgrade</code>命令，通过迁移框架重新创建数据库。另一种方法是不执行<code>flask dbupgrade</code>命令，而是使用<code>flask db stamp</code>命令把现有数据库标记为已更新。</p>
+</blockquote>
+<h3 id="添加几个迁移"><a href="#添加几个迁移" class="headerlink" title="添加几个迁移"></a>添加几个迁移</h3><p>在开发项目的过程中，时常要修改数据库模型。如果使用迁移框架管理数据库，必须在迁移脚本中定义所有改动，否则改动将不可复现。修改数据库的步骤与创建第一个迁移类似。</p>
+<ol>
+<li>对数据库模型做必要的修改。</li>
+<li>执行flask db migrate命令，生成迁移脚本。</li>
+<li>检查自动生成的脚本，改正不准确的地方。</li>
+<li>执行flask db upgrade命令，把改动应用到数据库中。</li>
+</ol>
+<p>实现一个功能时，可能要多次修改数据库模型才能得到预期结果。如果前一个迁移还未提交到源码控制系统中，可以继续在那个迁移中修改，以免创建大量无意义的小迁移脚本。在前一个迁移脚本的基础上修改的步骤如下。</p>
+<ol>
+<li>执行flask db downgrade命令，还原前一个脚本对数据库的改动（注意，这可能导致部分数据丢失）。</li>
+<li> 删除前一个迁移脚本，因为现在已经没什么用了。</li>
+<li> 执行flask db migrate命令生成一个新的数据库迁移脚本。这个迁移脚本除了前面删除的那个脚本中的改动之外，还包括这一次对模型的改动。</li>
+<li>根据前面的说明，检查并应用迁移脚本。</li>
+</ol>
 <style>
     table
     {
@@ -573,6 +727,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/08/05/Flask-Mail%E5%AE%9E%E7%8E%B0%E9%82%AE%E4%BB%B6%E5%8A%9F%E8%83%BD/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flask-Mail实现邮件功能</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
