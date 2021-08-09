@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.6k 字
+      4.8k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      57
+      60
        分钟
     </span>
   
@@ -389,6 +389,13 @@
 
 <p>登录页面要显示一个指向注册页面的链接，让没有账户的用户能轻松找到注册页面。</p>
 <p><code>app/templates/auth/login.html</code>：链接到注册页面</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>    新用户？<br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&#123;&#123; url_for(&#x27;auth.register&#x27;) &#125;&#125;&quot;</span>&gt;</span>点击注册用户<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="注册新用户-1"><a href="#注册新用户-1" class="headerlink" title="注册新用户"></a>注册新用户</h3><p>处理用户注册的过程没有什么难以理解的地方。提交注册表单，通过验证后，系统使用用户填写的信息在数据库中添加一个新用户。</p>
+<p><code>app/auth/views.py</code>：用户注册路由。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@auth.route(<span class="hljs-params"><span class="hljs-string">&#x27;/register&#x27;</span>, methods=[<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;POST&#x27;</span>]</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">register</span>():</span><br>    register_form = RegistrationForm()<br>    <span class="hljs-keyword">if</span> register_form.validate_on_submit():<br>        user = User(email=register_form.email.data,<br>                    username=register_form.username.data,<br>                    password=register_form.password.data)<br>        db.session.add(user)<br>        db.session.commit()<br>        flash(<span class="hljs-string">&quot;注册成功，跳转登录！&quot;</span>)<br>        <span class="hljs-keyword">return</span> redirect(url_for(<span class="hljs-string">&#x27;auth.login&#x27;</span>))<br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;/auth/register.html&#x27;</span>, register_form=register_form)<br></code></pre></td></tr></table></figure>
+
+<p><img src="image-20210809230811876.png" srcset="/img/loading.gif" lazyload></p>
 <style>
     table
     {
