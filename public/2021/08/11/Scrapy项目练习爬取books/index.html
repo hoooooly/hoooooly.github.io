@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.5k 字
+      3k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      39
+      48
        分钟
     </span>
   
@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年8月12日 晚上
+                  本文最后更新于：2021年8月14日 下午
                 
               </p>
             
@@ -328,12 +328,27 @@
 <p>先来完成第4步，实现书籍列表页面的解析函数（parse方法），需要完成以下两个任务：</p>
 <p>（1）提取页面中每一个书籍页面的链接，用它们构造Request对象并提交。</p>
 <p>（2）提取页面中下一个书籍列表页面的链接，用其构造Request对象并提交。提取链接的具体细节在页面分析时已经讨论过，实现代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><span class="hljs-keyword">from</span> scrapy.linkextractors <span class="hljs-keyword">import</span> LinkExtractor<br><span class="hljs-keyword">from</span> ..items <span class="hljs-keyword">import</span> BookItem<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BooksSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    name = <span class="hljs-string">&#x27;books&#x27;</span><br>    allowed_domains = [<span class="hljs-string">&#x27;books.toscrape.com&#x27;</span>]<br>    start_urls = [<span class="hljs-string">&#x27;http://books.toscrape.com/&#x27;</span>]<br><br>    <span class="hljs-comment"># 书籍列表页面的解析函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        <span class="hljs-comment"># 提取书籍列表中的每本书的连接</span><br>        le = LinkExtractor(restrict_css=<span class="hljs-string">&#x27;article.product_pod h3&#x27;</span>)<br>        <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> le.extract_links(response):<br>            time.sleep(<span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">yield</span> scrapy.Request(link.url, callback=self.parse_book)<br><br>        <span class="hljs-comment"># 提取“下一页的链接”</span><br>        le = LinkExtractor(restrict_css=<span class="hljs-string">&#x27;ul.page li.next&#x27;</span>)<br>        links = le.extract_links(response)<br>        <span class="hljs-keyword">if</span> links:<br>            next_url = links[<span class="hljs-number">0</span>].url<br>            <span class="hljs-keyword">yield</span> scrapy.Request(next_url, callback=self.parse)<br><br>    <span class="hljs-comment"># 数据页面的解析函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_book</span>(<span class="hljs-params">self, response</span>):</span><br>        book = BookItem()<br>        sel = response.css(<span class="hljs-string">&#x27;div.product_main&#x27;</span>)<br>        book[<span class="hljs-string">&#x27;name&#x27;</span>] = sel.xpath(<span class="hljs-string">&#x27;./h1/text()&#x27;</span>).extract_first()<br>        book[<span class="hljs-string">&#x27;price&#x27;</span>] = sel.css(<span class="hljs-string">&#x27;p.price_color::text&#x27;</span>).extract_first()<br>        book[<span class="hljs-string">&#x27;review_rating&#x27;</span>] = sel.css(<span class="hljs-string">&#x27;p.star-rating::attr(class)&#x27;</span>).re_first(<span class="hljs-string">&#x27;star-rating ([A-Za-z]+)&#x27;</span>)<br>        sel = response.css(<span class="hljs-string">&#x27;table.table.table-striped&#x27;</span>)<br>        book[<span class="hljs-string">&#x27;upc&#x27;</span>] = sel.xpath(<span class="hljs-string">&#x27;(.//tr)[1]/td/text()&#x27;</span>).extract_first()<br>        book[<span class="hljs-string">&#x27;stock&#x27;</span>] = sel.xpath(<span class="hljs-string">&#x27;(.//tr)[last()-1]/td/text()&#x27;</span>).re_first(<span class="hljs-string">&#x27;\((\d+) available\)&#x27;</span>)<br>        book[<span class="hljs-string">&#x27;review_num&#x27;</span>] = sel.xpath(<span class="hljs-string">&#x27;(.//tr)[last()]/td/text()&#x27;</span>).extract_first()<br><br>        <span class="hljs-keyword">yield</span> book<br></code></pre></td></tr></table></figure>
 
+<p>完成代码后，运行爬虫并观察结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy crawl books -o books.csv --nolog<br></code></pre></td></tr></table></figure>
 
+<p><img src="image-20210813004618596.png" srcset="/img/loading.gif" lazyload></p>
+<p>从以上结果中看出，我们成功地爬取了网站中1000本书的详细信息，但也有让人不满意的地方，比如·文件中各列的次序是随机的，看起来比较混乱，可在配置文件<code>settings.py</code>中使用<code>FEED_EXPORT_FIELDS</code>指定各列的次序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">FEED_EXPORT_FIELDS = [<span class="hljs-string">&#x27;upc&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;price&#x27;</span>, <span class="hljs-string">&#x27;stock&#x27;</span>, <span class="hljs-string">&#x27;review_rating&#x27;</span>, <span class="hljs-string">&#x27;review_num&#x27;</span>]<br></code></pre></td></tr></table></figure>
 
+<p><img src="image-20210813005148137.png" srcset="/img/loading.gif" lazyload></p>
+<p>另外，结果中评价等级字段的值是<code>One</code>、<code>Two</code>、<code>Three</code>……这样的单词，而不是阿拉伯数字，阅读起来不是很直观。下面实现一个<code>Item Pipeline</code>，将评价等级字段由单词映射到数字。在<code>pipelines.py</code>中实现<code>BookPipeline</code>，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ToscrapeBookPipeline</span>:</span><br>    review_rating_map = &#123;<br>        <span class="hljs-string">&#x27;One&#x27;</span>: <span class="hljs-number">1</span>,<br>        <span class="hljs-string">&#x27;Two&#x27;</span>: <span class="hljs-number">2</span>,<br>        <span class="hljs-string">&#x27;Three&#x27;</span>: <span class="hljs-number">3</span>,<br>        <span class="hljs-string">&#x27;Four&#x27;</span>: <span class="hljs-number">4</span>,<br>        <span class="hljs-string">&#x27;Five&#x27;</span>: <span class="hljs-number">5</span>,<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_item</span>(<span class="hljs-params">self, item, spider</span>):</span><br>        rating = item.get(<span class="hljs-string">&#x27;review_rating&#x27;</span>)<br>        <span class="hljs-keyword">if</span> rating:<br>            item[<span class="hljs-string">&#x27;review_rating&#x27;</span>] = self.review_rating_map[rating]<br>        <span class="hljs-keyword">return</span> item<br></code></pre></td></tr></table></figure>
 
+<p>在配置文件<code>settings.py</code>中启用<code>BookPipeline</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">ITEM_PIPELINES = &#123;<br>    <span class="hljs-string">&#x27;toscrape_book.pipelines.ToscrapeBookPipeline&#x27;</span>: <span class="hljs-number">300</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>重新运行爬虫，并观察结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy crawl books -o book.csv<br></code></pre></td></tr></table></figure>
+
+<p><img src="image-20210814120407993.png" srcset="/img/loading.gif" lazyload></p>
+<p>此时，各字段已按指定次序排列，并且评价等级字段的值是我们所期望的阿拉伯数字。到此为止，整个项目完成了。</p>
 <style>
     table
     {
@@ -360,9 +375,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Hexo/">Hexo</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Fluid/">Fluid</a>
+                      <a class="hover-with-bg" href="/tags/scrapy/">scrapy</a>
                     
                   </div>
                 

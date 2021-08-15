@@ -918,6 +918,13 @@ links:
       link: "https://www.foreverblog.cn/",
       avatar: "https://www.foreverblog.cn/favicon.ico"
     }
+    - {
+      title: "崔才庆的个人站点",
+      intro: "崔庆才的个人站点，记录生活的瞬间，分享学习的心得。",
+      link: "https://www.foreverblog.cn/",
+      avatar: "https://cuiqingcai.com/5052.html"
+    }
+    
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image

@@ -1,8 +1,7 @@
 ---
 title: Scrapy项目练习爬取books
 tags:
-  - Hexo
-  - Fluid
+  - scrapy
 comments: true
 typora-root-url: Scrapy项目练习爬取books
 date: 2021-08-11 17:59:45
@@ -269,7 +268,112 @@ class BooksSpider(scrapy.Spider):
 （2）提取页面中下一个书籍列表页面的链接，用其构造Request对象并提交。提取链接的具体细节在页面分析时已经讨论过，实现代码如下：
 
 ```python
+import scrapy
+from scrapy.linkextractors import LinkExtractor
+from ..items import BookItem
+import time
+
+class BooksSpider(scrapy.Spider):
+    name = 'books'
+    allowed_domains = ['books.toscrape.com']
+    start_urls = ['http://books.toscrape.com/']
+
+    # 书籍列表页面的解析函数
+    def parse(self, response):
+        # 提取书籍列表中的每本书的连接
+        le = LinkExtractor(restrict_css='article.product_pod h3')
+        for link in le.extract_links(response):
+            time.sleep(1)
+            yield scrapy.Request(link.url, callback=self.parse_book)
+
+        # 提取“下一页的链接”
+        le = LinkExtractor(restrict_css='ul.page li.next')
+        links = le.extract_links(response)
+        if links:
+            next_url = links[0].url
+            yield scrapy.Request(next_url, callback=self.parse)
+
+    # 数据页面的解析函数
+    def parse_book(self, response):
+        book = BookItem()
+        sel = response.css('div.product_main')
+        book['name'] = sel.xpath('./h1/text()').extract_first()
+        book['price'] = sel.css('p.price_color::text').extract_first()
+        book['review_rating'] = sel.css('p.star-rating::attr(class)').re_first('star-rating ([A-Za-z]+)')
+        sel = response.css('table.table.table-striped')
+        book['upc'] = sel.xpath('(.//tr)[1]/td/text()').extract_first()
+        book['stock'] = sel.xpath('(.//tr)[last()-1]/td/text()').re_first('\((\d+) available\)')
+        book['review_num'] = sel.xpath('(.//tr)[last()]/td/text()').extract_first()
+
+        yield book
 ```
+
+完成代码后，运行爬虫并观察结果：
+
+```python
+scrapy crawl books -o books.csv --nolog
+```
+
+![](image-20210813004618596.png)
+
+从以上结果中看出，我们成功地爬取了网站中1000本书的详细信息，但也有让人不满意的地方，比如·文件中各列的次序是随机的，看起来比较混乱，可在配置文件`settings.py`中使用`FEED_EXPORT_FIELDS`指定各列的次序：
+
+```python
+FEED_EXPORT_FIELDS = ['upc', 'name', 'price', 'stock', 'review_rating', 'review_num']
+```
+
+![](image-20210813005148137.png)
+
+另外，结果中评价等级字段的值是`One`、`Two`、`Three`……这样的单词，而不是阿拉伯数字，阅读起来不是很直观。下面实现一个`Item Pipeline`，将评价等级字段由单词映射到数字。在`pipelines.py`中实现`BookPipeline`，代码如下：
+
+```python
+class ToscrapeBookPipeline:
+    review_rating_map = {
+        'One': 1,
+        'Two': 2,
+        'Three': 3,
+        'Four': 4,
+        'Five': 5,
+    }
+
+    def process_item(self, item, spider):
+        rating = item.get('review_rating')
+        if rating:
+            item['review_rating'] = self.review_rating_map[rating]
+        return item
+```
+
+在配置文件`settings.py`中启用`BookPipeline`：
+
+```python
+ITEM_PIPELINES = {
+    'toscrape_book.pipelines.ToscrapeBookPipeline': 300,
+}
+```
+
+重新运行爬虫，并观察结果：
+
+```python
+scrapy crawl books -o book.csv
+```
+
+![](image-20210814120407993.png)
+
+此时，各字段已按指定次序排列，并且评价等级字段的值是我们所期望的阿拉伯数字。到此为止，整个项目完成了。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
