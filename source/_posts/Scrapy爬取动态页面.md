@@ -1,7 +1,8 @@
 ---
-title: Scrapy爬取动态页面
+title: Scrapy爬取动态页面-scrapy-splash
 tags:
   - scrapy
+  - splash
 comments: true
 typora-root-url: Scrapy爬取动态页面
 date: 2021-08-15 09:42:11
@@ -274,15 +275,223 @@ execute端点支持的参数：
 | timeout    | 可选      | float  | 渲染页面的超时时间  |
 | proxy      | 可选      | string | 代理服务器地址      |
 
+可以将execute端点的服务看作一个可用`lua`语言编程的浏览器，功能类似于`PhantomJS`。使用时需传递一个用户自定义的`lua`脚本给Splash，该`lua`脚本中包含用户想要模拟的浏览器行为，例如：
+
+- 打开某`url`地址的页面
+- 等待页面加载及渲染
+- 执行JavaScript代码
+- 获取HTTP响应头部
+- 获取Cookie
+
+下面是使用requests库调用execute端点服务的示例代码。
+
+```python
+>>> import requests
+>>> import json
+>>> lua_scrpit = '''
+...     function main(splash)
+...         splash:go("http://example.com")
+...         splash: wait(0.5)
+...         local title=splash:evaljs("document.title")
+...         return{title=title)
+...     end
+... '''
+>>> splash_url = 'http://localhost:8050/execute'
+>>> headers = {'content-type': 'application/json'}
+>>> data = json.dumps({'lua_source': lua_scrpit})
+>>> response = requests.post(splash_url, headers=headers, data=data)
+>>> response
+<Response [400]>
+>>> response.json()
+{'error': 400, 'type': 'ScriptError', 'description': 'Error happened while executing Lua script', 'info': {'source': '[string "..."]', 'line_number': 6, 'error': "'}' expected near ')'", 'type': 'LUA_INIT_ERROR', 'message': '[string "..."]:6: \'}\' expected near \')\''}}
+```
+
+用户自定义的`lua`脚本中必须包含一个`main`函数作为程序入口，`main`函数被调用时会传入一个`splash`对象（`lua`中的对象），用户可以调用该对象上的方法操纵`Splash`。例如，在上面的例子中，先调用go方法打开某页面，再调用wait方法等待页面渲染，然后调用`evaljs`方法执行一个JavaScript表达式，并将结果转化为相应的`lua`对象，最终Splash根据main函数的返回值构造HTTP响应返回给用户，main函数的返回值可以是字符串，也可以是`lua`中的表（类似Python字典），表会被编码成`json`串。
+
+splash对象常用的属性和方法。
+
+- `splash.args`属性
+
+  用户传入参数的表，通过该属性可以访问用户传入的参数，如`splash.args.url`、`splash.args.wait`。
+
+-  `splash.js_enabled`属性
+
+  用于开启/禁止JavaScript渲染，默认为true。
+
+- `splash.images_enabled`属性
+
+  用于开启/禁止图片加载，默认为true。
+
+- `splash:go`方法
+
+  `splash:go{url, baseurl=nil, headers=nil, http_method="GET",body=nil, formdata=nil}`
+
+  类似于在浏览器中打开某url地址的页面，页面所需资源会被加载，并进行JavaScript渲染，可以通过参数指定HTTP请求头部、请求方法、表单数据等。
+
+- `splash:wait`方法
+
+  `splash:wait{time, cancel_on_redirect=false, cancel_on_error=true}`
+
+  等待页面渲染，time参数为等待的秒数。
+
+- `splash:evaljs`方法
+
+  `splash:evaljs(snippet)`
+
+  在当前页面下，执行一段JavaScript代码，并返回最后一句表达式的值。
+
+-  `splash:runjs`方法
+
+  `splash:runjs(snippet)`
+
+  在当前页面下，执行一段JavaScript代码，与evaljs方法相比，该函数只执行JavaScript代码，不返回值。
+
+- `splash:url`方法
+
+  `splash:url()`
+
+  获取当前页面的`url`。
+
+- `splash:html`方法
+
+  `splash:html()`
+
+  获取当前页面的HTML文本。
+
+- `splash:get_cookies`方法
+
+  `splash:get_cookies()`
+
+  获取全部Cookie信息．
+
+## 在Scrapy中使用Splash
+
+如何在`Scrapy`中调用`Splash`服务，Python库的`scrapy-splash`是非常好的选择。
+
+使用pip安装`scrapy-splash`：
+
+```python
+pip install scrapy-splash
+```
+
+在项目环境中讲解`scrapy-splash`的使用，创建一个`Scrapy`项目，取名为`splash_examples`：
+
+```python
+scrapy startproject scrapy-splash
+```
+
+首先在项目配置文件`settings.py`中对`scrapy-splash`进行配置，添加内容如下：
+
+```python
+# Splash服务器地址
+SPLASH_URL = 'http://localhost:8050'
+
+# 开启Splash的两个下载中间件并调整HttpCompressionMiddleware的次序
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy_splash.SplashCookiesMiddleware': 723,
+    'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
+
+# 设置去重过滤器
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+
+# 用来支持cache_args(可选）
+SPIDER_MIDDLEWARES = {
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100
+}
+```
+
+编写Spider代码过程中，使用`scrapy_splash`调用Splash服务非常简单，`scrapy_splash`中定义了一个`SplashRequest`类，用户只需使用`scrapy_splash.SplashRequest`（替代`scrapy.Request`）提交请求即可。下面是`SplashRequest`构造器方法中的一些常用参数。
+
+- `url`
+
+  与`scrapy.Request`中的`url`相同，也就是待爬取页面的`url`（注意，不是Splash服务器地址）。
+
+- `headers`
+
+  与`scrapy.Request`中的`headers`相同。
+
+- `cookies`
+
+  与`scrapy.Request`中的`cookies`相同。
+
+- `args`
+
+  传递给Splash的参数（除`url`以外），如`wait`、`timeout`、`images`、`js_source`等。
+
+- `cache_args`
+
+  如果`args`中的某些参数每次调用都重复传递并且数据量较大（例如一段JavaScript代码），此时可以把该参数名填入`cache_args`列表中，让Splash服务器缓存该参数，如`SplashRequest(url,args= {'js_source': js,'wait': 0.5}, cache_args = ['js_source'])`。
+
+- `endpointSplash`
+
+  服务端点，默认为`’render.html'`，即JavaScript页面渲染服务，该参数可以设置为`’render.json'`、`'render.har'`、`'render.png'`、`'render.jpeg'`、`'execute’`等
+
+- `splash_url`
+
+  Splash服务器地址，默认为None，即使用配置文件中`SPLASH_URL`的地址。
+
+## 项目实战：爬取toscrape中的名人名言
+
+首先，在`splash_examples`项目目录下创建Spider：
+
+```python
+scrapy genspider quotes quotes.toscrape.com
+```
+
+接下来只需使用Splash的`render.html`端点渲染页面，再进行爬取即可实现`QuotesSpider`，代码如下：
+
+```python
+# coding:utf-8
+import scrapy
+from scrapy_splash import SplashRequest
 
 
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes'
+    allowed_domains = ['quotes.toscrape.com']
+    start_urls = ['http://quotes.toscrape.com/js/']
 
+    def start_requests(self):
+        for url in self.start_urls:
+            # 不下载图片，超时时间3秒
+            yield SplashRequest(url, args={'images': 0, 'timeout': 3})
 
+    def parse(self, response):
+        for sel in response.css('div.quote'):
+            quote = sel.css('span.text::text').extract_first()
+            author = sel.css('small.author::text').extract_first()
+            yield {'quote': quote, 'author': author}
+        href = response.css('li.next > a::attr(href)').extract_first()
+        if href:
+            url = response.urljoin(href)
+            yield SplashRequest(url, args={'images': 0, 'timeout': 3})
+```
 
+上述代码中，使用`SplashRequest`提交请求，在`SplashRequest`的构造器中无须传递`endpoint`参数，因为该参数默认值便是`’render.html'`。使用`args`参数禁止`Splash`加载图片，并设置渲染超时时间。
 
+运行爬虫，观察结果：
 
+```python
+(Spiders) [root@VM-8-16-centos splash_examples]# scrapy crawl quotes -o quotes.csv
+(Spiders) [root@VM-8-16-centos splash_examples]# cat quotes.csv 
+quote,author
+“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”,Albert Einstein
+"“It is our choices, Harry, that show what we truly are, far more than our abilities.”",J.K. Rowling
+“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.”,Albert Einstein
+"“The person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.”",Jane Austen
+"“Imperfection is beauty, madness is genius and it's better to be absolutely ridiculous than absolutely boring.”",Marilyn Monroe
+“Try not to become a man of success. Rather become a man of value.”,Albert Einstein
+“It is better to be hated for what you are than to be loved for what you are not.”,André Gide
+"“I have not failed. I've just found 10,000 ways that won't work.”",Thomas A. Edison
+“A woman is like a tea bag; you never know how strong it is until it's in hot water.”,Eleanor Roosevelt
+"“A day without sunshine is like, you know, night.”",Steve Martin
+"“This life is what you make it. No matter what, you're going to mess up sometimes, it's a universal truth. But the good part is you get to decide how you're going to mess it up. Girls will be your friends - they'll act like it anyway. But just remember, some come, some go. The ones that stay with you through everything - they're your true best friends. Don't let go of them. Also remember, sisters make the best friends in the world. As for lovers, well, they'll come and go too. And baby, I hate to say it, most of them - actually pretty much all of them are going to break your heart, but you can't give up because if you give up, you'll never find your soulmate. You'll never find that half who makes you whole and that goes for everything. Just because you fail once, doesn't mean you're gonna fail at everything. Keep trying, hold on, and always, always, always believe in yourself, because if you don't, then who will, sweetie? So keep your head high, keep your chin up, and most importantly, keep smiling, because life's a beautiful thing and there's so much to smile about.”",Marilyn Monroe
+...
+```
 
-
+运行结果显示，我们成功爬取了10个页面中的100条名人名言。
 
 
 [//]:#(设置表格整体居中显示)

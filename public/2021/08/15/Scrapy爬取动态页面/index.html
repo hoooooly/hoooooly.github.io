@@ -18,7 +18,7 @@
   <meta name="author" content="Holy Chan">
   <meta name="keywords" content="">
   
-  <title>Scrapy爬取动态页面 - Holy的个人站点</title>
+  <title>Scrapy爬取动态页面-scrapy-splash - Holy的个人站点</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -179,7 +179,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Scrapy爬取动态页面">
+            <span class="h2" id="subtitle" title="Scrapy爬取动态页面-scrapy-splash">
               
             </span>
 
@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.4k 字
+      4.3k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      38
+      68
        分钟
     </span>
   
@@ -249,11 +249,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Scrapy爬取动态页面</h1>
+            <h1 style="display: none">Scrapy爬取动态页面-scrapy-splash</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年8月15日 晚上
+                  本文最后更新于：2021年8月16日 晚上
                 
               </p>
             
@@ -411,6 +411,107 @@
 <td>代理服务器地址</td>
 </tr>
 </tbody></table>
+<p>可以将execute端点的服务看作一个可用<code>lua</code>语言编程的浏览器，功能类似于<code>PhantomJS</code>。使用时需传递一个用户自定义的<code>lua</code>脚本给Splash，该<code>lua</code>脚本中包含用户想要模拟的浏览器行为，例如：</p>
+<ul>
+<li>打开某<code>url</code>地址的页面</li>
+<li>等待页面加载及渲染</li>
+<li>执行JavaScript代码</li>
+<li>获取HTTP响应头部</li>
+<li>获取Cookie</li>
+</ul>
+<p>下面是使用requests库调用execute端点服务的示例代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> requests<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> json<br><span class="hljs-meta">&gt;&gt;&gt; </span>lua_scrpit = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string"><span class="hljs-meta">... </span>    function main(splash)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>        splash:go(&quot;http://example.com&quot;)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>        splash: wait(0.5)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>        local title=splash:evaljs(&quot;document.title&quot;)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>        return&#123;title=title)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>    end</span><br><span class="hljs-string"><span class="hljs-meta">... </span>&#x27;&#x27;&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>splash_url = <span class="hljs-string">&#x27;http://localhost:8050/execute&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>headers = &#123;<span class="hljs-string">&#x27;content-type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>&#125;<br><span class="hljs-meta">&gt;&gt;&gt; </span>data = json.dumps(&#123;<span class="hljs-string">&#x27;lua_source&#x27;</span>: lua_scrpit&#125;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>response = requests.post(splash_url, headers=headers, data=data)<br><span class="hljs-meta">&gt;&gt;&gt; </span>response<br>&lt;Response [<span class="hljs-number">400</span>]&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>response.json()<br>&#123;<span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-number">400</span>, <span class="hljs-string">&#x27;type&#x27;</span>: <span class="hljs-string">&#x27;ScriptError&#x27;</span>, <span class="hljs-string">&#x27;description&#x27;</span>: <span class="hljs-string">&#x27;Error happened while executing Lua script&#x27;</span>, <span class="hljs-string">&#x27;info&#x27;</span>: &#123;<span class="hljs-string">&#x27;source&#x27;</span>: <span class="hljs-string">&#x27;[string &quot;...&quot;]&#x27;</span>, <span class="hljs-string">&#x27;line_number&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&quot;&#x27;&#125;&#x27; expected near &#x27;)&#x27;&quot;</span>, <span class="hljs-string">&#x27;type&#x27;</span>: <span class="hljs-string">&#x27;LUA_INIT_ERROR&#x27;</span>, <span class="hljs-string">&#x27;message&#x27;</span>: <span class="hljs-string">&#x27;[string &quot;...&quot;]:6: \&#x27;&#125;\&#x27; expected near \&#x27;)\&#x27;&#x27;</span>&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>用户自定义的<code>lua</code>脚本中必须包含一个<code>main</code>函数作为程序入口，<code>main</code>函数被调用时会传入一个<code>splash</code>对象（<code>lua</code>中的对象），用户可以调用该对象上的方法操纵<code>Splash</code>。例如，在上面的例子中，先调用go方法打开某页面，再调用wait方法等待页面渲染，然后调用<code>evaljs</code>方法执行一个JavaScript表达式，并将结果转化为相应的<code>lua</code>对象，最终Splash根据main函数的返回值构造HTTP响应返回给用户，main函数的返回值可以是字符串，也可以是<code>lua</code>中的表（类似Python字典），表会被编码成<code>json</code>串。</p>
+<p>splash对象常用的属性和方法。</p>
+<ul>
+<li><p><code>splash.args</code>属性</p>
+<p>用户传入参数的表，通过该属性可以访问用户传入的参数，如<code>splash.args.url</code>、<code>splash.args.wait</code>。</p>
+</li>
+<li><p> <code>splash.js_enabled</code>属性</p>
+</li>
+</ul>
+<p>  用于开启/禁止JavaScript渲染，默认为true。</p>
+<ul>
+<li><p><code>splash.images_enabled</code>属性</p>
+<p>用于开启/禁止图片加载，默认为true。</p>
+</li>
+<li><p><code>splash:go</code>方法</p>
+<p><code>splash:go&#123;url, baseurl=nil, headers=nil, http_method=&quot;GET&quot;,body=nil, formdata=nil&#125;</code></p>
+<p>类似于在浏览器中打开某url地址的页面，页面所需资源会被加载，并进行JavaScript渲染，可以通过参数指定HTTP请求头部、请求方法、表单数据等。</p>
+</li>
+<li><p><code>splash:wait</code>方法</p>
+<p><code>splash:wait&#123;time, cancel_on_redirect=false, cancel_on_error=true&#125;</code></p>
+<p>等待页面渲染，time参数为等待的秒数。</p>
+</li>
+<li><p><code>splash:evaljs</code>方法</p>
+<p><code>splash:evaljs(snippet)</code></p>
+<p>在当前页面下，执行一段JavaScript代码，并返回最后一句表达式的值。</p>
+</li>
+<li><p> <code>splash:runjs</code>方法</p>
+</li>
+</ul>
+<p>  <code>splash:runjs(snippet)</code></p>
+<p>  在当前页面下，执行一段JavaScript代码，与evaljs方法相比，该函数只执行JavaScript代码，不返回值。</p>
+<ul>
+<li><p><code>splash:url</code>方法</p>
+<p><code>splash:url()</code></p>
+<p>获取当前页面的<code>url</code>。</p>
+</li>
+<li><p><code>splash:html</code>方法</p>
+<p><code>splash:html()</code></p>
+<p>获取当前页面的HTML文本。</p>
+</li>
+<li><p><code>splash:get_cookies</code>方法</p>
+<p><code>splash:get_cookies()</code></p>
+<p>获取全部Cookie信息．</p>
+</li>
+</ul>
+<h2 id="在Scrapy中使用Splash"><a href="#在Scrapy中使用Splash" class="headerlink" title="在Scrapy中使用Splash"></a>在Scrapy中使用Splash</h2><p>如何在<code>Scrapy</code>中调用<code>Splash</code>服务，Python库的<code>scrapy-splash</code>是非常好的选择。</p>
+<p>使用pip安装<code>scrapy-splash</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install scrapy-splash<br></code></pre></td></tr></table></figure>
+
+<p>在项目环境中讲解<code>scrapy-splash</code>的使用，创建一个<code>Scrapy</code>项目，取名为<code>splash_examples</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy startproject scrapy-splash<br></code></pre></td></tr></table></figure>
+
+<p>首先在项目配置文件<code>settings.py</code>中对<code>scrapy-splash</code>进行配置，添加内容如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Splash服务器地址</span><br>SPLASH_URL = <span class="hljs-string">&#x27;http://localhost:8050&#x27;</span><br><br><span class="hljs-comment"># 开启Splash的两个下载中间件并调整HttpCompressionMiddleware的次序</span><br>DOWNLOADER_MIDDLEWARES = &#123;<br>    <span class="hljs-string">&#x27;scrapy_splash.SplashCookiesMiddleware&#x27;</span>: <span class="hljs-number">723</span>,<br>    <span class="hljs-string">&#x27;scrapy_splash.SplashMiddleware&#x27;</span>: <span class="hljs-number">725</span>,<br>    <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware&#x27;</span>: <span class="hljs-number">810</span>,<br>&#125;<br><br><span class="hljs-comment"># 设置去重过滤器</span><br>DUPEFILTER_CLASS = <span class="hljs-string">&#x27;scrapy_splash.SplashAwareDupeFilter&#x27;</span><br><br><span class="hljs-comment"># 用来支持cache_args(可选）</span><br>SPIDER_MIDDLEWARES = &#123;<br>    <span class="hljs-string">&#x27;scrapy_splash.SplashDeduplicateArgsMiddleware&#x27;</span>: <span class="hljs-number">100</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>编写Spider代码过程中，使用<code>scrapy_splash</code>调用Splash服务非常简单，<code>scrapy_splash</code>中定义了一个<code>SplashRequest</code>类，用户只需使用<code>scrapy_splash.SplashRequest</code>（替代<code>scrapy.Request</code>）提交请求即可。下面是<code>SplashRequest</code>构造器方法中的一些常用参数。</p>
+<ul>
+<li><p><code>url</code></p>
+<p>与<code>scrapy.Request</code>中的<code>url</code>相同，也就是待爬取页面的<code>url</code>（注意，不是Splash服务器地址）。</p>
+</li>
+<li><p><code>headers</code></p>
+<p>与<code>scrapy.Request</code>中的<code>headers</code>相同。</p>
+</li>
+<li><p><code>cookies</code></p>
+<p>与<code>scrapy.Request</code>中的<code>cookies</code>相同。</p>
+</li>
+<li><p><code>args</code></p>
+<p>传递给Splash的参数（除<code>url</code>以外），如<code>wait</code>、<code>timeout</code>、<code>images</code>、<code>js_source</code>等。</p>
+</li>
+<li><p><code>cache_args</code></p>
+<p>如果<code>args</code>中的某些参数每次调用都重复传递并且数据量较大（例如一段JavaScript代码），此时可以把该参数名填入<code>cache_args</code>列表中，让Splash服务器缓存该参数，如<code>SplashRequest(url,args= &#123;&#39;js_source&#39;: js,&#39;wait&#39;: 0.5&#125;, cache_args = [&#39;js_source&#39;])</code>。</p>
+</li>
+<li><p><code>endpointSplash</code></p>
+<p>服务端点，默认为<code>’render.html&#39;</code>，即JavaScript页面渲染服务，该参数可以设置为<code>’render.json&#39;</code>、<code>&#39;render.har&#39;</code>、<code>&#39;render.png&#39;</code>、<code>&#39;render.jpeg&#39;</code>、<code>&#39;execute’</code>等</p>
+</li>
+<li><p><code>splash_url</code></p>
+<p>Splash服务器地址，默认为None，即使用配置文件中<code>SPLASH_URL</code>的地址。</p>
+</li>
+</ul>
+<h2 id="项目实战：爬取toscrape中的名人名言"><a href="#项目实战：爬取toscrape中的名人名言" class="headerlink" title="项目实战：爬取toscrape中的名人名言"></a>项目实战：爬取toscrape中的名人名言</h2><p>首先，在<code>splash_examples</code>项目目录下创建Spider：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy genspider quotes quotes.toscrape.com<br></code></pre></td></tr></table></figure>
+
+<p>接下来只需使用Splash的<code>render.html</code>端点渲染页面，再进行爬取即可实现<code>QuotesSpider</code>，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-keyword">import</span> scrapy<br><span class="hljs-keyword">from</span> scrapy_splash <span class="hljs-keyword">import</span> SplashRequest<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QuotesSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    name = <span class="hljs-string">&#x27;quotes&#x27;</span><br>    allowed_domains = [<span class="hljs-string">&#x27;quotes.toscrape.com&#x27;</span>]<br>    start_urls = [<span class="hljs-string">&#x27;http://quotes.toscrape.com/js/&#x27;</span>]<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_requests</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> self.start_urls:<br>            <span class="hljs-comment"># 不下载图片，超时时间3秒</span><br>            <span class="hljs-keyword">yield</span> SplashRequest(url, args=&#123;<span class="hljs-string">&#x27;images&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;timeout&#x27;</span>: <span class="hljs-number">3</span>&#125;)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        <span class="hljs-keyword">for</span> sel <span class="hljs-keyword">in</span> response.css(<span class="hljs-string">&#x27;div.quote&#x27;</span>):<br>            quote = sel.css(<span class="hljs-string">&#x27;span.text::text&#x27;</span>).extract_first()<br>            author = sel.css(<span class="hljs-string">&#x27;small.author::text&#x27;</span>).extract_first()<br>            <span class="hljs-keyword">yield</span> &#123;<span class="hljs-string">&#x27;quote&#x27;</span>: quote, <span class="hljs-string">&#x27;author&#x27;</span>: author&#125;<br>        href = response.css(<span class="hljs-string">&#x27;li.next &gt; a::attr(href)&#x27;</span>).extract_first()<br>        <span class="hljs-keyword">if</span> href:<br>            url = response.urljoin(href)<br>            <span class="hljs-keyword">yield</span> SplashRequest(url, args=&#123;<span class="hljs-string">&#x27;images&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;timeout&#x27;</span>: <span class="hljs-number">3</span>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>上述代码中，使用<code>SplashRequest</code>提交请求，在<code>SplashRequest</code>的构造器中无须传递<code>endpoint</code>参数，因为该参数默认值便是<code>’render.html&#39;</code>。使用<code>args</code>参数禁止<code>Splash</code>加载图片，并设置渲染超时时间。</p>
+<p>运行爬虫，观察结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">(Spiders) [root@VM-<span class="hljs-number">8</span>-<span class="hljs-number">16</span>-centos splash_examples]<span class="hljs-comment"># scrapy crawl quotes -o quotes.csv</span><br>(Spiders) [root@VM-<span class="hljs-number">8</span>-<span class="hljs-number">16</span>-centos splash_examples]<span class="hljs-comment"># cat quotes.csv </span><br>quote,author<br>“The world <span class="hljs-keyword">as</span> we have created it <span class="hljs-keyword">is</span> a process of our thinking. It cannot be changed without changing our thinking.”,Albert Einstein<br><span class="hljs-string">&quot;“It is our choices, Harry, that show what we truly are, far more than our abilities.”&quot;</span>,J.K. Rowling<br>“There are only two ways to live your life. One <span class="hljs-keyword">is</span> <span class="hljs-keyword">as</span> though nothing <span class="hljs-keyword">is</span> a miracle. The other <span class="hljs-keyword">is</span> <span class="hljs-keyword">as</span> though everything <span class="hljs-keyword">is</span> a miracle.”,Albert Einstein<br><span class="hljs-string">&quot;“The person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.”&quot;</span>,Jane Austen<br><span class="hljs-string">&quot;“Imperfection is beauty, madness is genius and it&#x27;s better to be absolutely ridiculous than absolutely boring.”&quot;</span>,Marilyn Monroe<br>“Try <span class="hljs-keyword">not</span> to become a man of success. Rather become a man of value.”,Albert Einstein<br>“It <span class="hljs-keyword">is</span> better to be hated <span class="hljs-keyword">for</span> what you are than to be loved <span class="hljs-keyword">for</span> what you are <span class="hljs-keyword">not</span>.”,André Gide<br><span class="hljs-string">&quot;“I have not failed. I&#x27;ve just found 10,000 ways that won&#x27;t work.”&quot;</span>,Thomas A. Edison<br>“A woman <span class="hljs-keyword">is</span> like a tea bag; you never know how strong it <span class="hljs-keyword">is</span> until it<span class="hljs-string">&#x27;s in hot water.”,Eleanor Roosevelt</span><br><span class="hljs-string">&quot;“A day without sunshine is like, you know, night.”&quot;,Steve Martin</span><br><span class="hljs-string">&quot;“This life is what you make it. No matter what, you&#x27;</span>re going to mess up sometimes, it<span class="hljs-string">&#x27;s a universal truth. But the good part is you get to decide how you&#x27;</span>re going to mess it up. Girls will be your friends - they<span class="hljs-string">&#x27;ll act like it anyway. But just remember, some come, some go. The ones that stay with you through everything - they&#x27;</span>re your true best friends. Don<span class="hljs-string">&#x27;t let go of them. Also remember, sisters make the best friends in the world. As for lovers, well, they&#x27;</span>ll come <span class="hljs-keyword">and</span> go too. And baby, I hate to say it, most of them - actually pretty much <span class="hljs-built_in">all</span> of them are going to <span class="hljs-keyword">break</span> your heart, but you can<span class="hljs-string">&#x27;t give up because if you give up, you&#x27;</span>ll never find your soulmate. Yo<span class="hljs-string">u&#x27;ll never find that half who makes you whole and that goes for everything. Just because you fail once, doesn&#x27;</span>t mean yo<span class="hljs-string">u&#x27;re gonna fail at everything. Keep trying, hold on, and always, always, always believe in yourself, because if you don&#x27;</span>t, then who will, sweetie? So keep your head high, keep your chin up, <span class="hljs-keyword">and</span> most importantly, keep smiling, because life<span class="hljs-string">&#x27;s a beautiful thing and there&#x27;</span>s so much to smile about.”<span class="hljs-string">&quot;,Marilyn Monroe</span><br><span class="hljs-string">...</span><br></code></pre></td></tr></table></figure>
+
+<p>运行结果显示，我们成功爬取了10个页面中的100条名人名言。</p>
 <style>
     table
     {
@@ -438,6 +539,8 @@
                     <i class="iconfont icon-tags"></i>
                     
                       <a class="hover-with-bg" href="/tags/scrapy/">scrapy</a>
+                    
+                      <a class="hover-with-bg" href="/tags/splash/">splash</a>
                     
                   </div>
                 
