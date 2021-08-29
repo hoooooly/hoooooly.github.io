@@ -195,6 +195,247 @@
   <div class="row mx-auto index-card">
     
     
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/08/28/go%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+          <img src="/2021/08/28/go%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/footer-gopher.jpg" srcset="/img/loading.gif" lazyload alt="搞定go语言数据类型">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/28/go%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+          搞定go语言数据类型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/28/go%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+          
+          
+            
+          
+          数据类型先上图：
+
+变量格式化输出通用：
+12345%v	值的默认格式表示%+v	类似%v，但输出结构体是会增加字段名%#v	值的Go语法表示%T	值的类型的Go语法表示%%	百分号
+
+布尔值：
+1%t	单词true或false
+
+进制数：
+12345678%b	表示为二进制	%c	该值对应的unicode码值%d	表示为十进制%o	表示为八进制%q	该值对应单引号括起来的go语法字符字面值，必要
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-28 18:44" pubdate>
+              2021-08-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/go/">go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/28/Go%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/" target="_self">
+          Go语言入门
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/28/Go%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/" target="_self">
+          
+          
+            
+          
+          语言特性
+闭包与匿名函数
+错误处理
+函数多返回值
+自动垃圾回收
+接口与类型
+并发编程
+反射
+
+安装环境变量使用go env可以查看所有的环境变量。
+GOROOTGOROOT 表示 Go 语言的安装目录。
+GOROOT 的作用是用来索引 Go 语言的安装目录下的相关资源，比如 bin 目录的工具（如 go 命令），src 目录下的源码等。
+GOPATHGOPATH 用于指定我们的开发工作区，可以有多
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-28 17:47" pubdate>
+              2021-08-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/go/">go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/17/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93/" target="_self">
+          数据存入数据库
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/17/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93/" target="_self">
+          
+          
+            
+          
+          SQLiteSQLite是一个文件型轻量级数据库，它的处理速度很快，在数据量不是很大的情况下，使用SQLite足够了。
+首先，创建一个供Scrapy使用的SQLite数据库，取名为scrapy.db：
+1[root@VM-8-16-centos SQL]# sqlite3 scrapy.db
+
+接下来，在客户端中创建数据表（Table）：
+12345678CREATE TABLE books(	u
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-17 14:15" pubdate>
+              2021-08-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/SQL/">SQL</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/17/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%EF%BC%9AScrapy%E7%88%AC%E5%8F%96%E4%BA%AC%E4%B8%9C%E5%95%86%E5%9F%8E%E4%B9%A6%E7%B1%8D%E4%BF%A1%E6%81%AF/" target="_self">
+          项目实战：Scrapy爬取京东商城书籍信息
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/17/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%EF%BC%9AScrapy%E7%88%AC%E5%8F%96%E4%BA%AC%E4%B8%9C%E5%95%86%E5%9F%8E%E4%B9%A6%E7%B1%8D%E4%BF%A1%E6%81%AF/" target="_self">
+          
+          
+            
+          
+          项目实战：爬取京东商城中的书籍信息项目需求爬取京东商城中所有Python书籍的名字和价格信息。
+页面分析在京东网站（http://www.jd.com）的书籍分类下搜索Python关键字得到的页面。
+
+结果有很多页，在每一个书籍列表页面中可以数出有60本书，但我们在scrapyshell中爬取该页面时遇到了问题，仅在页面中找到了30本书，少了30本，代码如下：
+1$ scrapy shell
+
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-17 09:35" pubdate>
+              2021-08-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/scrapy/">scrapy</a>
+            
+              <a href="/tags/splash/">splash</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
@@ -516,228 +757,11 @@ ImagesPipeline
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/06/Flask%E7%9A%84%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E6%89%A9%E5%B1%95/" target="_self">
-          Flask的身份验证扩展
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/06/Flask%E7%9A%84%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E6%89%A9%E5%B1%95/" target="_self">
-          
-          
-            
-          
-          密码安全性设计Web应用时，人们往往会忽视数据库中用户信息的安全性。如果攻击者入侵服务器，攫取了数据库，用户的安全就处在风险之中，而且这个风险超乎你的想象。众所周知，多数用户会在不同的网站中使用相同的密码。因此，即便不保存任何敏感信息，攻击者获得存储在数据库中的密码之后，也能访问用户在其他网站中的账户。
-若想保证数据库中用户密码的安全，关键在于不存储密码本身，而是存储密码的散列值。计算密码散列值的
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-06 10:26" pubdate>
-              2021-08-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Flask/">Flask</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/flask/">flask</a>
-            
-              <a href="/tags/flask-login/">flask-login</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/05/%E5%A4%A7%E5%9E%8B%E5%BA%94%E7%94%A8%E7%9A%84%E7%BB%93%E6%9E%84/" target="_self">
-          大型应用的结构
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/05/%E5%A4%A7%E5%9E%8B%E5%BA%94%E7%94%A8%E7%9A%84%E7%BB%93%E6%9E%84/" target="_self">
-          
-          
-            
-          
-          项目结构多文件Flask应用的基本结构：
-12345678910111213141516171819├─app/   ├─__init__.py   ├─email.py   ├─models.py   ├─main/      ├─__init__.py      ├─errors.py      ├─forms.py   	  ├─views.py   ├─static/   └─templa
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-05 14:19" pubdate>
-              2021-08-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Flask/">Flask</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/flask/">flask</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/05/Flask-Mail%E5%AE%9E%E7%8E%B0%E9%82%AE%E4%BB%B6%E5%8A%9F%E8%83%BD/" target="_self">
-          Flask-Mail实现邮件功能
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/05/Flask-Mail%E5%AE%9E%E7%8E%B0%E9%82%AE%E4%BB%B6%E5%8A%9F%E8%83%BD/" target="_self">
-          
-          
-            
-          
-          使用Flask-Mail提供电子邮件支持虽然Python标准库中的smtplib包可用于在Flask应用中发送电子邮件，但包装了smtplib的Flask-Mail扩展能更好地与Flask集成。Flask-Mail使用pip安装：
-1(venv)$ pip install falsk-mail
-
-Flask-Mail连接到简单邮件传输协议（SMTP, simple mail transfer pr
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-05 13:21" pubdate>
-              2021-08-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Flask/">Flask</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/flask/">flask</a>
-            
-              <a href="/tags/mail/">mail</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/02/flask%E6%95%B0%E6%8D%AE%E5%BA%93/" target="_self">
-          flask数据库
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/02/flask%E6%95%B0%E6%8D%AE%E5%BA%93/" target="_self">
-          
-          
-            
-          
-          关系型数据库关系型数据库把数据存储在表中，表为应用中不同的实体建模。例如，订单管理应用的数据库中可能有customers、products和orders等表。
-表中的列数是固定的，行数是可变的。列定义表所表示的实体的数据属性。例如，customers表中可能有name、address、phone等列。表中的行定义部分或所有列对应的真实数据。
-表中有个特殊的列，称为主键，其值为表中各行的唯一标识符。
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-02 23:42" pubdate>
-              2021-08-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Flask/">Flask</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/flask/">flask</a>
-            
-              <a href="/tags/SQL/">SQL</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/#board">9</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#board">10</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
