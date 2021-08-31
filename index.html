@@ -198,6 +198,193 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/08/31/Go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%88%87%E7%89%87/" target="_self">
+          Go语言中的切片
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/31/Go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%88%87%E7%89%87/" target="_self">
+          
+          
+            
+          
+          Go语言中的切片切片的基本介绍切片，slice
+是数组的一个引用，因此切片是引用类型，在进行传值时，遵守引用传递的机制。
+切片的使用和数组类似，遍历切片、访问切片的元素和求切片长度len(slice)都一样。
+切片的长度是可以变化的，因此切片是一个可以动态变化的数组。
+定义的基本语法：
+12var 切片名 []类型比如：var a []int
+
+快速入门演示一个切片的基本使用：
+123456789
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-31 20:42" pubdate>
+              2021-08-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/go/">go</a>
+            
+              <a href="/tags/%E5%88%87%E7%89%87/">切片</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/08/30/go%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0/" target="_self">
+          <img src="/2021/08/30/go%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0/beego.jpeg" srcset="/img/loading.gif" lazyload alt="go语言字符串常用的系统函数">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/30/go%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0/" target="_self">
+          go语言字符串常用的系统函数
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/30/go%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0/" target="_self">
+          
+          
+            
+          
+          字符串常用的系统函数1）统计字符串的长度，按字节len(str)
+12str := &quot;hello world&quot;fmt.Println(&quot;str len =&quot;, len(str)) // str len = 11
+
+2）字符串遍历，同时处理有中文的问题r:=[]rune(str)
+123456789101112str2 := &quot;hello世界&quo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-30 21:55" pubdate>
+              2021-08-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/go/">go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/08/30/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F/" target="_self">
+          <img src="/2021/08/30/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F/beego.jpeg" srcset="/img/loading.gif" lazyload alt="go语言中函数参数的传递方式">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/30/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F/" target="_self">
+          go语言中函数参数的传递方式
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/08/30/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F/" target="_self">
+          
+          
+            
+          
+          函数参数的传递方式两种传递方式1）值传递
+2）引用传递
+不论是值传递还是引用传递，传给函数的都是变量的副本，不同的是值传递的是值的拷贝，引用传递的是地址的拷贝，一般来说地址拷贝效率高。
+值类型和引用类型1）值类型：基本数据类型 int 系列，float系列，bool，string、数组和结构体struct
+2）引用类型：指针、slice切片、map、管道chan、interface等都是引用类型
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-30 21:21" pubdate>
+              2021-08-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/go/">go</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/08/29/Beego%E7%9A%84MVC%E6%9E%B6%E6%9E%84/" target="_self">
+          <img src="/2021/08/29/Beego%E7%9A%84MVC%E6%9E%B6%E6%9E%84/beego.jpeg" srcset="/img/loading.gif" lazyload alt="Beego的MVC架构">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/08/29/Beego%E7%9A%84MVC%E6%9E%B6%E6%9E%84/" target="_self">
           Beego的MVC架构
         </a>
@@ -610,166 +797,6 @@ GOPATHGOPATH 用于指定我们的开发工作区，可以有多
               <a href="/tags/scrapy/">scrapy</a>
             
               <a href="/tags/splash/">splash</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/15/Scrapy%E7%88%AC%E5%8F%96%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2/" target="_self">
-          Scrapy爬取动态页面-scrapy-splash
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/15/Scrapy%E7%88%AC%E5%8F%96%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2/" target="_self">
-          
-          
-            
-          
-          在现实中，目前绝大多数网站的页面都是动态页面，动态页面中的部分内容是浏览器运行页面中的JavaScript脚本动态生成的，爬取相对困难，这一章来学习如何爬取动态页面。
-先来看一个简单的动态页面的例子，在浏览器中打开http://quotes.toscrape.com/js，显示如图所示。
-
-页面中有10条名人名言，每一条都包含在一个&lt;div class=&quot;quote&quot;&g
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-15 09:42" pubdate>
-              2021-08-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/scrapy/">scrapy</a>
-            
-              <a href="/tags/splash/">splash</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/14/Cookie%E7%99%BB%E5%BD%95/" target="_self">
-          Cookie登录
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/14/Cookie%E7%99%BB%E5%BD%95/" target="_self">
-          
-          
-            
-          
-          在使用浏览器登录网站后，包含用户身份信息的Cookie会被浏览器保存在本地，如果Scrapy爬虫能直接使用浏览器中的Cookie发送HTTP请求，就可以绕过提交表单登录的步骤。
-获取浏览器Cookie使用第三方Python库browsercookie可以获取Chrome和Firefox浏览器中的Cookie。
-使用pip安装browsercookie：
-1pip install browserco
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-14 22:49" pubdate>
-              2021-08-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/cookie/">cookie</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/08/14/%E7%88%AC%E5%8F%96matplotlib%E4%BE%8B%E5%AD%90%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6/" target="_self">
-          爬取matplotlib例子源码文件
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/08/14/%E7%88%AC%E5%8F%96matplotlib%E4%BE%8B%E5%AD%90%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6/" target="_self">
-          
-          
-            
-          
-          项目实战：爬取matplotlib例子源码文件matplotlib是一个非常著名的Python绘图库，广泛应用于科学计算和数据分析等领域。在matplotlib网站上提供了许多应用例子代码，在浏览器中访问Matplotlib Examples — Matplotlib 2.0.2 documentation，可看到下图页面。
-
-其中有几百个例子，被分成多个类别，单击第一个例子，进入其页面，如图所示
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-14 14:07" pubdate>
-              2021-08-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/scrapy/">scrapy</a>
             
           </div>
         
