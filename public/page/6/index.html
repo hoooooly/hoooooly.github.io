@@ -195,28 +195,30 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/06/16/Django%E5%85%A5%E9%97%A8-Django-Admin/" target="_self">
+          <img src="/2021/06/16/Django%E5%85%A5%E9%97%A8-Django-Admin/Screenshot_8.webp" srcset="/img/loading.gif" lazyload alt="Django入门-Django Admin">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/05/Beautiful-Soup%E5%BA%93/" target="_self">
-          Beautiful Soup4库
+        <a href="/2021/06/16/Django%E5%85%A5%E9%97%A8-Django-Admin/" target="_self">
+          Django入门-Django Admin
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/06/05/Beautiful-Soup%E5%BA%93/" target="_self">
+        <a href="/2021/06/16/Django%E5%85%A5%E9%97%A8-Django-Admin/" target="_self">
           
           
             
           
-          Beautiful Soup 是一个可以从HTML或XML文件中提取数据的Python库。
-安装1pip install beautifulsoup4
-
-Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方的解析器,其中一个是 lxml .根据操作系统不同,可以选择下列方法来安装lxml:
-1pip install lxml
-
-使用示例HTML；
-12345678
+          Django Admin 简介当我们开始第一个新项目的时候，Django已经配置了Django Admin，这个应用程序列出的INSTALLED_APPS。
+使用Django Admin的一个很好的列子就是在博客中，它可以用来被作者用来编写和发布文章。另一个列子是电子商务网站，工作人员可以创建，编辑，删除产品。
+现在，我们来配置Django Admin来维护我们应用程序的板块。
+首先，创建一个管理
         </a>
       </p>
 
@@ -224,8 +226,8 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-05 16:15" pubdate>
-              2021-06-05
+            <time datetime="2021-06-16 12:47" pubdate>
+              2021-06-16
             </time>
           </div>
         
@@ -233,7 +235,7 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Python%E5%BA%93/">Python库</a>
+              <a href="/categories/Django/">Django</a>
             
           </div>
         
@@ -243,7 +245,7 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
             
               <a href="/tags/python/">python</a>
             
-              <a href="/tags/bs4/">bs4</a>
+              <a href="/tags/django/">django</a>
             
           </div>
         
@@ -254,26 +256,28 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/06/16/Django%E5%85%A5%E9%97%A8-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE/" target="_self">
+          <img src="/2021/06/16/Django%E5%85%A5%E9%97%A8-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE/Screenshot_8.webp" srcset="/img/loading.gif" lazyload alt="Django入门-静态文件设置">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/04/re%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C/" target="_self">
-          re正则表达式操作
+        <a href="/2021/06/16/Django%E5%85%A5%E9%97%A8-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE/" target="_self">
+          Django入门-静态文件设置
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/06/04/re%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C/" target="_self">
+        <a href="/2021/06/16/Django%E5%85%A5%E9%97%A8-%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE/" target="_self">
           
           
             
           
-          Regular Expression，正则表达式，使用表达式的方式对字符串进行匹配的语法规则。
-正则表达式语法一个正则表达式指定了一集与之匹配的字符串；模块内的函数可以让你检查某个字符串是否跟给定的正则表达式匹配。
-要看正则写得对不对，可以去测试网站测试匹配结果。
-首先了解元字符的概念：具有固定含义的特殊符号。
-特殊字符有：
-123456789101112131415161718192021222
+          静态文件设置静态文件是指 CSS，JavaScript，字体，图片或者是用来组成用户界面的任何其他资源。
+Django 本身是不负责处理这些文件的，但是为了让我们的开发过程更轻松，Django 提供了一些功能来帮助我们管理静态文件。这些功能可在 INSTALLED_APPS 的 django.contrib.staticfiles 应用程序中找到。实际上，Django为了使得开发方便，也可以处理静
         </a>
       </p>
 
@@ -281,8 +285,8 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 22:02" pubdate>
-              2021-06-04
+            <time datetime="2021-06-16 00:01" pubdate>
+              2021-06-16
             </time>
           </div>
         
@@ -290,7 +294,7 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Python%E5%BA%93/">Python库</a>
+              <a href="/categories/Django/">Django</a>
             
           </div>
         
@@ -300,7 +304,7 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
             
               <a href="/tags/python/">python</a>
             
-              <a href="/tags/re/">re</a>
+              <a href="/tags/django/">django</a>
             
           </div>
         
@@ -314,22 +318,19 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/04/%E7%BB%8F%E5%85%B8%E8%B1%86%E7%93%A3TOP250%E7%88%AC%E5%8F%96/" target="_self">
-          经典豆瓣TOP250爬取
+        <a href="/2021/06/15/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" target="_self">
+          python多线程基本原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/06/04/%E7%BB%8F%E5%85%B8%E8%B1%86%E7%93%A3TOP250%E7%88%AC%E5%8F%96/" target="_self">
+        <a href="/2021/06/15/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" target="_self">
           
           
             
           
-          经典案例每个学习爬虫的人都爬过的豆瓣电影TOP250，先看下长什么样。
-
-开爬。
-分析查看源代码，所有的数据都在页面源代码中，直接用requests请求拿过来页面源代码，再通过re匹配即可。
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455imp
+          多线程的含义说起多线程，就不得不先说什么是线程。然而想要弄明白什么是线程，又不得不先说什么是进程。
+进程可以理解为是一个可以独立运行的程序单位，比如打开一个浏览器，这就开启了一个浏览器进程；打开一个文本编辑器，这就开启了一个文本编辑器进程。但一个进程中是可以同时处理很多事情的，比如在浏览器中，可以在多个选项卡中打开多个页面，有的页面在播放音乐，有的页面在播放视频，有的网页在播放动画，它们可以同时运
         </a>
       </p>
 
@@ -337,8 +338,8 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 21:34" pubdate>
-              2021-06-04
+            <time datetime="2021-06-15 11:24" pubdate>
+              2021-06-15
             </time>
           </div>
         
@@ -346,121 +347,7 @@ Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/re/">re</a>
-            
-              <a href="/tags/requests/">requests</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/04/%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85redis/" target="_self">
-          基于docker安装redis
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/04/%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85redis/" target="_self">
-          
-          
-            
-          
-          获取redis镜像安装环境，腾讯云。
-1docker pull redis
-
-不加版本号默认获取最新版本，也可以使用 docker search redis 查看镜像来源。
-查看本地镜像123[root@VM-0-15-centos ~]# docker imagesREPOSITORY                TAG       IMAGE ID       CREATED        
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 19:11" pubdate>
-              2021-06-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Docker/">Docker</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/docker/">docker</a>
-            
-              <a href="/tags/redis/">redis</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/03/asyncio%E5%BC%82%E6%AD%A5I-O%E6%A8%A1%E5%9D%97/" target="_self">
-          asyncio异步I/O模块
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/03/asyncio%E5%BC%82%E6%AD%A5I-O%E6%A8%A1%E5%9D%97/" target="_self">
-          
-          
-            
-          
-          asyncio 是用来编写并发代码的库，使用 async/await 语法。
-asyncio 被用作多个提供高性能 Python 异步框架的基础，包括网络和网站服务，数据库连接库，分布式任务队列等等。
-asyncio 往往是构建 IO 密集型和高层级 结构化 网络代码的最佳选择。
-asyncio 提供一组 高层级 API 用于:
-
-并发地运行 Python 协程 并对其执行过程实现完全控制;
-执行
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 07:40" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Python%E5%BA%93/">Python库</a>
+              <a href="/categories/Python/">Python</a>
             
           </div>
         
@@ -470,7 +357,67 @@ asyncio 提供一组 高层级 API 用于:
             
               <a href="/tags/python/">python</a>
             
-              <a href="/tags/asyncio/">asyncio</a>
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+              <a href="/tags/threading/">threading</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/" target="_self">
+          <img src="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/Screenshot_8.webp" srcset="/img/loading.gif" lazyload alt="Django入门-视图函数">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/" target="_self">
+          Django入门-视图函数
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/" target="_self">
+          
+          
+            
+          
+          第一个视图函数第一个视图函数目前我们已经有一个视图函数叫 home ，这个视图在我们的应用程序主页上显示为&quot;Hello， World!&quot; 。
+boards/views.py
+1234from django.http import HttpResponsedef home(request):    return HttpResponse(&#x27;hello World&#x2
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-11 13:45" pubdate>
+              2021-06-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Django/">Django</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/django/">django</a>
             
           </div>
         
@@ -484,20 +431,27 @@ asyncio 提供一组 高层级 API 用于:
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/02/Pyppeteer%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
-          Pyppeteer的使用
+        <a href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/" target="_self">
+          抓取网易云音乐热评
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/06/02/Pyppeteer%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+        <a href="/2021/06/10/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%83%AD%E8%AF%84/" target="_self">
           
           
             
           
-          Selenium功能虽热强大，但还是有些不方便。
-Pyppeteer介绍Puppeteer 是 Google 基于 Node.js 开发的一个工具，有了它我们可以通过 JavaScript 来控制 Chrome 浏览器的一些操作，当然也可以用作网络爬虫上，其 API 极其完善，功能非常强大。
-Pyppeteer 是 Puppeteer 的 Python版本的实现，但它不是 Google 开发的，是
+          查看页面源代码，发现源代码中并不含有热评。通过工具抓包查看请求，数据是通过后端数据库请求过来的。
+
+查看标头可以发现，这条获取热评的请求传递的参数是加密的。
+
+首先，我们要找到未加密的参数。
+通过查看请求程序，可以看到当前网页调用了那些JS脚本执行过程，从下往上调用。
+
+查看最上面的JS脚本，这是产生请求的最后一个脚本，看看这个脚本里面有什么。
+
+点开后，咋一看没法理解，这是经过压缩后的JS脚本，
         </a>
       </p>
 
@@ -505,8 +459,8 @@ Pyppeteer 是 Puppeteer 的 Python版本的实现，但它不是 Google 开发�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:04" pubdate>
-              2021-06-02
+            <time datetime="2021-06-10 21:00" pubdate>
+              2021-06-10
             </time>
           </div>
         
@@ -524,8 +478,6 @@ Pyppeteer 是 Puppeteer 的 Python版本的实现，但它不是 Google 开发�
             
               <a href="/tags/python/">python</a>
             
-              <a href="/tags/pypprteer/">pypprteer</a>
-            
           </div>
         
       </div>
@@ -535,50 +487,28 @@ Pyppeteer 是 Puppeteer 的 Python版本的实现，但它不是 Google 开发�
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/" target="_self">
+          <img src="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/Screenshot_8.webp" srcset="/img/loading.gif" lazyload alt="Django入门-模型设计">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/02/logging%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97/" target="_self">
-          logging日志模块
+        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/" target="_self">
+          Django入门-模型设计
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/06/02/logging%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97/" target="_self">
+        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/" target="_self">
           
           
             
           
-          基础教程日志级别
-
-
-级别
-使用场景
-
-
-
-DEBUG
-细节信息，仅当诊断问题时适用
-
-
-INFO
-程序按预期运行
-
-
-WARNING
-表明有已经或即将发生的意外
-
-
-ERROR
-由于严重的问题，程序的某些功能已经不能正常执行
-
-
-CRITICAL
-严重的错误，表明程序已经不能继续执行
-
-
-默认是WARNING级别，意味着只会追踪该级别以及以上的事件，除非修改日志配置。
-simple exampl
+          模型这些模型基本上代表了应用程序的数据库设计。在本节中要做的是创建 Django 所表示的类，这些类就是在上一节中建模的类∶ Board，Topic和 Post。User 模型被命名为内置应用叫 auth，它以命名空间 django.contrib.auth 的形式出现在 INSTALLED_APPS配置中。
+我们要做的工作都在 boards/models.py 文件中。以下是我们在Django应
         </a>
       </p>
 
@@ -586,8 +516,8 @@ simple exampl
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 09:34" pubdate>
-              2021-06-02
+            <time datetime="2021-06-09 21:29" pubdate>
+              2021-06-09
             </time>
           </div>
         
@@ -595,7 +525,7 @@ simple exampl
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Python%E5%BA%93/">Python库</a>
+              <a href="/categories/Django/">Django</a>
             
           </div>
         
@@ -603,7 +533,9 @@ simple exampl
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/logging/">logging</a>
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/django/">django</a>
             
           </div>
         
@@ -614,22 +546,28 @@ simple exampl
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" target="_self">
+          <img src="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Screenshot_8.webp" srcset="/img/loading.gif" lazyload alt="Django入门-系统设计">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/01/%E5%8D%97%E7%91%9E103%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" target="_self">
-          南瑞103协议详解
+        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" target="_self">
+          Django入门-系统设计
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/06/01/%E5%8D%97%E7%91%9E103%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" target="_self">
+        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" target="_self">
           
           
             
           
-          前言IEC60870-5-103 传输规约是1999年10月1日实施的电力行业标准（国内称为DL/T667－1999继电保护设备信息接口配套标准），规约要求采用此规约的监控和保护装置必须符合该标准的所有强制性定义。
-深圳所IEC-103是该标准的一个子集，主要目的在于明确应用层功能，满足IEC60870-5-103的所有强制性定义，如果该子集与IEC60870-5-103相冲突，则以IEC6087
+          论坛项目在进入模型，视图等其它有趣的部分之前，先让我们花点时间，简要地讨论我们将要开发的这个项目。如果你已经有了Web 开发的经验并且觉得它太繁琐了，那么你可以浏览一下图片以了解我们将要构建的内容，然后直接跳转到本教程的模型部分。
+用列图我们的项目是一个论坛系统，整个项目的构思是维护几个论坛版块（boards），每个版块像一个分类一样。在指定的版块里面，用户可以通过创建新主题（Topic）开始讨论
         </a>
       </p>
 
@@ -637,8 +575,8 @@ simple exampl
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-01 15:09" pubdate>
-              2021-06-01
+            <time datetime="2021-06-09 09:56" pubdate>
+              2021-06-09
             </time>
           </div>
         
@@ -646,7 +584,7 @@ simple exampl
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
+              <a href="/categories/Django/">Django</a>
             
           </div>
         
@@ -654,7 +592,7 @@ simple exampl
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/pscada/">pscada</a>
+              <a href="/tags/django/">django</a>
             
           </div>
         
@@ -668,22 +606,24 @@ simple exampl
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/31/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/" target="_self">
-          异步爬虫的原理和解析
+        <a href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/" target="_self">
+          spider的用法
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/31/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/" target="_self">
+        <a href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/" target="_self">
           
           
             
           
-          实列引入看这么一个示例网站：https://static4.scrape.cuiqingcai.com/，如图所示。
+          Spider 的用法在 Scrapy 中，要抓取网站的链接配置、抓取逻辑、解析逻辑等其实都是在 Spider 中配置的。
+Spider运行流程在实现 Scrapy 爬虫项目时，最核心的类便是 Spider 类了，它定义了如何爬取某个网站的流程和解析方式。简单来讲， Spider 要做的事就是如下两件： 
 
-这个网站在内部实现返回响应的逻辑的时候特意加了 5 秒的延迟，也就是说如果我们用 requests 来爬取其中某个页面的话，至少需要 5 秒才能得到响应。
-下面我们来用 requests 写一个遍历程序，直接遍历 1~100 部电影数据，代码实现如下：
-1234567891011
+定义爬取网站的动作； 
+分析爬取下来的网页。 
+
+对于 Spider 类来说，整个爬取循环如
         </a>
       </p>
 
@@ -691,8 +631,8 @@ simple exampl
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-31 17:03" pubdate>
-              2021-05-31
+            <time datetime="2021-06-08 00:49" pubdate>
+              2021-06-08
             </time>
           </div>
         
@@ -708,9 +648,66 @@ simple exampl
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/scarpy/">scarpy</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/06/07/django%E5%85%A5%E9%97%A8%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_self">
+          <img src="/2021/06/07/django%E5%85%A5%E9%97%A8%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/Screenshot_8.webp" srcset="/img/loading.gif" lazyload alt="django入门-环境搭建">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/07/django%E5%85%A5%E9%97%A8%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_self">
+          django入门-环境搭建
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/07/django%E5%85%A5%E9%97%A8%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_self">
+          
+          
+            
+          
+          为什么要使用Django?Django是一个用python编写的Web框架。Web框架是一种软件，基于web框架可以开发动态网站，各种应用程序以及服务。它提供了一系列工具和功能，可以解决许多与Web开发相关的常见问题，比如∶ 安全功能，数据库访问，会话，模板处理，URL路由，国际化，本地化，等等。
+使用诸如 Django 之类的网络框架，使我们能够以标准化的方式快速开发安全可靠的Web应用程序，而
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-07 15:56" pubdate>
+              2021-06-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Django/">Django</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
               <a href="/tags/python/">python</a>
             
-              <a href="/tags/asyncio/">asyncio</a>
+              <a href="/tags/django/">django</a>
             
           </div>
         
@@ -724,19 +721,21 @@ simple exampl
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/" target="_self">
-          FastAPI教程-路径参数
+        <a href="/2021/06/06/XPath%E5%BA%93%E8%A7%A3%E6%9E%90/" target="_self">
+          XPath库解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/" target="_self">
+        <a href="/2021/06/06/XPath%E5%BA%93%E8%A7%A3%E6%9E%90/" target="_self">
           
           
             
           
-          可以使用与 Python 格式化字符串相同的语法来声明路径”参数”或”变量”：
-12345678from fastapi import FastAPIapp = FastAPI()@app.get(&quot;/items/&#123;item_id&#125;&quot;)async def read_item(item_id):    return &#123;&quot;item_id&qu
+          XPath，全称 XML Path Language，即 XML 路径语言，它是一门在XML文档中查找信息的语言。XPath 最初设计是用来搜寻XML文档的，HTML是XML的子集，它同样适用于HTML文档的搜索。
+安装1pip install lxml
+
+XPath 术语节点（Node）在 XPath 中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以及文档节点（或称为根节点）。
         </a>
       </p>
 
@@ -744,8 +743,8 @@ simple exampl
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-30 22:47" pubdate>
-              2021-05-30
+            <time datetime="2021-06-06 14:44" pubdate>
+              2021-06-06
             </time>
           </div>
         
@@ -753,7 +752,7 @@ simple exampl
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/FastAPI/">FastAPI</a>
+              <a href="/categories/Python%E5%BA%93/">Python库</a>
             
           </div>
         
@@ -761,7 +760,11 @@ simple exampl
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/fastapi/">fastapi</a>
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/xpath/">xpath</a>
+            
+              <a href="/tags/lxml/">lxml</a>
             
           </div>
         
@@ -773,7 +776,7 @@ simple exampl
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/5/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#board">7</a><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><a class="extend next" rel="next" href="/page/7/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/5/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#board">7</a><a class="page-number" href="/page/8/#board">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/#board">11</a><a class="extend next" rel="next" href="/page/7/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

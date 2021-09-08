@@ -198,28 +198,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
-          Ajax爬取案例实战
+        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/" target="_self">
+          FastAPI教程-路径参数
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
+        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0/" target="_self">
           
           
             
           
-          准备工作
-安装好Python 3（最低为 3.6 版本），并能成功运行Python 3程序。
-了解PythonHTTP请求库requests的基本用法。
-了解Ajax的基础知识和分析Ajax的基本方法。
-
-爬取目标其链接为：https://dynamic1.scrape.cuiqingcai.com/，页面如图所示。
-
-需要完成的目标有：
-
-分析页面数据的加载逻辑。
-用requests实现Ajax
+          可以使用与 Python 格式化字符串相同的语法来声明路径”参数”或”变量”：
+12345678from fastapi import FastAPIapp = FastAPI()@app.get(&quot;/items/&#123;item_id&#125;&quot;)async def read_item(item_id):    return &#123;&quot;item_id&qu
         </a>
       </p>
 
@@ -227,8 +218,295 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-24 20:13" pubdate>
-              2021-05-24
+            <time datetime="2021-05-30 22:47" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/FastAPI/">FastAPI</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/fastapi/">fastapi</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/" target="_self">
+          FastAPI教程-入门介绍
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/" target="_self">
+          
+          
+            
+          
+          第一步最简单的 FastAPI 文件可能像下面这样：
+最简单的 FastAPI 文件可能像下面这样：
+12345678from fastapi import FastAPIapp = FastAPI()@app.get(&quot;/&quot;)async def root():    return &#123;&quot;message&quot;: &quot;Hello World&quo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-30 19:57" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/FastAPI/">FastAPI</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/fastapi/">fastapi</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/30/FastAPI%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" target="_self">
+          FastAPI安装和使用
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/30/FastAPI%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" target="_self">
+          
+          
+            
+          
+          简介FastAPI 是一个用于构建 API 的现代、快速（高性能）的 web 框架，使用 Python 3.6+ 并基于标准的 Python 类型提示。
+关键特性:
+
+快速：可与 NodeJS 和 Go 比肩的极高性能（归功于 Starlette 和 Pydantic）。最快的 Python web 框架之一。
+
+高效编码：提高功能开发速度约 200％ 至 300％。*
+
+更少 bug：减少约 4
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-30 15:51" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/FastAPI/">FastAPI</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/fastapi/">fastapi</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/30/Flask%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_self">
+          Flask快速上手
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/30/Flask%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_self">
+          
+          
+            
+          
+          一个最小的应用一个最小的Flask应用如下:
+123456from flask import Flaskapp = Flask(__name__)@app.route(&#x27;/&#x27;)def hello_world():    return &#x27;Hello, World!&#x27;
+
+那么，这些代码是什么意思呢？
+
+首先我们导入了Flask类。 该类的实例将会成为我们的WSG
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-30 14:56" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/30/Flask%E5%AE%89%E8%A3%85/" target="_self">
+          Flask安装
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/30/Flask%E5%AE%89%E8%A3%85/" target="_self">
+          
+          
+            
+          
+          安装Python版本推荐使用最新版本的Python3 。 Flask支持Python 3.5及更高版本的Python 3 、Python 2.7和PyPy。
+依赖当安装Flask时，以下配套软件会被自动安装。
+
+Werkzeug用于实现WSGI，应用和服务之间的标准Python接口。
+
+Jinja用于渲染页面的模板语言。
+
+MarkupSafe与Jinja共用，在渲染页面时用于避免不可信的输入，防
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-30 14:24" pubdate>
+              2021-05-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/29/scrapy%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" target="_self">
+          scrapy的基本使用
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/29/scrapy%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" target="_self">
+          
+          
+            
+          
+          抓取目标要完成的任务如下。
+
+创建一个Scrapy项目。
+创建一个Spider来抓取站点和处理数据。
+通过命令行将抓取的内容导出。
+将抓取的内容保存到MongoDB数据库。
+
+抓取的目标站点为。
+准备工作安装好scrapy框架、MongoDB和PyMongo库。
+创建项目创建一个Scrapy项目，项目文件可以直接用Scrapy命令生成，命令如下所示：
+1scrapy startproject tu
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-29 22:49" pubdate>
+              2021-05-29
             </time>
           </div>
         
@@ -244,7 +522,115 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ajax/">ajax</a>
+              <a href="/tags/scrapy/">scrapy</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/" target="_self">
+          scrapy框架介绍
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/" target="_self">
+          
+          
+            
+          
+          Scrapy介绍Scrapy是一个基于Twisted的异步处理框架，是纯Python实现的爬虫框架，其架构清晰，模块之间的耦合程度低，可扩展性极强，可以灵活完成各种需求。只需要定制开发几个模块就可以轻松实现一个爬虫。
+Scrapy框架主要实现下面的流程：
+graph RL
+    A[内容提取]--url---&gt;B[url队列]
+    B--url---&gt;C[发送请求]
+    C-
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-29 18:13" pubdate>
+              2021-05-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/scrapy/">scrapy</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+          python的内置类型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+          
+          
+            
+          
+          字符串与字节Python3中只有一种能够保存文本信息的数据类型，就是str(string，字符串)。它是不可变的序列，保存的Unicode码位(code point)。
+字符串可以保存的数据类型有非常明确的限制，就是Unicode文本。
+bytes以及可变的bytearray与str不同，只能用字节作为序列值，即0&lt;=x&lt;256范围内的整数。
+12&gt;&gt;&gt; bytes(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-28 23:52" pubdate>
+              2021-05-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
             
               <a href="/tags/python/">python</a>
             
@@ -260,19 +646,25 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/24/Ajax%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/" target="_self">
-          Ajax的原理和解析
+        <a href="/2021/05/26/go%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85/" target="_self">
+          go语言的下载和安装
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/24/Ajax%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/" target="_self">
+        <a href="/2021/05/26/go%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85/" target="_self">
           
           
             
           
-          什么是Ajax？Ajax，全称为Asynchronous JavaScriptand XML，即异步的JavaScript和XML。它不是一门编程语言，而是利用JavaScript在保证页面不被刷新、页面链接不改变的情况下与服务器交换数据并更新部分网页的技术。
-传统的网页，如果你想更新其内容，那么必须要刷新整个页面。有了Ajax，便可以在页面不被全部刷新的情况下更新其内容。在这个过程中，页面实际上
+          下载安装包访问https://studygolang.com/dl下载对应系统的安装包，这里以windows平台为例。
+
+安装安装下载后的安装文件。
+
+使用推荐的默认设置就可以了。
+增加环境变量在系统环境变量PATH中添加go的安装路径，比如C:\Program Files\Go\bin。
+添加完成后调出cmd输入go version有下面的显示说明安装成功了。
+12C:\Users\espho&
         </a>
       </p>
 
@@ -280,8 +672,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-24 16:33" pubdate>
-              2021-05-24
+            <time datetime="2021-05-26 10:37" pubdate>
+              2021-05-26
             </time>
           </div>
         
@@ -289,7 +681,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+              <a href="/categories/Go/">Go</a>
             
           </div>
         
@@ -297,9 +689,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ajax/">ajax</a>
-            
-              <a href="/tags/javascript/">javascript</a>
+              <a href="/tags/go/">go</a>
             
           </div>
         
@@ -313,25 +703,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/23/request%E3%80%81pyquest%E5%92%8Cpymongodb%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
-          request、pyquest和pymongodb案例实战
+        <a href="/2021/05/25/%E5%9F%BA%E4%BA%8Edocker%E9%83%A8%E7%BD%B2code-server/" target="_self">
+          基于docker部署code-server
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/23/request%E3%80%81pyquest%E5%92%8Cpymongodb%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
+        <a href="/2021/05/25/%E5%9F%BA%E4%BA%8Edocker%E9%83%A8%E7%BD%B2code-server/" target="_self">
           
           
             
           
-          准备工作在本节课开始之前，我们需要做好如下的准备工作：
+          拉取镜像1234# docker pull codercom/code-server# docker imagesREPOSITORY             TAG       IMAGE ID       CREATED       SIZEcodercom/code-server   latest    f3ac734fcec8   12 days ago   802MB
 
-安装好Python3（最低为 3.6 版本），并能成功运行Python3程序。
-了解Python多进程的基本原理。
-了解PythonHTTP请求库requests的基本用法。
-了解正则表达式的用法和Python中正则表达式库re的基本用法。
-了解PythonHTML解析库pyquery的基本用法。
-了解MongoDB并安装和启动MongoD
+创建挂载目录12
         </a>
       </p>
 
@@ -339,8 +724,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-23 21:12" pubdate>
-              2021-05-23
+            <time datetime="2021-05-25 17:21" pubdate>
+              2021-05-25
             </time>
           </div>
         
@@ -348,409 +733,17 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+              <a href="/categories/Docker/">Docker</a>
             
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/request/">request</a>
-            
-              <a href="/tags/pyquest/">pyquest</a>
-            
-              <a href="/tags/pymongodb/">pymongodb</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/23/MongoDB%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
-          MongoDB数据库的使用
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/23/MongoDB%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
-          
-          
-            
-          
-          准备工作开始之前，请确保你已经安装好了MongoDB并启动了其服务，同时安装好了Python的PyMongo库。
-安装好之后，我们需要把MongoDB服务启动起来。启动完成之后，它会默认在本地localhost的27017端口上运行。
-接下来我们需要安装PyMongo这个库，它是Python用来操作MongoDB的第三方库，直接用pip3安装即可：
-1pip3 install pymongo
-
-连
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-23 14:46" pubdate>
-              2021-05-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/mongodb/">mongodb</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/23/Pyquery%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
-          Pyquery的使用
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/23/Pyquery%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
-          
-          
-            
-          
-          准备工作pyquery是Python的第三方库，安装命令如下：
-1pip3 install pyquery
-
-初始化解析HTML文本的时候，首先需要将其初始化为一个pyquery对象。它的初始化方式有多种，比如直接传入字符串、传入URL、传入文件名，等等。
-字符串初始化可以直接把HTML的内容当作参数来初始化pyquery对象。
-1234567891011121314151617html = &#
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-23 00:49" pubdate>
-              2021-05-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/pyquery/">pyquery</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/21/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
-          正则表达式
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/21/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
-          
-          
-            
-          
-          正则表达式正则表达式是处理字符串的强大工具，它有自己特定的语法结构。能实现字符串的检索、替换、匹配验证，对于爬虫来说，从HTML里提取想要的信息就非常方便。
-实例引入下面用几个实例来看一下正则表达式的用法。
-打开开源中国提供的正则表达式测试工具http://tool.oschina.net/regex/，输入待匹配的文本，然后选择常用的正则表达式，就可以得出相应的匹配结果了。
-例如，输入下面这段待
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-21 21:08" pubdate>
-              2021-05-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/re/">re</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/docker%E7%9A%84%E5%AE%89%E8%A3%85/" target="_self">
-          docker的安装
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/docker%E7%9A%84%E5%AE%89%E8%A3%85/" target="_self">
-          
-          
-            
-          
-          安装环境安装环境是Centos环境，要求版本是 CentOS 7 or 8以上。
-卸载旧版本的docker12345678sudo yum remove docker \                 docker-client \                 docker-client-latest \                 docker-common \            
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 16:45" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Linux/">Linux</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/linux/">linux</a>
             
               <a href="/tags/docker/">docker</a>
             
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/%E5%9F%BA%E4%BA%8Ecentos%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%9B%98/" target="_self">
-          基于NextCloud搭建个人网盘
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/%E5%9F%BA%E4%BA%8Ecentos%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%9B%98/" target="_self">
-          
-          
-            
-          
-          NextcloudNextcloud是一款开源免费的私有云存储网盘项目，可以让你快速便捷地搭建一套属于自己或团队的云同步网盘，从而实现跨平台跨设备文件同步、共享、版本控制、团队协作等功能。它的客户端覆盖了Windows、Mac、Android、iOS、Linux等各种平台，也提供了网页端以及WebDAV接口，所以你几乎可以在各种设备上方便地访问你的云盘。
-安装 Nextcloud安装Mysql12
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 16:16" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/">博客教程</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/docker/">docker</a>
-            
-              <a href="/tags/nextCloud/">nextCloud</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/18/requests%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" target="_self">
-          requests库的基本使用
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/18/requests%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" target="_self">
-          
-          
-            
-          
-          安装requests是一个第三方库，使用pip下载安装。
-1pip3 install requests
-
-实例引入用Python写爬虫的第一步就是模拟发起一个请求，把网页的源代码获取下来。
-在浏览器中输入一个URL并回车，实际上就是让浏览器帮我们发起一个GET类型的HTTP请求，浏览器得到源代码后，把它渲染出来就可以看到网页内容了。
-那如果想用requests来获取源代码，应该怎么办呢？很简单，r
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-18 15:44" pubdate>
-              2021-05-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/requests/">requests</a>
-            
-              <a href="/tags/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/18/Nginx%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" target="_self">
-          Nginx配置详解
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/18/Nginx%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" target="_self">
-          
-          
-            
-          
-          简介Nginx是lgor Sysoev为俄罗斯访问量第二的rambler.ru站点设计开发的。从2004年发布至今，凭借开源的力量，已经接近成熟与完善。
-Nginx功能丰富，可作为HTTP服务器，也可作为反向代理服务器，邮件服务器。支持FastCGI、SSL、Virtual Host、URL Rewrite、Gzip等功能。并且支持很多第三方的模块扩展。
-Nginx的稳定性、功能集、示例配置文件和
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-18 11:16" pubdate>
-              2021-05-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Nginx/">Nginx</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Nginx/">Nginx</a>
-            
-              <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
-            
-              <a href="/tags/http/">http</a>
+              <a href="/tags/vscode/">vscode</a>
             
           </div>
         
@@ -762,7 +755,7 @@ Nginx的稳定性、功能集、示例配置文件和
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/7/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/#board">9</a><a class="extend next" rel="next" href="/page/9/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/7/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/#board">9</a><a class="page-number" href="/page/10/#board">10</a><a class="page-number" href="/page/11/#board">11</a><a class="extend next" rel="next" href="/page/9/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

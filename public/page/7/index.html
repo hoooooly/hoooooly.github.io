@@ -198,20 +198,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/" target="_self">
-          FastAPI教程-入门介绍
+        <a href="/2021/06/06/%E4%BC%98%E7%BE%8E%E5%9B%BE%E5%BA%93%E6%8A%93%E5%8F%96/" target="_self">
+          优美图库抓取
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/30/FastAPI%E6%95%99%E7%A8%8B-%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97/" target="_self">
+        <a href="/2021/06/06/%E4%BC%98%E7%BE%8E%E5%9B%BE%E5%BA%93%E6%8A%93%E5%8F%96/" target="_self">
           
           
             
           
-          第一步最简单的 FastAPI 文件可能像下面这样：
-最简单的 FastAPI 文件可能像下面这样：
-12345678from fastapi import FastAPIapp = FastAPI()@app.get(&quot;/&quot;)async def root():    return &#123;&quot;message&quot;: &quot;Hello World&quo
+          抓取思路1.拿到主页面的源代码，然后提取子页面的链接接地址，href2.通过href拿到子页面的内容，从子页面中找到图片的下载地址 img -&gt; src3.下载图片并保存
+实现代码如下：
+123456789101112131415161718192021222324252627282930313233343536373839import osimport timeimport request
         </a>
       </p>
 
@@ -219,298 +219,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-30 19:57" pubdate>
-              2021-05-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/FastAPI/">FastAPI</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/fastapi/">fastapi</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/30/FastAPI%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" target="_self">
-          FastAPI安装和使用
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/30/FastAPI%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/" target="_self">
-          
-          
-            
-          
-          简介FastAPI 是一个用于构建 API 的现代、快速（高性能）的 web 框架，使用 Python 3.6+ 并基于标准的 Python 类型提示。
-关键特性:
-
-快速：可与 NodeJS 和 Go 比肩的极高性能（归功于 Starlette 和 Pydantic）。最快的 Python web 框架之一。
-
-高效编码：提高功能开发速度约 200％ 至 300％。*
-
-更少 bug：减少约 4
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-30 15:51" pubdate>
-              2021-05-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/FastAPI/">FastAPI</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/fastapi/">fastapi</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/30/Flask%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_self">
-          Flask快速上手
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/30/Flask%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_self">
-          
-          
-            
-          
-          一个最小的应用一个最小的Flask应用如下:
-123456from flask import Flaskapp = Flask(__name__)@app.route(&#x27;/&#x27;)def hello_world():    return &#x27;Hello, World!&#x27;
-
-那么，这些代码是什么意思呢？
-
-首先我们导入了Flask类。 该类的实例将会成为我们的WSG
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-30 14:56" pubdate>
-              2021-05-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Flask/">Flask</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/flask/">flask</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/30/Flask%E5%AE%89%E8%A3%85/" target="_self">
-          Flask安装
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/30/Flask%E5%AE%89%E8%A3%85/" target="_self">
-          
-          
-            
-          
-          安装Python版本推荐使用最新版本的Python3 。 Flask支持Python 3.5及更高版本的Python 3 、Python 2.7和PyPy。
-依赖当安装Flask时，以下配套软件会被自动安装。
-
-Werkzeug用于实现WSGI，应用和服务之间的标准Python接口。
-
-Jinja用于渲染页面的模板语言。
-
-MarkupSafe与Jinja共用，在渲染页面时用于避免不可信的输入，防
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-30 14:24" pubdate>
-              2021-05-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Flask/">Flask</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/python/">python</a>
-            
-              <a href="/tags/flask/">flask</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/29/scrapy%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" target="_self">
-          scrapy的基本使用
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/29/scrapy%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" target="_self">
-          
-          
-            
-          
-          抓取目标要完成的任务如下。
-
-创建一个Scrapy项目。
-创建一个Spider来抓取站点和处理数据。
-通过命令行将抓取的内容导出。
-将抓取的内容保存到MongoDB数据库。
-
-抓取的目标站点为。
-准备工作安装好scrapy框架、MongoDB和PyMongo库。
-创建项目创建一个Scrapy项目，项目文件可以直接用Scrapy命令生成，命令如下所示：
-1scrapy startproject tu
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-29 22:49" pubdate>
-              2021-05-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/scrapy/">scrapy</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/" target="_self">
-          scrapy框架介绍
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/29/scrapy%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/" target="_self">
-          
-          
-            
-          
-          Scrapy介绍Scrapy是一个基于Twisted的异步处理框架，是纯Python实现的爬虫框架，其架构清晰，模块之间的耦合程度低，可扩展性极强，可以灵活完成各种需求。只需要定制开发几个模块就可以轻松实现一个爬虫。
-Scrapy框架主要实现下面的流程：
-graph RL
-    A[内容提取]--url---&gt;B[url队列]
-    B--url---&gt;C[发送请求]
-    C-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-29 18:13" pubdate>
-              2021-05-29
+            <time datetime="2021-06-06 13:56" pubdate>
+              2021-06-06
             </time>
           </div>
         
@@ -528,7 +238,9 @@ graph RL
             
               <a href="/tags/python/">python</a>
             
-              <a href="/tags/scrapy/">scrapy</a>
+              <a href="/tags/bs4/">bs4</a>
+            
+              <a href="/tags/requests/">requests</a>
             
           </div>
         
@@ -542,21 +254,25 @@ graph RL
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/" target="_self">
-          python的内置类型
+        <a href="/2021/06/05/Beautiful-Soup%E5%BA%93/" target="_self">
+          Beautiful Soup4库
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/28/python%E7%9A%84%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+        <a href="/2021/06/05/Beautiful-Soup%E5%BA%93/" target="_self">
           
           
             
           
-          字符串与字节Python3中只有一种能够保存文本信息的数据类型，就是str(string，字符串)。它是不可变的序列，保存的Unicode码位(code point)。
-字符串可以保存的数据类型有非常明确的限制，就是Unicode文本。
-bytes以及可变的bytearray与str不同，只能用字节作为序列值，即0&lt;=x&lt;256范围内的整数。
-12&gt;&gt;&gt; bytes(
+          Beautiful Soup 是一个可以从HTML或XML文件中提取数据的Python库。
+安装1pip install beautifulsoup4
+
+Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方的解析器,其中一个是 lxml .根据操作系统不同,可以选择下列方法来安装lxml:
+1pip install lxml
+
+使用示例HTML；
+12345678
         </a>
       </p>
 
@@ -564,8 +280,8 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-28 23:52" pubdate>
-              2021-05-28
+            <time datetime="2021-06-05 16:15" pubdate>
+              2021-06-05
             </time>
           </div>
         
@@ -573,7 +289,7 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Python/">Python</a>
+              <a href="/categories/Python%E5%BA%93/">Python库</a>
             
           </div>
         
@@ -583,6 +299,8 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
             
               <a href="/tags/python/">python</a>
             
+              <a href="/tags/bs4/">bs4</a>
+            
           </div>
         
       </div>
@@ -595,25 +313,23 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/26/go%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85/" target="_self">
-          go语言的下载和安装
+        <a href="/2021/06/04/re%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C/" target="_self">
+          re正则表达式操作
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/26/go%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85/" target="_self">
+        <a href="/2021/06/04/re%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C/" target="_self">
           
           
             
           
-          下载安装包访问https://studygolang.com/dl下载对应系统的安装包，这里以windows平台为例。
-
-安装安装下载后的安装文件。
-
-使用推荐的默认设置就可以了。
-增加环境变量在系统环境变量PATH中添加go的安装路径，比如C:\Program Files\Go\bin。
-添加完成后调出cmd输入go version有下面的显示说明安装成功了。
-12C:\Users\espho&
+          Regular Expression，正则表达式，使用表达式的方式对字符串进行匹配的语法规则。
+正则表达式语法一个正则表达式指定了一集与之匹配的字符串；模块内的函数可以让你检查某个字符串是否跟给定的正则表达式匹配。
+要看正则写得对不对，可以去测试网站测试匹配结果。
+首先了解元字符的概念：具有固定含义的特殊符号。
+特殊字符有：
+123456789101112131415161718192021222
         </a>
       </p>
 
@@ -621,8 +337,8 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-26 10:37" pubdate>
-              2021-05-26
+            <time datetime="2021-06-04 22:02" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -630,7 +346,7 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Go/">Go</a>
+              <a href="/categories/Python%E5%BA%93/">Python库</a>
             
           </div>
         
@@ -638,7 +354,9 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/go/">go</a>
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/re/">re</a>
             
           </div>
         
@@ -652,20 +370,22 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/25/%E5%9F%BA%E4%BA%8Edocker%E9%83%A8%E7%BD%B2code-server/" target="_self">
-          基于docker部署code-server
+        <a href="/2021/06/04/%E7%BB%8F%E5%85%B8%E8%B1%86%E7%93%A3TOP250%E7%88%AC%E5%8F%96/" target="_self">
+          经典豆瓣TOP250爬取
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/25/%E5%9F%BA%E4%BA%8Edocker%E9%83%A8%E7%BD%B2code-server/" target="_self">
+        <a href="/2021/06/04/%E7%BB%8F%E5%85%B8%E8%B1%86%E7%93%A3TOP250%E7%88%AC%E5%8F%96/" target="_self">
           
           
             
           
-          拉取镜像1234# docker pull codercom/code-server# docker imagesREPOSITORY             TAG       IMAGE ID       CREATED       SIZEcodercom/code-server   latest    f3ac734fcec8   12 days ago   802MB
+          经典案例每个学习爬虫的人都爬过的豆瓣电影TOP250，先看下长什么样。
 
-创建挂载目录12
+开爬。
+分析查看源代码，所有的数据都在页面源代码中，直接用requests请求拿过来页面源代码，再通过re匹配即可。
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455imp
         </a>
       </p>
 
@@ -673,8 +393,64 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-25 17:21" pubdate>
-              2021-05-25
+            <time datetime="2021-06-04 21:34" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/re/">re</a>
+            
+              <a href="/tags/requests/">requests</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/04/%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85redis/" target="_self">
+          基于docker安装redis
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/04/%E5%9F%BA%E4%BA%8Edocker%E5%AE%89%E8%A3%85redis/" target="_self">
+          
+          
+            
+          
+          获取redis镜像安装环境，腾讯云。
+1docker pull redis
+
+不加版本号默认获取最新版本，也可以使用 docker search redis 查看镜像来源。
+查看本地镜像123[root@VM-0-15-centos ~]# docker imagesREPOSITORY                TAG       IMAGE ID       CREATED        
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 19:11" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -692,7 +468,7 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
             
               <a href="/tags/docker/">docker</a>
             
-              <a href="/tags/vscode/">vscode</a>
+              <a href="/tags/redis/">redis</a>
             
           </div>
         
@@ -706,27 +482,24 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/" target="_self">
-          腾讯云主机CPU占用100%
+        <a href="/2021/06/03/asyncio%E5%BC%82%E6%AD%A5I-O%E6%A8%A1%E5%9D%97/" target="_self">
+          asyncio异步I/O模块
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/" target="_self">
+        <a href="/2021/06/03/asyncio%E5%BC%82%E6%AD%A5I-O%E6%A8%A1%E5%9D%97/" target="_self">
           
           
             
           
-          异常情况使用ssh登录发现连接很缓慢，排除网络问题。登陆后使用top查看进程，发现git用户的两个进程占用了95%的CPU。
+          asyncio 是用来编写并发代码的库，使用 async/await 语法。
+asyncio 被用作多个提供高性能 Python 异步框架的基础，包括网络和网站服务，数据库连接库，分布式任务队列等等。
+asyncio 往往是构建 IO 密集型和高层级 结构化 网络代码的最佳选择。
+asyncio 提供一组 高层级 API 用于:
 
-网上查了下，kswapd0被植入挖矿病毒，立马kill这个进程，CPU的负荷马上降了下来。
-查看进程端口1netstat -anltp|grep kswapd0
-
-查看程序路径1ls -l /proc/3882/exe
-
-定时器查看1crontab -l -u git
-
-
+并发地运行 Python 协程 并对其执行过程实现完全控制;
+执行
         </a>
       </p>
 
@@ -734,8 +507,8 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-25 16:32" pubdate>
-              2021-05-25
+            <time datetime="2021-06-03 07:40" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -743,7 +516,7 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Linux/">Linux</a>
+              <a href="/categories/Python%E5%BA%93/">Python库</a>
             
           </div>
         
@@ -751,11 +524,249 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/linux/">linux</a>
+              <a href="/tags/python/">python</a>
             
-              <a href="/tags/git/">git</a>
+              <a href="/tags/asyncio/">asyncio</a>
             
-              <a href="/tags/%E7%97%85%E6%AF%92/">病毒</a>
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/02/Pyppeteer%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+          Pyppeteer的使用
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/02/Pyppeteer%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+          
+          
+            
+          
+          Selenium功能虽热强大，但还是有些不方便。
+Pyppeteer介绍Puppeteer 是 Google 基于 Node.js 开发的一个工具，有了它我们可以通过 JavaScript 来控制 Chrome 浏览器的一些操作，当然也可以用作网络爬虫上，其 API 极其完善，功能非常强大。
+Pyppeteer 是 Puppeteer 的 Python版本的实现，但它不是 Google 开发的，是
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:04" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/pypprteer/">pypprteer</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/02/logging%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97/" target="_self">
+          logging日志模块
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/02/logging%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97/" target="_self">
+          
+          
+            
+          
+          基础教程日志级别
+
+
+级别
+使用场景
+
+
+
+DEBUG
+细节信息，仅当诊断问题时适用
+
+
+INFO
+程序按预期运行
+
+
+WARNING
+表明有已经或即将发生的意外
+
+
+ERROR
+由于严重的问题，程序的某些功能已经不能正常执行
+
+
+CRITICAL
+严重的错误，表明程序已经不能继续执行
+
+
+默认是WARNING级别，意味着只会追踪该级别以及以上的事件，除非修改日志配置。
+simple exampl
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 09:34" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Python%E5%BA%93/">Python库</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/logging/">logging</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/01/%E5%8D%97%E7%91%9E103%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" target="_self">
+          南瑞103协议详解
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/01/%E5%8D%97%E7%91%9E103%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" target="_self">
+          
+          
+            
+          
+          前言IEC60870-5-103 传输规约是1999年10月1日实施的电力行业标准（国内称为DL/T667－1999继电保护设备信息接口配套标准），规约要求采用此规约的监控和保护装置必须符合该标准的所有强制性定义。
+深圳所IEC-103是该标准的一个子集，主要目的在于明确应用层功能，满足IEC60870-5-103的所有强制性定义，如果该子集与IEC60870-5-103相冲突，则以IEC6087
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-01 15:09" pubdate>
+              2021-06-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/pscada/">pscada</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/31/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/" target="_self">
+          异步爬虫的原理和解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/31/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E8%A7%A3%E6%9E%90/" target="_self">
+          
+          
+            
+          
+          实列引入看这么一个示例网站：https://static4.scrape.cuiqingcai.com/，如图所示。
+
+这个网站在内部实现返回响应的逻辑的时候特意加了 5 秒的延迟，也就是说如果我们用 requests 来爬取其中某个页面的话，至少需要 5 秒才能得到响应。
+下面我们来用 requests 写一个遍历程序，直接遍历 1~100 部电影数据，代码实现如下：
+1234567891011
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-31 17:03" pubdate>
+              2021-05-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/asyncio/">asyncio</a>
             
           </div>
         
@@ -767,7 +778,7 @@ bytes以及可变的bytearray与str不同，只能用字节作为序列值，即
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><a class="extend next" rel="next" href="/page/8/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/6/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/#board">11</a><a class="extend next" rel="next" href="/page/8/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
