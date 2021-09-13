@@ -1,0 +1,650 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>Session和Cookies - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Session和Cookies">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-05-12 10:51" pubdate>
+        2021年5月12日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Session和Cookies</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月9日 早上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="静态网页和动态网页"><a href="#静态网页和动态网页" class="headerlink" title="静态网页和动态网页"></a>静态网页和动态网页</h2><p>示例代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>This is a Demo<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span> <br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;container&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;wrapper&quot;</span>&gt;</span> <br>        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;title&quot;</span>&gt;</span>Hello World<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span> <br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>Hello, this is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span> <br>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span> <br>      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span> <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是最基本的HTML代码，保存为一个<code>.html</code>文件，然后把它放在某台具有固定公网<code>IP</code>的主机上，主机上装上<code>Apache</code>或<code>Nginx</code>等服务器，这样这台主机就可以作为服务器了，其他人便可以通过访问服务器看到这个页面，这就搭建了一个最简单的网站。</p>
+<p>这种网页的内容是HTML代码编写的，文字、图片等内容均通过写好的HTML代码来指定，这种页面叫作静态网页。它加载速度快，编写简单，但是存在很大的缺陷，如可维护性差，不能根据<code>URL</code>灵活多变地显示内容等。例如，想要给这个网页的<code>URL</code>传入一个<code>name</code>参数，让其在网页中显示出来，是无法做到的。</p>
+<p>因此，动态网页应运而生，它可以动态解析<code>URL</code>中参数的变化，关联数据库并动态呈现不同的页面内容，非常灵活多变。现在遇到的大多数网站都是动态网站，它们不再是一个简单的<code>HTML</code>，而是可能由<code>JSP</code>、<code>PHP</code>、<code>Python</code>等语言编写的，其功能比静态网页强大和丰富太多了。</p>
+<p>此外，动态网站还可以实现用户登录和注册的功能。按照一般的逻辑来说，输入用户名和密码登录之后，肯定是拿到了一种类似凭证的东西，有了它，才能保持登录状态，才能访问登录之后才能看到的页面。</p>
+<p>那么，这种神秘的凭证到底是什么呢？其实它就是 Session和Cookies 共同产生的结果。</p>
+<h2 id="无状态HTTP"><a href="#无状态HTTP" class="headerlink" title="无状态HTTP"></a>无状态HTTP</h2><p>在了解<code>Session</code>和<code>Cookies</code>之前，还需要了解<code>HTTP</code>的一个特点，叫作无状态。</p>
+<p><code>HTTP</code>的无状态是指<code>HTTP</code>协议对事务处理是没有记忆能力的，也就是说服务器不知道客户端是什么状态。</p>
+<p>当向服务器发送请求后，服务器解析此请求，然后返回对应的响应，服务器负责完成这个过程，而且这个过程是完全独立的，服务器不会记录前后状态的变化，也就是缺少状态记录。</p>
+<p>这意味着如果后续需要处理前面的信息，则必须重传，这也导致需要额外传递一些前面的重复请求，才能获取后续响应，这种效果显然不是想要的。为了保持前后状态，肯定不能将前面的请求全 部重传一次，这太浪费资源了，对于这种需要用户登录的页面来说，更是棘手。</p>
+<p>这时两个用于保持<code>HTTP</code>连接状态的技术就出现了，它们分别是<code>Session</code>和<code>Cookies</code>。<code>Session</code>在服务端，也就是网站的服务器，用来保存用户的<code>Session信息</code>；<code>Cookies</code>在客户端，也可以理解为<strong>浏览器端</strong>，有了<code>Cookies</code>，浏览器在下次访问网页时会自动附带上它发送给服务器，服务器通过识别<code>Cookies</code>并鉴定出是哪个用户，然后再判断用户是否是登录状态，进而返回对应的响应。</p>
+<p>可以理解为<code>Cookies</code>里面保存了登录的凭证，有了它，只需要在下次请求携带<code>Cookies</code>发送请求而不必重新输入用户名、密码等信息重新登录了。</p>
+<p>因此在爬虫中，有时候处理需要登录才能访问的页面时，一般会直接将登录成功后获取的<code>Cookies</code>放在请求头里面直接请求，而不必重新模拟登录。</p>
+<h2 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h2><p><code>Cookies</code>指某些网站为了辨别用户身份、进行<code>Session</code>跟踪而存储在用户本地终端上的数据。</p>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p><code>Session</code>，中文称之为<strong>会话</strong>，其本身的含义是指有始有终的一系列动作/消息。比如，打电话时，从拿起电话拨号到挂断电话这中间的一系列过程可以称为一个 <code>Session</code>。</p>
+<p>而在<code>Web</code>中，<code>Session对象</code>用来存储特定用户<code>Session</code>所需的属性及配置信息。这样，当用户在应用程序的<code>Web</code>页之间跳转时，存储在<code>Session</code>对象中的变量将不会丢失，而是在整个用户<code>Session</code>中一直存在下去。当用户请求来自应用程序的<code>Web</code>页时，如果该用户还没有<code>Session</code>，则<code>Web</code>服务器将自动创建一个 <code>Session</code>对象。当<code>Session</code>过期或被放弃后，服务器将终止该<code>Session</code>。</p>
+<h2 id="Session维持"><a href="#Session维持" class="headerlink" title="Session维持"></a>Session维持</h2><p>那么，怎样利用<code>Cookies</code>保持状态呢？当客户端第一次请求服务器时，服务器会返回一个响应头中带有<code>Set-Cookie</code>字段的响应给客户端，用来标记是哪一个用户，客户端浏览器会把<code>Cookies</code>保存起来。当浏览器下一次再请求该网站时，浏览器会把此<code>Cookies</code>放到请求头一起提交给服务器，<code>Cookies</code>携带了<code>SessionID</code> 信息，服务器检查该<code>Cookies</code>即可找到对应的<code>Session</code>是什么，然后再判断<code>Session</code>来以此来辨认用户状态。</p>
+<p>在成功登录某个网站时，服务器会告诉客户端设置哪些<code>Cookies</code>信息，在后续访问页面时客户端会把<code>Cookies</code>发送给服务器，服务器再找到对应的<code>Session</code>加以判断。如果<code>Session</code>中的某些设置登录状态的变量是有效的，那就证明用户处于登录状态，此时返回登录之后才可以查看的网页内容，浏览器再进行解析便可以看到了。</p>
+<p>反之，如果传给服务器的<code>Cookies</code>是无效的，或者<code>Session</code>已经过期了，将不能继续访问页面，此时可能会收到错误的响应或者跳转到登录页面重新登录。 所以，<code>Cookies</code>和<code>Session</code>需要配合，一个处于客户端，一个处于服务端，二者共同协作，就实现了登录<code>Session</code>控制。</p>
+<h2 id="Cookies属性结构"><a href="#Cookies属性结构" class="headerlink" title="Cookies属性结构"></a>Cookies属性结构</h2><p><code>Cookie</code>有如下几个属性。</p>
+<ul>
+<li><code>Name</code>，即该<code>Cookie</code>的名称。</li>
+<li><code>Cookie</code>一旦创建，名称便不可更改。</li>
+<li><code>Value</code>，即该<code>Cookie</code>的值。如果值为<code>Unicode</code>字符，需要为字符编码。如果值为二进制数据，则需要使用<code>BASE64</code>编码。</li>
+<li><code>MaxAge</code>，即该<code>Cookie</code>失效的时间，单位秒，也常和<code>Expires</code>一起使用，通过它可以计算出其有效时间。</li>
+<li><code>MaxAge</code> 如果为正数，则该<code>Cookie</code>在<code>MaxAge</code>秒之后失效。如果为负数，则关闭浏览器时<code>Cookie</code>即失效，浏览器也不会以任何形式保存该<code>Cookie</code>。</li>
+<li><code>Path</code>，即该<code>Cookie</code>的使用路径。如果设置为<code>/path/</code>，则只有路径为<code>/path/</code>的页面可以访问该<code>Cookie</code>。如果设置为<code>/</code>，则本域名下的所有页面都可以访问该<code>Cookie</code>。</li>
+<li><code>Domain</code>，即可以访问该<code>Cookie</code>的域名。例如如果设置为<code>.zhihu.com</code>，则所有以<code>zhihu.com</code>，结尾的域名都可以访问该<code>Cookie</code>。</li>
+<li><code>Size</code>字段，即此<code>Cookie</code>的大小。</li>
+<li><code>Http</code>字段，即<code>Cookie</code>的<code>httponly</code>属性。若此属性为<code>true</code>，则只有在<code>HTTP Headers</code>中会带有此<code>Cookie</code>的信息，而不能通过<code>document.cookie</code>来访问此<code>Cookie</code>。</li>
+<li><code>Secure</code>，即该<code>Cookie</code>是否仅被使用安全协议传输。安全协议。安全协议有<code>HTTPS、SSL</code>等，在网络上传输数据之前先将数据加密。默认为<code>false</code>。</li>
+</ul>
+<h2 id="会话会Cookie和持久和Cookie"><a href="#会话会Cookie和持久和Cookie" class="headerlink" title="会话会Cookie和持久和Cookie"></a>会话会<code>Cookie</code>和持久和<code>Cookie</code></h2><p>从表面意思来说，会话<code>Cookie</code>就是把<code>Cookie</code>放在浏览器内存里，浏览器在关闭之后该<code>Cookie</code>即失效；持久<code>Cookie</code>则会保存到客户端的硬盘中，下次还可以继续使用，用于长久保持用户登录状态。</p>
+<p>严格来说，没有会话<code>Cookie</code>和持久<code>Cookie</code>之分，只是由<code>Cookie</code>的<code>MaxAge</code>或<code>Expires</code>字段决定了过期的时间。 因此，一些持久化登录的网站其实就是把<code>Cookie</code>的有效时间和<code>Session</code>有效期设置得比较长，下次再访问页面时仍然携带之前的<code>Cookie</code>，就可以直接保持登录状态。</p>
+<h2 id="常见误区"><a href="#常见误区" class="headerlink" title="常见误区"></a>常见误区</h2><p>在谈论<code>Session</code>机制的时候，常常听到这样一种误解 ——“只要关闭浏览器，<code>Session</code>就消失了”。可以想象一下会员卡的例子，除非顾客主动对店家提出销卡，否则店家绝对不会轻易删除顾客的资料。对<code>Session</code>来说，也是一样，除非程序通知服务器删除一个<code>Session</code>，否则服务器会一直保留。比如，程序一般都是在做注销操作时才去删除<code>Session</code>。</p>
+<p>但是当关闭浏览器时，浏览器不会主动在关闭之前通知服务器它将要关闭，所以服务器根本不会有机会知道浏览器已经关闭。之所以会有这种错觉，是因为大部分网站都使用会话<code>Cookie</code>来保存<code>Session ID</code>信息，而关闭浏览器后<code>Cookies</code>就消失了，再次连接服务器时，也就无法找到原来的<code>Session</code>了。如果服务器设置的<code>Cookies</code>保存到硬盘上，或者使用某种手段改写浏览器发出的<code>HTTP</code>请求头，把原来的<code>Cookies</code>发送给服务器，则再次打开浏览器，仍然能够找到原来的<code>Session ID</code>，依旧还是可以保持登录状态的。</p>
+<p>而且恰恰是由于关闭浏览器不会导致<code>Session</code>被删除，这就需要服务器为<code>Session</code>设置一个失效时间，当距离客户端上一次使用<code>Session</code>的时间超过这个失效时间时，服务器就可以认为客户端已经停止了活动，才会把<code>Session</code>删除以节省存储空间。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/http/">http</a>
+                    
+                      <a class="hover-with-bg" href="/tags/web/">web</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/17/python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">python多进程基本原理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/12/%E7%88%AC%E8%99%AB%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/">
+                        <span class="hidden-mobile">爬虫的基本原理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>

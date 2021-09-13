@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>爬取matplotlib例子源码文件 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="爬取matplotlib例子源码文件">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-14 14:07" pubdate>
+        2021年8月14日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">爬取matplotlib例子源码文件</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月9日 早上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="项目实战：爬取matplotlib例子源码文件"><a href="#项目实战：爬取matplotlib例子源码文件" class="headerlink" title="项目实战：爬取matplotlib例子源码文件"></a>项目实战：爬取matplotlib例子源码文件</h1><p>matplotlib是一个非常著名的Python绘图库，广泛应用于科学计算和数据分析等领域。在matplotlib网站上提供了许多应用例子代码，在浏览器中访问<a target="_blank" rel="noopener" href="https://matplotlib.org/2.0.2/examples/index.html">Matplotlib Examples — Matplotlib 2.0.2 documentation</a>，可看到下图页面。</p>
+<p><img src="image-20210814140923483.png" srcset="/img/loading.gif" lazyload></p>
+<p>其中有几百个例子，被分成多个类别，单击第一个例子，进入其页面，如图所示。</p>
+<img src="/image-20210814141011589.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" />
+
+<p>用户可以在每个例子页面中阅读源码，也可以点击页面中的<code>source code</code>按钮下载源码文件。如果我们想把所有例子的源码文件都下载到本地，可以编写一个爬虫程序完成这个任务。</p>
+<h2 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h2><p>下载<a target="_blank" rel="noopener" href="http://matplotlib.org网站中所有例子的源码文件到本地./">http://matplotlib.org网站中所有例子的源码文件到本地。</a></p>
+<h2 id="页面分析"><a href="#页面分析" class="headerlink" title="页面分析"></a>页面分析</h2><p>先来看如何在例子列表页面<a target="_blank" rel="noopener" href="https://matplotlib.org/2.0.2/examples/index.html">https://matplotlib.org/2.0.2/examples/index.html</a>中获取所有例子页面的链接。使用<code>scrapy shell</code>命令下载页面，然后调用<code>view</code>函数在浏览器中查看页面，如图所示。</p>
+<p><img src="image-20210814141609306.png" srcset="/img/loading.gif" lazyload></p>
+<p>观察发现，所有例子页面的链接都在<code>&lt;div class=&quot;toctree-wrappercompound&quot;&gt;</code>下的每一个<code>&lt;li class=&quot;toctree-l2&quot;&gt;</code>中，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&lt;a <span class="hljs-class"><span class="hljs-keyword">class</span>=&quot;<span class="hljs-title">reference</span> <span class="hljs-title">internal</span>&quot; <span class="hljs-title">href</span>=&quot;<span class="hljs-title">animation</span>/<span class="hljs-title">index</span>.<span class="hljs-title">html</span>&quot;&gt;<span class="hljs-title">animation</span> <span class="hljs-title">Examples</span>&lt;/<span class="hljs-title">a</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>使用<code>LinkExtractor</code>提取所有例子页面的链接，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> scrapy.linkextractors <span class="hljs-keyword">import</span> LinkExtractor<br><span class="hljs-meta">&gt;&gt;&gt; </span>le = LinkExtractor(restrict_css=<span class="hljs-string">&#x27;div.toctree-wrapper.compound li.toctree-l2&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>links = le.extract_links(response)<br><span class="hljs-meta">&gt;&gt;&gt; </span>[link.url <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> links]<br>[<span class="hljs-string">&#x27;https://matplotlib.org/2.0.2/examples/animation/animate_decay.html&#x27;</span>, <span class="hljs-string">&#x27;https://matplotlib.org/2.0.2/examples/animation/basic_example.html&#x27;</span>, <span class="hljs-string">&#x27;https</span><br><span class="hljs-string">://matplotlib.org/2.0.2/examples/animation/basic_example_writer.html&#x27;</span>, <span class="hljs-string">&#x27;https://matplotlib.org/2.0.2/examples/animation/bayes_update.html&#x27;</span>, <span class="hljs-string">&#x27;https:</span><br><span class="hljs-string">//matplotlib.org/2.0.2/examples/animation/double_pendulum_animated.html&#x27;</span>, <span class="hljs-string">&#x27;https://matplotlib.org/2.0.2/examples/animation/dynamic_image.html&#x27;</span>, <span class="hljs-string">&#x27;ht</span><br><span class="hljs-string">tps://matplotlib.org/2.0.2/examples/animation/dynamic_image2.html&#x27;</span>, <br> ...<br></code></pre></td></tr></table></figure>
+
+<p>例子列表页面分析完毕，总共找到了507个例子。</p>
+<p>接下来分析例子页面。调用fetch函数下载第一个例子页面，并调用view函数在浏览器中查看页面，如图所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pyt">&gt;&gt;&gt; fetch(&#x27;https://matplotlib.org/2.0.2/examples/animation/animate_decay.html&#x27;)<br>2021-08-14 15:00:33 [scrapy.core.engine] DEBUG: Crawled (200) &lt;GET https://matplotlib.org/2.0.2/examples/animation/animate_decay.html&gt; (referer: No<br>ne)<br>&gt;&gt;&gt; view(response)<br>True<br></code></pre></td></tr></table></figure>
+
+<p><img src="image-20210814150107493.png" srcset="/img/loading.gif" lazyload></p>
+<p>在一个例子页面中，例子源码文件的下载地址可在<code>&lt;a class=&quot;referenceexternal&quot;&gt;</code>中找到：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>href = response.css(<span class="hljs-string">&#x27;a.reference.external::attr(href)&#x27;</span>).extract_first()<br><span class="hljs-meta">&gt;&gt;&gt; </span>href<br><span class="hljs-string">&#x27;animate_decay.py&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>response.urljoin(href)<br><span class="hljs-string">&#x27;https://matplotlib.org/2.0.2/examples/animation/animate_decay.py&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>到此，页面分析的工作完成了。</p>
+<h3 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h3><p>接下来，我们按以下4步完成该项目：</p>
+<p>（1）创建Scrapy项目，并使用<code>scrapy genspider</code>命令创建<code>Spider</code>。</p>
+<p>（2）在配置文件中启用FilesPipeline，并指定文件下载目录。</p>
+<p>（3）实现<code>ExampleItem</code>（可选）。</p>
+<p>（4）实现<code>ExamplesSpider</code>。</p>
+<p><strong>步骤01</strong> 首先创建<code>Scrapy</code>项目，取名为<code>matplotlib_examples</code>，再使用<code>scrapygenspider</code>命令创建<code>Spider</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">$ scrapy startproject matplotlib_examples<br>$ cd matplotlib_examples<br>$ scrapy genspider examples matplotlib.org<br></code></pre></td></tr></table></figure>
+
+<p><strong>步骤02</strong> 在配置文件<code>settings.py</code>中启用<code>FilesPipeline</code>，并指定文件下载目录，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">ITEM_PIPELINES = &#123;<br>    <span class="hljs-string">&#x27;scrapy.pipelines.files.FilesPipeline&#x27;</span>: <span class="hljs-number">1</span>,<br>&#125;<br>FILES_STORE = <span class="hljs-string">&#x27;examples_src&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>步骤03</strong> 实现<code>ExampleItem</code>，需定义<code>file_urls</code>和<code>files</code>两个字段，在<code>items.py</code>中完成如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExampleItem</span>(<span class="hljs-params">scrapy.Item</span>):</span><br>    file_urls = scrapy.Field()<br>    files = scrapy.Field()<br></code></pre></td></tr></table></figure>
+
+<p><strong>步骤04</strong> 实现<code>ExamplesSpider</code>。首先设置起始爬取点：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExamplesSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    name = <span class="hljs-string">&#x27;examples&#x27;</span><br>    allowed_domains = [<span class="hljs-string">&#x27;matplotlib.org&#x27;</span>]<br>    start_urls = [<span class="hljs-string">&#x27;https://matplotlib.org/2.0.2/examples/index.html&#x27;</span>]<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+
+<p><code>parse</code>方法是例子列表页面的解析函数，在该方法中提取每个例子页面的链接，用其构造<code>Request</code>对象并提交，实现parse方法的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><span class="hljs-keyword">from</span> scrapy.linkextractors <span class="hljs-keyword">import</span> LinkExtractor<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExamplesSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    name = <span class="hljs-string">&#x27;examples&#x27;</span><br>    allowed_domains = [<span class="hljs-string">&#x27;matplotlib.org&#x27;</span>]<br>    start_urls = [<span class="hljs-string">&#x27;https://matplotlib.org/2.0.2/examples/index.html&#x27;</span>]<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        le = LinkExtractor(restrict_css=<span class="hljs-string">&#x27;div.toctree-wrapper.compound&#x27;</span>, deny=<span class="hljs-string">&#x27;/index.html&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(le.extract_links(response)))<br>        <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> le.extract_links(response):<br>            <span class="hljs-keyword">yield</span> scrapy.Request(link.url, callback=self.parse_example)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_example</span>(<span class="hljs-params">self, response</span>):</span><br>        <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+
+<p>面代码中，我们将例子页面的解析函数设置为<code>parse_example</code>方法，下面来实现这个方法。例子页面中包含了例子源码文件的下载链接，在<code>parse_example</code>方法中获取源码文件的url，将其放入一个列表，赋给<code>ExampleItem</code>的<code>file_urls</code>字段。实现<code>parse_example</code>方法的代码如下：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><span class="hljs-keyword">from</span> scrapy.linkextractors <span class="hljs-keyword">import</span> LinkExtractor<br><span class="hljs-keyword">from</span> ..items <span class="hljs-keyword">import</span> ExampleItem<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExamplesSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    name = <span class="hljs-string">&#x27;examples&#x27;</span><br>    allowed_domains = [<span class="hljs-string">&#x27;matplotlib.org&#x27;</span>]<br>    start_urls = [<span class="hljs-string">&#x27;https://matplotlib.org/2.0.2/examples/index.html&#x27;</span>]<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        le = LinkExtractor(restrict_css=<span class="hljs-string">&#x27;div.toctree-wrapper.compound&#x27;</span>, deny=<span class="hljs-string">&#x27;/index.html&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(le.extract_links(response)))<br>        <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> le.extract_links(response):<br>            <span class="hljs-keyword">yield</span> scrapy.Request(link.url, callback=self.parse_example)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_example</span>(<span class="hljs-params">self, response</span>):</span><br>        href = response.css(<span class="hljs-string">&#x27;a.reference.external::attr(href)&#x27;</span>).extract_first()<br>        url = response.urljoin(href)<br>        example = ExampleItem()<br>        example[<span class="hljs-string">&#x27;file_urls&#x27;</span>] = [url]<br>        <span class="hljs-keyword">return</span> example<br></code></pre></td></tr></table></figure>
+
+<p>编码完成后，运行爬虫，并观察结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy crawl examples -o examples.json<br></code></pre></td></tr></table></figure>
+
+<p>运行结束后，在文件examples.json中可以查看到文件下载结果信息：</p>
+<p><img src="image-20210814160121208.png" srcset="/img/loading.gif" lazyload></p>
+<p>再来查看文件下载目录exmaples_src：</p>
+<p><img src="image-20210814155737440.png" srcset="/img/loading.gif" lazyload></p>
+<p>507个源码文件被下载到了<code>examples_src/full</code>目录下，并且每个文件的名字都是一串长度相等的奇怪数字，这些数字是下载文件url的<code>sha1</code>散列值。</p>
+<p>这种命名方式可以防止重名的文件相互覆盖，但这样的文件名太不直观了，无法从文件名了解文件内容，我们期望把这些例子文件按照类别下载到不同目录下，为完成这个任务，可以写一个单独的脚本，依据<code>examples.json</code>文件中的信息将文件重命名，也可以修改<code>FilesPipeline</code>为文件命名的规则，这里采用后一种方式。</p>
+<p>阅读<code>FilesPipeline</code>的源码发现，原来是其中的<code>file_path</code>方法决定了文件的命名，相关代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">file_path</span>(<span class="hljs-params">self, request, response=<span class="hljs-literal">None</span>, info=<span class="hljs-literal">None</span>, *, item=<span class="hljs-literal">None</span></span>):</span><br>    media_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()<br>    media_ext = os.path.splitext(request.url)[<span class="hljs-number">1</span>]<br>    <span class="hljs-comment"># Handles empty and wild extensions by trying to guess the</span><br>    <span class="hljs-comment"># mime type then extension or default to empty string otherwise</span><br>    <span class="hljs-keyword">if</span> media_ext <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> mimetypes.types_map:<br>        media_ext = <span class="hljs-string">&#x27;&#x27;</span><br>        media_type = mimetypes.guess_type(request.url)[<span class="hljs-number">0</span>]<br>        <span class="hljs-keyword">if</span> media_type:<br>            media_ext = mimetypes.guess_extension(media_type)<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&#x27;full/<span class="hljs-subst">&#123;media_guid&#125;</span><span class="hljs-subst">&#123;media_ext&#125;</span>&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>现在，我们实现一个<code>FilesPipeline</code>的子类，覆写<code>file_path</code>方法来实现所期望的文件命名规则，这些源码文件url<code>的</code>最后两部分是类别和文件名，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">https://matplotlib.org/<span class="hljs-number">2.0</span><span class="hljs-number">.2</span>/examples/animation/(animate_decay.py)<br></code></pre></td></tr></table></figure>
+
+<p>可用以上括号中的部分作为文件路径，在<code>pipelines.py</code>实现<code>MyFilesPipeline</code>，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> urllib.parse <span class="hljs-keyword">import</span> urlparse<br><span class="hljs-keyword">from</span> os.path <span class="hljs-keyword">import</span> basename, dirname, join<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyFilePipline</span>(<span class="hljs-params">FilesPipeline</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">file_path</span>(<span class="hljs-params">self, request, response=<span class="hljs-literal">None</span>, info=<span class="hljs-literal">None</span></span>):</span><br>        path = urlparse(request.url).path<br>        <span class="hljs-keyword">return</span> join(basename(dirname(path)), basename(path))<br></code></pre></td></tr></table></figure>
+
+<p>修改配置文件，使用<code>MyFilesPipeline</code>替代<code>FilesPipeline</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">ITEM_PIPELINES = &#123;<br>    <span class="hljs-comment"># &#x27;scrapy.pipelines.files.FilesPipeline&#x27;: 1,</span><br>    <span class="hljs-string">&#x27;matplotlib_examples.pipelines.MyFilePipline&#x27;</span>: <span class="hljs-number">1</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>删除之前下载的所有文件，重新运行爬虫后，再来查看<code>examples_src</code>目录：</p>
+<p><img src="image-20210814161729928.png" srcset="/img/loading.gif" lazyload></p>
+<p>从上述结果看出，507个文件按类别被下载到26个目录下，这正是我们所期望的。</p>
+<p>到此，文件下载的项目完成了。</p>
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/scrapy/">scrapy</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/14/Cookie%E7%99%BB%E5%BD%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Cookie登录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/14/Scrapy%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E5%92%8C%E5%9B%BE%E7%89%87/">
+                        <span class="hidden-mobile">Scrapy下载文件和图片</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>

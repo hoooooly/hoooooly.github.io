@@ -1,0 +1,671 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>抓取网易云音乐热评 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="抓取网易云音乐热评">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-10 21:00" pubdate>
+        2021年6月10日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">抓取网易云音乐热评</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月9日 早上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>查看页面源代码，发现源代码中并不含有热评。通过工具抓包查看请求，数据是通过后端数据库请求过来的。</p>
+<p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
+<p>查看标头可以发现，这条获取热评的请求传递的参数是加密的。</p>
+<p><img src="Screenshot_2.webp" srcset="/img/loading.gif" lazyload></p>
+<p>首先，我们要找到未加密的参数。</p>
+<p>通过查看请求程序，可以看到当前网页调用了那些JS脚本执行过程，从下往上调用。</p>
+<p><img src="Screenshot_3.webp" srcset="/img/loading.gif" lazyload></p>
+<p>查看最上面的JS脚本，这是产生请求的最后一个脚本，看看这个脚本里面有什么。</p>
+<p><img src="Screenshot_4.webp" srcset="/img/loading.gif" lazyload></p>
+<p>点开后，咋一看没法理解，这是经过压缩后的JS脚本，没关系，点击左下方的<code>&#123;&#125;</code>优质打印，就是格式化该脚本。</p>
+<p><img src="Screenshot_5.webp" srcset="/img/loading.gif" lazyload></p>
+<p>通过查看JS脚本，发现最后的请求就是通过<code>send</code>函数发送出去的，在这里设置断点。</p>
+<p><img src="Screenshot_6.webp" srcset="/img/loading.gif" lazyload></p>
+<p>重新刷新页面，可以看到所有的变量，找到<code>request</code>中的<code>url</code>为<code>/weapi/cdns?csrf_token=</code>，不是我们想要的地址，继续刷新，</p>
+<p><img src="Screenshot_7.webp" srcset="/img/loading.gif" lazyload></p>
+<p>直到出现<code>https://music.163.com/weapi/comment/resource/comments/get?csrf_token=</code>，这就是我们想要的<code>url</code>。</p>
+<p><img src="Screenshot_8.webp" srcset="/img/loading.gif" lazyload></p>
+<p>从上图中可以看到，<code>params</code>参数是经过加密的，接着往上分析。</p>
+<p><img src="Screenshot_9.webp" srcset="/img/loading.gif" lazyload></p>
+<p>查看这里，<code>d7e</code>参数，查看这里的<code>params</code>依旧是加密的。接着往回找，是谁调用的<code>b7g.bsO0x</code>函数。</p>
+<p><img src="Screenshot_10.webp" srcset="/img/loading.gif" lazyload></p>
+<p>这里可以看到<code>params</code>参数依旧是加密的。</p>
+<p><img src="Screenshot_11.webp" srcset="/img/loading.gif" lazyload></p>
+<p>找到这里就可以看到<code>params</code>参数没有加密，说明加密过程就在<code> t7m.be7X</code>函数中完成。</p>
+<p><img src="Screenshot_12.webp" srcset="/img/loading.gif" lazyload></p>
+<p>在这一步中<code>i7b</code>就是未加密的信息，通过这段JS代码后，变成了加密的<code>e7d</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript">i7b:<br>  csrf_token: <span class="hljs-string">&quot;&quot;</span><br>  <span class="hljs-attr">cursor</span>: <span class="hljs-string">&quot;-1&quot;</span><br>  <span class="hljs-attr">offset</span>: <span class="hljs-string">&quot;0&quot;</span><br>  <span class="hljs-attr">orderType</span>: <span class="hljs-string">&quot;1&quot;</span><br>  <span class="hljs-attr">pageNo</span>: <span class="hljs-string">&quot;1&quot;</span><br>  <span class="hljs-attr">pageSize</span>: <span class="hljs-string">&quot;20&quot;</span><br>  <span class="hljs-attr">rid</span>: <span class="hljs-string">&quot;R_SO_4_1465401422&quot;</span><br>  <span class="hljs-attr">threadId</span>: <span class="hljs-string">&quot;R_SO_4_1465401422&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>那么，接下来就需要对这段JS代码进行分析，找到加密的逻辑，然后我们自己来写一个相同的逻辑模拟这个请求。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> cJt0x = t7m.be7X; <br>t7m.be7X = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">X7Q, e7d</span>) </span>&#123;<br>    <span class="hljs-keyword">var</span> i7b = &#123;&#125;<br>      , e7d = NEJ.X(&#123;&#125;, e7d)<br>      , mi1x = X7Q.indexOf(<span class="hljs-string">&quot;?&quot;</span>);<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.GEnc &amp;&amp; <span class="hljs-regexp">/(^|\.com)\/api/</span>.test(X7Q) &amp;&amp; !(e7d.headers &amp;&amp; e7d.headers[ew8o.BH9y] == ew8o.Jf1x) &amp;&amp; !e7d.noEnc) &#123;<br>        <span class="hljs-keyword">if</span> (mi1x != -<span class="hljs-number">1</span>) &#123;<br>            i7b = j7c.gQ9H(X7Q.substring(mi1x + <span class="hljs-number">1</span>));<br>            X7Q = X7Q.substring(<span class="hljs-number">0</span>, mi1x)<br>        &#125;<br>        <span class="hljs-keyword">if</span> (e7d.query) &#123;<br>            i7b = NEJ.X(i7b, j7c.fO9F(e7d.query) ? j7c.gQ9H(e7d.query) : e7d.query)<br>        &#125;<br>        <span class="hljs-keyword">if</span> (e7d.data) &#123;<br>            i7b = NEJ.X(i7b, j7c.fO9F(e7d.data) ? j7c.gQ9H(e7d.data) : e7d.data)<br>        &#125;<br>        i7b[<span class="hljs-string">&quot;csrf_token&quot;</span>] = t7m.gP9G(<span class="hljs-string">&quot;__csrf&quot;</span>);<br>        X7Q = X7Q.replace(<span class="hljs-string">&quot;api&quot;</span>, <span class="hljs-string">&quot;weapi&quot;</span>);<br>        e7d.method = <span class="hljs-string">&quot;post&quot;</span>;<br>        <span class="hljs-keyword">delete</span> e7d.query;<br>        <span class="hljs-keyword">var</span> bZo6i = <span class="hljs-built_in">window</span>.asrsea(<span class="hljs-built_in">JSON</span>.stringify(i7b), bmn9e([<span class="hljs-string">&quot;流泪&quot;</span>, <span class="hljs-string">&quot;强&quot;</span>]), bmn9e(WI6C.md), bmn9e([<span class="hljs-string">&quot;爱心&quot;</span>, <span class="hljs-string">&quot;女孩&quot;</span>, <span class="hljs-string">&quot;惊恐&quot;</span>, <span class="hljs-string">&quot;大笑&quot;</span>])); # bZo6i这个变量就是加密后的params和encSecKey。是经过<span class="hljs-built_in">window</span>.asrsea函数后加密的<br>        e7d.data = j7c.cr7k(&#123;<br>            <span class="hljs-attr">params</span>: bZo6i.encText,  # 这就是请求的params参数<br>            <span class="hljs-attr">encSecKey</span>: bZo6i.encSecKey  # 这就是请求的encSecKey参数<br>        &#125;)<br>    &#125;<br>    <span class="hljs-keyword">var</span> cdnHost = <span class="hljs-string">&quot;y.music.163.com&quot;</span>;<br>    <span class="hljs-keyword">var</span> apiHost = <span class="hljs-string">&quot;interface.music.163.com&quot;</span>;<br>    <span class="hljs-keyword">if</span> (location.host === cdnHost) &#123;<br>        X7Q = X7Q.replace(cdnHost, apiHost);<br>        <span class="hljs-keyword">if</span> (X7Q.match(<span class="hljs-regexp">/^\/(we)?api/</span>)) &#123;<br>            X7Q = <span class="hljs-string">&quot;//&quot;</span> + apiHost + X7Q<br>        &#125;<br>        e7d.cookie = <span class="hljs-literal">true</span><br>    &#125;<br>    cJt0x(X7Q, e7d)<br></code></pre></td></tr></table></figure>
+
+<p>加密的函数就是<code>window.asrsea</code>，这个函数一共传入了四个参数，把他们找出来一个个分析。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">window</span>.asrsea(<span class="hljs-built_in">JSON</span>.stringify(i7b), bmn9e([<span class="hljs-string">&quot;流泪&quot;</span>, <span class="hljs-string">&quot;强&quot;</span>]), bmn9e(WI6C.md), bmn9e([<span class="hljs-string">&quot;爱心&quot;</span>, <span class="hljs-string">&quot;女孩&quot;</span>, <span class="hljs-string">&quot;惊恐&quot;</span>, <span class="hljs-string">&quot;大笑&quot;</span>])<br></code></pre></td></tr></table></figure>
+
+<p>通过上下文搜索，找到<code>window.asrsea = d</code>，来看这个<code>d</code>函数做i了那些加密工作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span>(<span class="hljs-params">a</span>) </span>&#123; # a= <span class="hljs-number">16</span><br>    <span class="hljs-keyword">var</span> d, e, b = <span class="hljs-string">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&quot;</span>, c = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">for</span> (d = <span class="hljs-number">0</span>; a &gt; d; d += <span class="hljs-number">1</span>) # 循环<span class="hljs-number">16</span>次<br>        e = <span class="hljs-built_in">Math</span>.random() * b.length, # 产生的随机数<br>        e = <span class="hljs-built_in">Math</span>.floor(e), # 取整<br>        c += b.charAt(e); # 取字符串中的xxx位<br>    <span class="hljs-keyword">return</span> c #　返回<span class="hljs-number">16</span>位随机的字符串<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span>(<span class="hljs-params">a, b</span>) </span>&#123; # a是要加密的内容<br>    <span class="hljs-keyword">var</span> c = CryptoJS.enc.Utf8.parse(b) # b就是密钥<br>      , d = CryptoJS.enc.Utf8.parse(<span class="hljs-string">&quot;0102030405060708&quot;</span>)<br>      , e = CryptoJS.enc.Utf8.parse(a) # e是a传入的数据<br>      , f = CryptoJS.AES.encrypt(e, c, &#123; # c是加密的密钥<br>        <span class="hljs-attr">iv</span>: d, # 偏移量<br>        <span class="hljs-attr">mode</span>: CryptoJS.mode.CBC # CBC加密模式<br>    &#125;);<br>    <span class="hljs-keyword">return</span> f.toString()<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span>(<span class="hljs-params">a, b, c</span>) </span>&#123; # c里面没有随机函数<br>    <span class="hljs-keyword">var</span> d, e;<br>    <span class="hljs-keyword">return</span> setMaxDigits(<span class="hljs-number">131</span>),<br>    d = <span class="hljs-keyword">new</span> RSAKeyPair(b,<span class="hljs-string">&quot;&quot;</span>,c),<br>    e = encryptedString(d, a)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">d</span>(<span class="hljs-params">d, e, f, g</span>) </span>&#123;  <br>    <span class="hljs-keyword">var</span> h = &#123;&#125;  # 定义h空对象<br>      , i = a(<span class="hljs-number">16</span>); # i就是<span class="hljs-number">16</span>位的随机值 把i设置成定值 <br>    <span class="hljs-keyword">return</span> h.encText = b(d, g), #  g是密钥<br>    h.encText = b(h.encText, i), # 返回的就是params, i是密钥<br>    h.encSecKey = c(i, e, f), # 得到的就是encSecKey, e和f是固定的值, i固定后，encSecKey一定是固定的<br>    h<br><br>    # 两次加密<br>    # 数据+<span class="hljs-function"><span class="hljs-params">g</span> =&gt;</span> 第一次加密结果 + <span class="hljs-function"><span class="hljs-params">i</span> =&gt;</span> params<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">e</span>(<span class="hljs-params">a, b, d, e</span>) </span>&#123;<br>    <span class="hljs-keyword">var</span> f = &#123;&#125;;<br>    <span class="hljs-keyword">return</span> f.encText = c(a + e, b, d),<br>    f<br>&#125;<br><span class="hljs-built_in">window</span>.asrsea = d,<br><span class="hljs-built_in">window</span>.ecnonasr = e<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>第一个参数<code>JSON.stringify(i7b)</code>：这里的<code>i7b</code>就是未经加密的数据。</li>
+<li>第二个的参数<code>bmn9e([&quot;流泪&quot;, &quot;强&quot;])</code>：执行了<code>bmn9e</code>函数，把这个复制到console中执行，可以发现是个固定值始终为<code>&quot;010001&quot;</code>。</li>
+<li>第三个参数<code>bmn9e(WI6C.md)</code>：在控制台执行，可以发现也是固定值<code>&quot;00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7&quot;</code></li>
+<li>第三个参数<code>bmn9e([&quot;爱心&quot;, &quot;女孩&quot;, &quot;惊恐&quot;, &quot;大笑&quot;]</code>：可以发现也是固定值<code>&quot;0CoJUm6Qyw8W8jud&quot;</code>。</li>
+</ul>
+<p>那么这里<code>function d(d, e, f, g)</code>中的<code>d</code>、<code>e</code>、<code>f</code>、<code>g</code>就分别找到了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 没有经过加密的真实参数</span><br>data = &#123;<br>  <span class="hljs-string">&quot;csrf_token&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;cursor&quot;</span>: <span class="hljs-string">&quot;-1&quot;</span>,<br>  <span class="hljs-string">&quot;offset&quot;</span>: <span class="hljs-string">&quot;0&quot;</span>,<br>  <span class="hljs-string">&quot;orderType&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;pageNo&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-string">&quot;pageSize&quot;</span>: <span class="hljs-string">&quot;20&quot;</span>,<br>  <span class="hljs-string">&quot;rid&quot;</span>: <span class="hljs-string">&quot;R_SO_4_1465401422&quot;</span>,<br>  <span class="hljs-string">&quot;threadId&quot;</span>: <span class="hljs-string">&quot;R_SO_4_1465401422&quot;</span><br>&#125;<br><br><span class="hljs-comment"># 处理加密过程</span><br>d = data<br>e = <span class="hljs-string">&quot;010001&quot;</span><br>f = <span class="hljs-string">&quot;00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7&quot;</span><br>g = <span class="hljs-string">&quot;0CoJUm6Qyw8W8jud&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>然后，把参数按照网易的规则进行加密处理，得到两个参数<code>params</code>和<code>encSecKry</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><br></code></pre></td></tr></table></figure>
+
+<p>最后，请求到网易，拿到评论信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br><span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64encode<br><span class="hljs-comment"># 请求的url</span><br><br>url = <span class="hljs-string">&#x27;https://music.163.com/weapi/comment/resource/comments/get?csrf_token=&#x27;</span><br><br><span class="hljs-comment"># 请求方式post</span><br><br><span class="hljs-comment"># 没有经过加密的真实参数</span><br>data = &#123;<br>    <span class="hljs-string">&quot;csrf_token&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>    <span class="hljs-string">&quot;cursor&quot;</span>: <span class="hljs-string">&quot;-1&quot;</span>,<br>    <span class="hljs-string">&quot;offset&quot;</span>: <span class="hljs-string">&quot;0&quot;</span>,<br>    <span class="hljs-string">&quot;orderType&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>    <span class="hljs-string">&quot;pageNo&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>    <span class="hljs-string">&quot;pageSize&quot;</span>: <span class="hljs-string">&quot;20&quot;</span>,<br>    <span class="hljs-string">&quot;rid&quot;</span>: <span class="hljs-string">&quot;R_SO_4_1465401422&quot;</span>,<br>    <span class="hljs-string">&quot;threadId&quot;</span>: <span class="hljs-string">&quot;R_SO_4_1465401422&quot;</span>,<br>&#125;<br><br><span class="hljs-comment"># 处理加密过程</span><br><br>d = data<br>e = <span class="hljs-string">&quot;010001&quot;</span><br>f = <span class="hljs-string">&quot;00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7&quot;</span><br>g = <span class="hljs-string">&quot;0CoJUm6Qyw8W8jud&quot;</span><br>i = <span class="hljs-string">&quot;8vUt6QwGJDa5do4h&quot;</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_encSecKey</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;b5fd7a3aa4b1bbab923026c03b1ebfb46ec108dbf90d7b968ff3953d58b0b7ac87a331043a9676a359051a5002a3a65c0bdf0c2b5f1519ddf153c26daeb5fdf0f43d25ca56d75c874fa98eebfec7d858f327f342f06aa03bb1f3250d4d8f7c3ab0ff2f7dd168ff9ea1327df172943a819d6fd0986699118de2ba25c535d22e4d&quot;</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_params</span>(<span class="hljs-params">data</span>):</span><br>    first = enc_params(data, g)<br>    second = enc_params(first, i)<br>    <span class="hljs-keyword">return</span> second<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">to_16</span>(<span class="hljs-params">data</span>):</span><br>    pad = <span class="hljs-number">16</span> - <span class="hljs-built_in">len</span>(data) % <span class="hljs-number">16</span><br>    data += <span class="hljs-built_in">chr</span>(pad) * pad<br>    <span class="hljs-keyword">return</span> data<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">enc_params</span>(<span class="hljs-params">data, key</span>):</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;加密过程&#x27;&#x27;&#x27;</span><br>    data = to_16(data)<br>    iv = <span class="hljs-string">&quot;0102030405060708&quot;</span><br>    aes = AES.new(key=key.encode(<span class="hljs-string">&quot;utf-8&quot;</span>), IV=iv.encode(<span class="hljs-string">&quot;utf-8&quot;</span>),<br>                  mode=AES.MODE_CBC)  <span class="hljs-comment"># 新建一个加密对象</span><br>    bs = aes.encrypt(data.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>))  <span class="hljs-comment"># 加密内容的长度必须是16的倍数</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(b64encode(bs), <span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    resp = requests.post(url=url, data=&#123;<br>        <span class="hljs-string">&quot;params&quot;</span>: get_params(json.dumps(data)),<br>        <span class="hljs-string">&quot;encSecKey&quot;</span>: get_encSecKey()<br>    &#125;)<br>    <span class="hljs-built_in">print</span>(resp.text)<br></code></pre></td></tr></table></figure>
+
+<p>兄弟们，我拿到了，有些细节还不清楚，以后再深究。</p>
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/11/Django%E5%85%A5%E9%97%A8-%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Django入门-视图函数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/">
+                        <span class="hidden-mobile">Django入门-模型设计</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>

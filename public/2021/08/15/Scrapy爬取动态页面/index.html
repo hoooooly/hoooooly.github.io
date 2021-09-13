@@ -1,0 +1,874 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>Scrapy爬取动态页面-scrapy-splash - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Scrapy爬取动态页面-scrapy-splash">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-15 09:42" pubdate>
+        2021年8月15日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      68
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Scrapy爬取动态页面-scrapy-splash</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月9日 早上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>在现实中，目前绝大多数网站的页面都是动态页面，动态页面中的部分内容是浏览器运行页面中的<code>JavaScript</code>脚本动态生成的，爬取相对困难，这一章来学习如何爬取动态页面。</p>
+<p>先来看一个简单的动态页面的例子，在浏览器中打开<a target="_blank" rel="noopener" href="http://quotes.toscrape.com/js%EF%BC%8C%E6%98%BE%E7%A4%BA%E5%A6%82%E5%9B%BE%E6%89%80%E7%A4%BA%E3%80%82">http://quotes.toscrape.com/js，显示如图所示。</a></p>
+<p><img src="image-20210815094432155.png" srcset="/img/loading.gif" lazyload></p>
+<p>页面中有10条名人名言，每一条都包含在一个<code>&lt;div class=&quot;quote&quot;&gt;</code>元素中。在<code>scrapy shell</code>环境下尝试爬取页面中的名人名言：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">$ scrapy shell http://quotes.toscrape.com/js<br><span class="hljs-meta">&gt;&gt;&gt; </span>response.css(<span class="hljs-string">&#x27;div.quote&#x27;</span>)<br>[]<br></code></pre></td></tr></table></figure>
+
+<p><img src="image-20210815094734907.png" srcset="/img/loading.gif" lazyload></p>
+<p>爬取失败了，在页面中没有找到任何包含名人名言的<code>&lt;divclass=&quot;quote&quot;&gt;</code>元素。这些<code>&lt;div class=&quot;quote&quot;&gt;</code>就是动态内容，从服务器下载的页面中并不包含它们（所以我们爬取失败），浏览器执行了页面中的一段<code>JavaScript</code>代码后，它们才被生成出来。</p>
+<p><img src="image-20210815094857124.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> data = [<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;change&quot;</span>,<br>        <span class="hljs-string">&quot;deep-thoughts&quot;</span>,<br>        <span class="hljs-string">&quot;thinking&quot;</span>,<br>        <span class="hljs-string">&quot;world&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Albert Einstein&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/9810.Albert_Einstein&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Albert-Einstein&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cThe world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;abilities&quot;</span>,<br>        <span class="hljs-string">&quot;choices&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;J.K. Rowling&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/1077326.J_K_Rowling&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;J-K-Rowling&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cIt is our choices, Harry, that show what we truly are, far more than our abilities.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;inspirational&quot;</span>,<br>        <span class="hljs-string">&quot;life&quot;</span>,<br>        <span class="hljs-string">&quot;live&quot;</span>,<br>        <span class="hljs-string">&quot;miracle&quot;</span>,<br>        <span class="hljs-string">&quot;miracles&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Albert Einstein&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/9810.Albert_Einstein&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Albert-Einstein&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cThere are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;aliteracy&quot;</span>,<br>        <span class="hljs-string">&quot;books&quot;</span>,<br>        <span class="hljs-string">&quot;classic&quot;</span>,<br>        <span class="hljs-string">&quot;humor&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Jane Austen&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/1265.Jane_Austen&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Jane-Austen&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cThe person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;be-yourself&quot;</span>,<br>        <span class="hljs-string">&quot;inspirational&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Marilyn Monroe&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/82952.Marilyn_Monroe&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Marilyn-Monroe&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cImperfection is beauty, madness is genius and it&#x27;s better to be absolutely ridiculous than absolutely boring.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;adulthood&quot;</span>,<br>        <span class="hljs-string">&quot;success&quot;</span>,<br>        <span class="hljs-string">&quot;value&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Albert Einstein&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/9810.Albert_Einstein&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Albert-Einstein&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cTry not to become a man of success. Rather become a man of value.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;life&quot;</span>,<br>        <span class="hljs-string">&quot;love&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Andr\u00e9 Gide&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/7617.Andr_Gide&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Andre-Gide&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cIt is better to be hated for what you are than to be loved for what you are not.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;edison&quot;</span>,<br>        <span class="hljs-string">&quot;failure&quot;</span>,<br>        <span class="hljs-string">&quot;inspirational&quot;</span>,<br>        <span class="hljs-string">&quot;paraphrased&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Thomas A. Edison&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/3091287.Thomas_A_Edison&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Thomas-A-Edison&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cI have not failed. I&#x27;ve just found 10,000 ways that won&#x27;t work.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;misattributed-eleanor-roosevelt&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Eleanor Roosevelt&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/44566.Eleanor_Roosevelt&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Eleanor-Roosevelt&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cA woman is like a tea bag; you never know how strong it is until it&#x27;s in hot water.\u201d&quot;</span><br>&#125;,<br>&#123;<br>    <span class="hljs-string">&quot;tags&quot;</span>: [<br>        <span class="hljs-string">&quot;humor&quot;</span>,<br>        <span class="hljs-string">&quot;obvious&quot;</span>,<br>        <span class="hljs-string">&quot;simile&quot;</span><br>    ],<br>    <span class="hljs-string">&quot;author&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Steve Martin&quot;</span>,<br>        <span class="hljs-string">&quot;goodreads_link&quot;</span>: <span class="hljs-string">&quot;/author/show/7103.Steve_Martin&quot;</span>,<br>        <span class="hljs-string">&quot;slug&quot;</span>: <span class="hljs-string">&quot;Steve-Martin&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;text&quot;</span>: <span class="hljs-string">&quot;\u201cA day without sunshine is like, you know, night.\u201d&quot;</span><br>&#125;];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> data) &#123;<br>        <span class="hljs-keyword">var</span> d = data[i];<br>        <span class="hljs-keyword">var</span> tags = $.map(d[<span class="hljs-string">&#x27;tags&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">t</span>) </span>&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&lt;a class=&#x27;tag&#x27;&gt;&quot;</span> + t + <span class="hljs-string">&quot;&lt;/a&gt;&quot;</span>;<br>        &#125;).join(<span class="hljs-string">&quot; &quot;</span>);<br>        <span class="hljs-built_in">document</span>.write(<span class="hljs-string">&quot;&lt;div class=&#x27;quote&#x27;&gt;&lt;span class=&#x27;text&#x27;&gt;&quot;</span> + d[<span class="hljs-string">&#x27;text&#x27;</span>] + <span class="hljs-string">&quot;&lt;/span&gt;&lt;span&gt;by &lt;small class=&#x27;author&#x27;&gt;&quot;</span> + d[<span class="hljs-string">&#x27;author&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>] + <span class="hljs-string">&quot;&lt;/small&gt;&lt;/span&gt;&lt;div class=&#x27;tags&#x27;&gt;Tags: &quot;</span> + tags + <span class="hljs-string">&quot;&lt;/div&gt;&lt;/div&gt;&quot;</span>);<br>        &#125;<br></code></pre></td></tr></table></figure>
+<p>所有名人名言信息被保存在数组data中，最后的for循环迭代data中的每项信息，使用<code>document.write</code>生成每条名人名言对应的<code>&lt;div class=&quot;quote&quot;&gt;</code>元素。</p>
+<p>上面是动态网页中最简单的一个例子，数据被硬编码于<code>JavaScript</code>代码中，实际中更常见的是<code>JavaScript</code>通过HTTP请求跟网站动态交互获取数据（<code>AJAX</code>），然后使用数据更新HTML页面。爬取此类动态网页需要先执行页面中的<code>JavaScript</code>代码渲染页面，再进行爬取。</p>
+<h2 id="Splash渲染引擎"><a href="#Splash渲染引擎" class="headerlink" title="Splash渲染引擎"></a>Splash渲染引擎</h2><p>Splash是<code>Scrapy</code>官方推荐的JavaScript渲染引擎，它是使用<code>Webkit</code>开发的轻量级无界面浏览器，提供基于HTTP接口的JavaScript渲染服务，支持以下功能：</p>
+<p>为用户返回经过渲染的HTML页面或页面截图。</p>
+<ul>
+<li>并发渲染多个页面。</li>
+<li> 关闭图片加载，加速渲染。</li>
+<li> 在页面中执行用户自定义的JavaScript代码。</li>
+<li>执行用户自定义的渲染脚本（<code>lua</code>），功能类似于<code>PhantomJS</code>。</li>
+</ul>
+<p>首先安装<code>Splash</code>，在<code>linux</code>下使用<code>docker</code>安装十分方便：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> docker pull scrapinghub/splash<br></code></pre></td></tr></table></figure>
+<p>安装完成后，在本机的8050和8051端口开启Splash服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@VM-8-16-centos docker]#  sudo docker run -it -p 8050:8050 --rm scrapinghub/splash<br>2021-08-15 02:22:30+0000 [-] Log opened.<br>2021-08-15 02:22:30.880640 [-] Xvfb is started: [&#x27;Xvfb&#x27;, &#x27;:1396582278&#x27;, &#x27;-screen&#x27;, &#x27;0&#x27;, &#x27;1024x768x24&#x27;, &#x27;-nolisten&#x27;, &#x27;tcp&#x27;]<br>QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to &#x27;/tmp/runtime-splash&#x27;<br>2021-08-15 02:22:31.273181 [-] Splash version: 3.5<br>2021-08-15 02:22:32.250100 [-] Qt 5.14.1, PyQt 5.14.2, WebKit 602.1, Chromium 77.0.3865.129, sip 4.19.22, Twisted 19.7.0, Lua 5.2<br>2021-08-15 02:22:32.251646 [-] Python 3.6.9 (default, Jul 17 2020, 12:50:27) [GCC 8.4.0]<br>2021-08-15 02:22:32.251796 [-] Open files limit: 1048576<br>2021-08-15 02:22:32.251837 [-] Can&#x27;t bump open files limit<br>2021-08-15 02:22:32.352114 [-] proxy profiles support is enabled, proxy profiles path: /etc/splash/proxy-profiles<br>2021-08-15 02:22:32.353014 [-] memory cache: enabled, private mode: enabled, js cross-domain access: disabled<br>2021-08-15 02:22:32.735663 [-] verbosity=1, slots=20, argument_cache_max_entries=500, max-timeout=90.0<br>2021-08-15 02:22:32.735875 [-] Web UI: enabled, Lua: enabled (sandbox: enabled), Webkit: enabled, Chromium: enabled<br>2021-08-15 02:22:32.736222 [-] Site starting on 8050<br>2021-08-15 02:22:32.737289 [-] Starting factory &lt;twisted.web.server.Site object at 0x7f1700b435c0&gt;<br>2021-08-15 02:22:32.740763 [-] Server listening on http://0.0.0.0:8050<br></code></pre></td></tr></table></figure>
+
+<p>Splash功能丰富，包含多个服务端点，由于篇幅有限，这里只介绍其中两个最常用的端点：</p>
+<ul>
+<li><code>render.html</code>提供<code>JavaScript</code>页面渲染服务。</li>
+<li><code>execute</code>执行用户自定义的渲染脚本（<code>lua</code>），利用该端点可在页面中执行JavaScript代码。</li>
+</ul>
+<p>Splash文档地址：<a target="_blank" rel="noopener" href="http://splash.readthedocs.io/en/latest/api.html%E3%80%82">http://splash.readthedocs.io/en/latest/api.html。</a></p>
+<h3 id="render-html端点"><a href="#render-html端点" class="headerlink" title="render.html端点"></a><code>render.html</code>端点</h3><p>JavaScript页面渲染服务是<code>Splash</code>中最基础的服务:</p>
+<table>
+<thead>
+<tr>
+<th>服务端点</th>
+<th>render.html</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求地址</td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8050/render.html">http://localhost:8050/render.html</a></td>
+</tr>
+<tr>
+<td>请求方式</td>
+<td>GET/POST</td>
+</tr>
+<tr>
+<td>返回类型</td>
+<td>html</td>
+</tr>
+</tbody></table>
+<p><code>render.html</code>端点支持的参数:</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>是否必选</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>必选</td>
+<td>string</td>
+<td>需要渲染页面的url</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>可选</td>
+<td>float</td>
+<td>渲染页面的超时时间</td>
+</tr>
+<tr>
+<td>proxy</td>
+<td>可选</td>
+<td>string</td>
+<td>代理服务器地址</td>
+</tr>
+<tr>
+<td>wait</td>
+<td>可选</td>
+<td>float</td>
+<td>等待页面渲染的时间</td>
+</tr>
+<tr>
+<td>images</td>
+<td>可选</td>
+<td>interger</td>
+<td>是否下载图片，默认为1</td>
+</tr>
+<tr>
+<td>js_source</td>
+<td>可选</td>
+<td>string</td>
+<td>用户自定义的JavaScript代码，在页面渲染前执行</td>
+</tr>
+</tbody></table>
+<p>下面是使用requests库调用render.html端点服务对页面<a target="_blank" rel="noopener" href="http://quotes.toscrape.com/js/%E8%BF%9B%E8%A1%8C%E6%B8%B2%E6%9F%93%E7%9A%84%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%E3%80%82">http://quotes.toscrape.com/js/进行渲染的示例代码。</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> requests<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">from</span> scrapy.selector <span class="hljs-keyword">import</span> Selector<br><span class="hljs-meta">&gt;&gt;&gt; </span>splash_url = <span class="hljs-string">&#x27;http://localhost:8050/render.html&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>args = &#123;<span class="hljs-string">&#x27;url&#x27;</span>: <span class="hljs-string">&#x27;http://quotes.toscrape.com/js&#x27;</span>, <span class="hljs-string">&#x27;timeout&#x27;</span>: <span class="hljs-string">&#x27;5&#x27;</span>, <span class="hljs-string">&#x27;image&#x27;</span>: <span class="hljs-number">0</span>&#125;<br><span class="hljs-meta">&gt;&gt;&gt; </span>response = requests.get(splash_url, params=args)<br><span class="hljs-meta">&gt;&gt;&gt; </span>sel = Selector(response)<br><span class="hljs-meta">&gt;&gt;&gt; </span>sel.css(<span class="hljs-string">&#x27;div.quote span.text::text&#x27;</span>).extract()<br>[<span class="hljs-string">&#x27;“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”&#x27;</span>, <span class="hljs-string">&#x27;“It is our choices, Harry, that show what we truly are, far more than our abilities.”&#x27;</span>, <span class="hljs-string">&#x27;“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.”&#x27;</span>, <span class="hljs-string">&#x27;“The person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.”&#x27;</span>, <span class="hljs-string">&quot;“Imperfection is beauty, madness is genius and it&#x27;s better to be absolutely ridiculous than absolutely boring.”&quot;</span>, <span class="hljs-string">&#x27;“Try not to become a man of success. Rather become a man of value.”&#x27;</span>, <span class="hljs-string">&#x27;“It is better to be hated for what you are than to be loved for what you are not.”&#x27;</span>, <span class="hljs-string">&quot;“I have not failed. I&#x27;ve just found 10,000 ways that won&#x27;t work.”&quot;</span>, <span class="hljs-string">&quot;“A woman is like a tea bag; you never know how strong it is until it&#x27;s in hot water.”&quot;</span>, <span class="hljs-string">&#x27;“A day without sunshine is like, you know, night.”&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>在上述代码中，依据文档中的描述设置参数<code>url</code>、<code>timeout</code>、<code>images</code>，然后发送HTTP请求到服务接口地址。从运行结果看出，页面渲染成功，我们爬取到了页面中的10条名人名言。</p>
+<h3 id="execute端点"><a href="#execute端点" class="headerlink" title="execute端点"></a>execute端点</h3><p>在爬取某些页面时，我们想在页面中执行一些用户自定义的JavaScript代码，例如，用JavaScript模拟点击页面中的按钮，或调用页面中的JavaScript函数与服务器交互，利用Splash的execute端点提供的服务可以实现这样的功能。</p>
+<table>
+<thead>
+<tr>
+<th>服务端点</th>
+<th>execute</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求地址</td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8050/execute">http://localhost:8050/execute</a></td>
+</tr>
+<tr>
+<td>请求方式</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>返回类型</td>
+<td>自定义</td>
+</tr>
+</tbody></table>
+<p>execute端点支持的参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>必选/可选</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lua_source</td>
+<td>必选</td>
+<td>string</td>
+<td>用户自定义的lua脚本</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>可选</td>
+<td>float</td>
+<td>渲染页面的超时时间</td>
+</tr>
+<tr>
+<td>proxy</td>
+<td>可选</td>
+<td>string</td>
+<td>代理服务器地址</td>
+</tr>
+</tbody></table>
+<p>可以将execute端点的服务看作一个可用<code>lua</code>语言编程的浏览器，功能类似于<code>PhantomJS</code>。使用时需传递一个用户自定义的<code>lua</code>脚本给Splash，该<code>lua</code>脚本中包含用户想要模拟的浏览器行为，例如：</p>
+<ul>
+<li>打开某<code>url</code>地址的页面</li>
+<li>等待页面加载及渲染</li>
+<li>执行JavaScript代码</li>
+<li>获取HTTP响应头部</li>
+<li>获取Cookie</li>
+</ul>
+<p>下面是使用requests库调用execute端点服务的示例代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> requests<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> json<br><span class="hljs-meta">&gt;&gt;&gt; </span>lua_scrpit = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string"><span class="hljs-meta">... </span>    function main(splash)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>        splash:go(&quot;http://example.com&quot;)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>        splash: wait(0.5)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>        local title=splash:evaljs(&quot;document.title&quot;)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>        return&#123;title=title)</span><br><span class="hljs-string"><span class="hljs-meta">... </span>    end</span><br><span class="hljs-string"><span class="hljs-meta">... </span>&#x27;&#x27;&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>splash_url = <span class="hljs-string">&#x27;http://localhost:8050/execute&#x27;</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>headers = &#123;<span class="hljs-string">&#x27;content-type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>&#125;<br><span class="hljs-meta">&gt;&gt;&gt; </span>data = json.dumps(&#123;<span class="hljs-string">&#x27;lua_source&#x27;</span>: lua_scrpit&#125;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>response = requests.post(splash_url, headers=headers, data=data)<br><span class="hljs-meta">&gt;&gt;&gt; </span>response<br>&lt;Response [<span class="hljs-number">400</span>]&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span>response.json()<br>&#123;<span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-number">400</span>, <span class="hljs-string">&#x27;type&#x27;</span>: <span class="hljs-string">&#x27;ScriptError&#x27;</span>, <span class="hljs-string">&#x27;description&#x27;</span>: <span class="hljs-string">&#x27;Error happened while executing Lua script&#x27;</span>, <span class="hljs-string">&#x27;info&#x27;</span>: &#123;<span class="hljs-string">&#x27;source&#x27;</span>: <span class="hljs-string">&#x27;[string &quot;...&quot;]&#x27;</span>, <span class="hljs-string">&#x27;line_number&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&quot;&#x27;&#125;&#x27; expected near &#x27;)&#x27;&quot;</span>, <span class="hljs-string">&#x27;type&#x27;</span>: <span class="hljs-string">&#x27;LUA_INIT_ERROR&#x27;</span>, <span class="hljs-string">&#x27;message&#x27;</span>: <span class="hljs-string">&#x27;[string &quot;...&quot;]:6: \&#x27;&#125;\&#x27; expected near \&#x27;)\&#x27;&#x27;</span>&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>用户自定义的<code>lua</code>脚本中必须包含一个<code>main</code>函数作为程序入口，<code>main</code>函数被调用时会传入一个<code>splash</code>对象（<code>lua</code>中的对象），用户可以调用该对象上的方法操纵<code>Splash</code>。例如，在上面的例子中，先调用go方法打开某页面，再调用wait方法等待页面渲染，然后调用<code>evaljs</code>方法执行一个JavaScript表达式，并将结果转化为相应的<code>lua</code>对象，最终Splash根据main函数的返回值构造HTTP响应返回给用户，main函数的返回值可以是字符串，也可以是<code>lua</code>中的表（类似Python字典），表会被编码成<code>json</code>串。</p>
+<p>splash对象常用的属性和方法。</p>
+<ul>
+<li><p><code>splash.args</code>属性</p>
+<p>用户传入参数的表，通过该属性可以访问用户传入的参数，如<code>splash.args.url</code>、<code>splash.args.wait</code>。</p>
+</li>
+<li><p> <code>splash.js_enabled</code>属性</p>
+</li>
+</ul>
+<p>  用于开启/禁止JavaScript渲染，默认为true。</p>
+<ul>
+<li><p><code>splash.images_enabled</code>属性</p>
+<p>用于开启/禁止图片加载，默认为true。</p>
+</li>
+<li><p><code>splash:go</code>方法</p>
+<p><code>splash:go&#123;url, baseurl=nil, headers=nil, http_method=&quot;GET&quot;,body=nil, formdata=nil&#125;</code></p>
+<p>类似于在浏览器中打开某url地址的页面，页面所需资源会被加载，并进行JavaScript渲染，可以通过参数指定HTTP请求头部、请求方法、表单数据等。</p>
+</li>
+<li><p><code>splash:wait</code>方法</p>
+<p><code>splash:wait&#123;time, cancel_on_redirect=false, cancel_on_error=true&#125;</code></p>
+<p>等待页面渲染，time参数为等待的秒数。</p>
+</li>
+<li><p><code>splash:evaljs</code>方法</p>
+<p><code>splash:evaljs(snippet)</code></p>
+<p>在当前页面下，执行一段JavaScript代码，并返回最后一句表达式的值。</p>
+</li>
+<li><p> <code>splash:runjs</code>方法</p>
+</li>
+</ul>
+<p>  <code>splash:runjs(snippet)</code></p>
+<p>  在当前页面下，执行一段JavaScript代码，与evaljs方法相比，该函数只执行JavaScript代码，不返回值。</p>
+<ul>
+<li><p><code>splash:url</code>方法</p>
+<p><code>splash:url()</code></p>
+<p>获取当前页面的<code>url</code>。</p>
+</li>
+<li><p><code>splash:html</code>方法</p>
+<p><code>splash:html()</code></p>
+<p>获取当前页面的HTML文本。</p>
+</li>
+<li><p><code>splash:get_cookies</code>方法</p>
+<p><code>splash:get_cookies()</code></p>
+<p>获取全部Cookie信息．</p>
+</li>
+</ul>
+<h2 id="在Scrapy中使用Splash"><a href="#在Scrapy中使用Splash" class="headerlink" title="在Scrapy中使用Splash"></a>在Scrapy中使用Splash</h2><p>如何在<code>Scrapy</code>中调用<code>Splash</code>服务，Python库的<code>scrapy-splash</code>是非常好的选择。</p>
+<p>使用pip安装<code>scrapy-splash</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install scrapy-splash<br></code></pre></td></tr></table></figure>
+
+<p>在项目环境中讲解<code>scrapy-splash</code>的使用，创建一个<code>Scrapy</code>项目，取名为<code>splash_examples</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy startproject scrapy-splash<br></code></pre></td></tr></table></figure>
+
+<p>首先在项目配置文件<code>settings.py</code>中对<code>scrapy-splash</code>进行配置，添加内容如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Splash服务器地址</span><br>SPLASH_URL = <span class="hljs-string">&#x27;http://localhost:8050&#x27;</span><br><br><span class="hljs-comment"># 开启Splash的两个下载中间件并调整HttpCompressionMiddleware的次序</span><br>DOWNLOADER_MIDDLEWARES = &#123;<br>    <span class="hljs-string">&#x27;scrapy_splash.SplashCookiesMiddleware&#x27;</span>: <span class="hljs-number">723</span>,<br>    <span class="hljs-string">&#x27;scrapy_splash.SplashMiddleware&#x27;</span>: <span class="hljs-number">725</span>,<br>    <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware&#x27;</span>: <span class="hljs-number">810</span>,<br>&#125;<br><br><span class="hljs-comment"># 设置去重过滤器</span><br>DUPEFILTER_CLASS = <span class="hljs-string">&#x27;scrapy_splash.SplashAwareDupeFilter&#x27;</span><br><br><span class="hljs-comment"># 用来支持cache_args(可选）</span><br>SPIDER_MIDDLEWARES = &#123;<br>    <span class="hljs-string">&#x27;scrapy_splash.SplashDeduplicateArgsMiddleware&#x27;</span>: <span class="hljs-number">100</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>编写Spider代码过程中，使用<code>scrapy_splash</code>调用Splash服务非常简单，<code>scrapy_splash</code>中定义了一个<code>SplashRequest</code>类，用户只需使用<code>scrapy_splash.SplashRequest</code>（替代<code>scrapy.Request</code>）提交请求即可。下面是<code>SplashRequest</code>构造器方法中的一些常用参数。</p>
+<ul>
+<li><p><code>url</code></p>
+<p>与<code>scrapy.Request</code>中的<code>url</code>相同，也就是待爬取页面的<code>url</code>（注意，不是Splash服务器地址）。</p>
+</li>
+<li><p><code>headers</code></p>
+<p>与<code>scrapy.Request</code>中的<code>headers</code>相同。</p>
+</li>
+<li><p><code>cookies</code></p>
+<p>与<code>scrapy.Request</code>中的<code>cookies</code>相同。</p>
+</li>
+<li><p><code>args</code></p>
+<p>传递给Splash的参数（除<code>url</code>以外），如<code>wait</code>、<code>timeout</code>、<code>images</code>、<code>js_source</code>等。</p>
+</li>
+<li><p><code>cache_args</code></p>
+<p>如果<code>args</code>中的某些参数每次调用都重复传递并且数据量较大（例如一段JavaScript代码），此时可以把该参数名填入<code>cache_args</code>列表中，让Splash服务器缓存该参数，如<code>SplashRequest(url,args= &#123;&#39;js_source&#39;: js,&#39;wait&#39;: 0.5&#125;, cache_args = [&#39;js_source&#39;])</code>。</p>
+</li>
+<li><p><code>endpointSplash</code></p>
+<p>服务端点，默认为<code>’render.html&#39;</code>，即JavaScript页面渲染服务，该参数可以设置为<code>’render.json&#39;</code>、<code>&#39;render.har&#39;</code>、<code>&#39;render.png&#39;</code>、<code>&#39;render.jpeg&#39;</code>、<code>&#39;execute’</code>等</p>
+</li>
+<li><p><code>splash_url</code></p>
+<p>Splash服务器地址，默认为None，即使用配置文件中<code>SPLASH_URL</code>的地址。</p>
+</li>
+</ul>
+<h2 id="项目实战：爬取toscrape中的名人名言"><a href="#项目实战：爬取toscrape中的名人名言" class="headerlink" title="项目实战：爬取toscrape中的名人名言"></a>项目实战：爬取toscrape中的名人名言</h2><p>首先，在<code>splash_examples</code>项目目录下创建Spider：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy genspider quotes quotes.toscrape.com<br></code></pre></td></tr></table></figure>
+
+<p>接下来只需使用Splash的<code>render.html</code>端点渲染页面，再进行爬取即可实现<code>QuotesSpider</code>，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8</span><br><span class="hljs-keyword">import</span> scrapy<br><span class="hljs-keyword">from</span> scrapy_splash <span class="hljs-keyword">import</span> SplashRequest<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QuotesSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    name = <span class="hljs-string">&#x27;quotes&#x27;</span><br>    allowed_domains = [<span class="hljs-string">&#x27;quotes.toscrape.com&#x27;</span>]<br>    start_urls = [<span class="hljs-string">&#x27;http://quotes.toscrape.com/js/&#x27;</span>]<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_requests</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> self.start_urls:<br>            <span class="hljs-comment"># 不下载图片，超时时间3秒</span><br>            <span class="hljs-keyword">yield</span> SplashRequest(url, args=&#123;<span class="hljs-string">&#x27;images&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;timeout&#x27;</span>: <span class="hljs-number">3</span>&#125;)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        <span class="hljs-keyword">for</span> sel <span class="hljs-keyword">in</span> response.css(<span class="hljs-string">&#x27;div.quote&#x27;</span>):<br>            quote = sel.css(<span class="hljs-string">&#x27;span.text::text&#x27;</span>).extract_first()<br>            author = sel.css(<span class="hljs-string">&#x27;small.author::text&#x27;</span>).extract_first()<br>            <span class="hljs-keyword">yield</span> &#123;<span class="hljs-string">&#x27;quote&#x27;</span>: quote, <span class="hljs-string">&#x27;author&#x27;</span>: author&#125;<br>        href = response.css(<span class="hljs-string">&#x27;li.next &gt; a::attr(href)&#x27;</span>).extract_first()<br>        <span class="hljs-keyword">if</span> href:<br>            url = response.urljoin(href)<br>            <span class="hljs-keyword">yield</span> SplashRequest(url, args=&#123;<span class="hljs-string">&#x27;images&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;timeout&#x27;</span>: <span class="hljs-number">3</span>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>上述代码中，使用<code>SplashRequest</code>提交请求，在<code>SplashRequest</code>的构造器中无须传递<code>endpoint</code>参数，因为该参数默认值便是<code>’render.html&#39;</code>。使用<code>args</code>参数禁止<code>Splash</code>加载图片，并设置渲染超时时间。</p>
+<p>运行爬虫，观察结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">(Spiders) [root@VM-<span class="hljs-number">8</span>-<span class="hljs-number">16</span>-centos splash_examples]<span class="hljs-comment"># scrapy crawl quotes -o quotes.csv</span><br>(Spiders) [root@VM-<span class="hljs-number">8</span>-<span class="hljs-number">16</span>-centos splash_examples]<span class="hljs-comment"># cat quotes.csv </span><br>quote,author<br>“The world <span class="hljs-keyword">as</span> we have created it <span class="hljs-keyword">is</span> a process of our thinking. It cannot be changed without changing our thinking.”,Albert Einstein<br><span class="hljs-string">&quot;“It is our choices, Harry, that show what we truly are, far more than our abilities.”&quot;</span>,J.K. Rowling<br>“There are only two ways to live your life. One <span class="hljs-keyword">is</span> <span class="hljs-keyword">as</span> though nothing <span class="hljs-keyword">is</span> a miracle. The other <span class="hljs-keyword">is</span> <span class="hljs-keyword">as</span> though everything <span class="hljs-keyword">is</span> a miracle.”,Albert Einstein<br><span class="hljs-string">&quot;“The person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.”&quot;</span>,Jane Austen<br><span class="hljs-string">&quot;“Imperfection is beauty, madness is genius and it&#x27;s better to be absolutely ridiculous than absolutely boring.”&quot;</span>,Marilyn Monroe<br>“Try <span class="hljs-keyword">not</span> to become a man of success. Rather become a man of value.”,Albert Einstein<br>“It <span class="hljs-keyword">is</span> better to be hated <span class="hljs-keyword">for</span> what you are than to be loved <span class="hljs-keyword">for</span> what you are <span class="hljs-keyword">not</span>.”,André Gide<br><span class="hljs-string">&quot;“I have not failed. I&#x27;ve just found 10,000 ways that won&#x27;t work.”&quot;</span>,Thomas A. Edison<br>“A woman <span class="hljs-keyword">is</span> like a tea bag; you never know how strong it <span class="hljs-keyword">is</span> until it<span class="hljs-string">&#x27;s in hot water.”,Eleanor Roosevelt</span><br><span class="hljs-string">&quot;“A day without sunshine is like, you know, night.”&quot;,Steve Martin</span><br><span class="hljs-string">&quot;“This life is what you make it. No matter what, you&#x27;</span>re going to mess up sometimes, it<span class="hljs-string">&#x27;s a universal truth. But the good part is you get to decide how you&#x27;</span>re going to mess it up. Girls will be your friends - they<span class="hljs-string">&#x27;ll act like it anyway. But just remember, some come, some go. The ones that stay with you through everything - they&#x27;</span>re your true best friends. Don<span class="hljs-string">&#x27;t let go of them. Also remember, sisters make the best friends in the world. As for lovers, well, they&#x27;</span>ll come <span class="hljs-keyword">and</span> go too. And baby, I hate to say it, most of them - actually pretty much <span class="hljs-built_in">all</span> of them are going to <span class="hljs-keyword">break</span> your heart, but you can<span class="hljs-string">&#x27;t give up because if you give up, you&#x27;</span>ll never find your soulmate. Yo<span class="hljs-string">u&#x27;ll never find that half who makes you whole and that goes for everything. Just because you fail once, doesn&#x27;</span>t mean yo<span class="hljs-string">u&#x27;re gonna fail at everything. Keep trying, hold on, and always, always, always believe in yourself, because if you don&#x27;</span>t, then who will, sweetie? So keep your head high, keep your chin up, <span class="hljs-keyword">and</span> most importantly, keep smiling, because life<span class="hljs-string">&#x27;s a beautiful thing and there&#x27;</span>s so much to smile about.”<span class="hljs-string">&quot;,Marilyn Monroe</span><br><span class="hljs-string">...</span><br></code></pre></td></tr></table></figure>
+
+<p>运行结果显示，我们成功爬取了10个页面中的100条名人名言。</p>
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/scrapy/">scrapy</a>
+                    
+                      <a class="hover-with-bg" href="/tags/splash/">splash</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/17/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数据存入数据库</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/14/Cookie%E7%99%BB%E5%BD%95/">
+                        <span class="hidden-mobile">Cookie登录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>

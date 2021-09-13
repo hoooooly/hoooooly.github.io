@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>spider的用法 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="spider的用法">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-08 00:49" pubdate>
+        2021年6月8日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      73
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">spider的用法</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月9日 早上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="Spider-的用法"><a href="#Spider-的用法" class="headerlink" title="Spider 的用法"></a>Spider 的用法</h2><p>在 <code>Scrapy</code> 中，要抓取网站的链接配置、抓取逻辑、解析逻辑等其实都是在 <code>Spider</code> 中配置的。</p>
+<h3 id="Spider运行流程"><a href="#Spider运行流程" class="headerlink" title="Spider运行流程"></a>Spider运行流程</h3><p>在实现 <code>Scrapy</code> 爬虫项目时，最核心的类便是 <code>Spider</code> 类了，它定义了如何爬取某个网站的流程和解析方式。简单来讲， <code>Spider</code> 要做的事就是如下两件： </p>
+<ul>
+<li>定义爬取网站的动作； </li>
+<li>分析爬取下来的网页。 </li>
+</ul>
+<p>对于 <code>Spider</code> 类来说，整个爬取循环如下所述。 </p>
+<ul>
+<li>以初始的 <code>URL</code> 初始化 <code>Request</code> ，并设置回调函数。 当</li>
+<li>该 <code>Request</code> 成功请求并返回时，将生成 <code>Response</code> ，并作为参数传给该回调函数。 </li>
+<li>在回调函数内分析返回的网页内容。返回结果可以有两种形式，一种是解析到的有效结果返回字典或 <code>Item</code> 对象。下一步可经过处理后（或直接）保存，另一种是解析到的下一个（如下一页）链接，可以 利用此链接构造 <code>Request</code> 并设置新的回调函数，返回 <code>Request</code> 。 </li>
+<li>如果返回的是字典或 <code>Item</code> 对象，可通过 <code>Feed Exports</code> 等形式存入文件，如果设置了 <code>Pipeline</code> 的话，可以经由 <code>Pipeline</code> 处理（如过滤、修正等）并保存。 </li>
+<li>如果返回的是 <code>Reqeust</code> ，那么 <code>Request</code> 执行成功得到 <code>Response</code> 之后会再次传递给 <code>Request</code> 中定义的回调函数，可以再次使用选择器来分析新得到的网页内容，并根据分析的数据生成 <code>Item</code> 。 通过以上几步循环往复进行，便完成了站点的爬取。</li>
+</ul>
+<h3 id="Spider类分析"><a href="#Spider类分析" class="headerlink" title="Spider类分析"></a>Spider类分析</h3><p><code>Spider</code> 继承自 <code>scrapy.spiders.Spider</code> ，这个类是最简单最基本的 <code>Spider</code> 类，每个其他的 <code>Spider</code> 必须继承自这个类，还有后面要说明的一些特殊 <code>Spider</code> 类也都是继承自它。 这个类里提供了 <code>start_requests</code> 方法的默认实现，读取并请求 <code>start_urls</code> 属性，并根据返回的结果调用 <code>parse</code> 方法解析结果。另外它还有一些基础属性，下面对其进行讲解。</p>
+<ul>
+<li><code>name</code> ：爬虫名称，是定义 <code>Spider</code> 名字的字符串。Spider 的名字定义了 Scrapy如何定位并初始化 Spider，所以其必须是唯一的。 不过我们可以生成多个相同的 Spider 实例，这没有任何限制。 name 是 Spider 最重要的属性，而且是必需的。如果该 Spider 爬取单个网站，一个常见的做法是以该网站的域名名称来命名 Spider。例如，如果 Spider 爬取 mywebsite.com，该 Spider 通常会被命名为 mywebsite。 </li>
+<li>allowed_domains：允许爬取的域名，是可选配置，不在此范围的链接不会被跟进爬取。 </li>
+<li><code>start_urls</code> ：起始 <code>URL</code> 列表，当我们没有实现 <code>start_requests</code> 方法时，默认会从这个列表开始抓取。 </li>
+<li><code>custom_settings</code> ：这是一个字典，是专属于本 <code>Spider</code> 的配置，此设置会覆盖项目全局的设置，而且此设置必须在初始化前被更新，所以它必须定义成类变量。 </li>
+<li><code>crawler</code> ：此属性是由 <code>from_crawler</code> 方法设置的，代表的是本 <code>Spider</code> 类对应的 <code>Crawler</code> 对象， <code>Crawler</code> 对象中包含了很多项目组件，利用它我们可以获取项目的一些配置信息，如最常见的就是获取项目的设置信息，即 <code>Settings</code> 。 </li>
+<li><code>settings</code> ：是一个 <code>Settings</code> 对象，利用它我们可以直接获取项目的全局设置变量。 </li>
+</ul>
+<p>除了一些基础属性， <code>Spider</code> 还有一些常用的方法，在此介绍如下。 </p>
+<ul>
+<li><code>start_requests</code> ：此方法用于生成初始请求，它必须返回一个可迭代对象，此方法会默认使用 <code>start_urls</code> 里面的 <code>URL</code> 来构造 <code>Request</code> ，而且 <code>Request</code> 是 <code>GET</code> 请求方式。如果我们想在启动时以 <code>POST</code> 方式访问某个 站点，可以直接重写这个方法，发送 <code>POST</code> 请求时我们使用 <code>FormRequest</code> 即可。 </li>
+<li><code>parse</code> ：当 <code>Response</code> 没有指定回调函数时，该方法会默认被调用，它负责处理 <code>Response</code> ，处理返回结果，并从中提取出想要的数据和下一步的请求，然后返回。该方法需要返回一个包含 <code>Request</code> 或 <code>Item</code> 的可迭代对象。 </li>
+<li><code>closed</code> ：当 <code>Spider</code> 关闭时，该方法会被调用，在这里一般会定义释放资源的一些操作或其他收尾操作。</li>
+</ul>
+<h2 id="Selector-的用法"><a href="#Selector-的用法" class="headerlink" title="Selector 的用法"></a>Selector 的用法</h2><p><code>Scrapy</code> 还提供了自己的数据提取方法，即 <code>Selector（选择器）</code> 。 <code>Selector</code> 是基于 <code>lxml</code> 构建的，支持 <code>XPath选择器</code> 、 <code>CSS选择器</code> ，以及 <code>正则表达式</code> ，功能全面，解析速度和准确度非常高。</p>
+<h3 id="直接使用"><a href="#直接使用" class="headerlink" title="直接使用"></a>直接使用</h3><p><code>Selector</code> 是一个可以独立使用的模块。我们可以直接利用 <code>Selector</code> 这个类来构建一个选择器对象，然后调用它的相关方法如 <code>xpath、css</code> 等来提取数据。 </p>
+<p>例如，针对一段 HTML代码，我们可以用如下方式构建 <code>Selector</code> 对象来提取数据： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> scrapy <span class="hljs-keyword">import</span> Selector<br><br>body = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">&lt;html&gt;</span><br><span class="hljs-string">    &lt;head&gt;</span><br><span class="hljs-string">        &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="hljs-string">    &lt;/head&gt;</span><br><span class="hljs-string">    &lt;body&gt;</span><br><span class="hljs-string">    &lt;/body&gt;</span><br><span class="hljs-string">&lt;/html&gt;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><br>selectot = Selector(text=body)<br>title = selectot.xpath(<span class="hljs-string">&quot;//title/text()&quot;</span>).extract_first()<br><span class="hljs-built_in">print</span>(title)<br><br><span class="hljs-comment">#Hello World </span><br></code></pre></td></tr></table></figure>
+
+<p>这里我们没有在 <code>Scrapy</code> 框架中运行，而是把 <code>Scrapy</code> 中的 <code>Selector</code> 单独拿出来使用了，构建的时候传入 <code>text</code> 参数，就生成了一个 <code>Selector</code> 选择器对象，然后就可以像前面我们所用的 <code>Scrapy</code> 中的解析方式一样，调用 <code>xpath、css</code> 等方法来提取了。 在这里我们查找的是源代码中的 <code>title</code> 中的文本，在 <code>XPath选择器</code> 最后加 <code>text</code> 方法就可以实现文本的提取了。</p>
+<h3 id="Scrapy-Shell"><a href="#Scrapy-Shell" class="headerlink" title="Scrapy Shell"></a>Scrapy Shell</h3><p>由于 <code>Selector</code> 主要是与 <code>Scrapy</code> 结合使用，如 <code>Scrapy</code> 的回调函数中的参数 <code>response</code> 直接调用 <code>xpath()</code> 或者 <code>css()</code> 方法来提取数据，所以在这里我们借助 <code>Scrapy Shell</code> 来模拟 <code>Scrapy</code> 请求的过程，来讲解相关的提取方法。</p>
+<p>我们用官方文档的一个样例页面来做演示：<a target="_blank" rel="noopener" href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a>。 </p>
+<p>开启 <code>Scrapy Shell</code>，在命令行中输入如下命令： </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html<br></code></pre></td></tr></table></figure>
+
+<p>这样我们就进入了 <code>Scrapy Shell</code> 模式。这个过程其实是 <code>Scrapy</code> 发起了一次请求，请求的 <code>URL</code> 就是刚才命令行下输入的 <code>URL</code> ，然后把一些可操作的变量传递给我们，如 <code>request、response</code> 等。</p>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs python">C:\Users\espho\PycharmProjects\PythonProjs\python模块\Scrapy框架&gt;scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.utils.log] INFO: Scrapy <span class="hljs-number">2.5</span><span class="hljs-number">.0</span> started (bot: scrapybot)<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.utils.log] INFO: Versions: lxml <span class="hljs-number">4.6</span><span class="hljs-number">.3</span><span class="hljs-number">.0</span>, libxml2 <span class="hljs-number">2.9</span><span class="hljs-number">.5</span>, cssselect <span class="hljs-number">1.1</span><span class="hljs-number">.0</span>, parsel <span class="hljs-number">1.6</span><span class="hljs-number">.0</span>, w3lib <span class="hljs-number">1.22</span><span class="hljs-number">.0</span>, Twisted <span class="hljs-number">21.2</span><span class="hljs-number">.0</span>, Python <span class="hljs-number">3.8</span><span class="hljs-number">.7</span> (tags/v3<span class="hljs-number">.8</span><span class="hljs-number">.7</span>:6503f05, Dec <span class="hljs-number">21</span> <span class="hljs-number">2020</span>, <span class="hljs-number">17</span>:<span class="hljs-number">59</span>:<span class="hljs-number">51</span>) [MSC v<span class="hljs-number">.1928</span> <span class="hljs-number">64</span> bit (AMD64)], pyOpenSSL <span class="hljs-number">20.0</span><span class="hljs-number">.1</span> (OpenSSL <span class="hljs-number">1.1</span><span class="hljs-number">.1</span>k  <span class="hljs-number">25</span> Mar <span class="hljs-number">2021</span>), cryptography <span class="hljs-number">3.4</span><span class="hljs-number">.7</span>, Platform Windows-<span class="hljs-number">10</span>-<span class="hljs-number">10.0</span><span class="hljs-number">.19041</span>-SP0<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.selectreactor.SelectReactor<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.crawler] INFO: Overridden settings:<br>&#123;<span class="hljs-string">&#x27;DUPEFILTER_CLASS&#x27;</span>: <span class="hljs-string">&#x27;scrapy.dupefilters.BaseDupeFilter&#x27;</span>,<br> <span class="hljs-string">&#x27;LOGSTATS_INTERVAL&#x27;</span>: <span class="hljs-number">0</span>&#125;<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.extensions.telnet] INFO: Telnet Password: b22034a15ef07be9<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.middleware] INFO: Enabled extensions:<br>[<span class="hljs-string">&#x27;scrapy.extensions.corestats.CoreStats&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.extensions.telnet.TelnetConsole&#x27;</span>]<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.middleware] INFO: Enabled downloader middlewares:<br>[<span class="hljs-string">&#x27;scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.useragent.UserAgentMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.retry.RetryMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.redirect.RedirectMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.cookies.CookiesMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.downloadermiddlewares.stats.DownloaderStats&#x27;</span>]<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.middleware] INFO: Enabled spider middlewares:<br>[<span class="hljs-string">&#x27;scrapy.spidermiddlewares.httperror.HttpErrorMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.spidermiddlewares.offsite.OffsiteMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.spidermiddlewares.referer.RefererMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.spidermiddlewares.urllength.UrlLengthMiddleware&#x27;</span>,<br> <span class="hljs-string">&#x27;scrapy.spidermiddlewares.depth.DepthMiddleware&#x27;</span>]<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.middleware] INFO: Enabled item pipelines:<br>[]<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.extensions.telnet] INFO: Telnet console listening on <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">6023</span><br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:02 [scrapy.core.engine] INFO: Spider opened<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:03 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (<span class="hljs-number">302</span>) to &lt;GET https://doc.scrapy.org/en/latest/_static/selectors-sample1.html&gt; <span class="hljs-keyword">from</span> &lt;GET http://doc.scrapy.org/en/latest/_static/selectors-sample1.html&gt;<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:04 [scrapy.core.engine] DEBUG: Crawled (<span class="hljs-number">200</span>) &lt;GET https://doc.scrapy.org/en/latest/_static/selectors-sample1.html&gt; (referer: <span class="hljs-literal">None</span>)<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:06 [asyncio] DEBUG: Using proactor: IocpProactor<br>[s] Available Scrapy objects:<br>[s]   scrapy     scrapy module (contains scrapy.Request, scrapy.Selector, etc)<br>[s]   crawler    &lt;scrapy.crawler.Crawler <span class="hljs-built_in">object</span> at <span class="hljs-number">0x0000010ADFBBE220</span>&gt;<br>[s]   item       &#123;&#125;<br>[s]   request    &lt;GET http://doc.scrapy.org/en/latest/_static/selectors-sample1.html&gt;<br>[s]   response   &lt;<span class="hljs-number">200</span> https://doc.scrapy.org/en/latest/_static/selectors-sample1.html&gt;<br>[s]   settings   &lt;scrapy.settings.Settings <span class="hljs-built_in">object</span> at <span class="hljs-number">0x0000010ADFBBE2B0</span>&gt;<br>[s]   spider     &lt;DefaultSpider <span class="hljs-string">&#x27;default&#x27;</span> at <span class="hljs-number">0x10ae002fdc0</span>&gt;<br>[s] Useful shortcuts:<br>[s]   fetch(url[, redirect=<span class="hljs-literal">True</span>]) Fetch URL <span class="hljs-keyword">and</span> update local objects (by default, redirects are followed)<br>[s]   fetch(req)                  Fetch a scrapy.Request <span class="hljs-keyword">and</span> update local objects<br>[s]   shelp()           Shell <span class="hljs-built_in">help</span> (<span class="hljs-built_in">print</span> this <span class="hljs-built_in">help</span>)<br>[s]   view(response)    View response <span class="hljs-keyword">in</span> a browser<br><span class="hljs-number">2021</span>-06-08 <span class="hljs-number">13</span>:<span class="hljs-number">47</span>:06 [asyncio] DEBUG: Using proactor: IocpProactor<br>In [<span class="hljs-number">1</span>]: <br></code></pre></td></tr></table></figure>
+
+<p>可以在命令行模式下输入命令调用对象的一些操作方法，回车之后实时显示结果。这与 <code>Python</code> 的命令行交互模式是类似的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">2</span>]: response.url<br>Out[<span class="hljs-number">2</span>]: <span class="hljs-string">&#x27;https://doc.scrapy.org/en/latest/_static/selectors-sample1.html&#x27;</span><br>In [<span class="hljs-number">3</span>]: response.text<br>Out[<span class="hljs-number">3</span>]: <span class="hljs-string">&quot;&lt;html&gt;\n &lt;head&gt;\n  &lt;base href=&#x27;http://example.com/&#x27; /&gt;\n  &lt;title&gt;Example website&lt;/title&gt;\n &lt;/head&gt;\n &lt;body&gt;\n  &lt;div id=&#x27;images&#x27;&gt;\n   &lt;a href=&#x27;image1.html&#x27;&gt;Name: My image 1 &lt;br /&gt;&lt;img src=&#x27;image1_thumb.jpg&#x27; /&gt;&lt;/a&gt;\n   &lt;a href=&#x27;image2.html&#x27;&gt;Name: My image 2 &lt;br /&gt;&lt;img src=&#x27;image2_thumb.jpg&#x27; /&gt;&lt;/a&gt;\n   &lt;a href=&#x27;image3.html&#x27;&gt;Name: My image 3 &lt;br /&gt;&lt;img src=&#x27;image3_thumb.jpg&#x27; /&gt;&lt;/a&gt;\n   &lt;a href=&#x27;image4.html&#x27;&gt;Name: My image 4 &lt;br /&gt;&lt;img src=&#x27;image4_thumb.jpg&#x27; /&gt;&lt;/a&gt;\n   &lt;a href=&#x27;image5.html&#x27;&gt;Name: My image 5 &lt;br /&gt;&lt;img src=&#x27;image5_thumb.jpg&#x27; /&gt;&lt;/a&gt;\n  &lt;/div&gt;\n &lt;/body&gt;\n&lt;/html&gt;\n\n&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="XPath选择器"><a href="#XPath选择器" class="headerlink" title="XPath选择器"></a>XPath选择器</h3><p>进入 <code>Scrapy Shell</code> 之后，我们将主要操作 <code>response</code> 变量来进行解析。因为我们解析的是 <code>HTML</code> <code>代码，Selector</code> 将自动使用 <code>HTML</code>语法来分析。 <code>response</code> 有一个属性 <code>selector</code>，我们调用 <code>response.selector</code> 返回的内容就相当于用 <code>response</code> 的 <code>text</code> 构造了一个 <code>Selector</code> 对象。通过这个 <code>Selector</code> 对象我们可以调用解析方法如 <code>xpath、css</code> 等，通过向方法传入 <code>XPath</code>或 <code>CSS</code> 选择器参数就可以实现信息的提取。 我们用一个实例感受一下，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">4</span>]: response.selector<br>Out[<span class="hljs-number">4</span>]: &lt;Selector xpath=<span class="hljs-literal">None</span> data=<span class="hljs-string">&#x27;&lt;html&gt;\n &lt;head&gt;\n  &lt;base href=&quot;http://e...&#x27;</span>&gt;<br><br>In [<span class="hljs-number">6</span>]: result = response.selector.xpath(<span class="hljs-string">&quot;//a&quot;</span>)<br><br>In [<span class="hljs-number">7</span>]: result<br>Out[<span class="hljs-number">7</span>]: <br>[&lt;Selector xpath=<span class="hljs-string">&#x27;//a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image1.html&quot;&gt;Name: My image ...&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;//a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image2.html&quot;&gt;Name: My image ...&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;//a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image3.html&quot;&gt;Name: My image ...&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;//a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image4.html&quot;&gt;Name: My image ...&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;//a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image5.html&quot;&gt;Name: My image ...&#x27;</span>&gt;]<br></code></pre></td></tr></table></figure>
+
+<p>打印结果的形式是 <code>Selector</code> 组成的列表，其实它是 <code>SelectorList</code> 类型， <code>SelectorList</code> 和 <code>Selector</code> 都可以继续调用 <code>xpath</code> 和 <code>css</code> 等方法来进一步提取数据。 在上面的例子中，我们提取了 <code>a</code> 节点。接下来，我们尝试继续调用 <code>xpath</code> 方法来提取 <code>a</code> 节点内包含的 <code>img</code> 节点，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">8</span>]: result.xpath(<span class="hljs-string">&quot;./img&quot;</span>)<br>Out[<span class="hljs-number">8</span>]: <br>[&lt;Selector xpath=<span class="hljs-string">&#x27;./img&#x27;</span> data=<span class="hljs-string">&#x27;&lt;img src=&quot;image1_thumb.jpg&quot;&gt;&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;./img&#x27;</span> data=<span class="hljs-string">&#x27;&lt;img src=&quot;image2_thumb.jpg&quot;&gt;&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;./img&#x27;</span> data=<span class="hljs-string">&#x27;&lt;img src=&quot;image3_thumb.jpg&quot;&gt;&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;./img&#x27;</span> data=<span class="hljs-string">&#x27;&lt;img src=&quot;image4_thumb.jpg&quot;&gt;&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;./img&#x27;</span> data=<span class="hljs-string">&#x27;&lt;img src=&quot;image5_thumb.jpg&quot;&gt;&#x27;</span>&gt;]<br></code></pre></td></tr></table></figure>
+
+<p>我们获得了 <code>a</code> 节点里面的所有 <code>img</code>节点，结果为 <code>5</code>。</p>
+<p>选择器的最前方加 <code>.（点）</code>，这代表提取元素内部的数据，如果没有加点，则代表从根节点开始提取。此处我们用了 <code>./img</code>的提取方式，则代表从 <code>a</code> 节点里进行提取。如果此处我们用 <code>//img</code>，则还 是从 <code>html节点</code>里进行提取。 </p>
+<p>我们刚才使用了 <code>response.selector.xpath</code>方法对数据进行了提取。<code>Scrapy</code>提供了两个实用的快捷方法，<code>response.xpath</code>和 <code>response.css</code>，它们二者的功能完全等同于 <code>response.selector.xpath</code>和 <code>response.selector.css</code>。方便起 见，后面我们统一直接调用 <code>response</code> 的 <code>xpath</code>和 <code>css</code> 方法进行选择。 现在我们得到的是 <code>SelectorList</code> 类型的变量，该变量是由 <code>Selector</code> 对象组成的列表。我们可以用索引单独取出其中某个 <code>Selector</code> 元素，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">9</span>]: result[<span class="hljs-number">0</span>]<br>Out[<span class="hljs-number">9</span>]: &lt;Selector xpath=<span class="hljs-string">&#x27;//a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image1.html&quot;&gt;Name: My image ...&#x27;</span>&gt;<br></code></pre></td></tr></table></figure>
+<p>可以像操作列表一样操作这个 <code>SelectorList</code> 。但是现在获取的内容是 <code>Selector</code> 或者 <code>SelectorList</code> 类型，并不是真正的文本内容。那么具体的内容怎么提取呢？ 比如我们现在想提取出 <code>a</code> 节点元素，就可以利用 <code>extract</code> 方法，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">10</span>]: result[<span class="hljs-number">0</span>].extract()<br>Out[<span class="hljs-number">10</span>]: <span class="hljs-string">&#x27;&lt;a href=&quot;image1.html&quot;&gt;Name: My image 1 &lt;br&gt;&lt;img src=&quot;image1_thumb.jpg&quot;&gt;&lt;/a&gt;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>这里使用了 <code>extract</code> 方法，我们就可以把真实需要的内容获取下来。</p>
+<p>还可以改写 <code>XPath</code> 表达式，来选取节点的内部文本和属性，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">11</span>]: response.xpath(<span class="hljs-string">&#x27;//a/text()&#x27;</span>).extract()<br>Out[<span class="hljs-number">11</span>]: <br>[<span class="hljs-string">&#x27;Name: My image 1 &#x27;</span>,<br> <span class="hljs-string">&#x27;Name: My image 2 &#x27;</span>,<br> <span class="hljs-string">&#x27;Name: My image 3 &#x27;</span>,<br> <span class="hljs-string">&#x27;Name: My image 4 &#x27;</span>,<br> <span class="hljs-string">&#x27;Name: My image 5 &#x27;</span>]<br><br>In [<span class="hljs-number">12</span>]: response.xpath(<span class="hljs-string">&#x27;//a/@href&#x27;</span>).extract()<br>Out[<span class="hljs-number">12</span>]: [<span class="hljs-string">&#x27;image1.html&#x27;</span>, <span class="hljs-string">&#x27;image2.html&#x27;</span>, <span class="hljs-string">&#x27;image3.html&#x27;</span>, <span class="hljs-string">&#x27;image4.html&#x27;</span>, <span class="hljs-string">&#x27;image5.html&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>只需要再加一层<code> /text()</code> 就可以获取节点的内部文本，或者加一层 <code>/@href</code>就可以获取节点的 <code>href属性</code>。其中，<code>@</code> 符号后面内容就是要获取的属性名称。</p>
+<p>现在我们可以用一个规则把所有符合要求的节点都获取下来，返回的类型是列表类型。</p>
+<p>但是这里有一个问题：如果符合要求的节点只有一个，那么返回的结果会是什么呢？我们再用一个实例来感受一下，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">13</span>]: response.xpath(<span class="hljs-string">&#x27;//a[@href=&quot;image1.html&quot;]/text()&#x27;</span>).extract()<br>Out[<span class="hljs-number">13</span>]: [<span class="hljs-string">&#x27;Name: My image 1 &#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>用属性限制了匹配的范围，使 <code>XPath</code>只可以匹配到一个元素。然后用 <code>extract</code> 方法提取结果，其结果还是一个列表形式，其文本是列表的第一个元素。但很多情况下，我们其实想要的数据就是第一个元素内容，这里我们通过加一个索引来获取，如下所示： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&#x27;Name: My image 1 &#x27;</span> <br></code></pre></td></tr></table></figure>
+
+<p>但是，这个写法很明显是有风险的。一旦 <code>XPath</code>有问题，那么 <code>extract</code> 后的结果可能是一个空列表。如果我们再用索引来获取，那不就可能会导致数组越界吗？ 所以，另外一个方法可以专门提取单个元素，它叫作 <code>extract_first</code>。我们可以改写上面的例子如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">14</span>]: response.xpath(<span class="hljs-string">&#x27;//a[@href=&quot;image1.html&quot;]/text()&#x27;</span>).extract_first()<br>Out[<span class="hljs-number">14</span>]: <span class="hljs-string">&#x27;Name: My image 1 &#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>直接利用 <code>extract_first</code> 方法将匹配的第一个结果提取出来，同时我们也不用担心数组越界的问题。也可以给<code>extract_first()</code>传递一个默认值，找不到的话会使用默认值。</p>
+<h3 id="CSS-选择器"><a href="#CSS-选择器" class="headerlink" title="CSS 选择器"></a>CSS 选择器</h3><p>接下来，我们看看 <code>CSS</code> 选择器的用法。<code>Scrapy</code>的选择器同时还对接了 <code>CSS</code> 选择器，使用 <code>response.css()</code> 方法可以使用 <code>CSS</code> 选择器来选择对应的元素。</p>
+<p>例如在上文我们选取了所有的 <code>a</code> 节点，那么 <code>CSS</code> 选择器同样可以做到，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">15</span>]: response.css(<span class="hljs-string">&#x27;a&#x27;</span>)<br>Out[<span class="hljs-number">15</span>]: <br>[&lt;Selector xpath=<span class="hljs-string">&#x27;descendant-or-self::a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image1.html&quot;&gt;Name: My image ...&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;descendant-or-self::a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image2.html&quot;&gt;Name: My image ...&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;descendant-or-self::a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image3.html&quot;&gt;Name: My image ...&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;descendant-or-self::a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image4.html&quot;&gt;Name: My image ...&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;descendant-or-self::a&#x27;</span> data=<span class="hljs-string">&#x27;&lt;a href=&quot;image5.html&quot;&gt;Name: My image ...&#x27;</span>&gt;]<br></code></pre></td></tr></table></figure>
+
+<p>同样，调用 <code>extract</code> 方法就可以提取出节点，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">16</span>]: response.css(<span class="hljs-string">&#x27;a&#x27;</span>).extract()<br>Out[<span class="hljs-number">16</span>]: <br>[<span class="hljs-string">&#x27;&lt;a href=&quot;image1.html&quot;&gt;Name: My image 1 &lt;br&gt;&lt;img src=&quot;image1_thumb.jpg&quot;&gt;&lt;/a&gt;&#x27;</span>,<br> <span class="hljs-string">&#x27;&lt;a href=&quot;image2.html&quot;&gt;Name: My image 2 &lt;br&gt;&lt;img src=&quot;image2_thumb.jpg&quot;&gt;&lt;/a&gt;&#x27;</span>,<br> <span class="hljs-string">&#x27;&lt;a href=&quot;image3.html&quot;&gt;Name: My image 3 &lt;br&gt;&lt;img src=&quot;image3_thumb.jpg&quot;&gt;&lt;/a&gt;&#x27;</span>,<br> <span class="hljs-string">&#x27;&lt;a href=&quot;image4.html&quot;&gt;Name: My image 4 &lt;br&gt;&lt;img src=&quot;image4_thumb.jpg&quot;&gt;&lt;/a&gt;&#x27;</span>,<br> <span class="hljs-string">&#x27;&lt;a href=&quot;image5.html&quot;&gt;Name: My image 5 &lt;br&gt;&lt;img src=&quot;image5_thumb.jpg&quot;&gt;&lt;/a&gt;&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>用法和 <code>XPath选择</code>是完全一样的。另外，我们也可以进行属性选择和嵌套选择，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">17</span>]: response.css(<span class="hljs-string">&#x27;a[href=&quot;image4.html&quot;]&#x27;</span>).extract()<br>Out[<span class="hljs-number">17</span>]: [<span class="hljs-string">&#x27;&lt;a href=&quot;image4.html&quot;&gt;Name: My image 4 &lt;br&gt;&lt;img src=&quot;image4_thumb.jpg&quot;&gt;&lt;/a&gt;&#x27;</span>]<br>In [<span class="hljs-number">18</span>]: response.css(<span class="hljs-string">&#x27;a[href=&quot;image4.html&quot;] img&#x27;</span>).extract()<br>Out[<span class="hljs-number">18</span>]: [<span class="hljs-string">&#x27;&lt;img src=&quot;image4_thumb.jpg&quot;&gt;&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>也可以使用 <code>extract_first()</code> 方法提取列表的第一个元素，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">19</span>]: response.css(<span class="hljs-string">&#x27;a[href=&quot;image4.html&quot;] img&#x27;</span>).extract_first()<br>Out[<span class="hljs-number">19</span>]: <span class="hljs-string">&#x27;&lt;img src=&quot;image4_thumb.jpg&quot;&gt;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>接下来的两个用法不太一样。节点的内部文本和属性的获取是这样实现的，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">21</span>]: response.css(<span class="hljs-string">&#x27;a[href=&quot;image4.html&quot;]::text&#x27;</span>).extract_first()<br>Out[<span class="hljs-number">21</span>]: <span class="hljs-string">&#x27;Name: My image 4 &#x27;</span><br>In [<span class="hljs-number">22</span>]: response.css(<span class="hljs-string">&#x27;a[href=&quot;image4.html&quot;] img::attr(src)&#x27;</span>).extract_first()<br>Out[<span class="hljs-number">22</span>]: <span class="hljs-string">&#x27;image4_thumb.jpg&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>获取文本和属性需要用 <code>::text</code> 和 <code>::attr()</code> 的写法。而其他库如 <code>BeautifulSoup</code> 或 <code>PyQuery</code> 都有单独的方法。</p>
+<p><code>CSS 选择器</code>和 <code>XPath选择器</code>一样可以嵌套选择。我们可以先用 <code>XPath选择器</code>选中所有 <code>a</code> 节点，再利用 <code>CSS 选择器</code>选中 <code>img节点</code>，再用 <code>XPath选择器</code>获取属性。我们用一个实例来感受一下，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">23</span>]: response.xpath(<span class="hljs-string">&#x27;//a&#x27;</span>).css(<span class="hljs-string">&#x27;img&#x27;</span>).xpath(<span class="hljs-string">&#x27;@src&#x27;</span>)<br>Out[<span class="hljs-number">23</span>]: <br>[&lt;Selector xpath=<span class="hljs-string">&#x27;@src&#x27;</span> data=<span class="hljs-string">&#x27;image1_thumb.jpg&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;@src&#x27;</span> data=<span class="hljs-string">&#x27;image2_thumb.jpg&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;@src&#x27;</span> data=<span class="hljs-string">&#x27;image3_thumb.jpg&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;@src&#x27;</span> data=<span class="hljs-string">&#x27;image4_thumb.jpg&#x27;</span>&gt;,<br> &lt;Selector xpath=<span class="hljs-string">&#x27;@src&#x27;</span> data=<span class="hljs-string">&#x27;image5_thumb.jpg&#x27;</span>&gt;]<br>In [<span class="hljs-number">24</span>]: response.xpath(<span class="hljs-string">&#x27;//a&#x27;</span>).css(<span class="hljs-string">&#x27;img&#x27;</span>).xpath(<span class="hljs-string">&#x27;@src&#x27;</span>).extract_first()<br>Out[<span class="hljs-number">24</span>]: <span class="hljs-string">&#x27;image1_thumb.jpg&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>可以随意使用 <code>xpath</code> 和 <code>css</code> 方法二者自由组合实现嵌套查询，二者是完全兼容的。</p>
+<h3 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h3><p><code>Scrapy</code>的选择器还支持正则匹配。比如，在示例的 <code>a</code> 节点中的文本类似于 <code>Name:My image 1</code>，现在我们只想把 <code>Name:</code>后面的内容提取出来，这时就可以借助 <code>re</code> 方法，实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">27</span>]: response.xpath(<span class="hljs-string">&#x27;//a/text()&#x27;</span>).re(<span class="hljs-string">&#x27;\s(.*):\s(.*)&#x27;</span>)<br>Out[<span class="hljs-number">27</span>]: [<span class="hljs-string">&#x27;My image 1 &#x27;</span>, <span class="hljs-string">&#x27;My image 2 &#x27;</span>, <span class="hljs-string">&#x27;My image 3 &#x27;</span>, <span class="hljs-string">&#x27;My image 4 &#x27;</span>, <span class="hljs-string">&#x27;My image 5 &#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>给 <code>re</code> 方法传入一个正则表达式，其中 <code>(.*)</code> 就是要匹配的内容，输出的结果就是正则表达式匹配的分组，结果会依次输出。 如果同时存在两个分组，那么结果依然会被按序输出，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">32</span>]: response.xpath(<span class="hljs-string">&#x27;//a/text()&#x27;</span>).re(<span class="hljs-string">&#x27;(.*?):\s(.*)&#x27;</span>)<br>Out[<span class="hljs-number">32</span>]: <br>[<span class="hljs-string">&#x27;Name&#x27;</span>,<br> <span class="hljs-string">&#x27;My image 1 &#x27;</span>,<br> <span class="hljs-string">&#x27;Name&#x27;</span>,<br> <span class="hljs-string">&#x27;My image 2 &#x27;</span>,<br> <span class="hljs-string">&#x27;Name&#x27;</span>,<br> <span class="hljs-string">&#x27;My image 3 &#x27;</span>,<br> <span class="hljs-string">&#x27;Name&#x27;</span>,<br> <span class="hljs-string">&#x27;My image 4 &#x27;</span>,<br> <span class="hljs-string">&#x27;Name&#x27;</span>,<br> <span class="hljs-string">&#x27;My image 5 &#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>类似 <code>extract_first</code> 方法，<code>re_first</code> 方法可以选取列表的第一个元素，用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">35</span>]: response.xpath(<span class="hljs-string">&#x27;//a/text()&#x27;</span>).re_first(<span class="hljs-string">&#x27;(.*?):\s(.*)&#x27;</span>)<br>Out[<span class="hljs-number">35</span>]: <span class="hljs-string">&#x27;Name&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>不论正则匹配了几个分组，结果都会等于列表的第一个元素。 值得注意的是， <code>response</code> 对象不能直接调用 <code>re</code> 和 <code>re_first</code> 方法。如果想要对全文进行正则匹配，可以先调用 <code>xpath</code> 方法然后再进行正则匹配，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">36</span>]: response.xpath(<span class="hljs-string">&#x27;.&#x27;</span>).re(<span class="hljs-string">&#x27;Name:\s(.*)&lt;br&gt;&#x27;</span>)<br>Out[<span class="hljs-number">36</span>]: [<span class="hljs-string">&#x27;My image 1 &#x27;</span>, <span class="hljs-string">&#x27;My image 2 &#x27;</span>, <span class="hljs-string">&#x27;My image 3 &#x27;</span>, <span class="hljs-string">&#x27;My image 4 &#x27;</span>, <span class="hljs-string">&#x27;My image 5 &#x27;</span>]<br><br>In [<span class="hljs-number">37</span>]:  response.xpath(<span class="hljs-string">&#x27;.&#x27;</span>).re_first(<span class="hljs-string">&#x27;Name:\s(.*)&lt;br&gt;&#x27;</span>)<br>Out[<span class="hljs-number">37</span>]: <span class="hljs-string">&#x27;My image 1 </span><br></code></pre></td></tr></table></figure>
+
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/scarpy/">scarpy</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Django入门-系统设计</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/07/django%E5%85%A5%E9%97%A8%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+                        <span class="hidden-mobile">django入门-环境搭建</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>

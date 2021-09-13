@@ -1,0 +1,735 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>modbus协议 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="modbus协议">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-12 23:59" pubdate>
+        2021年7月12日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">modbus协议</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月9日 早上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p><code>Modbus</code>作为开放式的工业通讯协议，在各种工业设备中应用极其广泛。</p>
+<p><code>Modbus</code>有国际标准，也有国家标准，内容是完全一样的。在标准钟支持2种物理链路：一是基于<code>RS485（RS232）</code>的串行链路；二是基于以太网的<code>TCP/IP</code>链路。事实上，<code>Modbus</code>协议作为一种应用层协议对物理键子并没有特别的要求，光纤、无线等都是可以实现的。</p>
+<p><code>Modbus RTU</code>和<code>Modbus TCP</code>两种标准协议方式，支持常用的功能码：</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>功能码</strong></th>
+<th align="center"><strong>名称</strong></th>
+<th align="center"><strong>实现</strong></th>
+<th align="left"><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0x01</td>
+<td align="center">读线圈</td>
+<td align="center">是</td>
+<td align="left">对可读写型的状态量进行读取</td>
+</tr>
+<tr>
+<td align="center">0x02</td>
+<td align="center">读离散输入</td>
+<td align="center">是</td>
+<td align="left">对只读型的状态量进行读取</td>
+</tr>
+<tr>
+<td align="center">0x03</td>
+<td align="center">读保持寄存器</td>
+<td align="center">是</td>
+<td align="left">对可读写型的寄存器量进行读取</td>
+</tr>
+<tr>
+<td align="center">0x04</td>
+<td align="center">读输入寄存器</td>
+<td align="center">是</td>
+<td align="left">对只读型的寄存器量进行读取</td>
+</tr>
+<tr>
+<td align="center">0x05</td>
+<td align="center">写单个线圈</td>
+<td align="center">是</td>
+<td align="left">对单个的读写型的状态量进行写入</td>
+</tr>
+<tr>
+<td align="center">0x06</td>
+<td align="center">写单个寄存器</td>
+<td align="center">是</td>
+<td align="left">对单个的读写型的寄存器量进行写入</td>
+</tr>
+<tr>
+<td align="center">0x0F</td>
+<td align="center">写多个线圈</td>
+<td align="center">是</td>
+<td align="left">对多个的读写型的状态量进行写入</td>
+</tr>
+<tr>
+<td align="center">0x10</td>
+<td align="center">写多个寄存器</td>
+<td align="center">是</td>
+<td align="left">对多个的读写型的寄存器量进行写入</td>
+</tr>
+</tbody></table>
+<p><code>Modbus</code>协议是一种主从（或者说客户端/服务器）模式协议，有主站（客户端）发起事务请求，从站（服务器）响应事务请求。一般我们想要访问（或者说被访问）的设备即为从站（服务器），而我们通常去访问别人的设备就是主站（客户端）。通常在<code>RTU</code>时被称为主站和从站，而在<code>TCP</code>方式时被称为服务器和客户端。这种称呼只是叫法不同，但在本质上是没有区别我的。</p>
+<h2 id="1、标准流程"><a href="#1、标准流程" class="headerlink" title="1、标准流程"></a>1、标准流程</h2><p>启动<code>MODBUS</code> 事务处理的客户机创建 <code>MODBUS</code> 应用数据单元。当从客户机向服务器设备发送报文时，功能码向服务器指示将执行哪种操作。</p>
+<p>从客户机向服务器设备发送的报文数据域包括附加信息，服务器使用这个信息执行功能码定义的操作。如果在一个正确接收的 <code>MODBUS ADU</code> 中，不出现与请求 <code>MODBUS</code> 功能有关的差错，那么服务器至客户机的响应数据域包括请求数据。</p>
+<p><img src="564295-20170704210404112-181581650.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="正常事务处理流程"><a href="#正常事务处理流程" class="headerlink" title="正常事务处理流程"></a>正常事务处理流程</h3><p>如果出现与请求 <code>MODBUS</code> 功能有关的差错，那么域包括一个异常码，服务器应用能够使用这个域确定下一个执行的操作。当服务器对客户机响应时，它使用功能码域来指示正常（无差错）响应或者出现某种差错（称为异常响应）。对于一个正常响应来说，服务器仅对原始功能码响应。</p>
+<p> <img src="564295-20170704210415394-91481268-1626106199739.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2、操作设计"><a href="#2、操作设计" class="headerlink" title="2、操作设计"></a>2、操作设计</h2><p>根据对<code>Modbus</code>标准事务流程的理解，主站和从站的具体操作过程。</p>
+<p><strong>主站操作流程：</strong></p>
+<p>（1）、初始化主站，站标识符，定时器、</p>
+<p>（2）、生成访问命令</p>
+<p>生成命令<code>ADU</code>分两层实现：网络层和链路层。</p>
+<p>（3）、定时发送访问命令，读命令定是轮询，写命令具有更高的优先级。在有写命令时暂停读命令，</p>
+<p>（4）、解析接收到的数据，进行相应操作</p>
+<p><strong>从站操作流程：</strong></p>
+<p>（1）、协议栈初始化：从站地址设置，创建数据存储域，访问控制</p>
+<p>（2）、从站接收消息并解析</p>
+<p>解析消息后操作数据（读写对应对象的值）</p>
+<p>生成响应</p>
+<p>（3）、生成响应数据并回复</p>
+<h2 id="3、命令格式"><a href="#3、命令格式" class="headerlink" title="3、命令格式"></a>3、命令格式</h2><p>不同的功能码具有不同的消息格式，简单说一下常用的8种功能码的信息格式。</p>
+<h3 id="（1）功能码0x01：读线圈"><a href="#（1）功能码0x01：读线圈" class="headerlink" title="（1）功能码0x01：读线圈"></a>（1）功能码<code>0x01</code>：读线圈</h3><p>在一个远程设备中，使用该功能码读取线圈的1至2000个连续状态。请求 <code>PDU</code>详细说明了起始地址，即指定的第一个线圈地址和线圈编号。从零开始寻址线圈。因此寻址线圈 <code>1-16</code> 为 <code>0-15</code>。</p>
+<p>根据数据域的每个比特将响应报文中的线圈分成为一个线圈。指示状态为 <code>1= ON</code> 和 <code>0= OFF</code>。第一个数据字节的 <code>LSB（最低有效位）</code>包括在询问中寻址的输出。其它线圈依次类推，一直到这个字节的高位端为止，并在后续字节中从低位到高位的顺序。</p>
+<p>如果返回的输出数量不是八的倍数，将用零填充最后数据字节中的剩余比特（一直到字节的高位端）。字节数量域说明了数据的完整字节数。具体格式举例如下：</p>
+<p> <img src="564295-20170704210448456-2056023284.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="（2）功能码0x02：读离散量输入"><a href="#（2）功能码0x02：读离散量输入" class="headerlink" title="（2）功能码0x02：读离散量输入"></a>（2）功能码<code>0x02</code>：读离散量输入</h3><p>在一个远程设备中，使用该功能码读取离散量输入的 1 至 2000 连续状态。请求 <code>PDU</code> 详细说明了起始地址，即指定的第一个输入地址和输入编号。从零开始寻址输入。因此寻址输入 <code>1-16</code> 为 <code>0-15</code>。</p>
+<p>根据数据域的每个比特将响应报文中的离散量输入分成为一个输入。指示状态为<code>1=ON</code> 和<code>0=OFF</code>。第一个数据字节的 <code>LSB（最低有效位）</code>包括在询问中寻址的输入。其它输入依次类推，一直到这个字节的高位端为止，并在后续字节中从低位到高位的顺序。</p>
+<p>如果返回的输入数量不是八的倍数，将用零填充最后数据字节中的剩余比特（一直到字节的高位端）。字节数量域说明了数据的完整字节数。具体格式举例如下：</p>
+<p> <img src="564295-20170704210457003-261949831.png" srcset="/img/loading.gif" lazyload></p>
+<p>事实上，功能码<code>0x01</code>和<code>0x02</code>的数据格式是完全一样的，操作方式也是完全一样的，所不同只是操作的对象不同。</p>
+<h3 id="（3）功能码0x03：读保持寄存器"><a href="#（3）功能码0x03：读保持寄存器" class="headerlink" title="（3）功能码0x03：读保持寄存器"></a>（3）功能码<code>0x03</code>：读保持寄存器</h3><p>在一个远程设备中，使用该功能码读取保持寄存器连续块的内容。请求 <code>PDU</code> 说明了起始寄存器地址和寄存器数量。从零开始寻址寄存器。因此，寻址寄存器 <code>1-16</code> 为 <code>0-15</code>。</p>
+<p>将响应报文中的寄存器数据分成每个寄存器有两字节，在每个字节中直接地调整二进制内容。</p>
+<p>对于每个寄存器，第一个字节包括高位比特，并且第二个字节包括低位比特。具体的格式举例如下：</p>
+<p> <img src="564295-20170704210508550-798950645.png" srcset="/img/loading.gif" lazyload></p>
+<p>响应信息的长度与具体读取的数据量有关。</p>
+<h3 id="（4）功能码0x04：读输入寄存器"><a href="#（4）功能码0x04：读输入寄存器" class="headerlink" title="（4）功能码0x04：读输入寄存器"></a>（4）功能码<code>0x04</code>：读输入寄存器</h3><p>在一个远程设备中，使用该功能码读取 1 至大约 125 的连续输入寄存器。请求 <code>PDU</code> 说明了起始地址和寄存器数量。从零开始寻址寄存器。因此，寻址输入寄存器 <code>1-16</code> 为 <code>0-15</code>。</p>
+<p>将响应报文中的寄存器数据分成每个寄存器为两字节，在每个字节中直接地调整二进制内容。</p>
+<p>对于每个寄存器，第一个字节包括高位比特，并且第二个字节包括低位比特。具体的格式举例如下：</p>
+<p> <img src="564295-20170704210521878-873305173.png" srcset="/img/loading.gif" lazyload></p>
+<p>事实上，功能码<code>0x03</code>和<code>0x04</code>的数据格式是完全一样的，操作方式也是完全一样的，所不同只是操作的对象不同。响应信息的长度与具体读取的数据量有关。</p>
+<h3 id="（5）功能码0x05：写单个线圈"><a href="#（5）功能码0x05：写单个线圈" class="headerlink" title="（5）功能码0x05：写单个线圈"></a>（5）功能码<code>0x05</code>：写单个线圈</h3><p>在一个远程设备上，使用该功能码写单个输出为 <code>ON</code> 或 <code>OFF</code>。</p>
+<p>请求数据域中的常量说明请求的<code>ON/OFF</code>状态。十六进制值<code>0xFF00</code>请求输出为 <code>ON</code>。十六进制值<code>0x0000</code> 请求输出为<code>OFF</code>。其它所有值均是非法的，并且对输出不起作用。</p>
+<p>请求 <code>PDU</code> 说明了强制的线圈地址。从零开始寻址线圈。因此，寻址线圈1为0。线圈值域的常量说明请求的 <code>ON/OFF</code> 状态。十六进制值 <code>0XFF00</code> 请求线圈为 <code>ON</code>。十六进制值 <code>0X0000</code> 请求线圈为<code>OFF</code>。其它所有值均为非法的，并且对线圈不起作用。</p>
+<p>正常响应是请求的应答，在写入线圈状态之后返回这个正常响应。具体的格式举例如下：</p>
+<p> <img src="564295-20170704210531862-774173145.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="（6）功能码0x06：写单个寄存器"><a href="#（6）功能码0x06：写单个寄存器" class="headerlink" title="（6）功能码0x06：写单个寄存器"></a>（6）功能码<code>0x06</code>：写单个寄存器</h3><p>在一个远程设备中，使用该功能码写单个保持寄存器。</p>
+<p>请求 <code>PDU</code> 说明了被写入寄存器的地址。从零开始寻址寄存器。因此，寻址寄存器<code>1</code>为<code>0</code>。</p>
+<p>正常响应是请求的应答，在写入寄存器内容之后返回这个正常响应。具体的格式举例如下：</p>
+<p> <img src="564295-20170704210541128-1585003645.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="（7）功能码0x0F：写多个线圈"><a href="#（7）功能码0x0F：写多个线圈" class="headerlink" title="（7）功能码0x0F：写多个线圈"></a>（7）功能码<code>0x0F</code>：写多个线圈</h3><p>在一个远程设备中，使用该功能码强制线圈序列中的每个线圈为<code>ON</code>或<code>OFF</code>。请求<code>PDU</code>说明了强制的线圈参考。从零开始寻址线圈。因此，寻址线圈<code>1</code>为<code>0</code>。</p>
+<p>请求数据域的内容说明了被请求的<code>ON/OFF</code>状态。域比特位置中的逻辑<code>“1”</code>请求相应输出为<code>ON</code>。域比特位置中的逻辑<code>“0”</code>请求相应输出为 <code>OFF</code>。</p>
+<p>正常响应返回功能码、起始地址和强制的线圈数量。具体的格式举例如下：</p>
+<p> <img src="564295-20170704210554487-1357285608.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="（8）功能码0x10：写多个寄存器"><a href="#（8）功能码0x10：写多个寄存器" class="headerlink" title="（8）功能码0x10：写多个寄存器"></a>（8）功能码<code>0x10</code>：写多个寄存器</h3><p>在一个远程设备中，使用该功能码写连续寄存器块(1至约120个寄存器)。</p>
+<p>在请求数据域中说明了请求写入的值。每个寄存器将数据分成两字节。</p>
+<p>正常响应返回功能码、起始地址和被写入寄存器的数量。具体的格式举例如下：</p>
+<p> <img src="564295-20170704210606503-1586352399.png" srcset="/img/loading.gif" lazyload></p>
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E7%BD%91/">工业物联网</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/modbus/">modbus</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/17/%E5%85%A8%E9%9D%A2%E6%8E%8C%E6%8F%A1Django-ORM/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">全面掌握Django ORM</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/07/Echatrs%E7%9A%84%E4%BD%BF%E7%94%A8/">
+                        <span class="hidden-mobile">Echatrs的使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>

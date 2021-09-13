@@ -1,0 +1,828 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>搞定Go语言流程控制 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="搞定Go语言流程控制">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-29 10:20" pubdate>
+        2021年8月29日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      45
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">搞定Go语言流程控制</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月9日 早上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h1><h2 id="流程控制：if-else"><a href="#流程控制：if-else" class="headerlink" title="流程控制：if-else"></a>流程控制：if-else</h2><h3 id="条件语句模型"><a href="#条件语句模型" class="headerlink" title="条件语句模型"></a>条件语句模型</h3><p>Go里的流程控制方法还是挺丰富，整理了下有如下这么多种：</p>
+<ul>
+<li>if - else 条件语句</li>
+<li>switch - case 选择语句</li>
+<li>for - range 循环语句</li>
+<li>goto 无条件跳转语句</li>
+<li>defer 延迟执行</li>
+</ul>
+<p>先看if-else语句：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">if</span> 条件 <span class="hljs-number">1</span> &#123;<br>  分支 <span class="hljs-number">1</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> 条件 <span class="hljs-number">2</span> &#123;<br>  分支 <span class="hljs-number">2</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> 条件 ... &#123;<br>  分支 ...<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>  分支 <span class="hljs-keyword">else</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Go编译器，对于 <code>&#123;</code> 和 <code>&#125;</code> 的位置有严格的要求，它要求 else if （或 else）和 两边的花括号，必须在同一行。</p>
+<p>Go是 强类型，所以要求你条件表达式必须严格返回布尔型的数据（nil 和 0 和 1 都不行。</p>
+<h3 id="单分支判断"><a href="#单分支判断" class="headerlink" title="单分支判断"></a>单分支判断</h3><p>只有一个 if ，没有 else</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>	age := <span class="hljs-number">20</span><br>	<span class="hljs-keyword">if</span> age &gt; <span class="hljs-number">18</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;你已经是个大孩子了&quot;</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果条件里需要满足多个条件，可以使用 <code>&amp;&amp;</code> 和 <code>||</code></p>
+<ul>
+<li><code>&amp;&amp;</code>：表示且，左右都需要为true，最终结果才能为 true，否则为 false</li>
+<li><code>||</code>：表示或，左右只要有一个为true，最终结果即为true，否则 为 false</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	age := <span class="hljs-number">20</span><br>	gender := <span class="hljs-string">&quot;male&quot;</span><br>	<span class="hljs-keyword">if</span> age &gt; <span class="hljs-number">18</span> &amp;&amp; gender == <span class="hljs-string">&quot;male&quot;</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;你已经是个大男孩子了&quot;</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="多分支判断"><a href="#多分支判断" class="headerlink" title="多分支判断"></a>多分支判断</h3><p>if - else</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    age := <span class="hljs-number">20</span><br>    <span class="hljs-keyword">if</span> age &gt; <span class="hljs-number">18</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;已经成年了&quot;</span>)<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;还未成年&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>if - else if - else</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    age := <span class="hljs-number">20</span><br>    <span class="hljs-keyword">if</span> age &gt; <span class="hljs-number">18</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;已经成年了&quot;</span>)<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> age &gt;<span class="hljs-number">12</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;已经是青少年了&quot;</span>)<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;还不是青少年&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="高级写法"><a href="#高级写法" class="headerlink" title="高级写法"></a>高级写法</h3><p>在 if 里可以允许先运行一个表达式，取得变量后，再对其进行判断，比如第一个例子里代码也可以写成这样</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">if</span> age := <span class="hljs-number">20</span>;age &gt; <span class="hljs-number">18</span> &#123;<br>        fmt.Println(<span class="hljs-string">&quot;已经成年了&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="流程控制：switch-case"><a href="#流程控制：switch-case" class="headerlink" title="流程控制：switch-case"></a>流程控制：switch-case</h2><h3 id="语句模型"><a href="#语句模型" class="headerlink" title="语句模型"></a>语句模型</h3><p>Go 里的选择语句模型是这样的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">switch</span> 表达式 &#123;<br>    <span class="hljs-keyword">case</span> 表达式<span class="hljs-number">1</span>:<br>        代码块<br>    <span class="hljs-keyword">case</span> 表达式<span class="hljs-number">2</span>:<br>        代码块<br>    <span class="hljs-keyword">case</span> 表达式<span class="hljs-number">3</span>:<br>        代码块<br>    <span class="hljs-keyword">case</span> 表达式<span class="hljs-number">4</span>:<br>        代码块<br>    <span class="hljs-keyword">case</span> 表达式<span class="hljs-number">5</span>:<br>        代码块<br>    <span class="hljs-keyword">default</span>:<br>        代码块<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>拿 switch 后的表达式分别和 case 后的表达式进行对比，只要有一个 case 满足条件，就会执行对应的代码块，然后直接退出 switch - case ，如果 一个都没有满足，才会执行 default 的代码块。</p>
+<h3 id="最简单的示例"><a href="#最简单的示例" class="headerlink" title="最简单的示例"></a>最简单的示例</h3><p>switch 后接一个你要判断变量 <code>education</code> （学历），然后 case 会拿这个 变量去和它后面的表达式（可能是常量、变量、表达式等）进行判等。</p>
+<p>如果相等，就执行相应的代码块。如果不相等，就接着下一个 case。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go">mport <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    education := <span class="hljs-string">&quot;本科&quot;</span><br><br>    <span class="hljs-keyword">switch</span> education &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;博士&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;我是博士&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;研究生&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;我是研究生&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;本科&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;我是本科生&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;大专&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;我是大专生&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;高中&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;我是高中生&quot;</span>)<br>    <span class="hljs-keyword">default</span>:<br>        fmt.Println(<span class="hljs-string">&quot;学历未达标..&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">我是本科生<br></code></pre></td></tr></table></figure>
+
+<h3 id="一个-case-多个条件"><a href="#一个-case-多个条件" class="headerlink" title="一个 case 多个条件"></a>一个 case 多个条件</h3><p>case 后可以接多个多个条件，多个条件之间是 <code>或</code> 的关系，用逗号相隔。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    month := <span class="hljs-number">2</span><br><br>    <span class="hljs-keyword">switch</span> month &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>:<br>        fmt.Println(<span class="hljs-string">&quot;春天&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>:<br>        fmt.Println(<span class="hljs-string">&quot;夏天&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>:<br>        fmt.Println(<span class="hljs-string">&quot;秋天&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">12</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>:<br>        fmt.Println(<span class="hljs-string">&quot;冬天&quot;</span>)<br>    <span class="hljs-keyword">default</span>:<br>        fmt.Println(<span class="hljs-string">&quot;输入有误...&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">冬天<br></code></pre></td></tr></table></figure>
+
+<h3 id="case-条件常量不能重复"><a href="#case-条件常量不能重复" class="headerlink" title="case 条件常量不能重复"></a>case 条件常量不能重复</h3><p>当 case 后接的是常量时，该常量只能出现一次。</p>
+<p>以下两种情况，在编译时，都会报错： duplicate case “male” in switch</p>
+<p><strong>错误案例一</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go">gender := <span class="hljs-string">&quot;male&quot;</span><br><br><span class="hljs-keyword">switch</span> gender &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;male&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;男性&quot;</span>)<br>    <span class="hljs-comment">// 与上面重复</span><br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;male&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;男性&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;female&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;女性&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>错误案例二</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">gender := <span class="hljs-string">&quot;male&quot;</span><br><br><span class="hljs-keyword">switch</span> gender &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;male&quot;</span>, <span class="hljs-string">&quot;male&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;男性&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;female&quot;</span>:<br>        fmt.Println(<span class="hljs-string">&quot;女性&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="switch-后可接函数"><a href="#switch-后可接函数" class="headerlink" title="switch 后可接函数"></a>switch 后可接函数</h3><p>switch 后面可以接一个函数，只要保证 case 后的值类型与函数的返回值 一致即可。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-comment">// 判断一个同学是否有挂科记录的函数</span><br><span class="hljs-comment">// 返回值是布尔类型</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getResult</span><span class="hljs-params">(args ...<span class="hljs-keyword">int</span>)</span> <span class="hljs-title">bool</span></span> &#123;<br>    <span class="hljs-keyword">for</span> _, i := <span class="hljs-keyword">range</span> args &#123;<br>        <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">60</span> &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    chinese := <span class="hljs-number">80</span><br>    english := <span class="hljs-number">50</span><br>    math := <span class="hljs-number">100</span><br><br>    <span class="hljs-keyword">switch</span> getResult(chinese, english, math) &#123;<br>    <span class="hljs-comment">// case 后也必须 是布尔类型</span><br>    <span class="hljs-keyword">case</span> <span class="hljs-literal">true</span>:<br>        fmt.Println(<span class="hljs-string">&quot;该同学所有成绩都合格&quot;</span>)<br>    <span class="hljs-keyword">case</span> <span class="hljs-literal">false</span>:<br>        fmt.Println(<span class="hljs-string">&quot;该同学有挂科记录&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="switch-可不接表达式"><a href="#switch-可不接表达式" class="headerlink" title="switch 可不接表达式"></a>switch 可不接表达式</h3><p>switch 后可以不接任何变量、表达式、函数。</p>
+<p>当不接任何东西时，switch - case 就相当于 if - elseif - else</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go">score := <span class="hljs-number">30</span><br><br><span class="hljs-keyword">switch</span> &#123;<br>    <span class="hljs-keyword">case</span> score &gt;= <span class="hljs-number">95</span> &amp;&amp; score &lt;= <span class="hljs-number">100</span>:<br>        fmt.Println(<span class="hljs-string">&quot;优秀&quot;</span>)<br>    <span class="hljs-keyword">case</span> score &gt;= <span class="hljs-number">80</span>:<br>        fmt.Println(<span class="hljs-string">&quot;良好&quot;</span>)<br>    <span class="hljs-keyword">case</span> score &gt;= <span class="hljs-number">60</span>:<br>        fmt.Println(<span class="hljs-string">&quot;合格&quot;</span>)<br>    <span class="hljs-keyword">case</span> score &gt;= <span class="hljs-number">0</span>:<br>        fmt.Println(<span class="hljs-string">&quot;不合格&quot;</span>)<br>    <span class="hljs-keyword">default</span>:<br>        fmt.Println(<span class="hljs-string">&quot;输入有误...&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="switch-的穿透能力"><a href="#switch-的穿透能力" class="headerlink" title="switch 的穿透能力"></a>switch 的穿透能力</h3><p>正常情况下 switch - case 的执行顺序是：只要有一个 case 满足条件，就会直接退出 switch - case ，如果 一个都没有满足，才会执行 default 的代码块。</p>
+<p>但是有一种情况是例外。</p>
+<p>那就是当 case 使用关键字 <code>fallthrough</code> 开启穿透能力的时候。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go">s := <span class="hljs-string">&quot;hello&quot;</span><br><span class="hljs-keyword">switch</span> &#123;<br><span class="hljs-keyword">case</span> s == <span class="hljs-string">&quot;hello&quot;</span>:<br>    fmt.Println(<span class="hljs-string">&quot;hello&quot;</span>)<br>    <span class="hljs-keyword">fallthrough</span><br><span class="hljs-keyword">case</span> s != <span class="hljs-string">&quot;world&quot;</span>:<br>    fmt.Println(<span class="hljs-string">&quot;world&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>代码输出如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">hello<br>world<br></code></pre></td></tr></table></figure>
+
+<p>需要注意的是，<code>fallthrough</code> 只能穿透一层，意思是它让你直接执行下一个case的语句，而且不需要判断条件。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go">s := <span class="hljs-string">&quot;hello&quot;</span><br><span class="hljs-keyword">switch</span> &#123;<br><span class="hljs-keyword">case</span> s == <span class="hljs-string">&quot;hello&quot;</span>:<br>    fmt.Println(<span class="hljs-string">&quot;hello&quot;</span>)<br>    <span class="hljs-keyword">fallthrough</span><br><span class="hljs-keyword">case</span> s == <span class="hljs-string">&quot;xxxx&quot;</span>:<br>    fmt.Println(<span class="hljs-string">&quot;xxxx&quot;</span>)<br><span class="hljs-keyword">case</span> s != <span class="hljs-string">&quot;world&quot;</span>:<br>    fmt.Println(<span class="hljs-string">&quot;world&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下，并不会输出 <code>world</code>（即使它符合条件）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">hello<br>xxxx<br></code></pre></td></tr></table></figure>
+
+<h2 id="流程控制：for-循环"><a href="#流程控制：for-循环" class="headerlink" title="流程控制：for 循环"></a>流程控制：for 循环</h2><h3 id="语句模型-1"><a href="#语句模型-1" class="headerlink" title="语句模型"></a>语句模型</h3><p>这是 for 循环的基本模型。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs coq"><span class="hljs-keyword">for</span> [condition |  <span class="hljs-type">( init</span>; condition; increment ) | <span class="hljs-type">Range</span>]<br>&#123;<br>   statement(s);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到 for 后面，可以接三种类型的表达式。</p>
+<ol>
+<li>接一个条件表达式</li>
+<li>接三个表达式</li>
+<li>接一个 range 表达式</li>
+</ol>
+<p>但其实还有第四种</p>
+<ol>
+<li>不接表达式</li>
+</ol>
+<h3 id="接一个条件表达式"><a href="#接一个条件表达式" class="headerlink" title="接一个条件表达式"></a>接一个条件表达式</h3><p>打印 1 到 5 的数值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">a := <span class="hljs-number">1</span><br><span class="hljs-keyword">for</span> a &lt;= <span class="hljs-number">5</span> &#123;<br>    fmt.Println(a)<br>    a ++<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-number">1</span><br><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br><span class="hljs-number">4</span><br><span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="接三个表达式"><a href="#接三个表达式" class="headerlink" title="接三个表达式"></a>接三个表达式</h3><p>for 后面，紧接着三个表达式，使用 <code>;</code> 分隔。</p>
+<p>这三个表达式，各有各的用途</p>
+<ul>
+<li>第一个表达式：初始化控制变量，在整个循环生命周期内，只运行一次；</li>
+<li>第二个表达式：设置循环控制条件，当返回true，继续循环，返回false，结束循环；</li>
+<li>第三个表达式：每次循完开始（除第一次）时，给控制变量增量或减量。</li>
+</ul>
+<p>这边的例子和上面的例子，是等价的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++ &#123;<br>        fmt.Println(i)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-number">1</span><br><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br><span class="hljs-number">4</span><br><span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="不接表达式：无限循环"><a href="#不接表达式：无限循环" class="headerlink" title="不接表达式：无限循环"></a>不接表达式：无限循环</h3><p>在 Go 语言中，没有 while 循环，如果要实现无限循环，也完全可以 for 来实现。</p>
+<p>当你不加任何的判断条件时， 就相当于你每次的判断都为 true，程序就会一直处于运行状态，但是一般我们并不会让程序处于死循环，在满足一定的条件下，可以使用关键字 <code>break</code> 退出循环体，也可以使用 <code>continue</code> 直接跳到下一循环。</p>
+<p>下面两种写法都是无限循环的写法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">for</span> &#123;<br>    代码块<br>&#125;<br><br><span class="hljs-comment">// 等价于</span><br><span class="hljs-keyword">for</span> ;; &#123;<br>    代码块<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>举个例子</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> i <span class="hljs-keyword">int</span> = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">5</span> &#123;<br>            <span class="hljs-keyword">break</span><br>        &#125;<br>        fmt.Printf(<span class="hljs-string">&quot;hello, %d\n&quot;</span>, i)<br>        i++<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">hello, <span class="hljs-number">1</span><br>hello, <span class="hljs-number">2</span><br>hello, <span class="hljs-number">3</span><br>hello, <span class="hljs-number">4</span><br>hello, <span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="接-for-range-语句"><a href="#接-for-range-语句" class="headerlink" title="接 for-range 语句"></a>接 for-range 语句</h3><p>遍历一个可迭代对象，是一个很常用的操作。在 Go 可以使用 for-range 的方式来实现。</p>
+<p>range 后可接数组、切片，字符串等</p>
+<p>由于 range 会返回两个值：索引和数据，若你后面的代码用不到索引，需要使用 <code>_</code> 表示 。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    myarr := [...]<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;world&quot;</span>, <span class="hljs-string">&quot;python&quot;</span>, <span class="hljs-string">&quot;go&quot;</span>&#125;<br>    <span class="hljs-keyword">for</span> _, item := <span class="hljs-keyword">range</span> myarr &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;hello, %s\n&quot;</span>, item)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><span class="hljs-built_in">hello,</span> world<br><span class="hljs-built_in">hello,</span> python<br><span class="hljs-built_in">hello,</span> go<br></code></pre></td></tr></table></figure>
+
+<p>如果你用一个变量来接收的话，接收到的是索引</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    myarr := [...]<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;world&quot;</span>, <span class="hljs-string">&quot;python&quot;</span>, <span class="hljs-string">&quot;go&quot;</span>&#125;<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> myarr &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;hello, %v\n&quot;</span>, i)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">hello</span>, <span class="hljs-number">0</span><br><span class="hljs-attribute">hello</span>, <span class="hljs-number">1</span><br><span class="hljs-attribute">hello</span>, <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="流程控制：goto-无条件跳转"><a href="#流程控制：goto-无条件跳转" class="headerlink" title="流程控制：goto 无条件跳转"></a>流程控制：goto 无条件跳转</h2><h3 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h3><p><code>goto</code> 顾言思义，是跳转的意思。</p>
+<p>goto 后接一个标签，这个标签的意义是告诉 Go程序下一步要执行哪里的代码。</p>
+<p>所以这个标签如何放置，放置在哪里，是 goto 里最需要注意的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">goto</span> 标签;<br>...<br>...<br>标签: 表达式;<br></code></pre></td></tr></table></figure>
+
+<h3 id="最简单的示例-1"><a href="#最简单的示例-1" class="headerlink" title="最简单的示例"></a>最简单的示例</h3><p><code>goto</code> 可以打破原有代码执行顺序，直接跳转到某一行执行代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>    <span class="hljs-keyword">goto</span> flag<br>    fmt.Println(<span class="hljs-string">&quot;B&quot;</span>)<br>flag:<br>    fmt.Println(<span class="hljs-string">&quot;A&quot;</span>)<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>执行结果，并不会输出 B ，而只会输出 A</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">A</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="如何使用？"><a href="#如何使用？" class="headerlink" title="如何使用？"></a>如何使用？</h3><p><code>goto</code> 语句通常与条件语句配合使用。可用来实现条件转移， 构成循环，跳出循环体等功能。</p>
+<p>这边举一个例子，用 <code>goto</code> 的方式来实现一个打印 1到5 的循环。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    i := <span class="hljs-number">1</span><br>flag:<br>    <span class="hljs-keyword">if</span> i &lt;= <span class="hljs-number">5</span> &#123;<br>        fmt.Println(i)<br>        i++<br>        <span class="hljs-keyword">goto</span> flag<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs">1<br>2<br>3<br>4<br>5<br></code></pre></td></tr></table></figure>
+
+<p>再举个例子，使用 goto 实现 类型 break 的效果。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs css">import &quot;fmt&quot;<br><br>func <span class="hljs-selector-tag">main</span>() &#123;<br>    <span class="hljs-selector-tag">i</span> := <span class="hljs-number">1</span><br>    for &#123;<br>        if i &gt; <span class="hljs-number">5</span> &#123;<br>            goto flag<br>        &#125;<br>        fmt<span class="hljs-selector-class">.Println</span>(<span class="hljs-selector-tag">i</span>)<br>        <span class="hljs-selector-tag">i</span>++<br>    &#125;<br>flag:<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs">1<br>2<br>3<br>4<br>5<br></code></pre></td></tr></table></figure>
+
+<p>最后再举个例子，使用 goto 实现 类型 continue的效果，打印 1到10 的所有偶数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    i := <span class="hljs-number">1</span><br>flag:<br>    <span class="hljs-keyword">for</span> i &lt;= <span class="hljs-number">10</span> &#123;<br>        <span class="hljs-keyword">if</span> i%<span class="hljs-number">2</span> == <span class="hljs-number">1</span> &#123;<br>            i++<br>            <span class="hljs-keyword">goto</span> flag<br>        &#125;<br>        fmt.Println(i)<br>        i++<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs">2<br>4<br>6<br>8<br>10<br></code></pre></td></tr></table></figure>
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>goto语句与标签之间不能有变量声明，否则编译错误。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    fmt.Println(<span class="hljs-string">&quot;start&quot;</span>)<br>    <span class="hljs-keyword">goto</span> flag<br>    <span class="hljs-keyword">var</span> say = <span class="hljs-string">&quot;hello oldboy&quot;</span><br>    fmt.Println(say)<br>flag:<br>    fmt.Println(<span class="hljs-string">&quot;end&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>编译错误</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">.\<span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.go</span>:<span class="hljs-number">7</span>:<span class="hljs-number">7</span>: goto flag jumps over declaration of say at .\<span class="hljs-selector-tag">main</span><span class="hljs-selector-class">.go</span>:<span class="hljs-number">8</span>:<span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="流程控制：defer-延迟语句"><a href="#流程控制：defer-延迟语句" class="headerlink" title="流程控制：defer 延迟语句"></a>流程控制：defer 延迟语句</h2><h3 id="延迟调用"><a href="#延迟调用" class="headerlink" title="延迟调用"></a>延迟调用</h3><p>defer 的用法很简单，只要在后面跟一个函数的调用，就能实现将这个 <code>xxx</code> 函数的调用延迟到当前函数执行完后再执行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">defer</span> xxx()<br></code></pre></td></tr></table></figure>
+
+<p>这是一个很简单的例子，可以很快帮助你理解 defer 的使用效果。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">myfunc</span><span class="hljs-params">()</span></span> &#123;<br>    fmt.Println(<span class="hljs-string">&quot;B&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">defer</span> myfunc()<br>    fmt.Println(<span class="hljs-string">&quot;A&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">A<br>B<br></code></pre></td></tr></table></figure>
+
+<p>当然了，对于上面这个例子可以简写为成如下，输出结果是一致的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;B&quot;</span>)<br>    fmt.Println(<span class="hljs-string">&quot;A&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="即时求值的变量快照"><a href="#即时求值的变量快照" class="headerlink" title="即时求值的变量快照"></a>即时求值的变量快照</h3><p>使用 defer 只是延时调用函数，此时传递给函数里的变量，不应该受到后续程序的影响。</p>
+<p>比如这边的例子</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    name := <span class="hljs-string">&quot;go&quot;</span><br>    <span class="hljs-keyword">defer</span> fmt.Println(name) <span class="hljs-comment">// 输出: go</span><br><br>    name = <span class="hljs-string">&quot;python&quot;</span><br>    fmt.Println(name)      <span class="hljs-comment">// 输出: python</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下，可见给 name 重新赋值为 <code>python</code>，后续调用 defer 的时候，仍然使用未重新赋值的变量值，就好在 defer 这里，给所有的这是做了一个快照一样。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">python<br><span class="hljs-keyword">go</span><br></code></pre></td></tr></table></figure>
+
+<p>如果 defer 后面跟的是匿名函数，情况会有所不同， defer 会取到最后的变量值</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    name := <span class="hljs-string">&quot;go&quot;</span><br>    <span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span>&#123;<br>    fmt.Println(name) <span class="hljs-comment">// 输出: python</span><br>&#125;()<br>    name = <span class="hljs-string">&quot;python&quot;</span><br>    fmt.Println(name)      <span class="hljs-comment">// 输出: python</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="多个defer-反序调用"><a href="#多个defer-反序调用" class="headerlink" title="多个defer 反序调用"></a>多个defer 反序调用</h3><p>当我们在一个函数里使用了 多个defer，那么这些defer 的执行函数是如何的呢？</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br><br>   <span class="hljs-keyword">defer</span> b()<br>   fmt.Println(<span class="hljs-string">&quot;function main&quot;</span>)<br>   <span class="hljs-keyword">defer</span> a()<br>   <span class="hljs-keyword">defer</span> c()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">a</span><span class="hljs-params">()</span></span>&#123;<br>   fmt.Println(<span class="hljs-string">&quot;function a&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">b</span><span class="hljs-params">()</span></span>&#123;<br>   fmt.Println(<span class="hljs-string">&quot;function b&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">c</span><span class="hljs-params">()</span></span>&#123;<br>   fmt.Println(<span class="hljs-string">&quot;function c&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下，可见 多个defer 是反序调用的，有点类似栈一样，后进先出。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">function main<br>function c<br>function a<br>function b<br></code></pre></td></tr></table></figure>
+
+<h3 id="defer-与-return-孰先孰后"><a href="#defer-与-return-孰先孰后" class="headerlink" title="defer 与 return 孰先孰后"></a>defer 与 return 孰先孰后</h3><p>defer 和 return 到底是哪个先调用？</p>
+<p>使用下面这段代码，可以很容易的观察出来</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-keyword">var</span> name <span class="hljs-keyword">string</span> = <span class="hljs-string">&quot;go&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">myfunc</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;<br>    <span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        name = <span class="hljs-string">&quot;python&quot;</span><br>    &#125;()<br><br>    fmt.Printf(<span class="hljs-string">&quot;myfunc 函数里的name：%s\n&quot;</span>, name)<br>    <span class="hljs-keyword">return</span> name<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    myname := myfunc()<br>    fmt.Printf(<span class="hljs-string">&quot;main 函数里的name: %s\n&quot;</span>, name)<br>    fmt.Println(<span class="hljs-string">&quot;main 函数里的myname: &quot;</span>, myname)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go">myfunc 函数里的name：<span class="hljs-keyword">go</span><br>main 函数里的name: python<br>main 函数里的myname:  <span class="hljs-keyword">go</span><br></code></pre></td></tr></table></figure>
+
+<p>来一起理解一下这段代码，第一行很直观，name 此时还是全局变量，值还是go</p>
+<p>第二行也不难理解，在 defer 里改变了这个全局变量，此时name的值已经变成了 python</p>
+<p>重点在第三行，为什么输出的是 go ？</p>
+<p>解释只有一个，那就是 defer 是return 后才调用的。所以在执行 defer 前，<code>myname</code> 已经被赋值成 go 了。</p>
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Go/">Go</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/go/">go</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/29/Beego%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Beego框架入门</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/28/go%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+                        <span class="hidden-mobile">搞定go语言数据类型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>

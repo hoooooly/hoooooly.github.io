@@ -1,0 +1,692 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>Go语言中的切片 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Go语言中的切片">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-31 20:42" pubdate>
+        2021年8月31日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Go语言中的切片</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月9日 早上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="Go语言中的切片"><a href="#Go语言中的切片" class="headerlink" title="Go语言中的切片"></a>Go语言中的切片</h1><h2 id="切片的基本介绍"><a href="#切片的基本介绍" class="headerlink" title="切片的基本介绍"></a>切片的基本介绍</h2><p>切片，slice</p>
+<p>是数组的一个引用，因此切片是引用类型，在进行传值时，遵守引用传递的机制。</p>
+<p>切片的使用和数组类似，遍历切片、访问切片的元素和求切片长度len(slice)都一样。</p>
+<p>切片的长度是可以变化的，因此切片是一个可以动态变化的数组。</p>
+<p>定义的基本语法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> 切片名 []类型<br>比如：<span class="hljs-keyword">var</span> a []<span class="hljs-keyword">int</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>演示一个切片的基本使用：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>	<span class="hljs-keyword">var</span> intArr [<span class="hljs-number">5</span>]<span class="hljs-keyword">int</span> = [...]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">22</span>, <span class="hljs-number">33</span>, <span class="hljs-number">66</span>, <span class="hljs-number">99</span>&#125;<br>	<span class="hljs-comment">// 声明/定义一个切片</span><br>	slice := intArr[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]<br>	fmt.Println(<span class="hljs-string">&quot;intArr&quot;</span>, intArr) <span class="hljs-comment">//intArr [1 22 33 66 99]</span><br>	fmt.Println(<span class="hljs-string">&quot;slice 的元素是 =&quot;</span>, slice) <span class="hljs-comment">//slice 的元素是 = [22 33]</span><br>	fmt.Println(<span class="hljs-string">&quot;slice 的元素个数 =&quot;</span>, <span class="hljs-built_in">len</span>(slice)) <span class="hljs-comment">//slice 的元素个数 = 2</span><br>	fmt.Println(<span class="hljs-string">&quot;slice 的容量 =&quot;</span>, <span class="hljs-built_in">cap</span>(slice)) <span class="hljs-comment">//slice 的容量 = 4</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="切片在内存中形式（重要）"><a href="#切片在内存中形式（重要）" class="headerlink" title="切片在内存中形式（重要）"></a>切片在内存中形式（重要）</h2><h3 id="基本的介绍："><a href="#基本的介绍：" class="headerlink" title="基本的介绍："></a>基本的介绍：</h3><p><img src="image-20210831205851193.png" srcset="/img/loading.gif" lazyload></p>
+<p>slice的确是一个引用类型</p>
+<p>slice从底层来说，其实是一个数据结构（结构体）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> slice <span class="hljs-keyword">struct</span>&#123;<br>    ptr *[<span class="hljs-number">2</span>]<span class="hljs-keyword">int</span><br>    <span class="hljs-built_in">len</span> <span class="hljs-keyword">int</span><br>    <span class="hljs-built_in">cap</span> <span class="hljs-keyword">int</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="切片的使用"><a href="#切片的使用" class="headerlink" title="切片的使用"></a>切片的使用</h2><ul>
+<li>方式一：</li>
+</ul>
+<p>第一种方式：定义一个切片，然后让切片去引用一个已经创建好的数组。</p>
+<ul>
+<li>方式二：</li>
+</ul>
+<p>第二种方式：通过make来创建切片</p>
+<p>基本语法：<code>var 切片名 []type = make([]type, len, [cap])</code></p>
+<p>参数说明：<code>type</code>数据类型，<code>len</code>大小，<code>cap</code>指定切片容量，可选，如果你分配了<code>cap</code>，则要求<code>cap&gt;=len</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> slice1 []<span class="hljs-keyword">float64</span> = <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">float64</span>, <span class="hljs-number">5</span>, <span class="hljs-number">10</span>)<br>slice1[<span class="hljs-number">1</span>] = <span class="hljs-number">10</span><br>slice1[<span class="hljs-number">3</span>] = <span class="hljs-number">10</span><br>fmt.Println(slice1) <span class="hljs-comment">//[0 10 0 10 0]</span><br>fmt.Println(<span class="hljs-string">&quot;slice1的size=&quot;</span>, <span class="hljs-built_in">len</span>(slice1)) <span class="hljs-comment">//slice1的size= 5</span><br>fmt.Println(<span class="hljs-string">&quot;slice的cap=&quot;</span>, <span class="hljs-built_in">cap</span>(slice1)) <span class="hljs-comment">//slice的cap= 10</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="image-20210831211122280.png" srcset="/img/loading.gif" lazyload></p>
+<p>1）通过make方式创建切片可以指定切片的大小和容量</p>
+<p>2）如果没有给切片的各个元素赋值，那么就会使用默认值</p>
+<p>3）通过make方式创建的切片对应的数组是由make底层维护，对外不可见，即只能通过slice访问各个元素</p>
+<ul>
+<li>方式三</li>
+</ul>
+<p>第3种方式：定义一个切片，直接就指定具体数组，使用原理类似make的方式。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> strSlice []<span class="hljs-keyword">string</span> = []<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;tom&quot;</span>, <span class="hljs-string">&quot;jack&quot;</span>, <span class="hljs-string">&quot;mary&quot;</span>&#125;<br>fmt.Println(<span class="hljs-string">&quot;strSlice=&quot;</span>, strSlice) <span class="hljs-comment">//strSlice= [tom jack mary]</span><br>fmt.Println(<span class="hljs-string">&quot;strSlice size=&quot;</span>, <span class="hljs-built_in">len</span>(strSlice)) <span class="hljs-comment">//strSlice size= 3</span><br>fmt.Println(<span class="hljs-string">&quot;strSlice cap=&quot;</span>, <span class="hljs-built_in">cap</span>(strSlice)) <span class="hljs-comment">//strSlice cap= 3</span><br></code></pre></td></tr></table></figure>
+
+<p>方式1是直接引用数组，这个数组是事先存在的，程序员是可见的。</p>
+<p>方式2是通过make来创建切片，make也会创建一个数组，是由切片在底层进行维护，程序员是看不见的。make创建切片的示意图∶</p>
+<p><img src="image-20210831212029532.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="切片的遍历"><a href="#切片的遍历" class="headerlink" title="切片的遍历"></a>切片的遍历</h2><p>切片的偏历和数组一样，也有两种方式</p>
+<ul>
+<li>for循环常规方式遍历</li>
+<li>for-range结构遍历切片</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> arr [<span class="hljs-number">5</span>]<span class="hljs-keyword">int</span> = [...]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>&#125;<br>	slice := arr[<span class="hljs-number">1</span>:<span class="hljs-number">4</span>]<br>	<span class="hljs-comment">// 传统方式</span><br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">len</span>(slice); i++ &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;slice[%v]=%v&quot;</span>, i, slice[i])<br>	&#125;<br>	fmt.Println()<br>	<span class="hljs-comment">// 使用for-range方式遍历切片</span><br>	<span class="hljs-keyword">for</span> i, v := <span class="hljs-keyword">range</span> slice &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;i=%v v=%v\n&quot;</span>, i, v)<br>	&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="切片的使用的注意事项"><a href="#切片的使用的注意事项" class="headerlink" title="切片的使用的注意事项"></a>切片的使用的注意事项</h2><p>1）切片初始化时<code>var slice = arr[startIndex:endIndex]</code></p>
+<p>说明：从<code>arr</code>数组下标为<code>startIndex</code>，取到下标为<code>endIndex</code>的元素</p>
+<p>2）切片初始化时，仍然不能越界。范围在<code>[0-len(arr)]</code>之间，但是可以动态增长。</p>
+<p><code>var slice = arr[0:end]</code> 可以简写 <code>var slice = arr[:end]</code></p>
+<p>3）cap是一个内置函数，用于统计切片的容量，即最大可以存放多少元素。</p>
+<p>4）切片定义完后，还不能使用，因为本身是一个空的，需要让其引用到一个数组，或者make一个空间供切片来使用。</p>
+<p>5）切片可以继续切片。</p>
+<p>6）用append内置函数，可以对切片进行动态追加。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go">slice = <span class="hljs-built_in">append</span>(slice, <span class="hljs-number">400</span>, <span class="hljs-number">500</span>, <span class="hljs-number">600</span>)<br>fmt.Println(<span class="hljs-string">&quot;slice&quot;</span>, slice) <span class="hljs-comment">//slice [20 30 40 400 500 600]</span><br>slice = <span class="hljs-built_in">append</span>(slice, slice...)<br>fmt.Println(slice) <span class="hljs-comment">// [20 30 40 400 500 600 20 30 40 400 500 600]</span><br></code></pre></td></tr></table></figure>
+
+<p>7）切片的拷贝操作</p>
+<p>切片使用copy内置函数完成拷贝，举例说明</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> newslice = <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">int</span>, <span class="hljs-number">10</span>)<br>	<span class="hljs-built_in">copy</span>(newslice, slice)<br>	fmt.Println(<span class="hljs-string">&quot;newslice=&quot;</span>, newslice) <span class="hljs-comment">//newslice= [20 30 40 400 500 600 20 30 40 400]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="string和slice"><a href="#string和slice" class="headerlink" title="string和slice"></a>string和slice</h2><p>1）string底层是一个byte数组，因此string也可以进行切片处理</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go">str := <span class="hljs-string">&quot;hello@outlook.com&quot;</span><br>slice := str[<span class="hljs-number">6</span>:]<br>fmt.Println(<span class="hljs-string">&quot;slice=&quot;</span>, slice) <span class="hljs-comment">//slice= outlook.com</span><br></code></pre></td></tr></table></figure>
+
+<p>2）string是不可以改变的，不能通过str[0]=’z’方式来修改字符串</p>
+<p>3）如果要修改字符串，可以先将string-&gt;[]byte/或者[]rune-&gt;修改-&gt;重写转成string</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go">arr1 := []<span class="hljs-keyword">byte</span>(str)<br>arr1[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;H&#x27;</span><br>str = <span class="hljs-keyword">string</span>(arr1)<br>fmt.Println(str) <span class="hljs-comment">//Hello@outlook.com</span><br><br><span class="hljs-comment">// 如果要处理中文，就必须转成[]rune</span><br>arr2 := []<span class="hljs-keyword">rune</span>(str)<br>arr2[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;陈&#x27;</span><br>str = <span class="hljs-keyword">string</span>(arr2)<br>fmt.Println(str) <span class="hljs-comment">//陈ello@outlook.com</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Go/">Go</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/go/">go</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%87%E7%89%87/">切片</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/03/%E4%BD%BF%E7%94%A8python%E5%AE%9E%E7%8E%B0%E4%B8%8B%E8%BD%BD%E5%99%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用python实现下载器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/30/go%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0/">
+                        <span class="hidden-mobile">go语言字符串常用的系统函数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>
