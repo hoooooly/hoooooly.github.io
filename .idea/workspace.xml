@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2423d4dc-3a74-48b2-8312-5dbe2f0f5070" name="Default Changelist" comment="">
+    <list default="true" id="2423d4dc-3a74-48b2-8312-5dbe2f0f5070" name="Default Changelist" comment="add">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/项目实战：Scrapy爬取京东商城书籍信息.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/项目实战：Scrapy爬取京东商城书籍信息/image-20210817093807431.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +35,16 @@
       <workItem from="1624377966574" duration="14000" />
       <workItem from="1631147610753" duration="1232000" />
       <workItem from="1631449651455" duration="641000" />
-      <workItem from="1631544477997" duration="23000" />
+      <workItem from="1631544477997" duration="669000" />
     </task>
+    <task id="LOCAL-00001" summary="add">
+      <created>1631544525457</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1631544525457</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -56,5 +61,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add" />
+    <option name="LAST_COMMIT_MESSAGE" value="add" />
   </component>
 </project>
