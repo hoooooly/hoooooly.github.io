@@ -268,7 +268,7 @@
 <li>渲染网页</li>
 </ul>
 <h3 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h3><p><code>JavaScript</code>可以实现页面的各种交互功能，<code>Ajax</code>也不例外，它是由<code>JavaScript</code>实现的，实际上执行了如下代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> xmlhttp;<br><span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.XMLHttpRequest)<br>  &#123;<span class="hljs-comment">// code for IE7+, Firefox, Chrome, Opera, Safari</span><br>  xmlhttp=<span class="hljs-keyword">new</span> XMLHttpRequest();<br>  &#125;<br><span class="hljs-keyword">else</span><br>  &#123;<span class="hljs-comment">// code for IE6, IE5</span><br>  xmlhttp=<span class="hljs-keyword">new</span> ActiveXObject(<span class="hljs-string">&quot;Microsoft.XMLHTTP&quot;</span>);<br>  &#125;<br>xmlhttp.onreadystatechange=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">  </span>&#123;<br>  <span class="hljs-keyword">if</span> (xmlhttp.readyState==<span class="hljs-number">4</span> &amp;&amp; xmlhttp.status==<span class="hljs-number">200</span>)<br>    &#123;<br>    <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;myDiv&quot;</span>).innerHTML=xmlhttp.responseText;<br>    &#125;<br>  &#125;<br>xmlhttp.open(<span class="hljs-string">&quot;GET&quot;</span>,<span class="hljs-string">&quot;/ajax/demo_get.asp&quot;</span>,<span class="hljs-literal">true</span>);<br>xmlhttp.send();<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> xmlhttp;<br><span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.XMLHttpRequest)<br>  &#123;<span class="hljs-comment">// code for IE7+, Firefox, Chrome, Opera, Safari</span><br>  xmlhttp=<span class="hljs-keyword">new</span> XMLHttpRequest();<br>  &#125;<br><span class="hljs-keyword">else</span><br>  &#123;<span class="hljs-comment">// code for IE6, IE5</span><br>  xmlhttp=<span class="hljs-keyword">new</span> ActiveXObject(<span class="hljs-string">&quot;Microsoft.XMLHTTP&quot;</span>);<br>  &#125;<br>xmlhttp.onreadystatechange=<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span><br><span class="hljs-function">  </span>&#123;<br>  <span class="hljs-keyword">if</span> (xmlhttp.readyState==<span class="hljs-number">4</span> &amp;&amp; xmlhttp.status==<span class="hljs-number">200</span>)<br>    &#123;<br>    <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;myDiv&quot;</span>).innerHTML=xmlhttp.responseText;<br>    &#125;<br>  &#125;<br>xmlhttp.open(<span class="hljs-string">&quot;GET&quot;</span>,<span class="hljs-string">&quot;/ajax/demo_get.asp&quot;</span>,<span class="hljs-literal">true</span>);<br>xmlhttp.send();<br></code></pre></div></td></tr></table></figure>
 
 <p>这是<code>JavaScript</code>对<code>Ajax</code>最底层的实现，这个过程实际上是新建了<code>XMLHttpRequest</code>对象，然后调用<code>onreadystatechange</code>属性设置监听，最后调用<code>open()</code>和<code>send()</code>方法向某个链接（也就是服务器）发送请求。</p>
 <p>用<code>Python</code>实现请求发送之后，可以得到响应结果，但这里请求的发送由<code>JavaScript</code>来完成。由于设置了监听，所以当服务器返回响应时，<code>onreadystatechange</code>对应的方法便会被触发，在这个方法里面 解析响应内容即可。</p>
@@ -279,7 +279,7 @@
 <p>可以看到，<strong>发送请求</strong>、<strong>解析内容</strong>和<strong>渲染网页</strong>这3个步骤其实都是由<code>JavaScript</code>完成的。</p>
 <h2 id="Ajax分析"><a href="#Ajax分析" class="headerlink" title="Ajax分析"></a>Ajax分析</h2><p>用浏览器打开微博链接<a target="_blank" rel="noopener" href="https://weibo.com/u/5902654742">https://weibo.com/u/5902654742</a>，随后在页面中点击鼠标右键，从弹出的快捷菜单中选择“检查”选项，此时便会弹出开发者工具，如图所示：</p>
 <p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><br></code></pre></div></td></tr></table></figure>
 
 <p><code>Ajax</code>有其特殊的请求类型，它叫作<code>xhr</code>。在图中我们可以发现一个以<code>getIndex</code>开头的请求，其<code>Type</code>为<code>xhr</code>，这就是一个<code>Ajax</code>请求。用鼠标点击这个请求，可以查看这个请求的详细信息。</p>
 <p><img src="Screenshot_2.webp" srcset="/img/loading.gif" lazyload></p>
@@ -445,31 +445,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

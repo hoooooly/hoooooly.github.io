@@ -11,4 +11,4 @@ layout: about
 
 python和Golang是两个比较喜欢的语言。
 
-爬虫方向和web开发方向，结合起来玩法很多。
+爬虫方向和web开发方向。

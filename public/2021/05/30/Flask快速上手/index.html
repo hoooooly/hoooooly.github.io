@@ -259,7 +259,7 @@
             
             <div class="markdown-body">
               <h2 id="一个最小的应用"><a href="#一个最小的应用" class="headerlink" title="一个最小的应用"></a>一个最小的应用</h2><p>一个最小的<code>Flask</code>应用如下:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask<br>app = Flask(__name__)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hello_world</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Hello, World!&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask<br>app = Flask(__name__)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hello_world</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Hello, World!&#x27;</span><br></code></pre></div></td></tr></table></figure>
 
 <p>那么，这些代码是什么意思呢？</p>
 <ol>
@@ -273,18 +273,18 @@
 </li>
 </ol>
 <p>可以使用<code>flask</code>命令或者<code>python</code>的<code>-m</code>开关来运行这个应用。在运行应用之前，需要在终端里导出<code>FLASK_APP</code>环境变量:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">export</span> FLASK_APP=hello.py</span><br><span class="hljs-meta">$</span><span class="bash"> flask run</span><br> * Running on http://127.0.0.1:5000/<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">export</span> FLASK_APP=hello.py</span><br><span class="hljs-meta">$</span><span class="bash"> flask run</span><br> * Running on http://127.0.0.1:5000/<br></code></pre></div></td></tr></table></figure>
 
 <p>如果是在<code>Windows</code>下，那么导出环境变量的语法取决于使用的是哪种命令行解释器。 在<code>Command Prompt</code>下:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">C:\path\to\app&gt;set FLASK_APP=hello.py<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">C:\path\to\app&gt;set FLASK_APP=hello.py<br></code></pre></div></td></tr></table></figure>
 
 <p>还可以使用<code>python -m flask</code>:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">export</span> FLASK_APP=hello.py</span><br><span class="hljs-meta">$</span><span class="bash"> python -m flask run</span><br> * Running on http://127.0.0.1:5000/<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">export</span> FLASK_APP=hello.py</span><br><span class="hljs-meta">$</span><span class="bash"> python -m flask run</span><br> * Running on http://127.0.0.1:5000/<br></code></pre></div></td></tr></table></figure>
 
 <p>这样就启动了一个非常简单的内建的服务器。这个服务器用于测试应该是足够了，但是用于生产可能是不够的。</p>
 <h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>现代<code>web</code>应用都使用有意义的<code>URL</code>，这样有助于用户记忆，网页会更得到用户的青睐， 提高回头率。</p>
 <p>使用<code>route()</code>装饰器来把函数绑定到<code>URL</code>:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Index Page&#x27;</span><br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/hello&#x27;</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hello</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Hello, World&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Index Page&#x27;</span><br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/hello&#x27;</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hello</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Hello, World&#x27;</span><br></code></pre></div></td></tr></table></figure>
 
 
             </div>
@@ -433,31 +433,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

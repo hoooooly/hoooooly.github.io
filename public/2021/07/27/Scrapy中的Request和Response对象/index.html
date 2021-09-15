@@ -259,7 +259,7 @@
             
             <div class="markdown-body">
               <h1 id="Request对象"><a href="#Request对象" class="headerlink" title="Request对象"></a><code>Request</code>对象</h1><p><code>Request</code>对象用来描述一个<code>HTTP</code>请求，下面是其构造器方法的参数列表：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">Resquest(url, callback=<span class="hljs-literal">None</span>, method=<span class="hljs-string">&#x27;GET&#x27;</span>, headers=<span class="hljs-literal">None</span>, body=<span class="hljs-literal">None</span>,<br>                 cookies=<span class="hljs-literal">None</span>, meta=<span class="hljs-literal">None</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>, priority=<span class="hljs-number">0</span>,<br>                 dont_filter=<span class="hljs-literal">False</span>, errback=<span class="hljs-literal">None</span>, flags=<span class="hljs-literal">None</span>, cb_kwargs=<span class="hljs-literal">None</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">Resquest(url, callback=<span class="hljs-literal">None</span>, method=<span class="hljs-string">&#x27;GET&#x27;</span>, headers=<span class="hljs-literal">None</span>, body=<span class="hljs-literal">None</span>,<br>                 cookies=<span class="hljs-literal">None</span>, meta=<span class="hljs-literal">None</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>, priority=<span class="hljs-number">0</span>,<br>                 dont_filter=<span class="hljs-literal">False</span>, errback=<span class="hljs-literal">None</span>, flags=<span class="hljs-literal">None</span>, cb_kwargs=<span class="hljs-literal">None</span>)<br></code></pre></div></td></tr></table></figure>
 
 <ul>
 <li><code>url</code>：必选参数，请求的地址。</li>
@@ -288,7 +288,7 @@
 <li><p><code>status</code>：HTTP响应的状态码，<code>int</code>类型，例如200, 404。</p>
 </li>
 <li><p><code>headers</code>：HTTP响应的头部，类字典类型，可以调用<code>get</code>或<code>getlist</code>方法对其进行访问。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">response.headers.get(<span class="hljs-string">&#x27;Content-Type&#x27;</span>)<br>response.headers.getlist(<span class="hljs-string">&#x27;Set-Cookie&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">response.headers.get(<span class="hljs-string">&#x27;Content-Type&#x27;</span>)<br>response.headers.getlist(<span class="hljs-string">&#x27;Set-Cookie&#x27;</span>)<br></code></pre></div></td></tr></table></figure></li>
 <li><p><code>body</code>：HTTP响应正文，<code>bytes</code>类型。</p>
 </li>
 <li><p> <code>text</code>：文本形式的HTTP响应正文，<code>str</code>类型，它是由<code>response.body</code>使用<code>response.encoding</code>解码得到的，即<code>response.text=response.body.decode(response.encoding)</code>。</p>
@@ -466,31 +466,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

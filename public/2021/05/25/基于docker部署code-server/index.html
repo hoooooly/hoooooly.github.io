@@ -258,20 +258,20 @@
               </p>
             
             <div class="markdown-body">
-              <h2 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker pull codercom/code-server</span><br><span class="hljs-meta">#</span><span class="bash"> docker images</span><br>REPOSITORY             TAG       IMAGE ID       CREATED       SIZE<br>codercom/code-server   latest    f3ac734fcec8   12 days ago   802MB<br></code></pre></td></tr></table></figure>
+              <h2 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker pull codercom/code-server</span><br><span class="hljs-meta">#</span><span class="bash"> docker images</span><br>REPOSITORY             TAG       IMAGE ID       CREATED       SIZE<br>codercom/code-server   latest    f3ac734fcec8   12 days ago   802MB<br></code></pre></div></td></tr></table></figure>
 
-<h2 id="创建挂载目录"><a href="#创建挂载目录" class="headerlink" title="创建挂载目录"></a>创建挂载目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> CODE=/home/docker/code</span><br><span class="hljs-meta">#</span><span class="bash"> mkdir <span class="hljs-variable">$CODE</span> &amp;&amp; <span class="hljs-built_in">cd</span> <span class="hljs-variable">$CODE</span></span><br></code></pre></td></tr></table></figure>
+<h2 id="创建挂载目录"><a href="#创建挂载目录" class="headerlink" title="创建挂载目录"></a>创建挂载目录</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> CODE=/home/docker/code</span><br><span class="hljs-meta">#</span><span class="bash"> mkdir <span class="hljs-variable">$CODE</span> &amp;&amp; <span class="hljs-built_in">cd</span> <span class="hljs-variable">$CODE</span></span><br></code></pre></div></td></tr></table></figure>
 
 <h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>启动一个容器：<code>-u</code>表示使用<code>root</code>用户运行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker run -d -u root -p 8088:8080 --name code-server -v <span class="hljs-variable">$CODE</span>:/home/code codercom/code-server</span><br><span class="hljs-meta">#</span><span class="bash"> docker ps</span><br>CONTAINER ID   IMAGE       COMMAND          CREATED    \ STATUS         PORTS             NAMES<br>f10030d88e1d  codercom/code-server &quot;/usr/bin/entrypoint鈥 3 minutes ago Up 3 minutes   0.0.0.0:8088-&gt;8080/tcp, :::8088-&gt;8080/tcp code-server<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker run -d -u root -p 8088:8080 --name code-server -v <span class="hljs-variable">$CODE</span>:/home/code codercom/code-server</span><br><span class="hljs-meta">#</span><span class="bash"> docker ps</span><br>CONTAINER ID   IMAGE       COMMAND          CREATED    \ STATUS         PORTS             NAMES<br>f10030d88e1d  codercom/code-server &quot;/usr/bin/entrypoint鈥 3 minutes ago Up 3 minutes   0.0.0.0:8088-&gt;8080/tcp, :::8088-&gt;8080/tcp code-server<br></code></pre></div></td></tr></table></figure>
 
 <p>拉出配置文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker cp code-server:/root/.config/code-server/config.yaml <span class="hljs-variable">$CODE</span>/</span><br><span class="hljs-meta">#</span><span class="bash"> cat <span class="hljs-variable">$CODE</span>/config.yaml</span><br>bind-addr: 127.0.0.1:8080<br>auth: password<br>password: 59bd4df2841fbc77d67f674f<br>cert: false<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker cp code-server:/root/.config/code-server/config.yaml <span class="hljs-variable">$CODE</span>/</span><br><span class="hljs-meta">#</span><span class="bash"> cat <span class="hljs-variable">$CODE</span>/config.yaml</span><br>bind-addr: 127.0.0.1:8080<br>auth: password<br>password: 59bd4df2841fbc77d67f674f<br>cert: false<br></code></pre></div></td></tr></table></figure>
 
 <p>修改你的密码：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -d -u root \<br>  -p 8088:8080 \<br>  --name code-server \<br>  -v $CODE/config.yaml:/root/.config/code-server/config.yaml \<br>  -v $CODE:/home/code \<br>  codercom/code-server<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">docker run -d -u root \<br>  -p 8088:8080 \<br>  --name code-server \<br>  -v $CODE/config.yaml:/root/.config/code-server/config.yaml \<br>  -v $CODE:/home/code \<br>  codercom/code-server<br></code></pre></div></td></tr></table></figure>
 
-<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker stop code-server &amp;&amp; docker rm code-server</span><br><span class="hljs-meta">#</span><span class="bash"> docker run -d -u root \</span><br><span class="bash">  -p 8088:8080 \</span><br><span class="bash">  --name code-server \</span><br><span class="bash">  -v <span class="hljs-variable">$CODE</span>/config.yaml:/root/.config/code-server/config.yaml \</span><br><span class="bash">  -v <span class="hljs-variable">$CODE</span>:/home/code \</span><br><span class="bash">  codercom/code-server</span><br></code></pre></td></tr></table></figure>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> docker stop code-server &amp;&amp; docker rm code-server</span><br><span class="hljs-meta">#</span><span class="bash"> docker run -d -u root \</span><br><span class="bash">  -p 8088:8080 \</span><br><span class="bash">  --name code-server \</span><br><span class="bash">  -v <span class="hljs-variable">$CODE</span>/config.yaml:/root/.config/code-server/config.yaml \</span><br><span class="bash">  -v <span class="hljs-variable">$CODE</span>:/home/code \</span><br><span class="bash">  codercom/code-server</span><br></code></pre></div></td></tr></table></figure>
 
 <h2 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h2><p>访问<code>http://holychan.ltd:8088/</code>，输入密码登录。</p>
 <p><img src="!%5B%5D(Screenshot_1.webp)" srcset="/img/loading.gif" lazyload></p>
@@ -424,31 +424,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

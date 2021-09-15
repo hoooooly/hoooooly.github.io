@@ -276,7 +276,7 @@
 <p>上述内容其实都对应各自的<code>URL</code>，是基于<code>HTTP</code>或<code>HTTPS</code>协议的，只要是这种数据，爬虫都可以抓取。</p>
 <h3 id="JavaScript渲染页面"><a href="#JavaScript渲染页面" class="headerlink" title="JavaScript渲染页面"></a>JavaScript渲染页面</h3><p>有时候，在用<code>urllib</code>或<code>requests</code>抓取网页时，得到的源代码实际和浏览器中看到的不一样。</p>
 <p>这是一个非常常见的问题。现在网页越来越多地采用<code>Ajax</code>、<code>前端模块化工具</code>来构建，整个网页可能都是由<code>JavaScript</code>渲染出来的，也就是说原始的<code>HTML代码</code>就是一个空壳，例如：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span> <br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span> <br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>This is a Demo<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span> <br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span> <br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;container&quot;</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span> <br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span> <br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;app.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span> <br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span> <br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span> <br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>This is a Demo<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span> <br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span> <br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;container&quot;</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span> <br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span> <br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;app.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span> <br></code></pre></div></td></tr></table></figure>
 
 <p><code>body</code>节点里面只有一个<code>id</code>为<code>container</code>的节点，但是需要注意在<code>body</code>节点后引入了<code>app.js</code>，它便负责整个网站的渲染。</p>
 <p>在浏览器中打开这个页面时，首先会加载这个<code>HTML</code>内容，接着浏览器会发现其中引入了一个<code>app.js</code>文件，然后便会接着去请求这个文件，获取到该文件后，便会执行其中的<code>JavaScript</code>代码，而<code>JavaScript</code>则会改变<code>HTML</code>中的节点，向其添加内容，最后得到完整的页面。</p>
@@ -434,31 +434,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

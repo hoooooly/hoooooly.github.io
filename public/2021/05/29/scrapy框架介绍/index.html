@@ -298,15 +298,15 @@
 </ul>
 <p>通过多个组件的相互协作、不同组件完成工作的不同、组件对异步处理的支持，<code>Scrapy</code>最大限度地利用了网络带宽，大大提高了 数据爬取和处理的效率。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>使用官方文档推荐的方式安装就可以了：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install scrapy<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">pip install scrapy<br></code></pre></div></td></tr></table></figure>
 
 <h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>安装完成后，就可以使用<code>Scrapy</code>预先配置好的很多可用的组件和编写爬虫时所用的脚手架。</p>
 <p>创建项目的命令如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy startproject demo<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">scrapy startproject demo<br></code></pre></div></td></tr></table></figure>
 
 <p>执行完成之后，在当前运行目录下便会出现一个文件夹，叫作<code>demo</code>，这就是一个<code>Scrapy</code>项目框架，可以基于这个项目框架来编写爬虫。</p>
 <p>项目文件结构如下所示：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy.cfg <br>project/ <br>  __init__.py<br>  items.py <br>  pipelines.py <br>  settings.py <br>  middlewares.py <br>  spiders/<br>    __init__.py<br>    spider1.py<br>    spider2.py<br>    ...<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">scrapy.cfg <br>project/ <br>  __init__.py<br>  items.py <br>  pipelines.py <br>  settings.py <br>  middlewares.py <br>  spiders/<br>    __init__.py<br>    spider1.py<br>    spider2.py<br>    ...<br></code></pre></div></td></tr></table></figure>
 
 <p>在此要将各个文件的功能描述如下：</p>
 <ul>
@@ -466,31 +466,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

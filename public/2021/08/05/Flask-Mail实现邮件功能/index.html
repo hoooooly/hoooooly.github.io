@@ -259,7 +259,7 @@
             
             <div class="markdown-body">
               <h1 id="使用Flask-Mail提供电子邮件支持"><a href="#使用Flask-Mail提供电子邮件支持" class="headerlink" title="使用Flask-Mail提供电子邮件支持"></a>使用Flask-Mail提供电子邮件支持</h1><p>虽然Python标准库中的<code>smtplib</code>包可用于在Flask应用中发送电子邮件，但包装了<code>smtplib</code>的<code>Flask-Mail</code>扩展能更好地与Flask集成。<code>Flask-Mail</code>使用<code>pip</code>安装：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">(venv)$</span><span class="bash"> pip install falsk-mail</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">(venv)$</span><span class="bash"> pip install falsk-mail</span><br></code></pre></div></td></tr></table></figure>
 
 <p><code>Flask-Mail</code>连接到简单邮件传输协议<code>（SMTP, simple mail transfer protocol）</code>服务器，把邮件交给这个服务器发送。如果不进行配置，则<code>Flask-Mail</code>连接<code>localhost</code>上的<code>25</code>端口，无须验证身份即可发送电子邮件。</p>
 <p><code>Flask-Mail</code> SMTP服务器的配置:</p>
@@ -304,12 +304,12 @@
 </tbody></table>
 <p>在开发过程中，连接到外部SMTP服务器可能更方便。</p>
 <p>配置Flask-Mail使用<code>GMAIL</code>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">app.config[<span class="hljs-string">&#x27;MAIL_SERVER&#x27;</span>] = <span class="hljs-string">&#x27;smtp.googlemail.com&#x27;</span><br>app.config[<span class="hljs-string">&#x27;MAIL_PORT&#x27;</span>] = <span class="hljs-number">587</span><br>app.config[<span class="hljs-string">&#x27;MAIL_USE_TLS&#x27;</span>] = <span class="hljs-literal">True</span><br>app.config[<span class="hljs-string">&#x27;MAIL_USERNAME&#x27;</span>] = os.environ.get(<span class="hljs-string">&#x27;MAIL_USERNAME&#x27;</span>)<br>app.config[<span class="hljs-string">&#x27;MAIL_PASSWORD&#x27;</span>] = os.environ.get(<span class="hljs-string">&#x27;MAIL_PASSWORD&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">app.config[<span class="hljs-string">&#x27;MAIL_SERVER&#x27;</span>] = <span class="hljs-string">&#x27;smtp.googlemail.com&#x27;</span><br>app.config[<span class="hljs-string">&#x27;MAIL_PORT&#x27;</span>] = <span class="hljs-number">587</span><br>app.config[<span class="hljs-string">&#x27;MAIL_USE_TLS&#x27;</span>] = <span class="hljs-literal">True</span><br>app.config[<span class="hljs-string">&#x27;MAIL_USERNAME&#x27;</span>] = os.environ.get(<span class="hljs-string">&#x27;MAIL_USERNAME&#x27;</span>)<br>app.config[<span class="hljs-string">&#x27;MAIL_PASSWORD&#x27;</span>] = os.environ.get(<span class="hljs-string">&#x27;MAIL_PASSWORD&#x27;</span>)<br></code></pre></div></td></tr></table></figure>
 
 <p>初始化方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Mail<br>mail = Mail(app)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Mail<br>mail = Mail(app)<br></code></pre></div></td></tr></table></figure>
 
-<h2 id="在python-shell中发送电子邮件"><a href="#在python-shell中发送电子邮件" class="headerlink" title="在python shell中发送电子邮件"></a>在python shell中发送电子邮件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">(venv)$falsk shell<br>&gt;&gt;&gt;<span class="hljs-keyword">from</span> flask_mail <span class="hljs-keyword">import</span> Message<br>&gt;&gt;&gt;<span class="hljs-keyword">from</span> run <span class="hljs-keyword">import</span> mail<br>&gt;&gt;&gt;msg = Message(<span class="hljs-string">&#x27;test mail&#x27;</span>, sender=<span class="hljs-string">&#x27;you@example.com&#x27;</span>, recipients=[<span class="hljs-string">&#x27;you@example.com&#x27;</span>])<br>&gt;&gt;&gt;msg.body = <span class="hljs-string">&#x27;This is the plain text body&#x27;</span><br>&gt;&gt;&gt;msg.html = <span class="hljs-string">&#x27;This is the &lt;b&gt;HTML&lt;/b&gt; body&#x27;</span><br>&gt;&gt;&gt;<span class="hljs-keyword">with</span> app.app_context():<br>...		mail.send(msg)<br>...		<br></code></pre></td></tr></table></figure>
+<h2 id="在python-shell中发送电子邮件"><a href="#在python-shell中发送电子邮件" class="headerlink" title="在python shell中发送电子邮件"></a>在python shell中发送电子邮件</h2><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">(venv)$falsk shell<br>&gt;&gt;&gt;<span class="hljs-keyword">from</span> flask_mail <span class="hljs-keyword">import</span> Message<br>&gt;&gt;&gt;<span class="hljs-keyword">from</span> run <span class="hljs-keyword">import</span> mail<br>&gt;&gt;&gt;msg = Message(<span class="hljs-string">&#x27;test mail&#x27;</span>, sender=<span class="hljs-string">&#x27;you@example.com&#x27;</span>, recipients=[<span class="hljs-string">&#x27;you@example.com&#x27;</span>])<br>&gt;&gt;&gt;msg.body = <span class="hljs-string">&#x27;This is the plain text body&#x27;</span><br>&gt;&gt;&gt;msg.html = <span class="hljs-string">&#x27;This is the &lt;b&gt;HTML&lt;/b&gt; body&#x27;</span><br>&gt;&gt;&gt;<span class="hljs-keyword">with</span> app.app_context():<br>...		mail.send(msg)<br>...		<br></code></pre></div></td></tr></table></figure>
 
 <p>注意，<code>Flask-Mail</code>的<code>send()</code>函数使用<code>current_app</code>，因此要在激活的应用上下文中执行。</p>
 <style>
@@ -472,31 +472,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

@@ -282,7 +282,7 @@
 <h3 id="GOPROXY"><a href="#GOPROXY" class="headerlink" title="GOPROXY"></a><code>GOPROXY</code></h3><p><code>go get</code> 下载依赖时使用的代理地址列表，使用逗号 <code>,</code>或竖杠 |`)分隔。</p>
 <p>当用 go 命令查找依赖模块时，它会按顺序访问 <code>GOPROXY</code> 列表中的每个代理，直到收到成功的响应或出现终端错误。</p>
 <p><code>GOPROXY</code> 中可能会存在两个关键字来代替代理URL：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">off:不允许从任何源下载依赖的模块<br>direct:直接从版本控制存储库下载，而不是使用模块代理<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go">off:不允许从任何源下载依赖的模块<br>direct:直接从版本控制存储库下载，而不是使用模块代理<br></code></pre></div></td></tr></table></figure>
 
 <p><code>GOPROXY</code> 缺省值为<code>https://proxy.golang.org,direct</code></p>
 <h3 id="GOPRIVATE"><a href="#GOPRIVATE" class="headerlink" title="GOPRIVATE"></a><code>GOPRIVATE</code></h3><p><code>go get</code> 通过代理服务拉取仓库时，因为代理服务不可能访问到私有仓库（一般为企业内部代码管理平台），会出现 404 错误。</p>
@@ -448,31 +448,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

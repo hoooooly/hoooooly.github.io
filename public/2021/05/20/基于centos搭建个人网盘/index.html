@@ -259,31 +259,31 @@
             
             <div class="markdown-body">
               <h2 id="Nextcloud"><a href="#Nextcloud" class="headerlink" title="Nextcloud"></a>Nextcloud</h2><p><code>Nextcloud</code>是一款开源免费的私有云存储网盘项目，可以让你快速便捷地搭建一套属于自己或团队的云同步网盘，从而实现跨平台跨设备文件同步、共享、版本控制、团队协作等功能。它的客户端覆盖了<code>Windows</code>、<code>Mac</code>、<code>Android</code>、<code>iOS</code>、<code>Linux</code>等各种平台，也提供了网页端以及<code>WebDAV</code>接口，所以你几乎可以在各种设备上方便地访问你的云盘。</p>
-<h2 id="安装-Nextcloud"><a href="#安装-Nextcloud" class="headerlink" title="安装 Nextcloud"></a>安装 Nextcloud</h2><h3 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker pull mysql # 拉取镜像<br><br>docker images # 查看名称/镜像id<br><br>docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=******** -d c0cdc95609f1 #c0cdc95609f1（镜像id）<br></code></pre></td></tr></table></figure>
+<h2 id="安装-Nextcloud"><a href="#安装-Nextcloud" class="headerlink" title="安装 Nextcloud"></a>安装 Nextcloud</h2><h3 id="安装Mysql"><a href="#安装Mysql" class="headerlink" title="安装Mysql"></a>安装Mysql</h3><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">docker pull mysql # 拉取镜像<br><br>docker images # 查看名称/镜像id<br><br>docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=******** -d c0cdc95609f1 #c0cdc95609f1（镜像id）<br></code></pre></div></td></tr></table></figure>
 
 <p>运行<code>mysql</code>并且设置访问端口：<code>3306</code>，容器名称：<code>mysql</code> ,管理员密码：<code>********</code></p>
 <p>进入容器<code>bash</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker exec -it 容器名称/容器id bash<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">docker exec -it 容器名称/容器id bash<br></code></pre></div></td></tr></table></figure>
 
 <p>登陆<code>mysql</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mysql -uroot -p<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">mysql -uroot -p<br></code></pre></div></td></tr></table></figure>
 
 <p>接着输入管理员密码：<code>admin</code>,回车。<br>创建一个数据库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE DATABASE nextcloud;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs mysql">CREATE DATABASE nextcloud;<br></code></pre></div></td></tr></table></figure>
 
 <p>创建一个用户</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE USER &#x27;nextcloud&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;admin&#x27;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs mysql">CREATE USER &#x27;nextcloud&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;admin&#x27;;<br></code></pre></div></td></tr></table></figure>
 
 <p>创建一个用户名称为：<code>nextcloud；‘%’</code>：代表不限<code>ip</code>登陆，远程登陆; 密码为：<code>admin</code>。</p>
 <p>授权。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">GRANT ALL PRIVILEGES ON nextcloud.* TO nextcloud@&#x27;%&#x27;  WITH GRANT OPTION;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs mysql">GRANT ALL PRIVILEGES ON nextcloud.* TO nextcloud@&#x27;%&#x27;  WITH GRANT OPTION;<br></code></pre></div></td></tr></table></figure>
 
 <p>给这个用户<code>nextcloud</code>授予 这个数据库<code>nextcloud.*</code>所有的权限，远程登陆，密码为<code>admin</code>；</p>
 <h3 id="基于Docker部署Nextcloud服务端"><a href="#基于Docker部署Nextcloud服务端" class="headerlink" title="基于Docker部署Nextcloud服务端"></a>基于Docker部署Nextcloud服务端</h3><p>选择以<code>Docker</code>的方式来部署<code>nextcloud</code>是因为<code>Docker</code>可以跨平台上运行，可以确保执行环境的一致性，有利于应用的迁移和管理。</p>
 <p>服务端部署的基本流程是：<strong>安装<code>Docker</code>并启动</strong> –&gt; <strong>运行<code>Nextcloud</code>容器</strong> –&gt; <strong>访问<code>Web</code>端初始化</strong>。</p>
 <p>安装的话不做过多说明，参考官方文档或本博客其他博文。</p>
 <p>下载<code>Nextcloud</code>镜像</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker pull nextcloud<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">docker pull nextcloud<br></code></pre></div></td></tr></table></figure>
 
 <p>运行<code>Nextcloud</code></p>
 <p>参数说明：</p>
@@ -293,13 +293,13 @@
 <li>-v /data/nextcloud:/var/www/html #将宿主机的目录/data/nextcloud挂载到容器的/var/www/html</li>
 <li>-p 8000:80 #将宿主机的端口（此处以8000为例）映射到容器的80端口”</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -d \<br>--name nextcloud \<br>-p 8000:80 \<br>-v /data/nextcloud:/var/www/html \<br>nextcloud<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">docker run -d \<br>--name nextcloud \<br>-p 8000:80 \<br>-v /data/nextcloud:/var/www/html \<br>nextcloud<br></code></pre></div></td></tr></table></figure>
 
 <p>查看运行的容器。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker ps -a<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">docker ps -a<br></code></pre></div></td></tr></table></figure>
 
 <p>停止运行的容器。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker stop id<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">docker stop id<br></code></pre></div></td></tr></table></figure>
             </div>
             <hr>
             <div>
@@ -448,31 +448,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

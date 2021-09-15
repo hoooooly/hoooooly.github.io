@@ -261,16 +261,16 @@
               <h2 id="异常情况"><a href="#异常情况" class="headerlink" title="异常情况"></a>异常情况</h2><p>使用<code>ssh</code>登录发现连接很缓慢，排除网络问题。登陆后使用<code>top</code>查看进程，发现<code>git</code>用户的两个进程占用了<code>95%</code>的<code>CPU</code>。</p>
 <p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
 <p>网上查了下，<code>kswapd0</code>被植入挖矿病毒，立马<code>kill</code>这个进程，CPU的负荷马上降了下来。</p>
-<h2 id="查看进程端口"><a href="#查看进程端口" class="headerlink" title="查看进程端口"></a>查看进程端口</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">netstat -anltp|grep kswapd0<br></code></pre></td></tr></table></figure>
+<h2 id="查看进程端口"><a href="#查看进程端口" class="headerlink" title="查看进程端口"></a>查看进程端口</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">netstat -anltp|grep kswapd0<br></code></pre></div></td></tr></table></figure>
 
-<h2 id="查看程序路径"><a href="#查看程序路径" class="headerlink" title="查看程序路径"></a>查看程序路径</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls -l /proc/3882/exe<br></code></pre></td></tr></table></figure>
+<h2 id="查看程序路径"><a href="#查看程序路径" class="headerlink" title="查看程序路径"></a>查看程序路径</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">ls -l /proc/3882/exe<br></code></pre></div></td></tr></table></figure>
 
-<h2 id="定时器查看"><a href="#定时器查看" class="headerlink" title="定时器查看"></a>定时器查看</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">crontab -l -u git<br></code></pre></td></tr></table></figure>
+<h2 id="定时器查看"><a href="#定时器查看" class="headerlink" title="定时器查看"></a>定时器查看</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">crontab -l -u git<br></code></pre></div></td></tr></table></figure>
 
 <p>查看到定时任务，这个就是病毒的执行路径。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@VM-0-15-centos ~]# crontab -l -u git<br>1 1 */2 * * /var/tmp/.X18263/.rsync/a/upd&gt;/dev/null 2&gt;&amp;1<br>5 8 * * 0 /var/tmp/.X18263/.rsync/b/sync&gt;/dev/null 2&gt;&amp;1 <br>@reboot /var/tmp/.X18263/.rsync/b/sync&gt;/dev/null 2&gt;&amp;1  <br>0 0 */3 * * /var/tmp/.X18263/.rsync/c/aptitude&gt;/dev/null 2&gt;&amp;1<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">[root@VM-0-15-centos ~]# crontab -l -u git<br>1 1 */2 * * /var/tmp/.X18263/.rsync/a/upd&gt;/dev/null 2&gt;&amp;1<br>5 8 * * 0 /var/tmp/.X18263/.rsync/b/sync&gt;/dev/null 2&gt;&amp;1 <br>@reboot /var/tmp/.X18263/.rsync/b/sync&gt;/dev/null 2&gt;&amp;1  <br>0 0 */3 * * /var/tmp/.X18263/.rsync/c/aptitude&gt;/dev/null 2&gt;&amp;1<br></code></pre></div></td></tr></table></figure>
 
-<h2 id="临时目录查看"><a href="#临时目录查看" class="headerlink" title="临时目录查看"></a>临时目录查看</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@VM-0-15-centos tmp]# cd /temp<br>[root@VM-0-15-centos tmp]# ll -sa | grep git<br>0 -rw-rw-r--   1 git  git     0 May 24 21:41 .out<br>4 -rw-rw-r--   1 git  git     9 May 24 07:28 up.txt<br>4 drwxrwxr-x   2 git  git  4096 May 24 21:25 .X25-unix<br>4 drwxrwxr-x   2 git  git  4096 May 24 21:50 .X3-u111<br></code></pre></td></tr></table></figure>
+<h2 id="临时目录查看"><a href="#临时目录查看" class="headerlink" title="临时目录查看"></a>临时目录查看</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">[root@VM-0-15-centos tmp]# cd /temp<br>[root@VM-0-15-centos tmp]# ll -sa | grep git<br>0 -rw-rw-r--   1 git  git     0 May 24 21:41 .out<br>4 -rw-rw-r--   1 git  git     9 May 24 07:28 up.txt<br>4 drwxrwxr-x   2 git  git  4096 May 24 21:25 .X25-unix<br>4 drwxrwxr-x   2 git  git  4096 May 24 21:50 .X3-u111<br></code></pre></div></td></tr></table></figure>
 
 <h2 id="处理办法"><a href="#处理办法" class="headerlink" title="处理办法"></a>处理办法</h2><ol>
 <li><p>直接杀掉进程</p>
@@ -278,12 +278,12 @@
 <li><p>删除所有的crontab计划任务</p>
 </li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sheel">crontab -e -u git<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sheel">crontab -e -u git<br></code></pre></div></td></tr></table></figure>
 
 <ol start="3">
 <li>删除用户和文件（前提是正规业务没有用到此用户）</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">userdel -r git<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">userdel -r git<br></code></pre></div></td></tr></table></figure>
 
 <ol start="4">
 <li>删除/tmp目录下test用户的文件</li>
@@ -441,31 +441,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

@@ -288,27 +288,27 @@
 <p>虚拟环境可以为每一个项目安装独立的Python库，这样就可以隔离不同项目之间的Python库，也可以隔离项目与操作系统之间的Python库。</p>
 <p>Python3内置了用于创建虚拟环境的<code>venv</code>模块。如果你使用的是较新的Python版本，那么可以按照下面的步骤创建虚拟环境。</p>
 <h2 id="创建一个虚拟环境"><a href="#创建一个虚拟环境" class="headerlink" title="创建一个虚拟环境"></a>创建一个虚拟环境</h2><p>创建一个项目文件夹，然后创建一个虚拟环境。创建完成后项目文件夹中会有一个<code>venv</code>文件夹：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir myproject<br>cd myproject<br>python3 -m venv venv<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">mkdir myproject<br>cd myproject<br>python3 -m venv venv<br></code></pre></div></td></tr></table></figure>
 
 <p>在<code>Windows</code>下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">py -3 -m venv venv<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">py -3 -m venv venv<br></code></pre></div></td></tr></table></figure>
 
 <p>在老版本的<code>Python</code>中要使用下面的命令创建虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python2 -m virtualenv venv<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">python2 -m virtualenv venv<br></code></pre></div></td></tr></table></figure>
 
 <p>在<code>Windows</code>下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">\Python27\Scripts\virtualenv.exe venv<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">\Python27\Scripts\virtualenv.exe venv<br></code></pre></div></td></tr></table></figure>
 
 <h3 id="激活python环境"><a href="#激活python环境" class="headerlink" title="激活python环境"></a>激活python环境</h3><p>在开始工作前，先要激活相应的虚拟环境：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">. venv/bin/activate<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">. venv/bin/activate<br></code></pre></div></td></tr></table></figure>
 
 <p>在<code>Windows</code>下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">venv\Scripts\activate<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">venv\Scripts\activate<br></code></pre></div></td></tr></table></figure>
 
 <p>激活后，你的终端提示符会显示虚拟环境的名称。</p>
 <p>如果你使用的VS code，要在cmd命令行下激活虚拟环境，如果是power shell则不可以。</p>
 <h2 id="安装Flask"><a href="#安装Flask" class="headerlink" title="安装Flask"></a>安装Flask</h2><p>在已激活的虚拟环境中可以使用如下命令安装<code>Flask</code>：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install Flask<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">pip install Flask<br></code></pre></div></td></tr></table></figure>
 
 <p><code>Flask</code>现在已经安装完毕。</p>
 
@@ -460,31 +460,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->
