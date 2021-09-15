@@ -256,33 +256,6 @@
   
   
   <entry>
-    <title>项目实战：Scrapy爬取京东商城书籍信息</title>
-    <link href="/2021/08/17/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%EF%BC%9AScrapy%E7%88%AC%E5%8F%96%E4%BA%AC%E4%B8%9C%E5%95%86%E5%9F%8E%E4%B9%A6%E7%B1%8D%E4%BF%A1%E6%81%AF/"/>
-    <url>/2021/08/17/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98%EF%BC%9AScrapy%E7%88%AC%E5%8F%96%E4%BA%AC%E4%B8%9C%E5%95%86%E5%9F%8E%E4%B9%A6%E7%B1%8D%E4%BF%A1%E6%81%AF/</url>
-    
-    <content type="html"><![CDATA[<h1 id="项目实战：爬取京东商城中的书籍信息"><a href="#项目实战：爬取京东商城中的书籍信息" class="headerlink" title="项目实战：爬取京东商城中的书籍信息"></a>项目实战：爬取京东商城中的书籍信息</h1><h2 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h2><p>爬取京东商城中所有Python书籍的名字和价格信息。</p><h2 id="页面分析"><a href="#页面分析" class="headerlink" title="页面分析"></a>页面分析</h2><p>在京东网站（<a href="http://www.jd.com)的书籍分类下搜索python关键字得到的页面./">http://www.jd.com）的书籍分类下搜索Python关键字得到的页面。</a></p><p><img src="image-20210817093807431.png"></p><p>结果有很多页，在每一个书籍列表页面中可以数出有60本书，但我们在<code>scrapyshell</code>中爬取该页面时遇到了问题，仅在页面中找到了30本书，少了30本，代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">$ scrapy shell<br></code></pre></td></tr></table></figure><style>    table    {        margin: auto;        font-size: 80%;    }</style>]]></content>
-    
-    
-    <categories>
-      
-      <category>爬虫</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>scrapy</tag>
-      
-      <tag>splash</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>Scrapy爬取动态页面-scrapy-splash</title>
     <link href="/2021/08/15/Scrapy%E7%88%AC%E5%8F%96%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2/"/>
     <url>/2021/08/15/Scrapy%E7%88%AC%E5%8F%96%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2/</url>
