@@ -109,5 +109,5 @@ deploy:
   branch: gh-pages # 部署到guthub pages使用这个
   # branch:       # # 部署到腾讯云使用这个
 
-url: https://ipvb.gitee.io/blog
+url: https://holychan.gitee.io/blog
 root: /blog
