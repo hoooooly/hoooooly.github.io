@@ -198,6 +198,69 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/" target="_self">
+          腾讯云主机CPU占用100%
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/25/%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BACPU%E5%8D%A0%E7%94%A8%E7%99%BE%E5%88%86%E7%99%BE/" target="_self">
+          
+          
+            
+          
+          异常情况使用ssh登录发现连接很缓慢，排除网络问题。登陆后使用top查看进程，发现git用户的两个进程占用了95%的CPU。
+
+网上查了下，kswapd0被植入挖矿病毒，立马kill这个进程，CPU的负荷马上降了下来。
+查看进程端口1netstat -anltp|grep kswapd0
+
+查看程序路径1ls -l /proc/3882/exe
+
+定时器查看1crontab -l -u git
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-25 16:32" pubdate>
+              2021-05-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Linux/">Linux</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
+            
+              <a href="/tags/git/">git</a>
+            
+              <a href="/tags/%E7%97%85%E6%AF%92/">病毒</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/05/24/Ajax%E7%88%AC%E5%8F%96%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/" target="_self">
           Ajax爬取案例实战
         </a>
@@ -692,65 +755,9 @@
             
               <a href="/tags/python/">python</a>
             
-              <a href="/tags/requests/">requests</a>
-            
               <a href="/tags/%E7%88%AC%E8%99%AB/">爬虫</a>
             
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/18/Nginx%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" target="_self">
-          Nginx配置详解
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/18/Nginx%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" target="_self">
-          
-          
-            
-          
-          简介Nginx是lgor Sysoev为俄罗斯访问量第二的rambler.ru站点设计开发的。从2004年发布至今，凭借开源的力量，已经接近成熟与完善。
-Nginx功能丰富，可作为HTTP服务器，也可作为反向代理服务器，邮件服务器。支持FastCGI、SSL、Virtual Host、URL Rewrite、Gzip等功能。并且支持很多第三方的模块扩展。
-Nginx的稳定性、功能集、示例配置文件和
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-18 11:16" pubdate>
-              2021-05-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Nginx/">Nginx</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Nginx/">Nginx</a>
-            
-              <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">负载均衡</a>
-            
-              <a href="/tags/http/">http</a>
+              <a href="/tags/requests/">requests</a>
             
           </div>
         
@@ -762,7 +769,7 @@ Nginx的稳定性、功能集、示例配置文件和
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/8/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="page-number" href="/page/8/#board">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/#board">10</a><a class="extend next" rel="next" href="/page/10/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/8/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="page-number" href="/page/8/#board">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/#board">10</a><a class="page-number" href="/page/11/#board">11</a><a class="extend next" rel="next" href="/page/10/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
