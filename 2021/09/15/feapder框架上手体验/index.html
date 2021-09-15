@@ -296,7 +296,7 @@
 <p>再改改parse：</p>
 <figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, request, response</span>):</span><br>    article_list = response.xpath(<span class="hljs-string">&#x27;//a[@class=&quot;recmd-content&quot;]&#x27;</span>)<br>    <span class="hljs-keyword">for</span> article <span class="hljs-keyword">in</span> article_list:<br>        title = article.xpath(<span class="hljs-string">&quot;./text()&quot;</span>).extract_first()<br>        url = article.xpath(<span class="hljs-string">&quot;./@href&quot;</span>).extract_first()<br>        <span class="hljs-built_in">print</span>(title, url)<br></code></pre></div></td></tr></table></figure>
 
-<p><img src="feapder%E6%A1%86%E6%9E%B6%E4%B8%8A%E6%89%8B%E4%BD%93%E9%AA%8C/image-20210915153021188.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="image-20210915153021188.png" srcset="/img/loading.gif" lazyload></p>
 <p>细心的把文章的连接都给补全了。</p>
 <p>提取详情页：</p>
 <p>在parse中添加回调函数：</p>
@@ -311,7 +311,7 @@
 <p>嫌弃跑的太慢? 我们可以加一个参数轻松解决，这是开15个线程。</p>
 <figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    SpiderTest(thread_count=<span class="hljs-number">15</span>).start()<br></code></pre></div></td></tr></table></figure>
 
-<p><img src="feapder%E6%A1%86%E6%9E%B6%E4%B8%8A%E6%89%8B%E4%BD%93%E9%AA%8C/image-20210915153728403.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="image-20210915153728403.png" srcset="/img/loading.gif" lazyload></p>
 <p>不得不说，确实很方便，对于这种没有限制的网站傻瓜式爬取。</p>
 <style>
     table
