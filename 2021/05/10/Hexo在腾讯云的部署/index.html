@@ -260,56 +260,56 @@
             <div class="markdown-body">
               <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>Hexo</code>在<code>GitHub pages</code>上的访问太慢了，迁移到腾讯云服务器上。</p>
 <h2 id="部署环境"><a href="#部署环境" class="headerlink" title="部署环境"></a>部署环境</h2><p>腾讯云服务器（Centos 64位）。</p>
-<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install git<br></code></pre></td></tr></table></figure>
+<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">yum install git<br></code></pre></div></td></tr></table></figure>
 
 <p>创建git用户并修改权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">adduser git<br>passwd git<br>chmod 740 /etc/sudoers<br>vim /etc/sudoers<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">adduser git<br>passwd git<br>chmod 740 /etc/sudoers<br>vim /etc/sudoers<br></code></pre></div></td></tr></table></figure>
 
 <p>找到一下内容</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># Allow root to run any commands anywhere</span></span><br>root    ALL=(ALL)       ALL<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># Allow root to run any commands anywhere</span></span><br>root    ALL=(ALL)       ALL<br></code></pre></div></td></tr></table></figure>
 
 <p>在该语句下添加</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git ALL=(ALL) ALL<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">git ALL=(ALL) ALL<br></code></pre></div></td></tr></table></figure>
 
 <p>退出（esc + :wq）并修改权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod 400 /etc/sudoers<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">chmod 400 /etc/sudoers<br></code></pre></div></td></tr></table></figure>
 
 <p>本地使用gitbash创建密钥</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa //因为我在GitHub上部署博客时已经创建过密钥，这里可以直接跳过生成，用以前的密钥<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">ssh-keygen -t rsa //因为我在GitHub上部署博客时已经创建过密钥，这里可以直接跳过生成，用以前的密钥<br></code></pre></div></td></tr></table></figure>
 
 <p>在腾讯云中创建<code>ssh</code>，并将本地的<code>id_rsa.pub</code>中的文件内容全部复制到<code>authorized_keys</code>中。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">su git<br>mkdir ~/.ssh<br>vim ~/.ssh/authorized_keys<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">su git<br>mkdir ~/.ssh<br>vim ~/.ssh/authorized_keys<br></code></pre></div></td></tr></table></figure>
 
 <p>修改权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~<br>chmod 600 .ssh/authorized_keys<br>chmod 700 .ssh<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">cd ~<br>chmod 600 .ssh/authorized_keys<br>chmod 700 .ssh<br></code></pre></div></td></tr></table></figure>
 
 <p>本地测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh -v git@SERVER //@后是你自己的服务器公网IP，如果不出现failed字样，说明成功<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">ssh -v git@SERVER //@后是你自己的服务器公网IP，如果不出现failed字样，说明成功<br></code></pre></div></td></tr></table></figure>
 
 <p>云服务器中创建网站目录并设置权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">su root<br>mkdir /home/hexo<br>chown git:git -R /home/hexo<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">su root<br>mkdir /home/hexo<br>chown git:git -R /home/hexo<br></code></pre></div></td></tr></table></figure>
 
-<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install -y nginx    // 安装<br>systemctl start nginx.service     // 启动服务<br></code></pre></td></tr></table></figure>
+<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">yum install -y nginx    // 安装<br>systemctl start nginx.service     // 启动服务<br></code></pre></div></td></tr></table></figure>
 
 <p>以上执行完之后，在浏览器中输入你的公网IP如果可以进入CentOs界面，说明Nginx安装成功。</p>
-<h3 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">nginx -t  // 命令查看位置，一般为 /etc/nginx/nginx.conf。<br>vim /etc/nginx/nginx.conf //修改配置文件，在server_name后添加自己的域名（要备案），root后添加/home/hexo<br></code></pre></td></tr></table></figure>
+<h3 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h3><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nginx -t  // 命令查看位置，一般为 /etc/nginx/nginx.conf。<br>vim /etc/nginx/nginx.conf //修改配置文件，在server_name后添加自己的域名（要备案），root后添加/home/hexo<br></code></pre></div></td></tr></table></figure>
 
 <p>重启服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl restart nginx.service<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">systemctl restart nginx.service<br></code></pre></div></td></tr></table></figure>
 
-<h2 id="建立git仓库并修改权限"><a href="#建立git仓库并修改权限" class="headerlink" title="建立git仓库并修改权限"></a>建立git仓库并修改权限</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">su root<br>cd /home/git<br>git init --bare blog.git<br>chown git:git -R blog.git<br></code></pre></td></tr></table></figure>
+<h2 id="建立git仓库并修改权限"><a href="#建立git仓库并修改权限" class="headerlink" title="建立git仓库并修改权限"></a>建立git仓库并修改权限</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">su root<br>cd /home/git<br>git init --bare blog.git<br>chown git:git -R blog.git<br></code></pre></div></td></tr></table></figure>
 
 <p>同步网站根目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim blog.git/hooks/post-receive<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">vim blog.git/hooks/post-receive<br></code></pre></div></td></tr></table></figure>
 
 <p>填入如下内容</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">!/bin/sh</span><br>git --work-tree=/home/hexo --git-dir=/home/git/blog.git checkout -f<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">!/bin/sh</span><br>git --work-tree=/home/hexo --git-dir=/home/git/blog.git checkout -f<br></code></pre></div></td></tr></table></figure>
 
 <p>修改权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod +x /home/git/blog.git/hooks/post-receive<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">chmod +x /home/git/blog.git/hooks/post-receive<br></code></pre></div></td></tr></table></figure>
 
 <p>在本地Hexo目录下修改_config.yml文件中的deploy后的repo改为：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git@SERVER:/home/git/blog.git   //@后为你的服务器公网IP<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">git@SERVER:/home/git/blog.git   //@后为你的服务器公网IP<br></code></pre></div></td></tr></table></figure>
 
 <p>以上全部完成后，执行hexo的部署命令即可完成在腾讯云服务器上的博客部署。</p>
 
@@ -459,31 +459,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

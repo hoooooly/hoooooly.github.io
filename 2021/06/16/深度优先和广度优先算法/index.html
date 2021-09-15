@@ -280,10 +280,10 @@
 <p>动图如下：</p>
 <p><img src="2.gif" srcset="/img/loading.gif" lazyload></p>
 <h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><h3 id="python实现深度优先"><a href="#python实现深度优先" class="headerlink" title="python实现深度优先"></a>python实现深度优先</h3><p>递归实现。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">depth_tree</span>(<span class="hljs-params">tree_node</span>):</span><br>    <span class="hljs-keyword">if</span> tree_node <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-built_in">print</span>(tree_node._data)<br>        <span class="hljs-keyword">if</span> tree_node._left <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span> depth_tree(tree_node._left)<br>        <span class="hljs-keyword">if</span> tree_node._right <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span> depth_tree(tree_node._right)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">depth_tree</span>(<span class="hljs-params">tree_node</span>):</span><br>    <span class="hljs-keyword">if</span> tree_node <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-built_in">print</span>(tree_node._data)<br>        <span class="hljs-keyword">if</span> tree_node._left <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span> depth_tree(tree_node._left)<br>        <span class="hljs-keyword">if</span> tree_node._right <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span> depth_tree(tree_node._right)<br></code></pre></div></td></tr></table></figure>
 
 <h3 id="python实现广度优先"><a href="#python实现广度优先" class="headerlink" title="python实现广度优先"></a>python实现广度优先</h3><p>队列实现。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">level_queue</span>(<span class="hljs-params">root</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;利用队列实现广度优先遍历&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">if</span> root <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">return</span><br>    my_queue = []<br>    node = root<br>    my_queue.append(node)<br>    <span class="hljs-keyword">while</span> my_queue:<br>        node = my_queue.pop(<span class="hljs-number">0</span>)<br>        <span class="hljs-built_in">print</span>(node.elem)<br>        <span class="hljs-keyword">if</span> node.lchild <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            my_queue.append(node.lchild)<br>        <span class="hljs-keyword">if</span> node.rchild <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            my_queue.append(node.rchild)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">level_queue</span>(<span class="hljs-params">root</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;利用队列实现广度优先遍历&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">if</span> root <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">return</span><br>    my_queue = []<br>    node = root<br>    my_queue.append(node)<br>    <span class="hljs-keyword">while</span> my_queue:<br>        node = my_queue.pop(<span class="hljs-number">0</span>)<br>        <span class="hljs-built_in">print</span>(node.elem)<br>        <span class="hljs-keyword">if</span> node.lchild <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            my_queue.append(node.lchild)<br>        <span class="hljs-keyword">if</span> node.rchild <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            my_queue.append(node.rchild)<br></code></pre></div></td></tr></table></figure>
 
 
 
@@ -445,31 +445,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

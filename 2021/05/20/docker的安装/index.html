@@ -259,37 +259,37 @@
             
             <div class="markdown-body">
               <h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><p>安装环境是Centos环境，要求版本是<code> CentOS 7 or 8</code>以上。</p>
-<h2 id="卸载旧版本的docker"><a href="#卸载旧版本的docker" class="headerlink" title="卸载旧版本的docker"></a>卸载旧版本的docker</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum remove docker \<br>                 docker-client \<br>                 docker-client-latest \<br>                 docker-common \<br>                 docker-latest \<br>                 docker-latest-logrotate \<br>                 docker-logrotate \<br>                 docker-engine<br></code></pre></td></tr></table></figure>
+<h2 id="卸载旧版本的docker"><a href="#卸载旧版本的docker" class="headerlink" title="卸载旧版本的docker"></a>卸载旧版本的docker</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">sudo yum remove docker \<br>                 docker-client \<br>                 docker-client-latest \<br>                 docker-common \<br>                 docker-latest \<br>                 docker-latest-logrotate \<br>                 docker-logrotate \<br>                 docker-engine<br></code></pre></div></td></tr></table></figure>
 
 <h2 id="使用yum仓库安装"><a href="#使用yum仓库安装" class="headerlink" title="使用yum仓库安装"></a>使用yum仓库安装</h2><p>安装方式有很多种，可以参考官方文档。</p>
 <h3 id="设置仓库源"><a href="#设置仓库源" class="headerlink" title="设置仓库源"></a>设置仓库源</h3><p>下载<code>yum-utils</code>工具包和稳固的安装源。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum install -y yum-utils<br><br>sudo yum-config-manager \<br>    --add-repo \<br>    https://download.docker.com/linux/centos/docker-ce.repo<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">sudo yum install -y yum-utils<br><br>sudo yum-config-manager \<br>    --add-repo \<br>    https://download.docker.com/linux/centos/docker-ce.repo<br></code></pre></div></td></tr></table></figure>
 
 <h3 id="安装docker引擎"><a href="#安装docker引擎" class="headerlink" title="安装docker引擎"></a>安装docker引擎</h3><ul>
 <li>1.安装最新版本</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum install docker-ce docker-ce-cli containerd.io<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">sudo yum install docker-ce docker-ce-cli containerd.io<br></code></pre></div></td></tr></table></figure>
 
 <ul>
 <li>2.安装特定版本</li>
 </ul>
 <p>列出可安装的版本。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">yum <span class="hljs-built_in">list</span> docker-ce --showduplicates | sort -r<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">yum <span class="hljs-built_in">list</span> docker-ce --showduplicates | sort -r<br></code></pre></div></td></tr></table></figure>
 
 <p>选择安装版本。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sudo yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">sudo yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io<br></code></pre></div></td></tr></table></figure>
 
 <h3 id="启动docker"><a href="#启动docker" class="headerlink" title="启动docker"></a>启动docker</h3><p>运行下列命令启动<code>docker</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo systemctl start docker<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">sudo systemctl start docker<br></code></pre></div></td></tr></table></figure>
 
 <p>测试<code>docker</code>安装正确。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sudo docker run hello-world<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">sudo docker run hello-world<br></code></pre></div></td></tr></table></figure>
 
 <h2 id="卸载docker"><a href="#卸载docker" class="headerlink" title="卸载docker"></a>卸载docker</h2><p>卸载docker和下载的容器及包：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum remove docker-ce docker-ce-cli containerd.io<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">sudo yum remove docker-ce docker-ce-cli containerd.io<br><br></code></pre></div></td></tr></table></figure>
 
 <p>镜像等配置文件不会自动移除，需要手动删除。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo rm -rf /var/lib/docker<br>sudo rm -rf /var/lib/containerd<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">sudo rm -rf /var/lib/docker<br>sudo rm -rf /var/lib/containerd<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
@@ -439,31 +439,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

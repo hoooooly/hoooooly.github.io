@@ -260,13 +260,13 @@
             <div class="markdown-body">
               <h1 id="嵌入的视频"><a href="#嵌入的视频" class="headerlink" title="嵌入的视频"></a>嵌入的视频</h1><p>Hexo支持Youtube视频的嵌入，可以参考其实现方式。</p>
 <p>首先，在<code>node_modules/hexo/lib/plugins/tag/index.js</code>中添加以下代码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 添加哔哩哔哩</span><br>tag.register(<span class="hljs-string">&#x27;bilibili&#x27;</span>, <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./bilibili&#x27;</span>));<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">// 添加哔哩哔哩</span><br>tag.register(<span class="hljs-string">&#x27;bilibili&#x27;</span>, <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./bilibili&#x27;</span>));<br></code></pre></div></td></tr></table></figure>
 
 <p>然后在<code>node_modules/hexo/lib/plugins/tag/</code>目录下新建<code>bilibili.js</code>文件，打开并添加如下代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-meta">&#x27;use strict&#x27;</span>;<br><br><span class="hljs-keyword">const</span> &#123; htmlTag &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;hexo-util&#x27;</span>);<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* bilibili tag</span><br><span class="hljs-comment">*</span><br><span class="hljs-comment">* Syntax:</span><br><span class="hljs-comment">*   &#123;% bilibili id %&#125;</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bilibiliTag</span>(<span class="hljs-params">args, content</span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> id = args[<span class="hljs-number">0</span>];<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;div style=&quot;position: relative; width: 100%; height: 0; padding-bottom: 75%;&quot;&gt;&lt;iframe src=&quot;//player.bilibili.com/player.html?<span class="hljs-subst">$&#123;id&#125;</span>&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; style=&quot;position: absolute; width: 100%; height: 100%; left: 0; top: 0;&quot;&gt; &lt;/iframe&gt;&lt;/div&gt;`</span>;<br>&#125;<br><br><span class="hljs-built_in">module</span>.exports = bilibiliTag;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-meta">&#x27;use strict&#x27;</span>;<br><br><span class="hljs-keyword">const</span> &#123; htmlTag &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;hexo-util&#x27;</span>);<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* bilibili tag</span><br><span class="hljs-comment">*</span><br><span class="hljs-comment">* Syntax:</span><br><span class="hljs-comment">*   &#123;% bilibili id %&#125;</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bilibiliTag</span>(<span class="hljs-params">args, content</span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> id = args[<span class="hljs-number">0</span>];<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;div style=&quot;position: relative; width: 100%; height: 0; padding-bottom: 75%;&quot;&gt;&lt;iframe src=&quot;//player.bilibili.com/player.html?<span class="hljs-subst">$&#123;id&#125;</span>&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot; style=&quot;position: absolute; width: 100%; height: 100%; left: 0; top: 0;&quot;&gt; &lt;/iframe&gt;&lt;/div&gt;`</span>;<br>&#125;<br><br><span class="hljs-built_in">module</span>.exports = bilibiliTag;<br><br></code></pre></div></td></tr></table></figure>
 
 <p>重新启动下<code>Hexo Server</code>,在<code>md</code>页面中添加下列：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&#123;% bilibili aid=<span class="hljs-number">586894170</span>&amp;bvid=BV1uz4y1m72t&amp;cid=<span class="hljs-number">305401685</span>&amp;page=<span class="hljs-number">1</span> %&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript">&#123;% bilibili aid=<span class="hljs-number">586894170</span>&amp;bvid=BV1uz4y1m72t&amp;cid=<span class="hljs-number">305401685</span>&amp;page=<span class="hljs-number">1</span> %&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>重新刷新页面，就可以看到视频正常加载了。</p>
 <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="//player.bilibili.com/player.html?aid=586894170&bvid=BV1uz4y1m72t&cid=305401685&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div>
@@ -416,31 +416,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

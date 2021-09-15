@@ -262,10 +262,10 @@
 <p>使用<code>Django Admin</code>的一个很好的列子就是在博客中，它可以用来被作者用来编写和发布文章。另一个列子是电子商务网站，工作人员可以创建，编辑，删除产品。</p>
 <p>现在，我们来配置<code>Django Admin</code>来维护我们应用程序的板块。</p>
 <p>首先，创建一个管理员账户：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&gt;&gt;&gt;python manage.py createsuperuser<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">&gt;&gt;&gt;python manage.py createsuperuser<br></code></pre></div></td></tr></table></figure>
 
 <p>按说明设置管理员账户名，邮箱和密码：</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs applescript">Username (leave blank <span class="hljs-keyword">to</span> use &#x27;q&#x27;): Admin<br>Email address: espholychan@outlook.com<br>Password:<br>Password (again):<br>The password <span class="hljs-keyword">is</span> too similar <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> username.<br>This password <span class="hljs-keyword">is</span> too short. It must <span class="hljs-keyword">contain</span> <span class="hljs-keyword">at</span> least <span class="hljs-number">8</span> <span class="hljs-built_in">characters</span>.<br>This password <span class="hljs-keyword">is</span> too common.<br>Bypass password validation <span class="hljs-keyword">and</span> create user anyway? [y/N]: y<br>Superuser created successfully.<br></code></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs applescript">Username (leave blank <span class="hljs-keyword">to</span> use &#x27;q&#x27;): Admin<br>Email address: espholychan@outlook.com<br>Password:<br>Password (again):<br>The password <span class="hljs-keyword">is</span> too similar <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> username.<br>This password <span class="hljs-keyword">is</span> too short. It must <span class="hljs-keyword">contain</span> <span class="hljs-keyword">at</span> least <span class="hljs-number">8</span> <span class="hljs-built_in">characters</span>.<br>This password <span class="hljs-keyword">is</span> too common.<br>Bypass password validation <span class="hljs-keyword">and</span> create user anyway? [y/N]: y<br>Superuser created successfully.<br></code></pre></div></td></tr></table></figure>
 
 <p>在浏览器访问<code>http://127.0.0.1/admin</code>。</p>
 <p><img src="1.PNG" srcset="/img/loading.gif" lazyload></p>
@@ -274,7 +274,7 @@
 <p>它已经配置了一些功能。在这里，我们可以添加用户和组的权限管理，这些概念在后面将会探讨。</p>
 <p>添加<code>Board</code>模型，在<code>boards</code>目录中的<code>admin.py</code>文件中添加以下代码：</p>
 <p><strong>boards/admin.py</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Board<br><span class="hljs-comment"># Register your models here.</span><br><br>admin.site.register(Board)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> Board<br><span class="hljs-comment"># Register your models here.</span><br><br>admin.site.register(Board)<br></code></pre></div></td></tr></table></figure>
 
 <p>保存<code>admin.py</code>文件，然后刷新页面。</p>
 <p><img src="3.PNG" srcset="/img/loading.gif" lazyload></p>
@@ -440,31 +440,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

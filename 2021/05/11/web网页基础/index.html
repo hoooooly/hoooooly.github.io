@@ -267,13 +267,13 @@
 <h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><p>虽然<code>HTML</code>定义了网页的结构，但是只有<code>HTML</code>页面的布局并不美观，可能只是简单的节点元素的排列，为了让网页看起来更好看一些，这里就需要借助<code>CSS</code>了。</p>
 <p><code>CSS</code>，全称叫作<code>Cascading Style Sheets</code>，即<code>层叠样式表</code>。“层叠”是指当在HTML中引用了数个样式文件，并且样式发生冲突时，浏览器能依据层叠顺序处理。“样式”指网页中文字大小、颜色、元素间距、排列等 格式。</p>
 <p><code>CSS</code>是目前唯一的网页页面排版样式标准，有了它的帮助，页面才会变得更为美观。例如：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-id">#head_wrapper</span><span class="hljs-selector-class">.s-ps-islite</span> <span class="hljs-selector-class">.s-p-top</span> &#123; <br>    <span class="hljs-attribute">position</span>: absolute; <br>    <span class="hljs-attribute">bottom</span>: <span class="hljs-number">40px</span>; <br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>; <br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">181px</span>; <br>    &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs css"><span class="hljs-selector-id">#head_wrapper</span><span class="hljs-selector-class">.s-ps-islite</span> <span class="hljs-selector-class">.s-p-top</span> &#123; <br>    <span class="hljs-attribute">position</span>: absolute; <br>    <span class="hljs-attribute">bottom</span>: <span class="hljs-number">40px</span>; <br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>; <br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">181px</span>; <br>    &#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>这就是一个<code>CSS</code>样式。大括号前面是一个<code>CSS选择器</code>。此选择器的作用是首先选中<code>id</code>为<code>head_wrapper</code>且<code>class</code> 为<code>s-ps-islite</code>的节点，然后再选中其内部的<code>class</code>为<code>s-p-top</code>的节点。大括号内部写的就是一条条样式规则，例如<code>position</code>指定了这个元素的布局方式为<strong>绝对布局</strong>，<code>bottom</code>指定元素的下边距为<strong>40像素</strong>，<code>width</code>指定了宽度为<strong>100%<strong>占满父元素，<code>height</code>则指定了元素的</strong>高度</strong>。也就是说，我们将位置、宽度、高度等样式配置统一写成这样的形式，然后用大括号括起来，接着在开头再加上<code>CSS</code>选择器，这就代表这个样式对<code>CSS</code>选择器选中的元素生效，元素就会根据此样式来展示了。</p>
 <p>在网页中，一般会统一定义整个网页的样式规则，并写入<code>CSS</code>文件中（其后缀为css）。在HTML中，只需要用<code>link</code>标签即可引入写好的<code>CSS</code>文件，这样整个页面就会变得美观、优雅。</p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p><code>JavaScript</code>，简称<code>JS</code>，是一种脚本语言。HTML和CSS配合使用，提供给用户的只是一种静态信息，缺乏交互性。我们在网页里可能会看到一些交互和动画效果，如下载进度条、提示框、轮播图等，这通常就是<code>JavaScript</code>的功劳。它的出现使得用户与信息之间不只是一种浏览与显示的关系，而是实现了一种<strong>实时、动态、交互</strong>的页面功能。</p>
 <p><code>JavaScript</code>通常也是以单独的文件形式加载的，后缀为<code>js</code>，在 HTML中通过<code>script标签</code>即可引入，例如:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;jquery-2.1.0.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;jquery-2.1.0.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
 
 <p>综上所述，HTML定义了网页的内容和结构，CSS描述了网页的布局，<code>JavaScript</code>定义了网页的行为。</p>
 
@@ -427,31 +427,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

@@ -262,16 +262,16 @@
 <p>使用诸如 <code>Django</code> 之类的网络框架，使我们能够以标准化的方式快速开发安全可靠的Web应用程序，而无需重新发明轮子。</p>
 <p>那么，Django有什么特别之处呢? 对于初学者来说，它是一个<code>Python Web</code>框架，这意味着你可以受益于各种各样的开源库包。如果当你想要解决一个特定的问题的时候，可能有人已经为它实现了一个库来供你使用。<code>Django</code>是用python编写的最流行的web框架之一。它绝对是最完整的，提供了各种各样的开箱即用的功能，比如用于开发和测试的独立Web服务器，缓存，中间件系统，<code>ORM</code>，模板引擎，表单处理，基于<code>Python单元测试</code>的工具接口。<code>Django</code>还自带内部电池，提供内置应用程序，比如一个认证系统，一个可用于 <code>cRuD （增删改查）</code>操作并且自动生成页面的后台管理界面，生成订阅文档<code>（RSS/Atom）</code>，站点地图等。甚至在<code>django</code>中内建了一个<code>地理信息系统（GIS）框架</code>。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>通过虚拟环境安装，先安装虚拟环境。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install virtualenv<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">pip install virtualenv<br></code></pre></div></td></tr></table></figure>
 
 <p>创建虚拟环境并激活，在虚拟环境下安装<code>django</code>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">mkdir myproject<br>cd myproject<br>virtualenv venv -p python3<br>.\venv\Scripts\activate.bat <span class="hljs-comment"># 激活虚拟环境，在命令行前出现venv得命令，代表虚拟环境激活</span><br>pip install django<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">mkdir myproject<br>cd myproject<br>virtualenv venv -p python3<br>.\venv\Scripts\activate.bat <span class="hljs-comment"># 激活虚拟环境，在命令行前出现venv得命令，代表虚拟环境激活</span><br>pip install django<br></code></pre></div></td></tr></table></figure>
 
 <p>如果要退出虚拟环境，运行<code>deactive</code>就退出了虚拟环境。</p>
-<h2 id="创建一个项目"><a href="#创建一个项目" class="headerlink" title="创建一个项目"></a>创建一个项目</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">django-admin startproject myproject<br></code></pre></td></tr></table></figure>
+<h2 id="创建一个项目"><a href="#创建一个项目" class="headerlink" title="创建一个项目"></a>创建一个项目</h2><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">django-admin startproject myproject<br></code></pre></div></td></tr></table></figure>
 
 <p>执行上面的命令后，会在目录下生成基础文件夹结构。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">vnev/<br>myproject/<br>  - myproject/<br>    -- asgi.py<br>    -- settings.py<br>    -- urls.py<br>    -- wsgi.py<br>    -- __init__.py<br>  - manage.py<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">vnev/<br>myproject/<br>  - myproject/<br>    -- asgi.py<br>    -- settings.py<br>    -- urls.py<br>    -- wsgi.py<br>    -- __init__.py<br>  - manage.py<br></code></pre></div></td></tr></table></figure>
 
 <p>最初项目由五个文件构成：</p>
 <ul>
@@ -282,7 +282,7 @@
 <li><code>wsgi.py</code>：该文件是用于部署得简单网关接口。</li>
 </ul>
 <p><code>django</code>自带了一个简单得网络服务器。在开发过程中无需安装其他软件即可在本地运行项目，通过执行命令测试一些。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage.py runserver<br><br><span class="hljs-comment"># Django version 3.2.4, using settings &#x27;myproject.settings&#x27;</span><br><span class="hljs-comment"># Starting development server at http://127.0.0.1:8000/</span><br><span class="hljs-comment"># Quit the server with CTRL-BREAK.</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">python manage.py runserver<br><br><span class="hljs-comment"># Django version 3.2.4, using settings &#x27;myproject.settings&#x27;</span><br><span class="hljs-comment"># Starting development server at http://127.0.0.1:8000/</span><br><span class="hljs-comment"># Quit the server with CTRL-BREAK.</span><br></code></pre></div></td></tr></table></figure>
 
 <p>访问<code>http://127.0.0.1:8000/</code>，你可以看到下面页面。</p>
 <p><img src="Screenshot_1.webp" srcset="/img/loading.gif" lazyload></p>
@@ -293,10 +293,10 @@
 <li>project：是配置和应用程序得集合。一个项目可以由多个应用程序或一个应用程序组成。</li>
 </ul>
 <p>创建一个应用：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">django-admin startapp boards<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">django-admin startapp boards<br></code></pre></div></td></tr></table></figure>
 
 <p>执行上面的命令后，会在<code>myproject/</code>目录下生成<code>boards</code>文件夹。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">vnev/<br>myproject/<br>  - boards/<br>      -- migrations/<br>      -- admin.py<br>      -- apps.py<br>      -- models.py<br>      -- tests.py<br>      -- views.py<br>      -- __init__.py<br>  - myproject/<br>      -- asgi.py<br>      -- settings.py<br>      -- urls.py<br>      -- wsgi.py<br>      -- __init__.py<br>  - manage.py<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">vnev/<br>myproject/<br>  - boards/<br>      -- migrations/<br>      -- admin.py<br>      -- apps.py<br>      -- models.py<br>      -- tests.py<br>      -- views.py<br>      -- __init__.py<br>  - myproject/<br>      -- asgi.py<br>      -- settings.py<br>      -- urls.py<br>      -- wsgi.py<br>      -- __init__.py<br>  - manage.py<br></code></pre></div></td></tr></table></figure>
 
 <p>文件作用介绍：</p>
 <ul>
@@ -309,18 +309,18 @@
 </ul>
 <p>现在创建了第一个应用程序，来配置下项目以便启用这个应用程序。</p>
 <p>在<code>settings</code>文件中<code>INSTALLED_APPS</code>中添加这个应用：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">INSTALLED_APPS = [<br>    <span class="hljs-string">&#x27;django.contrib.admin&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.auth&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.contenttypes&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.sessions&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.messages&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.staticfiles&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;boards&#x27;</span>,<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">INSTALLED_APPS = [<br>    <span class="hljs-string">&#x27;django.contrib.admin&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.auth&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.contenttypes&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.sessions&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.messages&#x27;</span>,<br>    <span class="hljs-string">&#x27;django.contrib.staticfiles&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;boards&#x27;</span>,<br>]<br></code></pre></div></td></tr></table></figure>
 
 <h2 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h2><p>现在来写第一个视图（view），打开boards应用程序中的views.py文件，并添加以下代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> HttpResponse<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">home</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&#x27;hello World&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> HttpResponse<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">home</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&#x27;hello World&#x27;</span>)<br></code></pre></div></td></tr></table></figure>
 
 <p>视图是接收<code>httprequest</code>对象并返回一个<code>httpresponse</code>对象的<code>python</code>函数。接收<code>request</code>作为参数并返回<code>response</code>作为结果。</p>
 <p>这里定义了一个简单的视图，命名为<code>home</code>，它只是简单返回一个信息，一个字符串<code>hello world</code>。</p>
 <p>接下来需要告诉<code>Django</code>什么时候会调用这个<code>view</code>。在<code>boards</code>文件夹下创建<code>urls.py</code>文件并添加以下内容中添加：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><br><span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, views.home, name=<span class="hljs-string">&#x27;home&#x27;</span>),<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> path<br><br><span class="hljs-keyword">from</span> . <span class="hljs-keyword">import</span> views<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, views.home, name=<span class="hljs-string">&#x27;home&#x27;</span>),<br>]<br></code></pre></div></td></tr></table></figure>
 
 <p>下一步是要在根 <code>URLconf</code> 文件中指定我们创建的 <code>boards.urls</code>模块。在 <code>myproject/urls.py</code> 文件的 <code>urlpatterns</code> 列表里插入一个<code> include()</code>， 如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> include, path<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, include(<span class="hljs-string">&#x27;boards.urls&#x27;</span>)),<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> admin<br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> include, path<br><br>urlpatterns = [<br>    path(<span class="hljs-string">&#x27;&#x27;</span>, include(<span class="hljs-string">&#x27;boards.urls&#x27;</span>)),<br>    path(<span class="hljs-string">&#x27;admin/&#x27;</span>, admin.site.urls),<br>]<br></code></pre></div></td></tr></table></figure>
 
 <p>函数 <code>include()</code> 允许引用其它 <code>URLconfs</code>。每当 <code>Django</code> 遇到 <code>include()</code> 时，它会截断与此项匹配的 <code>URL</code> 的部分，并将剩余的字符串发送到 <code>URLconf</code> 以供进一步处理。</p>
 <p>访问<code>http://127.0.0.1:8000/</code>，就会返回<code>hello world</code>。</p>
@@ -482,31 +482,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

@@ -259,26 +259,26 @@
             
             <div class="markdown-body">
               <p>有一个使用JavaScript开发的优秀客户端开源库，名为Moment.js，它可以在浏览器中渲染日期和时间。Flask-Moment是一个Flask扩展，能简化把Moment.js集成到Jinja2模板中的过程。Flask-Moment使用pip安装：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">(venv)$</span><span class="bash"> pip install flask-moment</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">(venv)$</span><span class="bash"> pip install flask-moment</span><br></code></pre></div></td></tr></table></figure>
 
 <p>初始化</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask_moment <span class="hljs-keyword">import</span> Moment<br><span class="hljs-comment"># ...</span><br><br>Moment(app)<br><br><span class="hljs-comment"># ...</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask_moment <span class="hljs-keyword">import</span> Moment<br><span class="hljs-comment"># ...</span><br><br>Moment(app)<br><br><span class="hljs-comment"># ...</span><br></code></pre></div></td></tr></table></figure>
 
 <p>除了Moment.js, Flask-Moment还依赖jQuery.js。因此，要在HTML文档的某个地方引入这两个库，可以直接引入，这样可以选择使用哪个版本，也可以使用扩展提供的辅助函数，从内容分发网络（CDN, content delivery network）中引入通过测试的版本。Bootstrap已经引入了jQuery.js，因此只需引入Moment.js即可。</p>
 <p>templates/index.html：引入Moment.js库</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% block scripts %&#125;&#125;<br>    &#123;&#123; super() &#125;&#125;<br>    &#123;&#123; moment.include_moment()&#125;&#125;<br>&#123;% endblock %&#125;&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs html">&#123;% block scripts %&#125;&#125;<br>    &#123;&#123; super() &#125;&#125;<br>    &#123;&#123; moment.include_moment()&#125;&#125;<br>&#123;% endblock %&#125;&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>为了处理时间戳，Flask-Moment向模板开放了moment对象。把变量current time传入模板进行渲染。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span>():</span><br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;index.html&#x27;</span>, name=<span class="hljs-string">&quot;world&quot;</span>, current_time=datetime.utcnow())<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span>():</span><br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;index.html&#x27;</span>, name=<span class="hljs-string">&quot;world&quot;</span>, current_time=datetime.utcnow())<br></code></pre></div></td></tr></table></figure>
 
 <p>在模板中渲染：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>The local date and time is &#123;&#123; moment(current_time).format(&#x27;LLL&#x27;) &#125;&#125;.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>That was &#123;&#123; moment(current_time).fromNow(refresh=True) &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>The local date and time is &#123;&#123; moment(current_time).format(&#x27;LLL&#x27;) &#125;&#125;.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>That was &#123;&#123; moment(current_time).fromNow(refresh=True) &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
 
 <p>实现效果：</p>
 <p><img src="image-20210730113140244.png" srcset="/img/loading.gif" lazyload></p>
 <p>Flask-Moment实现了Moment.js的format()、fromNow()、fromTime()、calendar()、valueOf()和unix()等方法。请查阅Moment.js的文档（<a target="_blank" rel="noopener" href="http://momentjs.com/docs/#/displaying/%EF%BC%89%EF%BC%8C%E5%AD%A6%E4%B9%A0%E8%BF%99%E4%B8%AA%E5%BA%93%E6%8F%90%E4%BE%9B%E7%9A%84%E5%85%A8%E9%83%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E9%80%89%E9%A1%B9%E3%80%82">http://momentjs.com/docs/#/displaying/），学习这个库提供的全部格式化选项。</a></p>
 <p>Flask-Moment渲染的时间戳可实现多种语言的本地化。语言可在模板中选择，方法是在引入Moment.js之后，立即把两个字母的语言代码传给locale()函数。例如，配置Moment. js使用汉语的方式如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% block scripts %&#125;&#125;<br>    &#123;&#123; super() &#125;&#125;<br>    &#123;&#123; moment.include_moment()&#125;&#125;<br>    &#123;&#123; moment.locale(&#x27;zh-cn&#x27;) &#125;&#125;<br>&#123;% endblock %&#125;&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs html">&#123;% block scripts %&#125;&#125;<br>    &#123;&#123; super() &#125;&#125;<br>    &#123;&#123; moment.include_moment()&#125;&#125;<br>    &#123;&#123; moment.locale(&#x27;zh-cn&#x27;) &#125;&#125;<br>&#123;% endblock %&#125;&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p><img src="image-20210730113419711.png" srcset="/img/loading.gif" lazyload></p>
 <style>
@@ -439,31 +439,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

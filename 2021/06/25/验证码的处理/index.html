@@ -280,12 +280,12 @@
 <ul>
 <li>Mac环境直接执行命令</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brew install --with-training-tools tesseract<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">brew install --with-training-tools tesseract<br></code></pre></div></td></tr></table></figure>
 
 <ul>
 <li>Linux环境下的安装</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs she">sudo apt-get install tesseract-ocr<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs she">sudo apt-get install tesseract-ocr<br></code></pre></div></td></tr></table></figure>
 
 <ul>
 <li>Window环境下的安装通过<code>exe</code>安装包安装，下载地址在<code>Github</code>项目中的<code>wiki</code>中找到。</li>
@@ -295,19 +295,19 @@
 <li><p>Python库的安装</p>
 </li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pytho"># PIL库安装<br>pip install pillow<br><br># pytesseract模块用于从图片解析数据<br>pip install pytesseract<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs pytho"># PIL库安装<br>pip install pillow<br><br># pytesseract模块用于从图片解析数据<br>pip install pytesseract<br></code></pre></div></td></tr></table></figure>
 <p>安装完成之后，需要在<code>lib\pytesseract</code>中添加安装的<code>tesseract</code>路径。也要把<code>tesseract</code>的安装路径放到系统环境变量中。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">tesseract_cmd = <span class="hljs-string">r&#x27;C:\Program Files\Tesseract-OCR\tesseract.exe&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">tesseract_cmd = <span class="hljs-string">r&#x27;C:\Program Files\Tesseract-OCR\tesseract.exe&#x27;</span><br></code></pre></div></td></tr></table></figure>
 
 <p>2.3 图片识别引擎的使用</p>
 <ul>
 <li>通过<code>pytesseract</code>模块的<code>image_to_string</code>方法能将打开的图片文件中的数据转成字符串数据，具体方法如下：</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><span class="hljs-keyword">import</span> pytesseract<br><br>im = Image.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;1.png&quot;</span>)<br><br>result = pytesseract.image_to_string(im)<br><br><span class="hljs-built_in">print</span>(result)<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><span class="hljs-keyword">import</span> pytesseract<br><br>im = Image.<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;1.png&quot;</span>)<br><br>result = pytesseract.image_to_string(im)<br><br><span class="hljs-built_in">print</span>(result)<br><br></code></pre></div></td></tr></table></figure>
 
 <p><img src="1.png" srcset="/img/loading.gif" lazyload alt="1.png"></p>
 <p>输出结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pytho">This is some text, written in Arial, that will be read by<br>Tesseract. Here are some symbols: !|@#$%*&amp;&quot;()<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs pytho">This is some text, written in Arial, that will be read by<br>Tesseract. Here are some symbols: !|@#$%*&amp;&quot;()<br></code></pre></div></td></tr></table></figure>
 
 
 
@@ -479,31 +479,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

@@ -265,17 +265,17 @@
 </ul>
 <p>我们可以将这两个<code>Item Pipeline</code>看作特殊的下载器，用户使用时只需要通过<code>item</code>的一个特殊字段将要下载文件或图片的<code>url</code>传递给它们，它们会自动将文件或图片下载到本地，并将下载结果信息存入<code>item</code>的另一个特殊字段，以便用户在导出文件中查阅。</p>
 <h3 id="FilesPipeline使用说明"><a href="#FilesPipeline使用说明" class="headerlink" title="FilesPipeline使用说明"></a><code>FilesPipeline</code>使用说明</h3><p>通过一个简单的例子讲解<code>FilesPipeline</code>的使用，在如下页面中可以下载多本<code>PDF</code>格式的小说：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    ...<br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/book/sg.pdf&quot;</span>&gt;</span>下载《三国演义》<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/book/shz.pdf&quot;</span>&gt;</span>下载《水浒传》<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/book/hlm.pdf&quot;</span>&gt;</span>下载《红楼梦》<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>    ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    ...<br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/book/sg.pdf&quot;</span>&gt;</span>下载《三国演义》<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/book/shz.pdf&quot;</span>&gt;</span>下载《水浒传》<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/book/hlm.pdf&quot;</span>&gt;</span>下载《红楼梦》<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>    ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
 
 <p>使用<code>FilesPipeline</code>下载页面中所有<code>PDF</code>文件，可按以下步骤进行：</p>
 <p><strong>步骤</strong>01 在配置文件<code>settings.py</code>中启用<code>FilesPipeline</code>，通常将其置于其他<code>ItemPipeline</code>之前：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ITEM_PIPELINES = &#123;<span class="hljs-string">&#x27;scrapy.piplines.files.FilesPipline&#x27;</span>: <span class="hljs-number">1</span>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">ITEM_PIPELINES = &#123;<span class="hljs-string">&#x27;scrapy.piplines.files.FilesPipline&#x27;</span>: <span class="hljs-number">1</span>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p><strong>步骤02</strong> 在配置文件<code>settings.py</code>中，使用<code>FILES_STORE</code>指定文件下载目录，如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">FILES_STORE = <span class="hljs-string">&#x27;/home/Dowload/Scrapy&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">FILES_STORE = <span class="hljs-string">&#x27;/home/Dowload/Scrapy&#x27;</span><br></code></pre></div></td></tr></table></figure>
 
 <p><code>步骤</code>03 在<code>Spider</code>解析一个包含文件下载链接的页面时，将所有需要下载文件的<code>url</code>地址收集到一个列表，赋给<code>item</code>的<code>file_urls</code>字段（<code>item[&#39;file_urls&#39;]</code>）。<code>FilesPipeline</code>在处理每一项<code>item</code>时，会读取<code>item[&#39;file_urls&#39;]</code>，对其中每一个<code>url</code>进行下载，<code>Spider</code>示例代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DownloadBoosSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    ...<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        item = &#123;&#125;<br>        <span class="hljs-comment"># 下载列表</span><br>        item[<span class="hljs-string">&#x27;file_urls&#x27;</span>] = []<br>        <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> response.xpath(<span class="hljs-string">&#x27;//a/@href&#x27;</span>).extract():<br>            download_url = response.urljoin(url)<br>            <span class="hljs-comment"># 将url填入列表</span><br>            item[<span class="hljs-string">&#x27;file_urls&#x27;</span>].append((download_url))<br>        <span class="hljs-keyword">yield</span> item<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DownloadBoosSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    ...<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        item = &#123;&#125;<br>        <span class="hljs-comment"># 下载列表</span><br>        item[<span class="hljs-string">&#x27;file_urls&#x27;</span>] = []<br>        <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> response.xpath(<span class="hljs-string">&#x27;//a/@href&#x27;</span>).extract():<br>            download_url = response.urljoin(url)<br>            <span class="hljs-comment"># 将url填入列表</span><br>            item[<span class="hljs-string">&#x27;file_urls&#x27;</span>].append((download_url))<br>        <span class="hljs-keyword">yield</span> item<br></code></pre></div></td></tr></table></figure>
 
 <p>当<code>FilesPipeline</code>下载完<code>item[&#39;file_urls&#39;]</code>中的所有文件后，会将各文件的下载结果信息收集到另一个列表，赋给<code>item</code>的<code>files</code>字段（<code>item[&#39;files&#39;]</code>）。下载结果信息包括以下内容：</p>
 <ul>
@@ -314,7 +314,7 @@
 <p>开启该功能，只需在配置文件<code>settings.py</code>中设置<code>IMAGES_THUMBS</code>，它是一个字典，每一项的值是缩略图的尺寸，代码如下：</p>
 </li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">IMAGES_THUMBS = &#123;<br>    <span class="hljs-string">&#x27;small&#x27;</span>: (<span class="hljs-number">50</span>, <span class="hljs-number">50</span>),<br>    <span class="hljs-string">&#x27;big&#x27;</span>: (<span class="hljs-number">270</span>, <span class="hljs-number">270</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">IMAGES_THUMBS = &#123;<br>    <span class="hljs-string">&#x27;small&#x27;</span>: (<span class="hljs-number">50</span>, <span class="hljs-number">50</span>),<br>    <span class="hljs-string">&#x27;big&#x27;</span>: (<span class="hljs-number">270</span>, <span class="hljs-number">270</span>)<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>开启该功能后，下载一张图片时，本地会出现3张图片（1张原图片，2张缩略图）。</p>
 <ul>
@@ -322,7 +322,7 @@
 <p>开启该功能，需在配置文件<code>settings.py</code>中设置<code>IMAGES_MIN_WIDTH</code>和<code>IMAGES_MIN_HEIGHT</code>，它们分别指定图片最小的宽和高，代码如下：</p>
 </li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">IMAGES_MIN_WIDTH = <span class="hljs-number">10</span><br>IMAGES_MIN_HEIGHT = <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">IMAGES_MIN_WIDTH = <span class="hljs-number">10</span><br>IMAGES_MIN_HEIGHT = <span class="hljs-number">10</span><br></code></pre></div></td></tr></table></figure>
 
 <p>开启该功能后，如果下载了一张105×200的图片，该图片就会被抛弃掉，因为它的宽度不符合标准。</p>
 <style>
@@ -481,31 +481,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

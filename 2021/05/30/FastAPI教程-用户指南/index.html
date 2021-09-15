@@ -260,11 +260,11 @@
             <div class="markdown-body">
               <h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>最简单的 <code>FastAPI</code> 文件可能像下面这样：</p>
 <p>最简单的 FastAPI 文件可能像下面这样：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br>app = FastAPI()<br><br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br>app = FastAPI()<br><br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>将其复制到 <code>main.py</code> 文件中。</p>
 <p>运行实时服务器：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">uvicorn main:app --reload<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">uvicorn main:app --reload<br></code></pre></div></td></tr></table></figure>
 
 
 
@@ -274,29 +274,29 @@
 <li>app：在 main.py 文件中通过 app = FastAPI() 创建的对象。</li>
 <li>--reload：让服务器在更新代码后重新启动。仅在开发时使用该选项。</li>
 </ul>
-<h2 id="分步概括"><a href="#分步概括" class="headerlink" title="分步概括"></a>分步概括</h2><h3 id="步骤1：导入FastAPI"><a href="#步骤1：导入FastAPI" class="headerlink" title="步骤1：导入FastAPI"></a>步骤1：导入FastAPI</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br></code></pre></td></tr></table></figure>
+<h2 id="分步概括"><a href="#分步概括" class="headerlink" title="分步概括"></a>分步概括</h2><h3 id="步骤1：导入FastAPI"><a href="#步骤1：导入FastAPI" class="headerlink" title="步骤1：导入FastAPI"></a>步骤1：导入FastAPI</h3><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br></code></pre></div></td></tr></table></figure>
 
 <p><code>FastAPI</code> 是一个为 <code>API</code> 提供了所有功能的 <code>Python</code> 类。</p>
 <p>FastAPI 是直接从 Starlette 继承的类。<br>你可以通过 FastAPI 使用所有的 Starlette 的功能。</p>
-<h3 id="步骤-2：创建一个-FastAPI「实例」"><a href="#步骤-2：创建一个-FastAPI「实例」" class="headerlink" title="步骤 2：创建一个 FastAPI「实例」"></a>步骤 2：创建一个 FastAPI「实例」</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">app = FastAPI()<br></code></pre></td></tr></table></figure>
+<h3 id="步骤-2：创建一个-FastAPI「实例」"><a href="#步骤-2：创建一个-FastAPI「实例」" class="headerlink" title="步骤 2：创建一个 FastAPI「实例」"></a>步骤 2：创建一个 FastAPI「实例」</h3><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">app = FastAPI()<br></code></pre></div></td></tr></table></figure>
 
 <p>这里的变量 <code>app</code> 会是 <code>FastAPI</code> 类的一个「实例」。</p>
 <p>这个实例将是创建你所有 <code>API</code> 的主要交互对象。</p>
 <p>这个 <code>app</code> 同样在如下命令中被 <code>uvicorn</code> 所引用：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">uvicorn main:app --reload<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">uvicorn main:app --reload<br></code></pre></div></td></tr></table></figure>
 
 <p>如果你像下面这样创建应用：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br>my_awesome_api = FastAPI()<br><br><span class="hljs-meta">@my_awesome_api.get(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br>my_awesome_api = FastAPI()<br><br><span class="hljs-meta">@my_awesome_api.get(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>将代码放入 <code>main.py</code> 文件中，然后你可以像下面这样运行 <code>uvicorn</code>：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">uvicorn main:my_awesome_api --reload<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">uvicorn main:my_awesome_api --reload<br></code></pre></div></td></tr></table></figure>
 
 <h3 id="步骤-3：创建一个路径操作"><a href="#步骤-3：创建一个路径操作" class="headerlink" title="步骤 3：创建一个路径操作"></a>步骤 3：创建一个路径操作</h3><h4 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h4><p>这里的「路径」指的是 <code>URL</code> 中从第一个 <code>/</code> 起的后半部分。</p>
 <p>所以，在一个这样的 <code>URL</code> 中：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">https://example.com/items/foo<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">https://example.com/items/foo<br></code></pre></div></td></tr></table></figure>
 
 <p>…路径会是：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">/items/foo<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python">/items/foo<br></code></pre></div></td></tr></table></figure>
 
 
 
@@ -327,7 +327,7 @@
 <li>DELETE：删除数据。</li>
 </ul>
 <p>因此，在 <code>OpenAPI</code> 中，每一个 <code>HTTP</code> 方法都被称为<code>「操作」</code>。</p>
-<h4 id="定义一个路径操作装饰器"><a href="#定义一个路径操作装饰器" class="headerlink" title="定义一个路径操作装饰器"></a>定义一个路径操作装饰器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br>app = FastAPI()<br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="定义一个路径操作装饰器"><a href="#定义一个路径操作装饰器" class="headerlink" title="定义一个路径操作装饰器"></a>定义一个路径操作装饰器</h4><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><br>app = FastAPI()<br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p><code>@app.get(&quot;/&quot;)</code>告诉 <code>FastAPI</code> 在它下方的函数负责处理如下访问请求：</p>
 <ul>
@@ -344,12 +344,12 @@
 <li>操作：是 <code>get</code>。</li>
 <li>函数：是位于「装饰器」下方的函数（位于<code>@app.get(&quot;/&quot;)</code>下方）。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br>app = FastAPI()<br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br>app = FastAPI()<br><br><span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root</span>():</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>这是一个 <code>Python</code> 函数。</p>
 <p>每当 <code>FastAPI</code> 接收一个使用 <code>GET</code> 方法访问 <code>URL「/」</code>的请求时这个函数会被调用。</p>
 <p>在这个例子中，它是一个 <code>async</code> 函数。当然也可以定义为常规函数。</p>
-<h3 id="步骤-5：返回内容"><a href="#步骤-5：返回内容" class="headerlink" title="步骤 5：返回内容"></a>步骤 5：返回内容</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="步骤-5：返回内容"><a href="#步骤-5：返回内容" class="headerlink" title="步骤 5：返回内容"></a>步骤 5：返回内容</h3><figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Hello World&quot;</span>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>你可以返回一个 <code>dict</code>、<code>list</code>，像 <code>str</code>、<code>int</code> 一样的单个值，等等。</p>
 <p>你还可以返回 <code>Pydantic</code> 模型（稍后你将了解更多）。</p>
@@ -503,31 +503,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

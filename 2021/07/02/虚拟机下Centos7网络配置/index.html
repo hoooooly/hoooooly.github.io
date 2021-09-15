@@ -266,7 +266,7 @@
 <p>然后，修改<code>Centos</code>网络配置文件。</p>
 <p>在<code>Centos</code>终端中，输入<code>vi /etc/sysconfig/network-scripts/ifcfg-ens33</code></p>
 <p>配置文件内容如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">TYPE=Ethernet                 # 网卡类型：为以太网<br>PROXY_METHOD=none               # 代理方式：关闭状态<br>BROWSER_ONLY=no                # 只是浏览器：否<br>BOOTPROTO=dhcp                # 网卡的引导协议：DHCP<br>DEFROUTE=yes                 # 默认路由：是 <br>IPV4_FAILURE_FATAL=no             # 是不开启IPV4致命错误检测：否<br>IPV6INIT=yes                 # IPV6是否自动初始化: 是<br>IPV6_AUTOCONF=yes               # IPV6是否自动配置：是<br>IPV6_DEFROUTE=yes               # IPV6是否可以为默认路由：是<br>IPV6_FAILURE_FATAL=no             # 是不开启IPV6致命错误检测：否<br>IPV6_ADDR_GEN_MODE=stable-privacy       # IPV6地址生成模型：stable-privacy <br>NAME=ens33                  # 网卡物理设备名称<br>UUID=42773503-99ed-443f-a957-66dbc1258347   # 通用唯一识别码<br>DEVICE=ens33                 # 网卡设备名称<br>ONBOOT=no                   # 是否开机启动， 可用systemctl restart network重启网络<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">TYPE=Ethernet                 # 网卡类型：为以太网<br>PROXY_METHOD=none               # 代理方式：关闭状态<br>BROWSER_ONLY=no                # 只是浏览器：否<br>BOOTPROTO=dhcp                # 网卡的引导协议：DHCP<br>DEFROUTE=yes                 # 默认路由：是 <br>IPV4_FAILURE_FATAL=no             # 是不开启IPV4致命错误检测：否<br>IPV6INIT=yes                 # IPV6是否自动初始化: 是<br>IPV6_AUTOCONF=yes               # IPV6是否自动配置：是<br>IPV6_DEFROUTE=yes               # IPV6是否可以为默认路由：是<br>IPV6_FAILURE_FATAL=no             # 是不开启IPV6致命错误检测：否<br>IPV6_ADDR_GEN_MODE=stable-privacy       # IPV6地址生成模型：stable-privacy <br>NAME=ens33                  # 网卡物理设备名称<br>UUID=42773503-99ed-443f-a957-66dbc1258347   # 通用唯一识别码<br>DEVICE=ens33                 # 网卡设备名称<br>ONBOOT=no                   # 是否开机启动， 可用systemctl restart network重启网络<br></code></pre></div></td></tr></table></figure>
 
 <p>修改<code>ONBOOT=yes</code>并添加<code>DNS1=127.0.0.1</code>，此<code>DNS</code>地址设置为本机的<code>DNS</code>地址。 </p>
 <p><img src="image-20210702152401623.png" srcset="/img/loading.gif" lazyload></p>
@@ -276,18 +276,18 @@
 <p>测试<code>ping</code>百度<a target="_blank" rel="noopener" href="https://www.baidu.com/"><code>www.baidu.com</code></a>可以访问。</p>
 <p><img src="image-20210702152616087.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="主机名配置"><a href="#主机名配置" class="headerlink" title="主机名配置"></a>主机名配置</h2><p>为了更改或设置<code>CentOS 7</code>计算机主机名称，请使用<code>hostnamectl</code>命令，如下面的命令摘录所示。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> hostnamectl set-hostname your-new-hostname</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> hostnamectl set-hostname your-new-hostname</span><br></code></pre></div></td></tr></table></figure>
 
 
 
 <p>除<code>hostname</code>命令外，还可以使用<code>hostnamectl</code>命令显示<code>Linux</code>机器主机名。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> hostnamectl</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> hostnamectl</span><br></code></pre></div></td></tr></table></figure>
 
 <p>为了应用新的主机名，需要重启系统，请执行以下命令之一来重新启动<code>CentOS 7</code>机器。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> init 6</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl reboot</span><br><span class="hljs-meta">#</span><span class="bash"> shutdown -r</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> init 6</span><br><span class="hljs-meta">#</span><span class="bash"> systemctl reboot</span><br><span class="hljs-meta">#</span><span class="bash"> shutdown -r</span><br></code></pre></div></td></tr></table></figure>
 
 <p>第二种设置<code>CentOS 7</code>机器主机名的方法是手动编辑<code>/ etc/hostname</code>文件并输入新的主机名。另外，为了应用新的机器名称，系统重新启动是必要的。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> vi /etc/hostname</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> vi /etc/hostname</span><br></code></pre></div></td></tr></table></figure>
 
 <h2 id="修改IP地址"><a href="#修改IP地址" class="headerlink" title="修改IP地址"></a>修改<code>IP</code>地址</h2><p>在配置文件里修改为如下：</p>
 <p><img src="image-20210702155511437.png" srcset="/img/loading.gif" lazyload></p>
@@ -452,31 +452,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->

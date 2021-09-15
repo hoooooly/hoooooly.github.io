@@ -266,10 +266,10 @@
 <h2 id="值传递和引用传递使用特点"><a href="#值传递和引用传递使用特点" class="headerlink" title="值传递和引用传递使用特点"></a>值传递和引用传递使用特点</h2><p>1）值类型默认是值传递：变量直接存储存值，内存通常在栈中分配</p>
 <p>2）引用类型默认是引用传递：变量存储的是一个地址，这个地址对应的空间才是真正存储数值，内存通常在堆上分配，当没有任何变量引用这个地址时，改地址对应的数据空间就成为一个垃圾，有<code>GC</code>来回收。</p>
 <p>3）如果希望函数内的变量能够修改函数外的变量，可以传入变量的地址&amp;，函数内以指针的方式操作变量。从效果上类似引用。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-keyword">var</span> a <span class="hljs-keyword">int</span> = <span class="hljs-number">100</span><br><span class="hljs-keyword">var</span> b <span class="hljs-keyword">int</span> = <span class="hljs-number">100</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getVar</span><span class="hljs-params">(x *<span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span>&#123;<br>   *x = <span class="hljs-number">1000</span><br>   <span class="hljs-keyword">return</span> *x<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getVar2</span><span class="hljs-params">(x <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span>&#123;<br>   x = <span class="hljs-number">200</span><br>   <span class="hljs-keyword">return</span> x<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>  &#123;<br>   fmt.Println(a) <span class="hljs-comment">//100</span><br>   fmt.Println(getVar(&amp;a)) <span class="hljs-comment">//1000</span><br>   fmt.Println(a) <span class="hljs-comment">//1000</span><br>   fmt.Println(b) <span class="hljs-comment">//100</span><br>   fmt.Println(getVar2(b)) <span class="hljs-comment">//200</span><br>   fmt.Println(b) <span class="hljs-comment">//100</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-keyword">var</span> a <span class="hljs-keyword">int</span> = <span class="hljs-number">100</span><br><span class="hljs-keyword">var</span> b <span class="hljs-keyword">int</span> = <span class="hljs-number">100</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getVar</span><span class="hljs-params">(x *<span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span>&#123;<br>   *x = <span class="hljs-number">1000</span><br>   <span class="hljs-keyword">return</span> *x<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getVar2</span><span class="hljs-params">(x <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span>&#123;<br>   x = <span class="hljs-number">200</span><br>   <span class="hljs-keyword">return</span> x<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>  &#123;<br>   fmt.Println(a) <span class="hljs-comment">//100</span><br>   fmt.Println(getVar(&amp;a)) <span class="hljs-comment">//1000</span><br>   fmt.Println(a) <span class="hljs-comment">//1000</span><br>   fmt.Println(b) <span class="hljs-comment">//100</span><br>   fmt.Println(getVar2(b)) <span class="hljs-comment">//200</span><br>   fmt.Println(b) <span class="hljs-comment">//100</span><br><br>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>1）函数内部声明/定义的变量叫局部变量，作用域仅限于函数内部。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">area</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">string</span>, <span class="hljs-keyword">int</span>)</span></span>&#123;<br>   <span class="hljs-comment">// name,age定义在函数内部</span><br>   name := <span class="hljs-string">&quot;holy&quot;</span><br>   age:=<span class="hljs-number">25</span><br>   <span class="hljs-keyword">return</span> name, age<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">area</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">string</span>, <span class="hljs-keyword">int</span>)</span></span>&#123;<br>   <span class="hljs-comment">// name,age定义在函数内部</span><br>   name := <span class="hljs-string">&quot;holy&quot;</span><br>   age:=<span class="hljs-number">25</span><br>   <span class="hljs-keyword">return</span> name, age<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>2）函数外部声明/定义的变量叫全局变量，作用域在整个包都有效，如果其首字母大写，则作用域在整个程序有效。</p>
 <p>3）如果变量在一个代码块中，比如for/if中，那么这个变量的作用域就在该代码块</p>
@@ -429,31 +429,6 @@
      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
   </div>
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- LeanCloud 统计PV -->
-        <span id="leancloud-site-pv-container" style="display: none">
-            总访问量 
-            <span id="leancloud-site-pv"></span>
-             次
-          </span>
-      
-      
-        <!-- LeanCloud 统计UV -->
-        <span id="leancloud-site-uv-container" style="display: none">
-            总访客数 
-            <span id="leancloud-site-uv"></span>
-             人
-          </span>
-      
-
-    
-  </div>
-
 
   
   <!-- 备案信息 -->
