@@ -921,8 +921,15 @@ links:
     - {
       title: "崔才庆的个人站点",
       intro: "崔庆才的个人站点，记录生活的瞬间，分享学习的心得。",
-      link: "https://www.foreverblog.cn/",
-      avatar: "https://cuiqingcai.com/"
+      link: "https://cuiqingcai.com/",
+      avatar: "https://cuiqingcai.com/images/avatar.png"
+    }
+    - {
+
+      title: "猿人学个人博客",
+      intro: "猿人学 王平 APP逆向抓取，JS高阶逆向抓取，安卓群控抓取",
+      link: "https://www.yuanrenxue.com/",
+      avatar: "https://www.yuanrenxue.com/wp-content/uploads/2021/09/1.jpg"
     }
     
 
