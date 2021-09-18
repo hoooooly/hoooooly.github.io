@@ -9,6 +9,4 @@ layout: about
 
 热爱编程，潜心自学中。
 
-python和Golang是两个比较喜欢的语言。
-
-爬虫方向和web开发方向。
+爬虫方向和web安全方向。
