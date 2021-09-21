@@ -304,7 +304,7 @@ navbar:
   # Navigation bar menu. `key` is used to associate languages/*.yml. If there is no association, the value of `key` itself will be displayed; if `icon` is a css class, it can be omitted; adding `name` can force the display of the specified name
   menu:
     - { key: "主页", link: "/", icon: "iconfont icon-home-fill" }
-    - { 
+    - {
         key: "文章",
         icon: 'iconfont icon-books',
         submenu: [
@@ -405,9 +405,9 @@ footer:
     # ICP证号
     icp_text: 鄂ICP备2021008617号-1
     # 公安备案号，不填则只显示ICP
-    police_text: 
+    police_text:
     # 公安备案的编号，用于URL跳转查询
-    police_code: 
+    police_code:
     # 公安备案的图片. 为空时不显示备案图片
     police_icon: /img/police_beian.png
 
@@ -438,7 +438,7 @@ index:
 
     # 为空则按 hexo config.subtitle 显示
     # If empty, text based on `subtitle` in hexo config
-    text: "永远年少"
+    text: "总有人间二两风，<br/>填我四万八千梦"
 
     # 通过 API 接口作为首页副标题的内容，必须返回的是 JSON 格式，如果请求失败则按 text 字段显示，该功能必须先开启 typing 打字机功能
     # Subtitle of the homepage through the API, must be returned a JSON. If the request fails, it will be displayed in `text` value. This feature must first enable the typing animation
@@ -931,7 +931,7 @@ links:
       link: "https://www.yuanrenxue.com/",
       avatar: "https://www.yuanrenxue.com/wp-content/uploads/2021/09/1.jpg"
     }
-    
+
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
