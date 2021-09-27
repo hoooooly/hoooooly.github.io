@@ -195,6 +195,136 @@
   <div class="row mx-auto index-card">
     
     
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/06/17/Requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+          <img src="/2021/06/17/Requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/requests-sidebar.png" srcset="/img/loading.gif" lazyload alt="Requests库">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/17/Requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+          Requests库
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/17/Requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+          
+          
+            
+          
+          
+Requests is an elegant and simple HTTP library for Python, built for human beings.
+
+Requests 唯一的一个非转基因的 Python HTTP 库，人类可以安全享用。
+安装Requests是一个第三方的库，建议在虚拟环境中安装。
+1pip install requests
+
+快速上手发送请求123456789
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-17 19:53" pubdate>
+              2021-06-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Python%E5%BA%93/">Python库</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/http/">http</a>
+            
+              <a href="/tags/requests/">requests</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/" target="_self">
+          爬虫去重策略
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/17/%E7%88%AC%E8%99%AB%E5%8E%BB%E9%87%8D%E7%AD%96%E7%95%A5/" target="_self">
+          
+          
+            
+          
+          
+将访问过的URL保存到数据库
+
+将访问过的URL保存到set中，只需要O(1)的代价就可以查询到URL，100000000*2byte*50个字符/1024/1024/1024 = 9G 
+
+URL经过md5等方法哈希保存到set中
+
+用bitmap方法，将访问过的URL通过hash函数映射到某一位
+
+bloomfilter方法对bitmap进行改进，多重hash函数降低冲突
+
+
+
+    ta
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-17 18:48" pubdate>
+              2021-06-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/MD5/">MD5</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
@@ -646,119 +776,6 @@ boards/views.py
               <a href="/tags/python/">python</a>
             
               <a href="/tags/django/">django</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" target="_self">
-          <img src="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Screenshot_8.webp" srcset="/img/loading.gif" lazyload alt="Django入门-系统设计">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" target="_self">
-          Django入门-系统设计
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/09/Django%E5%85%A5%E9%97%A8-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" target="_self">
-          
-          
-            
-          
-          论坛项目在进入模型，视图等其它有趣的部分之前，先让我们花点时间，简要地讨论我们将要开发的这个项目。如果你已经有了Web 开发的经验并且觉得它太繁琐了，那么你可以浏览一下图片以了解我们将要构建的内容，然后直接跳转到本教程的模型部分。
-用列图我们的项目是一个论坛系统，整个项目的构思是维护几个论坛版块（boards），每个版块像一个分类一样。在指定的版块里面，用户可以通过创建新主题（Topic）开始讨论
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-09 09:56" pubdate>
-              2021-06-09
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Django/">Django</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/django/">django</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/" target="_self">
-          spider的用法
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/06/08/spider%E7%9A%84%E7%94%A8%E6%B3%95/" target="_self">
-          
-          
-            
-          
-          Spider 的用法在 Scrapy 中，要抓取网站的链接配置、抓取逻辑、解析逻辑等其实都是在 Spider 中配置的。
-Spider运行流程在实现 Scrapy 爬虫项目时，最核心的类便是 Spider 类了，它定义了如何爬取某个网站的流程和解析方式。简单来讲， Spider 要做的事就是如下两件： 
-
-定义爬取网站的动作； 
-分析爬取下来的网页。 
-
-对于 Spider 类来说，整个爬取循环如
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-08 00:49" pubdate>
-              2021-06-08
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/scarpy/">scarpy</a>
             
           </div>
         
