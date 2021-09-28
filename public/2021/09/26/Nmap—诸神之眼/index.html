@@ -1,0 +1,694 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.jpg">
+  <link rel="icon" href="/img/icon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Holy Chan">
+  <meta name="keywords" content="">
+  
+  <title>Nmap—诸神之眼 - Holy的个人站点</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":78,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":1},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"e0b23de316904d07fb7110bd99d69a80","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"5nl8DQfwVmV1EVq02TMrVpLl-gzGzoHsz","app_key":"RbsmRlFYbVuACVohRTd4N6Cr","server_url":"https://5nl8dqfw.lc-cn-n1-shared.com"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Holy</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                文章
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    归档
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    分类
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    标签
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友情链接
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Nmap—诸神之眼">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-26 19:48" pubdate>
+        2021年9月26日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      59
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Nmap—诸神之眼</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年9月27日 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Nmap概述网络映射器（Network Mapper，Nmap）是一个免费开源的网络扫描和嗅探工具，可以用来扫描计算机上开放的端口，确定哪些服务运行在哪些端口，并且推断出计算机运行的操作系统。利用该工具，可以评估网络系统的安全性</p>
+<h2 id="功能架构"><a href="#功能架构" class="headerlink" title="功能架构"></a>功能架构</h2><p>Nmap主要有4项扫描功能，分别是<strong>主机发现</strong>、<strong>端口扫描</strong>、<strong>版本侦测</strong>和<strong>操作系统侦测</strong>。</p>
+<p><img src="2021-09-26_110727.png" srcset="/img/loading.gif" lazyload></p>
+<p>Nmap各功能之间的依赖关系。</p>
+<p>（1）确定目标，进行主机发现，找出活动的主机，然后确定活动主机上的端口状况。<br>（2）根据端口进行扫描。<br>（3）确定端口上具体运行的应用程序与版本信息。<br>（4）对版本信息侦测后，再对操作系统进行侦测。</p>
+<p>在这4项基本功能的基础上，Nmap还提供了防火墙与入侵检测系统（IntrusionDetection System，IDS）的规避技巧，可以综合应用到4个基本功能的各个阶段。另外，Nmap还提供了强大的NSE（Nmap Scripting Language）脚本引擎功能，可以对基本功能进行补充和扩展，提供漏洞扫描等功能。</p>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>map通过发包和分析响应包来判断目标主机的状态。为了获取有价值的信息，Nmap会发送特定的包（Probe），并分析响应包的特征信息（指纹）。</p>
+<h3 id="1-探针"><a href="#1-探针" class="headerlink" title="1. 探针"></a>1. 探针</h3><p>探针（Probe）是基于协议功能和特性，使用特定端口和数据载荷所构建的数据包。</p>
+<h3 id="2-指纹信息"><a href="#2-指纹信息" class="headerlink" title="2. 指纹信息"></a>2. 指纹信息</h3><p>指纹信息就是目标主机响应包的特征信息，如ARP应答报文、TCP标志位、ICMP应答报文等。Nmap根据这些指纹信息即可判断主机的状态和端口状态等。</p>
+<h2 id="Nmap的扫描类型"><a href="#Nmap的扫描类型" class="headerlink" title="Nmap的扫描类型"></a>Nmap的扫描类型</h2><p>Ping扫描：用于发现主机，以探测网络中活动的主机。<br>TCP SYN扫描：Nmap默认的端口扫描方式，用来探测目标开放的TCP端口。<br>操作系统识别：用于识别操作系统的指纹信息，如操作系统类型和服务版本等。<br>端口扫描：用于探测目标主机中开放的端口。<br>UDP扫描：使用UDP实施扫描，如UDP Ping扫描和UDP端口扫描等。<br>隐蔽扫描：主要用于规避防火墙，如TCP NULL扫描、TCP FIN扫描、TCP Xmas扫描和FTP转发扫描等。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>网上有很多关于Nmap安装的教程，不做介绍。</p>
+<h2 id="网络环境"><a href="#网络环境" class="headerlink" title="网络环境"></a>网络环境</h2><h3 id="查看网路接口"><a href="#查看网路接口" class="headerlink" title="查看网路接口"></a>查看网路接口</h3><p>多主机都具备多个网络接口。为了明确扫描时所使用的接口，Nmap工具提供了选项–iflist，用来查看主机的网络接口和路由信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --iflist<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h3><p>当确定了当前主机中的网络接口后，即可使用网络调试命令获取网络配置信息。在Windows系统中可以使用ipconfig命令查看网络配置；在Linux系统中可以使用ifconfig命令查看网络配置。</p>
+<h3 id="IPv4和IPv6网络"><a href="#IPv4和IPv6网络" class="headerlink" title="IPv4和IPv6网络"></a>IPv4和IPv6网络</h3><p>IP地址可以分为IPv4和IPv6两大类，网络也可以分为IPv4网络和IPv6网络。其中，IPv4是Internet Protocol Version 4的缩写，表示IP的第四个版本，IPv6表示IP的第六个版本，是下一代互联网协议。目前，大部分用户使用的IP地址都是IPv4。Nmap工具支持对IPv4和IPv6网络进行扫描，默认扫描的是IPv4网络。如果用户要扫描IPv6网络，则需要使用-6选项启用IPv6扫描功能。</p>
+<h3 id="查看帮助"><a href="#查看帮助" class="headerlink" title="查看帮助"></a>查看帮助</h3><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">C:\&gt;nmap -h<br>Nmap 7.92 ( https://nmap.org )<br>Usage: nmap [Scan Type(s)] [Options] &#123;target specification&#125;<br>TARGET SPECIFICATION:	# 目标规范<br>  Can pass hostnames, IP addresses, networks, etc.<br>  Ex: scanme.nmap.org, microsoft.com/24, 192.168.0.1; 10.0.0-255.1-254<br>  -iL &lt;inputfilename&gt;: Input from list of hosts/networks<br>  -iR &lt;num hosts&gt;: Choose random targets<br>  --exclude &lt;host1[,host2][,host3],...&gt;: Exclude hosts/networks<br>  --excludefile &lt;exclude_file&gt;: Exclude list from file<br>HOST DISCOVERY:	# 主机发现<br>  -sL: List Scan - simply list targets to scan<br>  -sn: Ping Scan - disable port scan<br>  -Pn: Treat all hosts as online -- skip host discovery<br>  -PS/PA/PU/PY[portlist]: TCP SYN/ACK, UDP or SCTP discovery to given ports<br>  -PE/PP/PM: ICMP echo, timestamp, and netmask request discovery probes<br>  -PO[protocol list]: IP Protocol Ping<br>  -n/-R: Never do DNS resolution/Always resolve [default: sometimes]<br>  --dns-servers &lt;serv1[,serv2],...&gt;: Specify custom DNS servers<br>  --system-dns: Use OS&#x27;s DNS resolver<br>  --traceroute: Trace hop path to each host<br>SCAN TECHNIQUES:	# 扫描方式<br>  -sS/sT/sA/sW/sM: TCP SYN/Connect()/ACK/Window/Maimon scans<br>  -sU: UDP Scan<br>  -sN/sF/sX: TCP Null, FIN, and Xmas scans<br>  --scanflags &lt;flags&gt;: Customize TCP scan flags<br>  -sI &lt;zombie host[:probeport]&gt;: Idle scan<br>  -sY/sZ: SCTP INIT/COOKIE-ECHO scans<br>  -sO: IP protocol scan<br>  -b &lt;FTP relay host&gt;: FTP bounce scan<br>PORT SPECIFICATION AND SCAN ORDER:	# 端口范围和扫描规则<br>  -p &lt;port ranges&gt;: Only scan specified ports<br>    Ex: -p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080,S:9<br>  --exclude-ports &lt;port ranges&gt;: Exclude the specified ports from scanning<br>  -F: Fast mode - Scan fewer ports than the default scan<br>  -r: Scan ports consecutively - don&#x27;t randomize<br>  --top-ports &lt;number&gt;: Scan &lt;number&gt; most common ports<br>  --port-ratio &lt;ratio&gt;: Scan ports more common than &lt;ratio&gt;<br>SERVICE/VERSION DETECTION:	# 服务/版本探测<br>  -sV: Probe open ports to determine service/version info<br>  --version-intensity &lt;level&gt;: Set from 0 (light) to 9 (try all probes)<br>  --version-light: Limit to most likely probes (intensity 2)<br>  --version-all: Try every single probe (intensity 9)<br>  --version-trace: Show detailed version scan activity (for debugging)<br>SCRIPT SCAN:	# 脚本扫描<br>  -sC: equivalent to --script=default<br>  --script=&lt;Lua scripts&gt;: &lt;Lua scripts&gt; is a comma separated list of<br>           directories, script-files or script-categories<br>  --script-args=&lt;n1=v1,[n2=v2,...]&gt;: provide arguments to scripts<br>  --script-args-file=filename: provide NSE script args in a file<br>  --script-trace: Show all data sent and received<br>  --script-updatedb: Update the script database.<br>  --script-help=&lt;Lua scripts&gt;: Show help about scripts.<br>           &lt;Lua scripts&gt; is a comma-separated list of script-files or<br>           script-categories.<br>OS DETECTION:	# 系统探测<br>  -O: Enable OS detection<br>  --osscan-limit: Limit OS detection to promising targets<br>  --osscan-guess: Guess OS more aggressively<br>TIMING AND PERFORMANCE:<br>  Options which take &lt;time&gt; are in seconds, or append &#x27;ms&#x27; (milliseconds),<br>  &#x27;s&#x27; (seconds), &#x27;m&#x27; (minutes), or &#x27;h&#x27; (hours) to the value (e.g. 30m).<br>  -T&lt;0-5&gt;: Set timing template (higher is faster)<br>  --min-hostgroup/max-hostgroup &lt;size&gt;: Parallel host scan group sizes<br>  --min-parallelism/max-parallelism &lt;numprobes&gt;: Probe parallelization<br>  --min-rtt-timeout/max-rtt-timeout/initial-rtt-timeout &lt;time&gt;: Specifies<br>      probe round trip time.<br>  --max-retries &lt;tries&gt;: Caps number of port scan probe retransmissions.<br>  --host-timeout &lt;time&gt;: Give up on target after this long<br>  --scan-delay/--max-scan-delay &lt;time&gt;: Adjust delay between probes<br>  --min-rate &lt;number&gt;: Send packets no slower than &lt;number&gt; per second<br>  --max-rate &lt;number&gt;: Send packets no faster than &lt;number&gt; per second<br>FIREWALL/IDS EVASION AND SPOOFING:	# 防火墙/ ids规避和欺骗<br>  -f; --mtu &lt;val&gt;: fragment packets (optionally w/given MTU)<br>  -D &lt;decoy1,decoy2[,ME],...&gt;: Cloak a scan with decoys<br>  -S &lt;IP_Address&gt;: Spoof source address<br>  -e &lt;iface&gt;: Use specified interface<br>  -g/--source-port &lt;portnum&gt;: Use given port number<br>  --proxies &lt;url1,[url2],...&gt;: Relay connections through HTTP/SOCKS4 proxies<br>  --data &lt;hex string&gt;: Append a custom payload to sent packets<br>  --data-string &lt;string&gt;: Append a custom ASCII string to sent packets<br>  --data-length &lt;num&gt;: Append random data to sent packets<br>  --ip-options &lt;options&gt;: Send packets with specified ip options<br>  --ttl &lt;val&gt;: Set IP time-to-live field<br>  --spoof-mac &lt;mac address/prefix/vendor name&gt;: Spoof your MAC address<br>  --badsum: Send packets with a bogus TCP/UDP/SCTP checksum<br>OUTPUT:	# 输出方式<br>  -oN/-oX/-oS/-oG &lt;file&gt;: Output scan in normal, XML, s|&lt;rIpt kIddi3,<br>     and Grepable format, respectively, to the given filename.<br>  -oA &lt;basename&gt;: Output in the three major formats at once<br>  -v: Increase verbosity level (use -vv or more for greater effect)<br>  -d: Increase debugging level (use -dd or more for greater effect)<br>  --reason: Display the reason a port is in a particular state<br>  --open: Only show open (or possibly open) ports<br>  --packet-trace: Show all packets sent and received<br>  --iflist: Print host interfaces and routes (for debugging)<br>  --append-output: Append to rather than clobber specified output files<br>  --resume &lt;filename&gt;: Resume an aborted scan<br>  --noninteractive: Disable runtime interactions via keyboard<br>  --stylesheet &lt;path/URL&gt;: XSL stylesheet to transform XML output to HTML<br>  --webxml: Reference stylesheet from Nmap.Org for more portable XML<br>  --no-stylesheet: Prevent associating of XSL stylesheet w/XML output<br>MISC:<br>  -6: Enable IPv6 scanning<br>  -A: Enable OS detection, version detection, script scanning, and traceroute<br>  --datadir &lt;dirname&gt;: Specify custom Nmap data file location<br>  --send-eth/--send-ip: Send using raw ethernet frames or IP packets<br>  --privileged: Assume that the user is fully privileged<br>  --unprivileged: Assume the user lacks raw socket privileges<br>  -V: Print version number<br>  -h: Print this help summary page.<br>EXAMPLES:<br>  nmap -v -A scanme.nmap.org<br>  nmap -v -sn 192.168.0.0/16 10.0.0.0/8<br>  nmap -v -iR 10000 -Pn -p 80<br>SEE THE MAN PAGE (https://nmap.org/book/man.html) FOR MORE OPTIONS AND EXAMPLES<br>```<br><br></code></pre></div></td></tr></table></figure>
+
+<h1 id="确定目标"><a href="#确定目标" class="headerlink" title="确定目标"></a>确定目标</h1><p>指定扫描主机的所有IP地址在DNS服务器中，一个域名可以解析到多个IP地址。如果一个域名有多个IP地址时，Nmap默认仅探测第一个IP地址。为了能够探测到所有的IP地址，可以使用–resolve-all选项指定扫描主机中的所有IP地址。</p>
+<h2 id="指定单一目标"><a href="#指定单一目标" class="headerlink" title="指定单一目标"></a>指定单一目标</h2><p>Nmap可以指定一个IP地址作为渗透测试的目标。指定的IP地址必须是与Nmap所在主机能够互相连通的IP地址。如果目标主机有多块网卡，则每个网卡都有一个IP地址。指定的时候需要确认哪个IP地址是可以连通的。如果用户指定的是本机，则可以指定任意一个IP地址。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap 192.168.1.1<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="指定多个主机"><a href="#指定多个主机" class="headerlink" title="指定多个主机"></a>指定多个主机</h2><p>指定多个主机的格式可以是CIDR格式、连续主机、不连续主机或列表文件。</p>
+<h3 id="CIDR格式"><a href="#CIDR格式" class="headerlink" title="CIDR格式"></a>CIDR格式</h3><p>无类别域间路由（Classless Inter-Domain Routing，CIDR）可以将路由集中起来，在路由表中更灵活地定义地址。用户通过使用CIDR格式，可以指定一个网络内的所有主机。</p>
+<p>Nmap工具提供了一个<code>-sL</code>选项，可以列出扫描的目标。用户可以使用该选项来验证指定的目标主机范围。该选项及其含义如下：</p>
+<p><code>-sL：列出扫描的目标。</code></p>
+<blockquote>
+<p>sL是Scan List（扫描列表）的缩写。Nmap扫描类选项的缩写有具体的规定。其中，Scan缩写为小写字母s，特定项目List缩写为大写字母L。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs she">nmap 192.168.1.0/24 -sL<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="连续的主机"><a href="#连续的主机" class="headerlink" title="连续的主机"></a>连续的主机</h3><p>如果需要扫描多个IP地址连续的主机，则可以使用连字符格式。在一个IP地址中，连字符可以使用一次或多次。</p>
+<p>实施扫描时，可以先使用-sL选项查看指定的连续主机的IP地址，以确定指定的主机范围是否正确。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sL 192.168.1.10-100<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="使用列表文件"><a href="#使用列表文件" class="headerlink" title="使用列表文件"></a>使用列表文件</h3><p>当主机较多并且不连续时，可以将这些主机保存到一个列表文件中，然后直接使用这个列表文件指定多个主机。</p>
+<p>Nmap提供了一个<code>-iL</code>选项用于指定主机列表文件。该选项及其含义如下：</p>
+<p><code>-iL &lt;inputfilename&gt;</code>：指定主机或网络列表文件。</p>
+<blockquote>
+<p>iL是Input from List（从列表中读取）的缩写。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -iL host.txt -sL<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="指定扫描主机的所有IP地址"><a href="#指定扫描主机的所有IP地址" class="headerlink" title="指定扫描主机的所有IP地址"></a>指定扫描主机的所有IP地址</h3><p>在DNS服务器中，一个域名可以解析到多个IP地址。如果一个域名有多个IP地址时，Nmap默认仅探测第一个IP地址。为了能够探测到所有的IP地址，可以使用<code>--resolve-all</code>选项指定扫描主机中的所有IP地址。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --resolve-all www.baidu.com -sL<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="排除主机被扫描"><a href="#排除主机被扫描" class="headerlink" title="排除主机被扫描"></a>排除主机被扫描</h2><p>Nmap提供了两个选项用来排除主机被扫描。这两个选项及其含义如下：</p>
+<p><code>--exclude &lt;host1,host2...&gt;</code>：指定排除的主机。其中，用户可以指定排除单个目标、多个目标或一个目标范围。</p>
+<p><code>--excludefile &lt;exclude_file&gt;</code>：指定排除的主机文件列表。</p>
+<blockquote>
+<p>exclude是排除的意思。</p>
+</blockquote>
+<p>比如，扫描192.168.1.0/24网络中的所有主机，但是不扫描192.168.1.0-100范围内的主机。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap 192.168.1.0/24 --exclude 192.168.1.0-100 -sL<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="扫描方法"><a href="#扫描方法" class="headerlink" title="扫描方法"></a>扫描方法</h2><h3 id="全部扫描"><a href="#全部扫描" class="headerlink" title="全部扫描"></a>全部扫描</h3><p>全部扫描就是对目标主机进行完整、全面的扫描，如主机状态、开放端口、操作系统类型和主机漏洞等。Nmap提供了一个<code>-A</code>选项，可以对目标主机实施全部扫描。该选项及其含义如下：</p>
+<p><code>-A</code>：实施全部扫描，以探测目标主机的操作系统和版本信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap 192.168.1.1 -A<br></code></pre></div></td></tr></table></figure>
+
+<h1 id="发现主机"><a href="#发现主机" class="headerlink" title="发现主机"></a>发现主机</h1><p>发现主机就是指探测网络中活动的主机。发现主机是实施渗透测试的第一步，也是最重要的一步。只有先确定目标主机是活动的，才能进一步实施渗透测试。在Nmap中，可以通过不同的方法来发现主机，如IP发现、ICMP发现、TCP发现和UDP发现等。</p>
+<h3 id="IP发现"><a href="#IP发现" class="headerlink" title="IP发现"></a>IP发现</h3><p>网际协议（Internet Protocol，IP）是TCP/IP体系中的网络层协议。IP是整个TCP/IP簇的核心，也是构成互联网的基础。IP位于TCP/IP模型的网络层，对上可载送传输层的各种协议信息，如TCP和UDP等；对下可将IP数据包放到链路层，通过以太网和令牌网络等各种技术来传送。</p>
+<p>为了标识传输层协议类型，IP报文包含一个字段Protocol，用于保存传输层协议编号。Nmap允许用户基于IP构建探测数据包，用于构建不同类型的传输层数据包。通过字段Protocol，用户可以设置当前包采用哪种传输层协议。一旦目标响应这类数据包，就证明主机存在。这种探测方式称为IP发现。Nmap中的-PO选项可以用来实现IP发现。该选项及其含义如下：</p>
+<p><code>-PO &lt;protocol list&gt;</code>：使用IP数据包探测目标主机是否开启。其中，<code>protocol list</code>是协议编号列表。用户可以指定多个IP编号，如<code>6（TCP）</code>、<code>17（UDP）</code>、<code>1（ICMP）</code>和<code>2（IGMP）</code>。多个编号之间使用逗号分隔。如果没有指定协议，默认协议为<code>1（ICMP）</code>、<code>2（IGMP）</code>和<code>4（IP）</code>，等同于<code>-PO1,2,4</code>。</p>
+<blockquote>
+<p>注意：在选项-PO中，O是大写字母O，不是数字0。另外，选项和协议编号之间没有空格。如果指定的协议为ICMP、IGMP、TCP、UDP，则默认添加对应的协议报头作为IP层的数据载荷。如果是其他协议，默认不添加任何数据载荷，除非使用–data、–data-string或者–data-length来指定。</p>
+</blockquote>
+<h3 id="ICMP发现"><a href="#ICMP发现" class="headerlink" title="ICMP发现"></a>ICMP发现</h3><p>Internet控制报文协议（Internet Control Message Protocol，ICMP）是TCP/IP簇的一个子协议，用于在IP主机、路由器之间传递控制消息。该协议在网络中的主要作用就是实现主机探测、路由维护、路由选择和流量控制。Nmap工具可以利用该协议来实现主机探测。用户通过使用ICMP请求、ICMP响应、ICMP时间戳和ICMP地址掩码请求4种方式来实现主机发现，以探测活动的主机。</p>
+<h4 id="ICMP的工作原理"><a href="#ICMP的工作原理" class="headerlink" title="ICMP的工作原理"></a>ICMP的工作原理</h4><p>Ping是在ICMP中最典型的应用。下面以该工具的使用为例，介绍ICMP的工作原理。</p>
+<p><img src="image-20210927204147435.png" srcset="/img/loading.gif" lazyload></p>
+<p>ICMP的工作流程如下：</p>
+<p>（1）当主机A通过Ping命令测试是否可以正常通信时，将会向主机B发送一个请求包。</p>
+<p>（2）主机B收到该请求后，将检查它的目的地址，并和本机的IP地址对比。如果符合，则接收，否则丢弃。在接收该数据包后，将响应一个应答包给主机A，说明主机可达，即目标主机是活动的。</p>
+<h4 id="ICMP请求"><a href="#ICMP请求" class="headerlink" title="ICMP请求"></a>ICMP请求</h4><p>ICMP请求就是向目标主机发送一个Ping请求，等待目标主机的响应。如果目标主机给予了响应，则说明目标主机在线，否则说明目标主机不在线。Nmap提供了两个选项实施ICMP请求，以探测目标主机是否活动。这两个选项及其含义如下：</p>
+<p><code>-sn</code>：实施Ping扫描，禁止端口扫描。使用该选项时，Nmap默认发送4个请求，分别是<code>ICMP Echo</code>请求、<code>TCP SYN</code>请求、<code>TCP ACK</code>请求和<code>ICMP</code>时间戳请求。当特权用户扫描局域网中的主机时，将会发送ARP请求来发现主机。如果不希望使用ARP请求，则可以使用-<code>-send-ip</code>选项指定发送IP包。-sn选项可以和任何发现探测类型-P*选项结合使用，以达到更高的灵活性。</p>
+<blockquote>
+<p>sn是扫描类选项。其中，s是Scan的首字母，n是Not的首字母。</p>
+</blockquote>
+<p><code>-PE</code>：实施ICMP Echo探测请求发现。如果目标主机响应<code>ICMP Reply</code>报文，则说明目标主机在线；如果目标主机没有响应，则说明其不在线。</p>
+<blockquote>
+<p>PE是发现类选项。其中，P是Ping的首字母，E是ICMP Echo中Echo的首字母。</p>
+</blockquote>
+<p>下面通过实施Ping扫描，探测目标主机是否在线。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -sn www.baidu.com<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="ICMP时间戳"><a href="#ICMP时间戳" class="headerlink" title="ICMP时间戳"></a>ICMP时间戳</h4><p>ICMP时间戳请求允许一个系统向另一个系统查询当前的时间。如果目标主机返回了时间，则说明目标主机是活动的。为了安全起见，在实际应用中，一些主机和防火墙通常都会封锁ICMP响应请求报文，这样用户就无法使用ICMP响应来发现主机了。如果由于管理员失误仅封锁了ICMP响应请求报文，而忘记封锁其他ICMP查询报文，如ICMP时间戳请求，此时就可以通过ICMP时间戳请求来探测主机。Nmap中提供了一个<code>-PP</code>选项，可以用来实施ICMP时间戳Ping扫描。</p>
+<blockquote>
+<p>PP是发现类选项。其中，第一个P是Ping的首字母，第二个P是Timestamp的最后一个字母p的大写形式。</p>
+</blockquote>
+<p>使用ICMP时间戳实施主机发现。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -sn -PP --send-ip 192.168.198.122<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="ICMP地址掩码请求"><a href="#ICMP地址掩码请求" class="headerlink" title="ICMP地址掩码请求"></a>ICMP地址掩码请求</h4><p>ICMP地址掩码请求用于无盘系统在引导过程中获取自己的子网掩码。如果收到目标主机的响应，则说明目标主机是活动的。当用户使用ICMP时间戳方式无法探测出目标主机的状态时，则可以尝试使用ICMP地址掩码请求方式。用于实施ICMP地址掩码请求的选项及其含义如下：</p>
+<p><code>-PM</code>：进行ICMP地址掩码Ping扫描。</p>
+<blockquote>
+<p>PM是发现类选项。其中，P是Ping的首字母，M是Address Mask中Mask的首字母。</p>
+</blockquote>
+<p>用ICMP地址掩码请求进行主机发现。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -sn -PM www.baidu.com<br></code></pre></div></td></tr></table></figure>
+
+
+
+
+
+
+
+<style>
+    table
+    {
+        margin: auto;
+        font-size: 80%;
+    }
+</style>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AE%89%E5%85%A8/">安全</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BF%A1%E6%81%AF%E6%8E%A2%E6%B5%8B/">信息探测</a>
+                    
+                      <a class="hover-with-bg" href="/tags/nmap/">nmap</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/23/Scrapy%E5%88%86%E5%B8%83%E5%BC%8F%E7%88%AC%E8%99%AB/">
+                        <span class="hidden-mobile">Scrapy分布式爬虫</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"enable":true,"appid":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appkey":"Fl5THEPney6qStRSSEn3ELd3","placeholder":"说点什么","path":"window.location.pathname","avatar":"avatar.webp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":true,"serverURLs":"https://hdfxwi5e.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true,"requiredFields":[],"visitor":true,"comment_count":true,"appId":"hdfxWI5ee6Nfzsnqm5izGfSs-gzGzoHsz","appKey":"Fl5THEPney6qStRSSEn3ELd3"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="height:200px;">
+        </div>
+      </div>
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <p style="color:#f8f9fa">我们坚持一件事情，并不是因为这样做了会有效果，而是坚信，这样做是对的。</p> 
+  </div>
+  
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        鄂ICP备2021008617号-1
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.10.1/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e0b23de316904d07fb7110bd99d69a80";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script>
+  <link defer rel="stylesheet" href="/css/backgroundize.css" />
+  <!-- hexo injector body_end end --></body>
+</html>
