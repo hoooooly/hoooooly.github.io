@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      12.4k 字
+      14.5k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      149
+      173
        分钟
     </span>
   
@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年10月1日 凌晨
+                  本文最后更新于：2021年10月1日 下午
                 
               </p>
             
@@ -625,6 +625,81 @@
 <p>使用TCP连接扫描目标主机192.168.198.149中端口22和80的状态。</p>
 <figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -P0 --send-ip -sT -p22,80 192.168.1.1<br></code></pre></div></td></tr></table></figure>
 
+<h3 id="TCP-ACK扫描"><a href="#TCP-ACK扫描" class="headerlink" title="TCP ACK扫描"></a>TCP ACK扫描</h3><p>TCP ACK扫描和TCP SYN扫描类似。TCP ACK是一个确认报文，用来确定目标已收到报文，即服务器的TCP SYN/ACK报文。两者的主要区别是，TCP SYN扫描发送的是SYN标志位报文；TCP ACK扫描发送的是ACK标志位报文。另外，这种扫描方式无法确定目标端口是开放状态还是开放/被过滤的状态。TCP ACK扫描主要用于探测防火墙规则，确定它们是否具备状态封装检查功能，哪些端口是被过滤的。当目标端口是开放或关闭状态时，都会返回RST报文，此时，Nmap判断该端口是未被过滤的，如图1所示。如果没有收到目标端口的响应，或者收到目标主机响应的特定的ICMP错误消息端口，则Nmap判断该端口是被过滤的，如图2所示。下面介绍实施TCP ACK扫描的方法。</p>
+<p><img src="image-20211001124946295.png" srcset="/img/loading.gif" lazyload alt="图1 判断端口未被过滤的工作原理"></p>
+<p><img src="/image-20211001125027872.png" srcset="/img/loading.gif" lazyload alt="图2 判断端口被过滤的工作原理"></p>
+<p>Nmap提供了一个-sA选项，用来实施TCP ACK扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sA -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="TCP窗口扫描"><a href="#TCP窗口扫描" class="headerlink" title="TCP窗口扫描"></a>TCP窗口扫描</h3><p>TCP窗口扫描和TCP ACK扫描完全一样，它通过检查返回的RST报文的TCP窗口域来判断目标端口是开放还是关闭的。在某些系统中，开放的端口用正数表示窗口大小（包括RST报文），而关闭的端口窗口大小为0。因此，如果RST报文的TCP窗口大小为正数，则说明端口是开放的；如果TCP窗口大小为0，则表示端口是关闭的。但是，使用这种扫描方式的判断结果并不准确。下面介绍TCP窗口扫描的方法。</p>
+<p>Nmap提供了一个-sW选项用来实施TCP窗口扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sW -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="TCP-NULL扫描"><a href="#TCP-NULL扫描" class="headerlink" title="TCP NULL扫描"></a>TCP NULL扫描</h3><p>TCP NULL扫描是指向目标端口发送一个不包括任何标志位的数据包，Nmap根据服务器的响应情况判断端口状态。如果目标服务器没有响应，则说明端口为开放/被过滤状态；如果响应RST报文，则说明端口是关闭状态。用户使用这种方式可以判断操作系统的类型。在正常的数据通信中，至少要设置一个标志位。在RFC 793规定中，允许接收没有标志位的数据字包。因此，实施TCP NULL扫描，目标主机必须遵从RFC 793标准。但是Windows系统主机不遵从RFC 793标准，只要收到没有设置任何标志位的数据包时，不管端口是开放的还是关闭的都会响应一个RST数据包。而基于UNIX（如Linux）的系统则遵从RFC 793标准。因此，使用TCPNULL扫描方式可以判断目标主机的操作系统是Windows还是Linux。使用这种扫描方式更隐蔽，但精确度相对较低。</p>
+<ol>
+<li>端口开放</li>
+</ol>
+<p>客户端向服务器发送NULL报文，如果服务器没有响应，则说明端口是开放/被过滤状态。</p>
+<p><img src="image-20211001130103048.png" srcset="/img/loading.gif" lazyload alt="判断端口是开放/被过滤状态的工作原理"></p>
+<ol start="2">
+<li>端口关闭</li>
+</ol>
+<p>客户端向服务器发送NULL报文，如果服务器响应RST报文，则说明端口是关闭状态。</p>
+<p><img src="image-20211001130204842.png" srcset="/img/loading.gif" lazyload alt="判断端口是关闭状态的工作原理"></p>
+<ol start="3">
+<li>实施扫描</li>
+</ol>
+<p>Nmap提供了一个-sN选项用来实施TCP NULL扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sN -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="TCP-FIN扫描"><a href="#TCP-FIN扫描" class="headerlink" title="TCP FIN扫描"></a>TCP FIN扫描</h3><p>TCP FIN扫描与NULL扫描类似，不同的是TCP FIN扫描将发送一个FIN标志位的数据报文，该报文用于断开连接。如果收到RST响应报文，则表示端口是关闭状态；如果没有收到响应，则表示端口是开放/被过滤状态。这种方式比较适合UNIX系统。Nmap提供了一个<code>-sF</code>选项用来实施TCP FIN扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sF -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="TCP-Xmas扫描"><a href="#TCP-Xmas扫描" class="headerlink" title="TCP Xmas扫描"></a>TCP Xmas扫描</h3><p>TCP Xmas扫描表示向目标发送PSH、FIN、URG和TCP标志位被设为1的数据包。如果收到一个RST响应包，则说明目标端口是关闭状态；如果没有收到响应，则说明该端口是开放/被过滤状态。Nmap提供了一个-sX选项用来实施TCP Xmas扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sX -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="TCP-Maimon扫描"><a href="#TCP-Maimon扫描" class="headerlink" title="TCP Maimon扫描"></a>TCP Maimon扫描</h3><p>TCP Maimon扫描是用它的发现者Uriel Maimon命名的。TCP Maimon扫描方式和TCP NULL、TCP FIN及TCP Xmas扫描方式类似，不同的是TCP Maimon发送的探测报文是FIN/ACK。根据RFC 793规定，无论端口是开放还是关闭状态，都将对这些探测方式响应RST报文。但是Uriel发现，如果端口开放，许多基于BSD（是UNIX的衍生系统）的系统只是丢弃该探测包，不进行响应。因此，用户也可以使用这种扫描方式来判断端口的状态。如果收到RST响应报文，则说明端口是关闭的；如果没有收到任何响应，则说明端口是开放的。Nmap提供了一个<code>-sM</code>选项用来实施TCP Maimon扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sM -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="空闲扫描"><a href="#空闲扫描" class="headerlink" title="空闲扫描"></a>空闲扫描</h3><p>空闲扫描就是攻击者冒充一台空闲主机的IP地址对目标进行更为隐蔽的扫描。空闲主机是一台可用于欺骗目标IP地址且具有可预设的<code>IP ID</code>序列号的主机。</p>
+<ol>
+<li>空闲扫描的条件</li>
+</ol>
+<p>空闲主机必须符合以下两个特点：寻找一个很少发送和接收数据包的主机。用户可以借助Nmap脚本库中的ipidseq脚本来寻找空闲主机。</p>
+<p>主机的<code>IP ID</code>必须是递增的，0和随机增加都不可以。然而，现在大部分主流操作系统的IP ID都是随机产生的。但是，早期的Windows系统的IP ID（如Windows 2000/2003）都是递增的。</p>
+<ol start="2">
+<li>工作原理</li>
+</ol>
+<p>空闲扫描的工作原理如下：</p>
+<p>（1）确定空闲主机的IP ID序列号。</p>
+<p>（2）Nmap将伪造的SYN数据包发送到目标主机上，就像是由空闲主机发送的一样。</p>
+<p>（3）如果端口是开放的，则目标响应SYN/ACK数据包，并增加其IP ID序列号给空闲主机。</p>
+<p>（4）Nmap分析空闲主机的IP ID序列号的增量，查看是否收到来自目标的SYN/ACK数据包并确定端口状态。</p>
+<ol start="3">
+<li>实施空闲扫描</li>
+</ol>
+<p>Nmap提供了一个-sI选项用来实施空闲扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sI &lt;idle host&gt; -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<p>（1）使用ipidseq脚本寻找一个空闲主机。其中，语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -p80 --script ipidseq -iR &lt;num hosts&gt;	# 随机扫描N个主机<br>nmap -p80 --script ipidseq &lt;target&gt;	# 指定扫描的目标主机<br></code></pre></div></td></tr></table></figure>
+
+<p>例如，随机从网络中获取空闲主机的IP地址，执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> nmap -p80 --script ipidseq -iR 200</span><br><br>Nmap scan report for ec2-100-26-230-2.compute-1.amazonaws.com (100.26.230.2)<br>Host is up (0.38s latency).<br><br>PORT   STATE SERVICE<br>80/tcp open  http<br></code></pre></div></td></tr></table></figure>
+
+<p>（2）对目标主机100.26.230.2实施空闲扫描，探测22和80端口的状态。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -P0 --send-ip -p22,80 -sI 100.26.230.2<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="UDP扫描"><a href="#UDP扫描" class="headerlink" title="UDP扫描"></a>UDP扫描</h2><p>UDP扫描是扫描基于UDP的服务，其中UDP是一种网络传输协议。虽然互联网上很多流行的服务是基于TCP的，但是使用UDP的服务也不少。例如，常见的UDP服务有DNS、DHCP和SNMP等。Nmap通过向目标端口发送UDP数据包，根据目标端口的响应情况即可判断端口的状态。</p>
+<h3 id="UDP端口扫描原理"><a href="#UDP端口扫描原理" class="headerlink" title="UDP端口扫描原理"></a>UDP端口扫描原理</h3><p>UDP端口扫描是通过发送空的（没有数据）UDP报头给目标主机，根据目标主机的响应来判断目标端口是否开放。如果目标主机返回ICMP不可达的错误（类型3，代码为1、2、9、10或13），则说明端口是关闭的，其工作原理如图所示。</p>
+<p><img src="image-20211001132525805.png" srcset="/img/loading.gif" lazyload></p>
+<p>如果收到响应的UDP报文，则说明端口是开放状态，如图所示。如果重试几次后还没有响应，则认为该端口是开放/被过滤状态。此时，用户可以使用版本扫描（<code>-sV</code>选项）来帮助区分端口状态。</p>
+<p><img src="image-20211001132631844.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="实施UDP端口扫描"><a href="#实施UDP端口扫描" class="headerlink" title="实施UDP端口扫描"></a>实施UDP端口扫描</h3><p>Nmap提供了一个-sU选项用来实施UDP端口扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sU -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+
+
 
 
 
@@ -673,6 +748,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/10/01/Metasploit%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Metasploit渗透测试框架</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
