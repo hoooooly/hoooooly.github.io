@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.8k 字
+      12.4k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      98
+      149
        分钟
     </span>
   
@@ -253,7 +253,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年9月28日 下午
+                  本文最后更新于：2021年10月1日 凌晨
                 
               </p>
             
@@ -454,7 +454,176 @@
 <p>指定扫描IP地址为14.215.177.38的主机并进行反向解析。执行命令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> nmap --packet-trace -sn -PS -R 14.215.177.38</span><br></code></pre></div></td></tr></table></figure>
 
+<h2 id="路由追踪"><a href="#路由追踪" class="headerlink" title="路由追踪"></a>路由追踪</h2><p>跟踪路由是指通过向目标主机发送不同IP生存时间（TTL）值的ICMP应答数据包，来判断程序到目标主机所经过的路由。其中，<strong>数据包每经过一个路由，TTL值将减1</strong>。</p>
+<p>Nmap中提供了一个选项用来实现路由器跟踪。该选项及其含义如下：</p>
+<p><code>--traceroute</code>：实施路由跟踪。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> nmap --packet-trace --traceroute -sn -PS -R www.baidu.com</span><br><br>Nmap scan report for www.baidu.com (14.215.177.39)<br>Host is up (0.0069s latency).<br>Other addresses for www.baidu.com (not scanned): 14.215.177.38<br><br>TRACEROUTE (using port 80/tcp)<br>HOP RTT     ADDRESS<br>1   1.00 ms moshujia.cn (192.168.124.1)<br>2   2.00 ms 192.168.1.1<br>3   2.00 ms 100.64.0.1<br>4   ... 5<br>6   7.00 ms 113.96.5.50<br>7   9.00 ms 113.96.4.205<br>8   ... 9<br>10  6.00 ms 14.215.177.39<br><br>Nmap done: 1 IP address (1 host up) scanned in 16.50 seconds<br></code></pre></div></td></tr></table></figure>
 
+<p>输出信息共包括3列，分别是HOP（跳数）、RTT（往返时间）和ADDRESS（路由地址）。</p>
+<h2 id="跳过主机发现"><a href="#跳过主机发现" class="headerlink" title="跳过主机发现"></a>跳过主机发现</h2><p>跳过主机发现就是不进行主机发现，直接进行高强度的扫描，如端口扫描、版本探测和操作系统类型探测等。默认情况下，Nmap只对正在运行的主机进行高强度的探测。如果目标主机禁止Ping发现，则可以跳过主机发现，直接进行其他扫描。使用这种方法可以很好地规避防火墙。Nmap提供了两个选项用来跳过主机发现。这两个选项及其含义如下：</p>
+<p><code>-P0</code>：跳过主机发现。其中，-P0选项中的0是数字0而不是字母O。</p>
+<p><code>-Pn</code>：跳过主机发现。</p>
+<blockquote>
+<p>Pn是发现类选项。其中，P是Ping的首字母大写，n是Not首字母的小写形式。</p>
+</blockquote>
+<h1 id="扫描端口"><a href="#扫描端口" class="headerlink" title="扫描端口"></a>扫描端口</h1><p>端口扫描是Nmap最基本、最核心的功能。通过实施端口扫描可以确定目标主机中开放的端口，进而推断出目标主机上运行的应用程序，然后再对应用程序进行扫描，找出目标主机中可利用的漏洞。在Nmap中可以实施的端口扫描方式有TCP扫描、UDP扫描、SCTP扫描和IP扫描等。</p>
+<h2 id="端口简介"><a href="#端口简介" class="headerlink" title="端口简介"></a>端口简介</h2><p>在网络技术中，端口分为<strong>逻辑端口</strong>和<strong>物理端口</strong>。其中：物理端口是指连接物理设备的接口，如集线器和交换机；逻辑端口是指在逻辑意义上用于<em>区分服务的端口</em>，如FTP服务的21端口和Web服务的80端口等。这里扫描的端口就是逻辑端口，即基于TCP/IP的端口。</p>
+<h3 id="端口类型"><a href="#端口类型" class="headerlink" title="端口类型"></a>端口类型</h3><p>端口的主要作用是表示一台计算机中的特定进程所提供的服务。网络中的计算机是通过IP地址来代表其身份的，但是一台计算机上可以同时提供多个服务，如数据库服务、FTP服务和Web服务等。此时计算机就需要通过端口号来区别相同计算机所提供的不同服务。TCP/IP中的端口根据用途可以分为<strong>周知端口</strong>、<strong>动态端口</strong>和<strong>注册端口</strong>三类。</p>
+<ol>
+<li>周知端口</li>
+</ol>
+<p>周知端口（Well Known Ports）是众所周知的端口号。简单地说，就是被固定分配给特定服务的端口，范围为0～1023。例如，WWW服务默认的端口是80，FTP服务默认的端口是21，用户也可以为这些网络服务指定其他端口号。但是有些系统协议使用固定的端口号，是不能被改变的。例如，139端口专门用于NetBIOS与TCP/IP之间的通信，不能手动改变。</p>
+<p><img src="image-20210928195846185.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>动态端口（Dynamic Ports）</li>
+</ol>
+<p>动态端口的范围是49152～65535。之所以称为动态端口，是因为它们一般不固定分配某种服务，而是根据程序申请，由系统进行动态分配。</p>
+<ol start="3">
+<li>注册端口端口</li>
+</ol>
+<p>1024～49151用来分配给用户进程或应用程序。这些进程主要是用户所安装的一些应用程序，而不是已经分配好了公认端口的常用程序。这些端口在没有被服务器资源占用的时候，可以供用户端动态选用。</p>
+<h3 id="端口状态"><a href="#端口状态" class="headerlink" title="端口状态"></a>端口状态</h3><p>使用Nmap扫描出的端口状态有3种，分别是<strong>默认状态</strong>、<strong>防火墙</strong>和<strong>不确定状态</strong>。下面分别介绍每种端口状态。</p>
+<ol>
+<li>默认状态</li>
+</ol>
+<p>默认的端口状态有两种，分别是<code>open（开放）</code>和<code>close（关闭）</code>，其含义如下：</p>
+<p>open：应用程序正在该端口接收TCP连接或者UDP报文，即端口开放。</p>
+<p>close：端口关闭。Nmap也可以访问该端口，并且会接收目标系统对Nmap发送的探测报文的响应，但是没有应用程序监听该端口</p>
+<ol start="2">
+<li>防火墙</li>
+</ol>
+<p>如果目标主机的一些端口被防火墙或路由器规则过滤，则扫描出的端口状态可能为<code>filtered（过滤）</code>或<code>unfiltered（未过滤）</code>，其含义如下：</p>
+<p>filtered（被过滤）：端口被过滤。由于包过滤阻止探测报文到达该端口，该端口将不会做出任何响应，因此Nmap无法确定该端口是否开放。某些时候该端口可能会响应ICMP错误消息，如类型为3，代码为13（无法到达目标），但是通常情况下防护墙过滤器会丢弃这种探测报文，不做任何响应。因此，对于filtered类型的端口，即使Nmap发送N次探测包也会被网络阻塞丢弃，并使扫描速度变慢。</p>
+<p>unfiltered（未被过滤）：端口未被过滤，即端口可访问，但Nmap不能确定它是开放还是关闭的。这种状态只有使用TCP ACK扫描时才会出现。如果使用其他类型扫描，如SYN扫描和FIN扫描，则可以帮助确定端口是否开放。</p>
+<ol start="3">
+<li>不确定状态</li>
+</ol>
+<p>当Nmap无法确定目标主机的端口状态时，将显示<code>open|filtered（开放|过滤）</code>或<code>closed|filtered（关闭|过滤）</code>，其含义如下：</p>
+<p><code>open|filtered</code>：表示端口开放或者被过滤。当无法确定端口是开放的还是被过滤的时候，Nmap就把该端口视为此状态。</p>
+<p><code>closed|filtered</code>：表示端口关闭或者被过滤。当Nmap不能确定端口是关闭的还是被过滤的时候，将显示为此状态。该状态只会出现在IPID Idle扫描中。</p>
+<p>当用户使用Nmap实施扫描时，可以指定一些端口选项，仅显示开放的端口或显示端口状态的原因。其中，可以指定的选项及其含义如下：</p>
+<p><code>--open</code>：仅显示开放或可能开放的端口。</p>
+<p><code>--reason</code>：显示端口处于特定状态的原因。</p>
+<h2 id="指定端口"><a href="#指定端口" class="headerlink" title="指定端口"></a>指定端口</h2><p>当用户实施端口扫描时，可以手动指定端口，也可以使用预设端口和排除端口等。</p>
+<h3 id="手工指定"><a href="#手工指定" class="headerlink" title="手工指定"></a>手工指定</h3><p>在Nmap中，用户可以使用-p选项指定扫描的端口范围。语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -p &lt;port ranges&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<p>选项<code>-p &lt;port ranges&gt;</code>用于指定扫描的端口范围。其中，指定的端口可以是单个端口、连续端口、多个端口或不同协议类型的端口。下面将分别介绍每种端口范围的设置方法。</p>
+<ol>
+<li>单个端口</li>
+</ol>
+<p>单个端口就是指定扫描特定的独立端口。例如，扫描22号端口，则格式为<code>-p22</code>。其中，选项-p和端口22之间可以没有空格。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -p 80 www.baidu.com<br></code></pre></div></td></tr></table></figure>
+
+<ol start="2">
+<li>连续端口</li>
+</ol>
+<p>连续端口是指一个端口范围。当用户扫描一个端口范围时，可以使用连续端口的方式来指定端口。其中，连续端口之间使用连字符。例如，指定连续端口的范围为20～50，则格式为<code>-p20-50</code>。</p>
+<p>扫描目标主机中75～80范围内开放的端口。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -Pn -p50-70 www.baidu.com<br></code></pre></div></td></tr></table></figure>
+
+<ol start="3">
+<li> 多个端口</li>
+</ol>
+<p>用户还可以扫描多个端口。其中，多个端口可以是多个独立的端口，还可以是独立端口和连续端口的组合。当扫描多个端口时，端口之间使用逗号分隔。例如，扫描多个独立端口21、25、80，格式为“<code>-p21,25,80</code>”；扫描独立端口20和80～100范围内开放的端口，格式为“<code>-p20,80-100</code>”。</p>
+<p>扫描目标主机中的21、22和80端口。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -Pn -p21,22,80 www.baidu.com<br></code></pre></div></td></tr></table></figure>
+
+<ol start="4">
+<li>不同协议类型的端口</li>
+</ol>
+<p>Nmap还支持用户指定不同协议类型的端口。其中，支持的协议类型有TCP、UDP和SCTP。当用户根据协议类型指定端口时，指定的协议类型分别对应为T（TCP）、U（UDP）和S（SCTP），协议和端口之间使用冒号<code>（:）</code>分隔。例如，指定扫描TCP的80端口，格式为<code>-p T:80</code>。另外，用户也可以指定协议的多个端口或端口范围，语法格式和前面介绍的格式相同。用户还可以同时扫描多个协议的端口。例如，当同时扫描TCP和UDP端口时，需要指定协议的扫描方式，并且在端口号前加上<code>T:</code>或者<code>U:</code>，端口号之间使用逗号分隔。再例如，扫描UDP端口53、111和137，同时扫描TCP端口21～25、80，则格式为“-p U:53,111,137,T:21-25,80”。</p>
+<p>指定扫描TCP的22和80端口。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -Pn -pT:22,80 www.baidu.com<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="使用预设端口"><a href="#使用预设端口" class="headerlink" title="使用预设端口"></a>使用预设端口</h3><p>预设端口就是指Nmap默认扫描的端口。Nmap提供了3种预设端口形式，分别是<strong>默认端口</strong>、<strong>较少端口</strong>和<strong>通用端口</strong>。</p>
+<ol>
+<li>默认端口扫描</li>
+</ol>
+<p>Nmap默认提供了一个服务端口列表文件<code>nmap-services</code>，包括2 000多个端口。在Kali Linux中，该列表文件默认保存在<code>/usr/share/nmap</code>目录下。如果没有使用-p选项指定扫描端口，Nmap默认将扫描<code>nmap-services</code>文件中的端口；如果使用了-p选项，但没有指定扫描端口，默认将扫描<code>1~1024</code>端口和nmap-services列表文件中的端口。另外，用户也可以指定自己的nmap-services文件。如果要自己创建该文件，则需要了解其格式。</p>
+<p><img src="image-20210930223952115.png" srcset="/img/loading.gif" lazyload alt="nmap-services"></p>
+<p><code>nmap-services</code>文件共包括4个字段，分别是<code>Service name（服务名）</code>、<code>portnum/protocol（端口号/协议）</code>、<code>open-frequency（开放频率）</code>和<code>optionalcomments（注释）</code>。这里将以第一个TCP端口为例做一个简单分析。第一个TCP端口对应的服务名为<code>tcpmux</code>，端口号为1，协议为TCP，开放频率为0.001995，注释为<code>TCP Port Service Multiplexer [rfc-1078] | TCP Port Service</code>。如果用户不想扫描默认的nmap-services列表文件中的端口，可以指定自己的nmap-services文件。可以使用指定nmap-services文件的选项<code>--datadir &lt;directoryname&gt;</code>指定自己的<code>nmap-services</code>文件目录名。</p>
+<ol start="2">
+<li>较少端口扫描</li>
+</ol>
+<p>Nmap提供了一个<code>-F</code>选项，仅扫描预设列表中的端口（端口数较少），因此扫描速度非常快。如果用户扫描的端口数量较少，使用该选项可以提高扫描速度。扫描较少端口的语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -F &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<p>选项<code>-F</code>表示快速扫描端口。该选项将不会扫描所有端口，仅扫描Nmap中nmap-services包含的默认端口。另外，也可以使用<code>--datadir</code>选项指定自己的nmap-services文件。</p>
+<ol start="3">
+<li>通用端口扫描</li>
+</ol>
+<p>通用端口就是一些常见的TCP/UDP端口，如21、22、23等。Nmap中提供了两个扫描通用端口选项，可以指定扫描常见的端口数或端口概率。这两个选项及其含义如下：</p>
+<p><code>--top-ports</code>：扫描开放率最高的N个端口。默认情况下，Nmap会扫描可能性最大的1000个TCP端口。</p>
+<p><code>--port-ratio</code>：扫描指定频率以上的端口。其中，该选项的取值范围在0～1之间。</p>
+<p>扫描目标主机192.168.1.2中开放率最高的5个端口。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -Pn --send-ip --top-ports 5 192.168.1.2<br></code></pre></div></td></tr></table></figure>
+
+<p>扫描目标主机192.168.1.2中频率为0.2以上的端口。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -Pn --send-ip --top-ports 0.2 192.168.1.2<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="排除端口"><a href="#排除端口" class="headerlink" title="排除端口"></a>排除端口</h3><p>排除端口就是排除不需要扫描的端口。如果用户扫描一个大范围的端口，仅有几个端口不需要扫描时，则可以通过选项指定排除的端口。Nmap提供了一个<code>--exclude-ports</code>选项可以指定排除端口，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -p20-100 --exclude-ports 80 192.168.1.2<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="顺序扫描"><a href="#顺序扫描" class="headerlink" title="顺序扫描"></a>顺序扫描</h3><p>通常，端口扫描都是按顺序依次进行扫描。但是为了防止防火墙检测到端口的扫描行为，Nmap会打乱顺序，随机扫描。如果指定的端口顺序已经经过调整和优化，就需要按照指定的顺序进行扫描。Nmap提供了一个<code>-r</code>选项可以用来实施顺序扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -r &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="TCP扫描"><a href="#TCP扫描" class="headerlink" title="TCP扫描"></a>TCP扫描</h2><p>TCP是一种常用的网络传输协议，该协议规定了每个包都具备一系列的标记位，用来说明数据包的作用。在扫描过程中，Nmap通过发送不同TCP标志位的报文来探测目标端口的状态。其中，最常见的TCP扫描方式有<code>TCP SYN</code>扫描、TCP连接扫描和<code>TCP ACK</code>扫描等。</p>
+<h3 id="TCP-SYN"><a href="#TCP-SYN" class="headerlink" title="TCP SYN"></a>TCP SYN</h3><p>扫描TCP SYN扫描又称为<strong>半开放扫描</strong>。使用TCP传输数据时，首先需要建立连接。此时客户端向服务器发送一个TCP <code>SYN包</code>（SYN标记位为1的数据包），请求建立连接。如果目标主机端口是开放的，将建立连接；如果目标主机端口是关闭的，则连接失败。</p>
+<p>TCP SYN扫描通过向目标端口发送TCP SYN报文，并根据响应来判断目标端口的状态。因为TCP SYN扫描仅发送一个SYN报文，而且不会完成完整的TCP连接（三次握手），所以速度非常快并且非常隐蔽。TCP SYN是最受欢迎的扫描方式，也是Nmap默认的扫描方式。</p>
+<ol>
+<li>判断端口是否为开放状态</li>
+</ol>
+<p>判断目标端口是开放状态的，工作原理如图所示。</p>
+<p><img src="image-20210930230233092.png" srcset="/img/loading.gif" lazyload alt="半开放扫描工作流程"></p>
+<p>工作流程如下：</p>
+<p>（1）源主机首先向目标主机发送一个<code>SYN</code>包（SYN+端口号），请求建立连接。</p>
+<p>（2）目标主机收到请求后会响应一个<code>SYN/ACK</code>包，此时说明目标主机正在监听扫描的端口，即端口是开放的。</p>
+<p>（3）当源主机收到目标主机的响应后，则向目标发送一个<code>RST</code>替代<code>ACK</code>包，表示连接中止。此时，三次握手没有完成，所以不会被目标主机记录下来。</p>
+<ol start="2">
+<li>判断端口是否为关闭状态</li>
+</ol>
+<p>判断目标端口是关闭状态时，工作原理如图所示。</p>
+<p><img src="image-20210930230433905.png" srcset="/img/loading.gif" lazyload alt="判断是否关闭状态"></p>
+<p>工作流程如下：</p>
+<p>（1）源主机首先向目标主机发送一个<code>SYN</code>包（SYN+端口号）请求建立连接。</p>
+<p>（2）如果收到目标响应的<code>RST</code>包，则说明无法连接，即目标端口是关闭状态。</p>
+<ol start="3">
+<li>实施扫描</li>
+</ol>
+<p>使用TCP SYN扫描端口时，将向目标端口发送一个TCP SYN标志报文。如果目标响应SYN+ACK报文，则说明端口是开放的；如果目标响应RST报文，则说明端口是关闭的。如果收到<code>ICMP</code>不可达，表示端口状态为<code>filtered</code>。Nmap提供了一个选项<code>-sS</code>，可以用来实施TCP SYN扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -p &lt;Port&gt; -sS &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<blockquote>
+<p>sS是扫描类选项。其中，第一个s是Scan首字母的小写形式，第二个S是SYN的首字母。</p>
+</blockquote>
+<p>使用TCP SYN扫描目标192.168.198.149中端口22和80的状态。执行命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -P0 --send-ip -sS -p22,80 www.baidu.com<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="TCP连接扫描"><a href="#TCP连接扫描" class="headerlink" title="TCP连接扫描"></a>TCP连接扫描</h3><p>TCP连接扫描方式是Nmap通过创建connect()系统调用，要求当前主机和目标主机的端口建立TCP连接，即实现TCP三次握手。如果与目标端口成功建立连接，则说明端口是开放的；否则判断端口是关闭的。这种扫描方式和其他扫描类型不同，不会直接发送原始报文。当TCP SYN扫描不能使用时，默认将会选择TCP连接扫描。TCP连接扫描是最稳定的扫描方式，但是该扫描方式需要更长的时间，而且连接请求还可能被目标主机记录下来。另外，如果长时间进行扫描，可能会对目标系统造成洪水攻击并导致其崩溃。</p>
+<ol>
+<li>端口开放</li>
+</ol>
+<p>TCP连接扫描到目标端口是开放状态的工作原理如图所示。</p>
+<p><img src="image-20210930235716552.png" srcset="/img/loading.gif" lazyload alt="端口开放"></p>
+<p>工作流程如下：</p>
+<p>（1）源主机向目标主机发送SYN包（SYN+端口）与目标主机建立连接。</p>
+<p>（2）目标主机收到请求后，响应了一个SYN+ACK包。</p>
+<p>（3）源主机向目标主机发送一个ACK包，表示确认已建立连接。这说明目标主机的端口是开放的。</p>
+<p>（4）由于源主机与目标主机已成功建立连接，所以源主机会向目标主机请求资源。但是目标主机无法响应源主机的请求，因此源主机会发送一个RST包。</p>
+<ol start="2">
+<li>端口关闭</li>
+</ol>
+<p>TCP连接扫描到目标端口是关闭状态的工作原理如图所示。</p>
+<p><img src="image-20210930235829038.png" srcset="/img/loading.gif" lazyload alt="端口关闭"></p>
+<ol start="3">
+<li>实施端口扫描</li>
+</ol>
+<p>Nmap中提供了一个<code>-sT</code>选项，可以用来实施TCP连接扫描，其语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap -sT -p&lt;port&gt; &lt;target&gt;<br></code></pre></div></td></tr></table></figure>
+
+<p>使用TCP连接扫描目标主机192.168.198.149中端口22和80的状态。</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">nmap --packet-trace -P0 --send-ip -sT -p22,80 192.168.1.1<br></code></pre></div></td></tr></table></figure>
 
 
 
@@ -467,7 +636,6 @@
         font-size: 80%;
     }
 </style>
-
 
 
 
