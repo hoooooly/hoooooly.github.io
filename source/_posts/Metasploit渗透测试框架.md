@@ -73,7 +73,7 @@ ss -ant
 初始化数据库，执行命令如下：
 
 ```shell
-mdfdb init
+msfdb init
 ```
 
 

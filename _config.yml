@@ -103,13 +103,13 @@ theme: hexo-theme-fluid-master
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  #repo: https://github.com/hooooly/hooooly.github.io # 部署到guthub pages使用这个
+  repo: https://github.com/hooooly/hooooly.github.io # 部署到guthub pages使用这个
   #repo: https://gitee.com/holychan/Hooly.git # Gitee pages使用这个
-  repo: root@121.4.223.225:/home/git/blog.git # 部署到腾讯云使用这个
+  # repo: root@121.4.223.225:/home/git/blog.git # 部署到腾讯云使用这个
   # example, https://github.com/hexojs/hexojs.github.io
-  # branch: gh-pages # 部署到guthub pages使用这个
+  branch: gh-pages # 部署到guthub pages使用这个
   # branch: master # 部署到gitee pages使用这个
-  branch:   # # 部署到腾讯云使用这个
+  # branch:   # # 部署到腾讯云使用这个
 
 # url: https://holychan.gitee.io/blog
 # root: /blog
