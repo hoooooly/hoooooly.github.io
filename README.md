@@ -13,3 +13,5 @@ git add .
 git commit -m ""
 git push
 ```
+
+已经迁移为Hugo框架部署
